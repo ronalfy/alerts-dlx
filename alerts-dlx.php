@@ -11,12 +11,17 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       alerts-dlx
- * Domain Path:       /languages
  *
  * @package AlertsDLX
  */
 
 namespace DLXPlugins\AlertsDLX;
+
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 
 define( 'ALERTS_DLX_VERSION', '2.4.0' );
 define( 'ALERTS_DLX_FILE', __FILE__ );
@@ -58,11 +63,6 @@ class AlertsDLX {
 	 * Class initializer.
 	 */
 	public function plugins_loaded() {
-		load_plugin_textdomain(
-			'alerts-dlx',
-			false,
-			basename( __DIR__ ) . '/languages'
-		);
 
 		Options::run();
 		( new Admin() )->run();

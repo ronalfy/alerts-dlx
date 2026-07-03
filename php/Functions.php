@@ -7,6 +7,10 @@
 
 namespace DLXPlugins\AlertsDLX;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Functions
  */

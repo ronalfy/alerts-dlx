@@ -7,6 +7,10 @@
 
 namespace DLXPlugins\AlertsDLX;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Helper class for registering blocks.
  */
@@ -115,7 +119,7 @@ class Blocks {
 	 */
 	public function shortcode( $atts = array(), $content = '' ) {
 		$defaults = array(
-			'unique_id'               => 'alerts-dlx-' . mt_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
+			'unique_id'               => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
 			'alert_group'             => 'chakra',
 			'alert_type'              => 'success',
 			'align'                   => 'center',
@@ -423,7 +427,9 @@ class Blocks {
 			$custom_css = ob_get_clean();
 			wp_register_style(
 				'alerts-dlx-custom-css',
-				false
+				false,
+				array(),
+				Functions::get_plugin_version()
 			);
 			wp_add_inline_style(
 				'alerts-dlx-custom-css',
@@ -553,7 +559,7 @@ class Blocks {
 						$title_tag = Options::get_headline_tag();
 						printf(
 							'<%1$s class="%2$s">%3$s</%1$s>',
-							$title_tag,
+							esc_html( $title_tag ),
 							esc_attr( Options::get_headline_title_classes() ),
 							esc_html( $alert_title )
 						);
