@@ -550,10 +550,10 @@ class Blocks {
 						<?php
 					}
 					if ( $title_enabled ) {
-						$title_tag = Options::get_headline_style();
+						$title_tag = Options::get_headline_tag();
 						printf(
 							'<%1$s class="%2$s">%3$s</%1$s>',
-							tag_escape( $title_tag ),
+							$title_tag,
 							esc_attr( Options::get_headline_title_classes() ),
 							esc_html( $alert_title )
 						);
@@ -687,7 +687,7 @@ class Blocks {
 				'isAdmin'               => current_user_can( 'manage_options' ),
 				'colorPalette'          => Functions::get_theme_color_palette(),
 				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'         => Options::get_headline_style(),
+				'headlineStyle'         => Options::get_headline_tag(),
 				'headlineCustomClasses' => Options::get_headline_custom_classes(),
 				'headlineForceSize'     => Options::is_headline_force_size(),
 				'enabledBlockStyles'    => Options::get_enabled_block_styles(),

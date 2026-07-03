@@ -18,6 +18,32 @@ export const BLOCK_ALERT_GROUPS = {
 	'mediaron/alerts-dlx-shoelace': 'shoelace',
 };
 
+export const HEADLINE_TAG_MAP = {
+	h1: 'h1',
+	h2: 'h2',
+	h3: 'h3',
+	h4: 'h4',
+	h5: 'h5',
+	h6: 'h6',
+	div: 'div',
+};
+
+/**
+ * Resolve a headline tag to a safe allowlisted value via forced lookup.
+ *
+ * @param {string} tag Requested headline tag.
+ * @return {string} Safe headline tag from the allowlist.
+ */
+export function resolveHeadlineTag( tag ) {
+	if ( 'string' !== typeof tag ) {
+		return 'h2';
+	}
+
+	const key = tag.toLowerCase().trim();
+
+	return HEADLINE_TAG_MAP[ key ] ?? 'h2';
+}
+
 /**
  * Get the alert group slug for a block name.
  *

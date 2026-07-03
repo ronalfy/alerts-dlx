@@ -56,6 +56,32 @@ class Options {
 	}
 
 	/**
+	 * Resolve a headline tag to a safe allowlisted value via forced lookup.
+	 *
+	 * @param mixed $tag Requested headline tag.
+	 * @return string Safe headline tag from the allowlist.
+	 */
+	public static function resolve_headline_tag( $tag ) {
+		$map = array(
+			'h1'  => 'h1',
+			'h2'  => 'h2',
+			'h3'  => 'h3',
+			'h4'  => 'h4',
+			'h5'  => 'h5',
+			'h6'  => 'h6',
+			'div' => 'div',
+		);
+
+		if ( ! is_string( $tag ) ) {
+			return 'h2';
+		}
+
+		$key = strtolower( trim( $tag ) );
+
+		return $map[ $key ] ?? 'h2';
+	}
+
+	/**
 	 * Get allowed alert theme slugs.
 	 *
 	 * @return array
@@ -102,7 +128,7 @@ class Options {
 	 *
 	 * @return string
 	 */
-	public static function get_headline_style() {
+	public static function get_headline_tag() {
 		$options = self::get_plugin_options();
 		$style   = isset( $options['headline_style'] ) ? $options['headline_style'] : 'h2';
 
@@ -115,7 +141,9 @@ class Options {
 		 *
 		 * @param string $style The headline tag (h1-h6 or div).
 		 */
-		return apply_filters( 'alerts_dlx_headline_style', $style );
+		$style = apply_filters( 'alerts_dlx_headline_style', $style );
+
+		return self::resolve_headline_tag( $style );
 	}
 
 	/**

@@ -47,7 +47,7 @@ class Rest {
 	 * @return \WP_REST_Response
 	 */
 	public static function rest_get_pages( $request ) {
-		$search = sanitize_text_field( urldecode( $request->get_param( 'search' ) ) );
+		$search = sanitize_text_field( wp_unslash( urldecode( $request->get_param( 'search' ) ) ) );
 
 		$post_types_to_search = array(
 			'post',

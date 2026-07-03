@@ -11,6 +11,7 @@ import classnames from "classnames";
 import { __ } from "@wordpress/i18n";
 import IconPicker from "../IconPicker";
 import AlertButton from "../AlertButton";
+import { resolveHeadlineTag } from "../../utils/alert-style-utils";
 
 /**
  * Main Block Interface (what is shown to the user in the editor).
@@ -64,12 +65,7 @@ const BlockMain = (props) => {
     baseFontSize
   )}px; }`;
 
-  const allowedHeadlineStyles = ["h1", "h2", "h3", "h4", "h5", "h6", "div"];
-  const headlineTag = allowedHeadlineStyles.includes(
-    alertsDlxBlock.headlineStyle
-  )
-    ? alertsDlxBlock.headlineStyle
-    : "h2";
+  const headlineTag = resolveHeadlineTag( alertsDlxBlock.headlineStyle );
   const headlineTitleClasses = classnames(
     "alerts-dlx-title",
     (alertsDlxBlock.headlineCustomClasses || "")
