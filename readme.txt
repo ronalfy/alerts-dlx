@@ -23,7 +23,7 @@ https://www.youtube.com/watch?v=7dKpw5uBi5o
 
 ## Quick Links
 
-<a href="https://docs.dlxplugins.com/v/alertsdlx/">AlertsDLX Docs</a> | <a href="https://dlxplugins.com/plugins/alerts-dlx/">AlertsDLX Home</a> | <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">Shortcode Usage</a> | <a href="https://dlxplugins.com/support/">Support</a>
+<a href="https://docs.dlxplugins.com/product/alertsdlx/">AlertsDLX Docs</a> | <a href="https://dlxplugins.com/plugins/alerts-dlx/">AlertsDLX Home</a> | <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">Shortcode Usage</a> | <a href="https://dlxplugins.com/support/">Support</a>
 
 ## Major features
 
@@ -102,11 +102,11 @@ Yes. AlertsDLX works with the Classic Editor <a href="https://docs.dlxplugins.co
 
 = Does AlertsDLX work with Elementor or Divi? =
 
-Yes, via the <a href="ttps://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">built-in shortcode</a>, you can output in just about any page builder, including Elementor and Divi.
+Yes, via the <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">built-in shortcode</a>, you can output in just about any page builder, including Elementor and Divi.
 
 = Does AlertsDLX work with shortcodes? =
 
-Yes, via the <a href="ttps://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">built-in shortcode</a>.
+Yes, via the <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">built-in shortcode</a>.
 
 = Does this work with the Block Editor (aka, Gutenberg)? =
 
@@ -169,7 +169,7 @@ From there, add any additional blocks you need for the review, enable the alert 
 
 = Can I disable the custom font used (Lato)? =
 
-Yes, you can improve performance further by disabling the custom font supplied with AlertsDLX and supplying your own. Please see <a href="https://docs.dlxplugins.com/alertsdlx/developers/how-to-use-and-disable-custom-fonts-in-alertsdlx">disabling custom fonts in AlertsDLX</a>
+Yes, you can improve performance further by disabling the custom font supplied with AlertsDLX and supplying your own. Please see <a href="https://docs.dlxplugins.com/product/alertsdlx/custom-fonts/">disabling custom fonts in AlertsDLX</a>
 
 = How can I get support or leave a feature request? =
 
@@ -277,7 +277,7 @@ Please leave a note on <a href="https://dlxplugins.com/support/">our support pag
 * Released 2023-09-23
 * Added support for shortcodes.
 * <a href="https://dlxplugins.com/announcements/alertsdlx-1-3-0-includes-shortcode-support/">Read the announcement post</a>.
-* <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">See shortcode usage</a>.
+* <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">See shortcode usage</a>.
 
 = 1.2.5 =
 * Released 2023-09-10
