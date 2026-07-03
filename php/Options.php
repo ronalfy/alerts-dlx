@@ -54,7 +54,7 @@ class Options {
 	}
 
 	/**
-	 * Get allowed block style slugs.
+	 * Get allowed alert theme slugs.
 	 *
 	 * @return array
 	 */
@@ -63,7 +63,7 @@ class Options {
 	}
 
 	/**
-	 * Get block style definitions for admin UI.
+	 * Get alert theme definitions for admin UI.
 	 *
 	 * @return array
 	 */
@@ -117,7 +117,7 @@ class Options {
 	}
 
 	/**
-	 * Get enabled block style slugs.
+	 * Get enabled alert theme slugs.
 	 *
 	 * @return array
 	 */
@@ -141,17 +141,17 @@ class Options {
 		}
 
 		/**
-		 * Filter the enabled block styles.
+		 * Filter the enabled alert themes.
 		 *
-		 * @param array $styles Array of enabled block style slugs.
+		 * @param array $styles Array of enabled alert theme slugs.
 		 */
 		return apply_filters( 'alerts_dlx_enabled_block_styles', $styles );
 	}
 
 	/**
-	 * Check if a block style is enabled.
+	 * Check if an alert theme is enabled.
 	 *
-	 * @param string $style Block style slug.
+	 * @param string $style Alert theme slug.
 	 *
 	 * @return bool
 	 */
@@ -170,9 +170,9 @@ class Options {
 	}
 
 	/**
-	 * Sanitize enabled block styles from form input.
+	 * Sanitize enabled alert themes from form input.
 	 *
-	 * @param array $styles Block style slugs from form.
+	 * @param array $styles Alert theme slugs from form.
 	 *
 	 * @return array
 	 */

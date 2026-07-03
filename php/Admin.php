@@ -103,7 +103,7 @@ class Admin {
 
 		$enabled_block_styles = Options::sanitize_enabled_block_styles( $form_data['enabled_block_styles'] ?? array() );
 		if ( empty( $enabled_block_styles ) ) {
-			wp_send_json_error( array( 'message' => __( 'At least one block style must remain enabled.', 'alerts-dlx' ) ) );
+			wp_send_json_error( array( 'message' => __( 'At least one alert theme must remain enabled.', 'alerts-dlx' ) ) );
 		}
 
 		$debug_mode = filter_var( $form_data['debug_mode'] ?? false, FILTER_VALIDATE_BOOLEAN );
@@ -258,7 +258,7 @@ class Admin {
 	}
 
 	/**
-	 * Get block style options for the admin UI.
+	 * Get alert theme options for the admin UI.
 	 *
 	 * @return array
 	 */

@@ -45,6 +45,22 @@ registerBlockType( metadata, {
 					);
 				},
 			},
+			{
+				type: 'block',
+				blocks: [ 'mediaron/alerts-dlx-shoelace' ],
+				transform: ( attributes, innerBlocks ) => {
+					return transformToAlertBlock(
+						'mediaron/alerts-dlx-chakra',
+						attributes,
+						innerBlocks,
+						{
+							alertType: 'success',
+							variant: 'subtle',
+							className: 'is-style-success',
+						}
+					);
+				},
+			},
 		],
 		to: [
 			{
@@ -69,6 +85,22 @@ registerBlockType( metadata, {
 				transform: ( attributes, innerBlocks ) => {
 					return transformToAlertBlock(
 						'mediaron/alerts-dlx-bootstrap',
+						attributes,
+						innerBlocks,
+						{
+							alertType: 'success',
+							variant: 'default',
+							className: 'is-style-success',
+						}
+					);
+				},
+			},
+			{
+				type: 'block',
+				blocks: [ 'mediaron/alerts-dlx-shoelace' ],
+				transform: ( attributes, innerBlocks ) => {
+					return transformToAlertBlock(
+						'mediaron/alerts-dlx-shoelace',
 						attributes,
 						innerBlocks,
 						{

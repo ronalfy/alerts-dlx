@@ -89,7 +89,7 @@ const Interface = ({ defaults }) => {
 
     if (!formValues.enabledBlockStyles?.length) {
       setAjaxError(
-        __("At least one block style must remain enabled.", "alerts-dlx")
+        __("At least one alert theme must remain enabled.", "alerts-dlx")
       );
       return;
     }
@@ -228,12 +228,12 @@ const Interface = ({ defaults }) => {
           <div className="adlx-admin-content-body">
             <div className="adlx-admin-component-wrapper">
               <h3 className="adlx-admin-content-subheading">
-                {__("Block Styles", "highlight-and-share")}
+                {__("Alert Themes", "alerts-dlx")}
               </h3>
               <div className="adlx-admin-component-row">
                 <p className="description">
                   {__(
-                    "Select which blocks are available to be inserted into your site. This will not affect existing blocks on your site.",
+                    "Select which alert themes are available in the block inserter. This will not affect existing alerts on your site.",
                     "alerts-dlx"
                   )}
                 </p>
@@ -256,7 +256,7 @@ const Interface = ({ defaults }) => {
           <div className="adlx-admin-content-body">
             <div className="adlx-admin-component-wrapper">
               <h3 className="adlx-admin-content-subheading">
-                {__("Debug Mode", "highlight-and-share")}
+                {__("Debug Mode", "alerts-dlx")}
               </h3>
               <div className="adlx-admin-component-row">
                 <p className="description">
