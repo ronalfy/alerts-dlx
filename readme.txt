@@ -1,10 +1,10 @@
 === Alerts DLX - Alert Block, Alert Box, Callout Box, and Notifications ===
 Contributors: ronalfy
-Tags: alert box, notifications, alerts, notify, blocks
-Requires at least: 6.5
-Tested up to: 6.9
+Tags: alert box, notifications, alerts, dismissible, callouts
+Requires at least: 6.8
+Tested up to: 7.0
 Stable tag: 2.4.0
-Requires PHP: 7.2
+Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://github.com/sponsors/DLXPlugins
@@ -15,9 +15,9 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 
 Elevate your WordPress site's content and user engagement with AlertsDLX, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, AlertsDLX features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 
-AlertsDLX is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert out of blocks, and is flexible enough to quickly match most design needs. Stop digging for that alert in a block suite, and install a dedicated solution that works almost anywhere.
+AlertsDLX is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert notifications out of blocks, and is flexible enough to quickly match most theme designs. Stop digging for that alert in a block suite, and install a dedicated notifications solution that works almost anywhere.
 
-Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagination can really go wild. For example, you can create an "Empty Cart" alert for WooCommerce or Easy Digital Downloads when a cart is empty. For site-wide notifications, most themes and builders (including FSE) allow for site-wide template parts. Just add AlertsDLX to it, make it dismissible, and you now have a site-wide notification that can be hidden when dismissed.
+Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagination can really go wild. For example, you can create an "Empty Cart" callout for WooCommerce or Easy Digital Downloads when a cart is empty. For site-wide notifications, most themes and builders (including FSE) allow for site-wide template parts. Just add the notification to it, make it dismissible, and you now have a site-wide callout or notification that can be hidden when dismissed.
 
 https://www.youtube.com/watch?v=7dKpw5uBi5o
 
@@ -25,14 +25,12 @@ https://www.youtube.com/watch?v=7dKpw5uBi5o
 
 <a href="https://docs.dlxplugins.com/v/alertsdlx/">AlertsDLX Docs</a> | <a href="https://dlxplugins.com/plugins/alerts-dlx/">AlertsDLX Home</a> | <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">Shortcode Usage</a> | <a href="https://dlxplugins.com/support/">Support</a>
 
-> Check out the demo above for most alert types and variations.
-
 ## Major features
 
 1. Four modern alert blocks and styles: Material, Bootstrap, Chakra, and Shoelace.
 2. Use pre-selected colors, styles, and variants, or choose custom for your own branded colors.
 3. Add your own SVG icons, or choose from the ones included. Include a custom image if desired.
-4. Add dismissible notification boxes, and have it remember the user's choice.
+4. Add dismissible notification and callout boxes, and have it remember the user's choice.
 5. Add an optional title, description, and button to the alert block.
 6. Mark an Alert Block as Editorial, and have it only visible in the block editor.
 7. Shortcode/page builder support: use beautiful callouts and notifications anywhere shortcodes are supported.
@@ -70,11 +68,11 @@ AlertsDLX is more than just a beautiful alert block in post content. Here are so
 
 ## Future Features and Growth
 
-This plugin has a small install base and is still growing, so please help spread the word by leaving a feature or support request, review, <a href="https://github.com/DLXPlugins/alerts-dlx/issues">filing a GitHub issue</a>, or sponsoring the plugin monetarily <a href="https://github.com/sponsors/MediaRon">via a GitHub sponsorship</a> (highly recommended and appreciated).
+This plugin has a small (but growing) install base. Please help spread the word by leaving a feature, support request, or review, by <a href="https://github.com/DLXPlugins/alerts-dlx/issues">filing a GitHub issue</a>, or sponsoring the plugin monetarily <a href="https://github.com/sponsors/MediaRon">via a GitHub sponsorship</a> (highly recommended and appreciated).
 
 Future plans include:
 
-1. Consolidating all four blocks into one.
+1. Consolidating all four alert blocks into one (one alert block to rule them all).
 2. Providing global styles, so you can create a style, customize its colors and configuration, and use it on a block or shortcode to set global site-wide alert style that you can edit in one place. If inserting a block and adding a global style, the block is configured for you, with only the content parts editable.
 3. Provide presets, so you can insert the block, click on a preset, and the block is configured for you, setting the icon, style (info, success), configuration (left accent, right accent), and enabling/disabling other toggles. From there, you can edit as desired.
 4. Admin shortcode builder. So users using page builders and widgets have a visual way of creating an AlertsDLX shortcode.
