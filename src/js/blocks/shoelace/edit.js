@@ -25,21 +25,13 @@ import { rawHandler } from '@wordpress/blocks';
 import { useDispatch } from '@wordpress/data';
 
 import {
-	InspectorControls,
-	InspectorAdvancedControls,
-	RichText,
 	useBlockProps,
 	useInnerBlocksProps,
 	store,
 } from '@wordpress/block-editor';
 
-import { useInstanceId } from '@wordpress/compose';
-
-import AlertButton from '../components/AlertButton';
 import UnitChooser from '../components/unit-picker';
-import IconPicker from '../components/IconPicker';
 import BootstrapIcons from '../components/icons/BootstrapIcons';
-import shoelaceColors from './colors';
 import { ShoeLaceCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
 import {
@@ -51,11 +43,6 @@ import {
 const uniqueIds = [];
 
 const ShoelaceAlerts = ( props ) => {
-	const generatedUniqueId = useInstanceId(
-		ShoelaceAlerts,
-		'adlx-shoelace'
-	);
-
 	const { replaceInnerBlocks } = useDispatch( store );
 
 	// Shortcuts.
@@ -132,7 +119,7 @@ const ShoelaceAlerts = ( props ) => {
 	const inspectorControls = (
 		<>
 			<Slot name="alertsDLXPanelStart" fillProps={ props } />
-			<PanelBody initialOpen={ true } title={ __( 'Alert Settings', 'quotes-dlx' ) }>
+			<PanelBody title={ __( 'Alert Settings', 'alerts-dlx' ) }>
 				<>
 					<PanelRow>
 						<ToggleControl
@@ -210,10 +197,16 @@ const ShoelaceAlerts = ( props ) => {
 					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ props } />
 				</>
 			</PanelBody>
-			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'quotes-dlx' ) }>
+		</>
+	);
+
+	const styleControls = (
+		<>
+			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
+			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
 				<>
 					<UnitChooser
-						label={ __( 'Maximum Width', 'quotes-dlx' ) }
+						label={ __( 'Maximum Width', 'alerts-dlx' ) }
 						value={ maximumWidthUnit }
 						units={ [ 'px', '%', 'vw' ] }
 						onClick={ ( value ) => {
@@ -234,7 +227,7 @@ const ShoelaceAlerts = ( props ) => {
 					/>
 				</>
 				<PanelRow>
-					<BaseControl id="alerts-dlx-variants-button-group" label={ __( 'Set the Alert Variant', 'quotes-dlx' ) } className="alerts-dlx-shoelace-variants">
+					<BaseControl id="alerts-dlx-variants-button-group" label={ __( 'Set the Alert Variant', 'alerts-dlx' ) } className="alerts-dlx-shoelace-variants">
 						<ButtonGroup>
 							<Button
 								variant={ variant === 'top-accent' ? 'primary' : 'secondary' }
@@ -280,7 +273,7 @@ const ShoelaceAlerts = ( props ) => {
 					</BaseControl>
 				</PanelRow>
 				<PanelRow>
-					<BaseControl id="alerts-dlx-mode-button-group" label={ __( 'Set Light or Dark Mode', 'quotes-dlx' ) } className="alerts-dlx-shoelace-mode">
+					<BaseControl id="alerts-dlx-mode-button-group" label={ __( 'Set Light or Dark Mode', 'alerts-dlx' ) } className="alerts-dlx-shoelace-mode">
 						<ButtonGroup>
 							<Button
 								variant={ mode === 'light' ? 'primary' : 'secondary' }
@@ -307,7 +300,7 @@ const ShoelaceAlerts = ( props ) => {
 				</PanelRow>
 				{ ( iconEnabled && 'centered' !== variant && 'left-accent' !== variant ) && (
 					<PanelRow>
-						<BaseControl id="alerts-dlx-button-group-icon-alignment" label={ __( 'Icon Vertical Alignment', 'quotes-dlx' ) } className="alerts-dlx-material-variants">
+						<BaseControl id="alerts-dlx-button-group-icon-alignment" label={ __( 'Icon Vertical Alignment', 'alerts-dlx' ) } className="alerts-dlx-material-variants">
 							<ButtonGroup>
 								<Button
 									variant={ iconVerticalAlignment === 'top' ? 'primary' : 'secondary' }
@@ -353,27 +346,11 @@ const ShoelaceAlerts = ( props ) => {
 				</PanelRow>
 				<Slot name="alertsDLXAppearancePanelEnd" fillProps={ props } />
 			</PanelBody>
+			<Slot name="alertsDLXStylePanelEnd" fillProps={ props } />
 		</>
 	);
 
-	const advancedControls = (
-		<PanelRow>
-			<ToggleControl
-				label={ __( 'Enable Flexible InnerBlocks', 'alerts-dlx' ) }
-				checked={ innerBlocksEnabled }
-				onChange={ ( value ) => {
-					setAttributes( {
-						innerBlocksEnabled: value,
-					} );
-				} }
-				help={ __( 'Enable this option to allow the use of any block within the alert.', 'alerts-dlx' ) }
-			/>
-		</PanelRow>
-	);
-
-	useEffect( () => {
-		setAttributes( { uniqueId: generatedUniqueId } );
-	}, [] );
+	const advancedControls = null;
 
 	useAlertStyleSync( { className, alertType, setAttributes } );
 
@@ -383,6 +360,7 @@ const ShoelaceAlerts = ( props ) => {
 			setAttributes={ setAttributes }
 			iconSet={ BootstrapIcons }
 			inspectorControls={ inspectorControls }
+			styleControls={ styleControls }
 			advancedControls={ advancedControls }
 			CloseButtonIcon={ ShoeLaceCloseIcon }
 			innerBlockProps={ innerBlockProps }

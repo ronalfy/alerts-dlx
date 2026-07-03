@@ -109,7 +109,7 @@ const MaterialAlerts = ( props ) => {
 	const inspectorControls = (
 		<>
 			<Slot name="alertsDLXPanelStart" fillProps={ props } />
-			<PanelBody initialOpen={ true } title={ __( 'Alert Settings', 'quotes-dlx' ) }>
+			<PanelBody title={ __( 'Alert Settings', 'alerts-dlx' ) }>
 				<>
 					<PanelRow>
 						<ToggleControl
@@ -191,10 +191,16 @@ const MaterialAlerts = ( props ) => {
 					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ props } />
 				</>
 			</PanelBody>
-			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'quotes-dlx' ) }>
+		</>
+	);
+
+	const styleControls = (
+		<>
+			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
+			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
 				<>
 					<UnitChooser
-						label={ __( 'Maximum Width', 'quotes-dlx' ) }
+						label={ __( 'Maximum Width', 'alerts-dlx' ) }
 						value={ maximumWidthUnit }
 						units={ [ 'px', '%', 'vw' ] }
 						onClick={ ( value ) => {
@@ -217,7 +223,7 @@ const MaterialAlerts = ( props ) => {
 				<PanelRow>
 					<BaseControl
 						id="alerts-dlx-variants-button-group"
-						label={ __( 'Set the Alert Variant', 'quotes-dlx' ) }
+						label={ __( 'Set the Alert Variant', 'alerts-dlx' ) }
 						className="alerts-dlx-material-variants"
 					>
 						<ButtonGroup>
@@ -267,7 +273,7 @@ const MaterialAlerts = ( props ) => {
 				<PanelRow>
 					<BaseControl
 						id="alerts-dlx-mode-button-group"
-						label={ __( 'Set Light or Dark Mode', 'quotes-dlx' ) }
+						label={ __( 'Set Light or Dark Mode', 'alerts-dlx' ) }
 						className="alerts-dlx-chakra-mode"
 					>
 						<ButtonGroup>
@@ -298,7 +304,7 @@ const MaterialAlerts = ( props ) => {
 					<PanelRow>
 						<BaseControl
 							id="alerts-dlx-button-group-icon-alignment"
-							label={ __( 'Icon Vertical Alignment', 'quotes-dlx' ) }
+							label={ __( 'Icon Vertical Alignment', 'alerts-dlx' ) }
 							className="alerts-dlx-material-variants"
 						>
 							<ButtonGroup>
@@ -369,26 +375,11 @@ const MaterialAlerts = ( props ) => {
 				) }
 				<Slot name="alertsDLXAppearancePanelEnd" fillProps={ props } />
 			</PanelBody>
+			<Slot name="alertsDLXStylePanelEnd" fillProps={ props } />
 		</>
 	);
 
-	const advancedControls = (
-		<PanelRow>
-			<ToggleControl
-				label={ __( 'Enable Flexible InnerBlocks', 'alerts-dlx' ) }
-				checked={ innerBlocksEnabled }
-				onChange={ ( value ) => {
-					setAttributes( {
-						innerBlocksEnabled: value,
-					} );
-				} }
-				help={ __(
-					'Enable this option to allow the use of any block within the alert.',
-					'alerts-dlx'
-				) }
-			/>
-		</PanelRow>
-	);
+	const advancedControls = null;
 
 	useEffect( () => {
 		setAttributes( { uniqueId: generatedUniqueId } );
@@ -402,6 +393,7 @@ const MaterialAlerts = ( props ) => {
 			setAttributes={ setAttributes }
 			iconSet={ MaterialIcons }
 			inspectorControls={ inspectorControls }
+			styleControls={ styleControls }
 			advancedControls={ advancedControls }
 			CloseButtonIcon={ MaterialCloseIcon }
 			innerBlockProps={ innerBlockProps }

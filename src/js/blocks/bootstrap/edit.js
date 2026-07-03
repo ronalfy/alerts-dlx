@@ -204,6 +204,12 @@ const BootstrapAlerts = ( props ) => {
 					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ props } />
 				</>
 			</PanelBody>
+		</>
+	);
+
+	const styleControls = (
+		<>
+			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
 			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
 				<>
 					<UnitChooser
@@ -345,26 +351,11 @@ const BootstrapAlerts = ( props ) => {
 				</PanelRow>
 				<Slot name="alertsDLXAppearancePanelEnd" fillProps={ props } />
 			</PanelBody>
+			<Slot name="alertsDLXStylePanelEnd" fillProps={ props } />
 		</>
 	);
 
-	const advancedControls = (
-		<PanelRow>
-			<ToggleControl
-				label={ __( 'Enable Flexible InnerBlocks', 'alerts-dlx' ) }
-				checked={ innerBlocksEnabled }
-				onChange={ ( value ) => {
-					setAttributes( {
-						innerBlocksEnabled: value,
-					} );
-				} }
-				help={ __(
-					'Enable this option to allow the use of any block within the alert.',
-					'alerts-dlx'
-				) }
-			/>
-		</PanelRow>
-	);
+	const advancedControls = null;
 
 	/**
 	 * Attempt to check when block styles are changed.
@@ -377,6 +368,7 @@ const BootstrapAlerts = ( props ) => {
 			setAttributes={ setAttributes }
 			iconSet={ BootstrapIcons }
 			inspectorControls={ inspectorControls }
+			styleControls={ styleControls }
 			advancedControls={ advancedControls }
 			CloseButtonIcon={ BootstrapCloseIcon }
 			innerBlockProps={ innerBlockProps }
