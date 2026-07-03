@@ -102,7 +102,6 @@ const AlertButton = (props) => {
         <Popover
           anchor={linkIconAnchor}
           noArrow={false}
-          focusOnMount={false}
           onClose={closeLinkPopover}
         >
           <BaseControl

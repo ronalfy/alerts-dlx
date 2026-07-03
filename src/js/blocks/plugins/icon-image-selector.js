@@ -9,12 +9,15 @@ import {
 import { registerPlugin } from "@wordpress/plugins";
 import { __ } from "@wordpress/i18n";
 import useMediaUploader from "../hooks/useMediaUploader";
+import IconPicker from "../components/IconPicker";
+import { getIconSetForBlock } from "../utils/icon-sets";
+
 registerPlugin("custom-slot-fills", {
   render: () => {
     return (
       <Fill name="alertsDLXSettingsPanelEnd">
-        {({ attributes, setAttributes }) => {
-          const { iconSource, imageUrl, imageId } = attributes;
+        {({ attributes, setAttributes, name }) => {
+          const { iconSource, imageUrl, imageId, icon } = attributes;
 
           const { openMediaUploader } = useMediaUploader();
 
@@ -89,7 +92,7 @@ registerPlugin("custom-slot-fills", {
                   help={
                     "icon" === iconSource
                       ? __(
-                          "An icon is displayed in the alert. You can edit the icon by clicking on the icon in the alert.",
+                          "Select an icon below, or click the icon in the alert.",
                           "alerts-dlx"
                         )
                       : __(
@@ -108,6 +111,18 @@ registerPlugin("custom-slot-fills", {
                   />
                 </ToggleGroupControl>
               </PanelRow>
+              {"icon" === iconSource && (
+                <PanelRow>
+                  <div className="alerts-dlx-icon-sidebar-wrapper">
+                    <IconPicker
+                      defaultSvg={icon}
+                      setAttributes={setAttributes}
+                      icons={getIconSetForBlock(name)}
+                      popoverPlacement="left-start"
+                    />
+                  </div>
+                </PanelRow>
+              )}
               {iconSource === "image" && (
                 <PanelRow>
                   <>

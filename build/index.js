@@ -3314,7 +3314,6 @@ var AlertButton = function AlertButton(props) {
   }), isPopOverVisible && linkIconAnchor && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Popover, {
     anchor: linkIconAnchor,
     noArrow: false,
-    focusOnMount: false,
     onClose: closeLinkPopover
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.BaseControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Button Link", "alerts-dlx"),
@@ -3438,7 +3437,6 @@ var AlertButtonUrlPopover = function AlertButtonUrlPopover(_ref) {
   }
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Popover, {
     anchor: anchor,
-    focusOnMount: false,
     onClose: onClose,
     className: "alerts-dlx-button-link-popover"
   }, /*#__PURE__*/React.createElement("div", {
@@ -3945,7 +3943,8 @@ var IconPicker = function IconPicker(props) {
     setInitialTabName = _useState8[1];
   var defaultSvg = props.defaultSvg,
     setAttributes = props.setAttributes,
-    icons = props.icons;
+    icons = props.icons,
+    popoverPlacement = props.popoverPlacement;
 
   /**
    * Check whether the SVG matches a preset icon.
@@ -3993,6 +3992,7 @@ var IconPicker = function IconPicker(props) {
   })))), isPopoverVisible && popoverRef && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Popover, {
     noArrow: false,
     anchor: popoverRef,
+    placement: popoverPlacement,
     className: "alerts-dlx-icon-popover",
     onClose: closeIconPopover
   }, /*#__PURE__*/React.createElement("div", {
@@ -7001,12 +7001,12 @@ var withAlertCloseExpirationToolbar = (0,_wordpress_compose__WEBPACK_IMPORTED_MO
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Close button and expiration visibility duration", "alerts-dlx"),
         className: "alerts-dlx-close-expiration-toolbar",
         toggleProps: _objectSpread(_objectSpread({}, toggleProps), {}, {
-          children: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Close Settings", "alerts-dlx")))
+          children: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Close Expiration", "alerts-dlx")))
         })
       }, function (_ref) {
         var onClose = _ref.onClose;
         return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.MenuGroup, {
-          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Close alert for how long when closed?", "alerts-dlx")
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("When closed, close the alert for how long?", "alerts-dlx")
         }, _utils_alert_close_expiration_utils__WEBPACK_IMPORTED_MODULE_6__.ALERT_CLOSE_EXPIRATION_PRESETS.map(function (preset) {
           return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.MenuItem, {
             key: preset.seconds,
@@ -7679,6 +7679,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _hooks_useMediaUploader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/useMediaUploader */ "./src/js/blocks/hooks/useMediaUploader.js");
+/* harmony import */ var _components_IconPicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/IconPicker */ "./src/js/blocks/components/IconPicker/index.js");
+/* harmony import */ var _utils_icon_sets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/icon-sets */ "./src/js/blocks/utils/icon-sets.js");
+
+
 
 
 
@@ -7689,10 +7693,12 @@ __webpack_require__.r(__webpack_exports__);
       name: "alertsDLXSettingsPanelEnd"
     }, function (_ref) {
       var attributes = _ref.attributes,
-        setAttributes = _ref.setAttributes;
+        setAttributes = _ref.setAttributes,
+        name = _ref.name;
       var iconSource = attributes.iconSource,
         imageUrl = attributes.imageUrl,
-        imageId = attributes.imageId;
+        imageId = attributes.imageId,
+        icon = attributes.icon;
       var _useMediaUploader = (0,_hooks_useMediaUploader__WEBPACK_IMPORTED_MODULE_3__["default"])(),
         openMediaUploader = _useMediaUploader.openMediaUploader;
       var getImageButtons = function getImageButtons() {
@@ -7747,13 +7753,20 @@ __webpack_require__.r(__webpack_exports__);
         },
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Icon Source", "alerts-dlx"),
         className: "alerts-dlx-icon-source-toggle-group",
-        help: "icon" === iconSource ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("An icon is displayed in the alert. You can edit the icon by clicking on the icon in the alert.", "alerts-dlx") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("An image is displayed in the alert. You can edit the image by changing the image below.", "alerts-dlx")
+        help: "icon" === iconSource ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Select an icon below, or click the icon in the alert.", "alerts-dlx") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("An image is displayed in the alert. You can edit the image by changing the image below.", "alerts-dlx")
       }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalToggleGroupControlOption, {
         value: "icon",
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Icon", "alerts-dlx")
       }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.__experimentalToggleGroupControlOption, {
         value: "image",
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Image", "alerts-dlx")
+      }))), "icon" === iconSource && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement("div", {
+        className: "alerts-dlx-icon-sidebar-wrapper"
+      }, /*#__PURE__*/React.createElement(_components_IconPicker__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        defaultSvg: icon,
+        setAttributes: setAttributes,
+        icons: (0,_utils_icon_sets__WEBPACK_IMPORTED_MODULE_5__.getIconSetForBlock)(name),
+        popoverPlacement: "left-start"
       }))), iconSource === "image" && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
         className: "alerts-dlx-icon-image-wrapper"
       }, getImage(), getImageButtons()))));
@@ -8707,6 +8720,46 @@ function getCurrentStyleLabel(alertType, presets, customLabel) {
     return style.name === alertType;
   });
   return (_match$label = match === null || match === void 0 ? void 0 : match.label) !== null && _match$label !== void 0 ? _match$label : alertType;
+}
+
+/***/ }),
+
+/***/ "./src/js/blocks/utils/icon-sets.js":
+/*!******************************************!*\
+  !*** ./src/js/blocks/utils/icon-sets.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getIconSetForBlock: () => (/* binding */ getIconSetForBlock)
+/* harmony export */ });
+/* harmony import */ var _components_icons_ChakraIcons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/icons/ChakraIcons */ "./src/js/blocks/components/icons/ChakraIcons.js");
+/* harmony import */ var _components_icons_BootstrapIcons__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/icons/BootstrapIcons */ "./src/js/blocks/components/icons/BootstrapIcons.js");
+/* harmony import */ var _components_icons_MaterialIcons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/icons/MaterialIcons */ "./src/js/blocks/components/icons/MaterialIcons.js");
+/**
+ * Block name to preset icon set mapping.
+ */
+
+
+
+
+var ICON_SETS_BY_BLOCK = {
+  "mediaron/alerts-dlx-chakra": _components_icons_ChakraIcons__WEBPACK_IMPORTED_MODULE_0__["default"],
+  "mediaron/alerts-dlx-bootstrap": _components_icons_BootstrapIcons__WEBPACK_IMPORTED_MODULE_1__["default"],
+  "mediaron/alerts-dlx-material": _components_icons_MaterialIcons__WEBPACK_IMPORTED_MODULE_2__["default"],
+  "mediaron/alerts-dlx-shoelace": _components_icons_BootstrapIcons__WEBPACK_IMPORTED_MODULE_1__["default"]
+};
+
+/**
+ * Return the preset icon set for an AlertsDLX block.
+ *
+ * @param {string} blockName Block name.
+ * @return {Object} Preset icon map.
+ */
+function getIconSetForBlock(blockName) {
+  return ICON_SETS_BY_BLOCK[blockName] || _components_icons_ChakraIcons__WEBPACK_IMPORTED_MODULE_0__["default"];
 }
 
 /***/ }),

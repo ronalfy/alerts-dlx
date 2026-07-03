@@ -86,6 +86,27 @@
 	font-size: 1em;
 }
 
+.alerts-dlx-icon-sidebar-wrapper .alerts-dlx-icon-wrapper {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+
+	.components-base-control__field {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+	}
+
+	.alerts-dlx-icon-preview {
+		width: 100%;
+	}
+
+	.alerts-dlx-icon-preview-button {
+		display: flex;
+		width: 100%;
+	}
+}
+
 .alerts-dlx-icon-preview {
 	display: flex;
 	justify-content: center;

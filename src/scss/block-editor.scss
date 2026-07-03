@@ -3,6 +3,7 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 	margin: 0;
 	padding: 0;
 }
+
 .template-material,
 .template-chakra,
 .template-bootstrap {
@@ -18,21 +19,36 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 	padding: 48px;
 	border: 4px dashed #ff9800;
 }
+
 .alerts-dlx-icon-image {
 	max-width: 64px;
 	max-height: 64px;
 }
+
 .alerts-dlx-icon-image-buttons-wrapper {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 10px;
 }
+
+.alerts-dlx-icon-sidebar-wrapper {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	padding: 8px 0;
+
+	.alerts-dlx-icon-preview svg {
+		width: 32px;
+		height: 32px;
+	}
+}
+
 .alerts-dlx-icon-source-toggle-group.components-toggle-group-control {
-    border: 1px solid #eaeaea;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 0 0 1px #eaeaea;
+	border: 1px solid #eaeaea;
+	border-radius: 4px;
+	background-color: #fff;
+	box-shadow: 0 0 0 1px #eaeaea;
 }
 
 .alerts-dlx-inner-block-parent-toolbar {

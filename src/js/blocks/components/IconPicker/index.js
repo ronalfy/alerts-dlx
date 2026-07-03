@@ -115,7 +115,7 @@ const IconPicker = (props) => {
   const [isPopoverVisible, setIsPopOverVisible] = useState(false);
   const [popoverRef, setPopoverRef] = useState(null);
   const [initialTabName, setInitialTabName] = useState("icons");
-  const { defaultSvg, setAttributes, icons } = props;
+  const { defaultSvg, setAttributes, icons, popoverPlacement } = props;
 
   /**
    * Check whether the SVG matches a preset icon.
@@ -176,6 +176,7 @@ const IconPicker = (props) => {
         <Popover
           noArrow={false}
           anchor={popoverRef}
+          placement={popoverPlacement}
           className="alerts-dlx-icon-popover"
           onClose={closeIconPopover}
         >
