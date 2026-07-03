@@ -59,7 +59,7 @@ const withAlertCloseExpirationToolbar = createHigherOrderComponent(
                       ...toggleProps,
                       children: (
                         <>
-                          <span>{__("Close Expiration", "alerts-dlx")}</span>
+                          <span>{__("Expiration", "alerts-dlx")}</span>
                         </>
                       ),
                     }}
@@ -67,7 +67,7 @@ const withAlertCloseExpirationToolbar = createHigherOrderComponent(
                     {({ onClose }) => (
                       <MenuGroup
                         label={__(
-                          "When closed, close the alert for how long?",
+                          "When dismissed, close the alert for how long?",
                           "alerts-dlx"
                         )}
                       >

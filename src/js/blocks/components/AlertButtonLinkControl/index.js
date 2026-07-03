@@ -5,7 +5,7 @@ import "./editor.scss";
  */
 import { useState, useEffect } from "@wordpress/element";
 import { Button, Popover } from "@wordpress/components";
-import { filterURLForDisplay } from "@wordpress/url";
+import { filterURLForDisplay, isValidFragment } from "@wordpress/url";
 import { __ } from "@wordpress/i18n";
 import { closeSmall, edit, link } from "@wordpress/icons";
 
@@ -72,7 +72,7 @@ const AlertButtonLinkPreview = ({ buttonUrl, onEdit, onClear }) => {
         rel="noopener noreferrer"
         onClick={(event) => {
           event.preventDefault();
-          if (isURL(buttonUrl)) {
+          if (isURL(buttonUrl) && !isValidFragment(buttonUrl)) {
             window.open(buttonUrl, "_blank");
           }
         }}
