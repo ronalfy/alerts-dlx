@@ -5,7 +5,6 @@
  * External dependencies
  */
 
-import classnames from 'classnames';
 
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -35,6 +34,10 @@ import UnitChooser from '../components/unit-picker';
 import BootstrapIcons from '../components/icons/BootstrapIcons';
 import { BootstrapCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
+import {
+	getAlertWrapperClassName,
+	useAlertStyleSync,
+} from '../utils/alert-style-utils';
 
 // For storing unique IDs.
 const uniqueIds = [];
@@ -366,17 +369,7 @@ const BootstrapAlerts = ( props ) => {
 	/**
 	 * Attempt to check when block styles are changed.
 	 */
-	useEffect( () => {
-		if ( undefined === className ) {
-			return;
-		}
-
-		const styleMatch = new RegExp( /is-style-([^\s]*)/g ).exec( className );
-		if ( null !== styleMatch ) {
-			const match = styleMatch[ 1 ];
-			setAttributes( { alertType: match } );
-		}
-	}, [ className ] );
+	useAlertStyleSync( { className, alertType, setAttributes } );
 
 	const block = (
 		<BlockMain
@@ -414,11 +407,12 @@ const BootstrapAlerts = ( props ) => {
 	);
 
 	const blockProps = useBlockProps( {
-		className: classnames(
+		className: getAlertWrapperClassName( {
 			className,
-			`alerts-dlx template-bootstrap is-style-${ alertType }`,
-			blockClasses
-		),
+			alertType,
+			templateSlug: 'bootstrap',
+			blockClasses,
+		} ),
 	} );
 
 	return (

@@ -249,14 +249,24 @@ class Blocks {
 	/**
 	 * Output the front-end structure.
 	 *
-	 * @param array  $attributes Block editor attributes.
-	 * @param string $content   Current content.
+	 * @param array          $attributes Block editor attributes.
+	 * @param string         $content    Current content.
+	 * @param \WP_Block|null $block      Block instance.
+	 * @return string
 	 */
-	public function frontend( array $attributes, string $content ) {
+	public function frontend( array $attributes, string $content, $block = null ) {
 
-		$unique_id               = Functions::sanitize_attribute( $attributes, 'uniqueId', 'text' );
-		$alert_group             = Functions::sanitize_attribute( $attributes, 'alertGroup', 'text' );
-		$alert_type              = Functions::sanitize_attribute( $attributes, 'alertType', 'text' );
+		$unique_id   = Functions::sanitize_attribute( $attributes, 'uniqueId', 'text' );
+		$alert_group = Functions::sanitize_attribute( $attributes, 'alertGroup', 'text' );
+		$alert_type  = Functions::sanitize_attribute( $attributes, 'alertType', 'text' );
+
+		if ( $block instanceof \WP_Block ) {
+			$expected_alert_group = $this->get_alert_group_for_block_name( $block->name );
+			if ( null !== $expected_alert_group && $alert_group !== $expected_alert_group ) {
+				$alert_group = $expected_alert_group;
+			}
+		}
+
 		$align                   = Functions::sanitize_attribute( $attributes, 'align', 'text' );
 		$alert_title             = Functions::sanitize_attribute( $attributes, 'alertTitle', 'text' );
 		$alert_description       = Functions::sanitize_attribute( $attributes, 'alertDescription', 'raw' );
@@ -604,6 +614,23 @@ class Blocks {
 		<!-- end AlertsDLX output -->
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Get the expected alert group slug for a block name.
+	 *
+	 * @param string $block_name Block name.
+	 * @return string|null
+	 */
+	private function get_alert_group_for_block_name( $block_name ) {
+		$style_map = array(
+			'mediaron/alerts-dlx-bootstrap' => 'bootstrap',
+			'mediaron/alerts-dlx-chakra'    => 'chakra',
+			'mediaron/alerts-dlx-material'  => 'material',
+			'mediaron/alerts-dlx-shoelace'  => 'shoelace',
+		);
+
+		return $style_map[ $block_name ] ?? null;
 	}
 
 	/**

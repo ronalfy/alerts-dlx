@@ -5,7 +5,6 @@
  * External dependencies
  */
 
-import classnames from 'classnames';
 
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -43,6 +42,10 @@ import BootstrapIcons from '../components/icons/BootstrapIcons';
 import shoelaceColors from './colors';
 import { ShoeLaceCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
+import {
+	getAlertWrapperClassName,
+	useAlertStyleSync,
+} from '../utils/alert-style-utils';
 
 // For storing unique IDs.
 const uniqueIds = [];
@@ -372,20 +375,7 @@ const ShoelaceAlerts = ( props ) => {
 		setAttributes( { uniqueId: generatedUniqueId } );
 	}, [] );
 
-	/**
-	 * Attempt to check when block styles are changed.
-	 */
-	useEffect( () => {
-		if ( undefined === className ) {
-			return;
-		}
-
-		const styleMatch = new RegExp( /is-style-([^\s]*)/g ).exec( className );
-		if ( null !== styleMatch ) {
-			const match = styleMatch[ 1 ];
-			setAttributes( { alertType: match } );
-		}
-	}, [ className ] );
+	useAlertStyleSync( { className, alertType, setAttributes } );
 
 	const block = (
 		<BlockMain
@@ -426,8 +416,11 @@ const ShoelaceAlerts = ( props ) => {
 	);
 
 	const blockProps = useBlockProps( {
-		className: classnames( className, `alerts-dlx template-shoelace is-style-${ alertType }`, {
-			...blockClasses,
+		className: getAlertWrapperClassName( {
+			className,
+			alertType,
+			templateSlug: 'shoelace',
+			blockClasses,
 		} ),
 	} );
 

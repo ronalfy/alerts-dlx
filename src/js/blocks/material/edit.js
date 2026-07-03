@@ -5,7 +5,6 @@
  * External dependencies
  */
 
-import classnames from 'classnames';
 
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -38,6 +37,10 @@ import UnitChooser from '../components/unit-picker';
 import MaterialIcons from '../components/icons/MaterialIcons';
 import { MaterialCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
+import {
+	getAlertWrapperClassName,
+	useAlertStyleSync,
+} from '../utils/alert-style-utils';
 
 const MaterialAlerts = ( props ) => {
 	const generatedUniqueId = useInstanceId( MaterialAlerts, 'adlx-material' );
@@ -391,20 +394,7 @@ const MaterialAlerts = ( props ) => {
 		setAttributes( { uniqueId: generatedUniqueId } );
 	}, [] );
 
-	/**
-	 * Attempt to check when block styles are changed.
-	 */
-	useEffect( () => {
-		if ( undefined === className ) {
-			return;
-		}
-
-		const styleMatch = new RegExp( /is-style-([^\s]*)/g ).exec( className );
-		if ( null !== styleMatch ) {
-			const match = styleMatch[ 1 ];
-			setAttributes( { alertType: match } );
-		}
-	}, [ className ] );
+	useAlertStyleSync( { className, alertType, setAttributes } );
 
 	const block = (
 		<BlockMain
@@ -431,10 +421,6 @@ const MaterialAlerts = ( props ) => {
 	const blockClasses = applyFilters(
 		'alertsDlx.blockClasses',
 		{
-			'is-style-success': className === undefined && 'success' === alertType,
-			'is-style-info': className === undefined && 'info' === alertType,
-			'is-style-warning': className === undefined && 'warning' === alertType,
-			'is-style-error': className === undefined && 'error' === alertType,
 			'is-dark-mode': 'dark' === mode,
 			'custom-fonts-enabled': enableCustomFonts,
 			'is-appearance-default': 'default' === variant,
@@ -449,8 +435,11 @@ const MaterialAlerts = ( props ) => {
 	);
 
 	const blockProps = useBlockProps( {
-		className: classnames( className, 'alerts-dlx template-material', {
-			...blockClasses,
+		className: getAlertWrapperClassName( {
+			className,
+			alertType,
+			templateSlug: 'material',
+			blockClasses,
 		} ),
 	} );
 
