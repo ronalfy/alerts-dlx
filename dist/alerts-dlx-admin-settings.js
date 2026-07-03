@@ -12001,6 +12001,49 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 var checkpointData = null;
+
+/**
+ * Validate comma-separated CSS class names for headline custom classes.
+ *
+ * @param {string} input Comma-separated class names.
+ * @return {{ valid: boolean, invalidTokens: string[] }}
+ */
+var validateHeadlineCustomClasses = function validateHeadlineCustomClasses(input) {
+  if (!input || !input.trim()) {
+    return {
+      valid: true,
+      invalidTokens: []
+    };
+  }
+  var invalidTokens = [];
+  var tokens = input.split(",").map(function (token) {
+    return token.trim();
+  });
+  tokens.forEach(function (token) {
+    if (!token) {
+      invalidTokens.push((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("(empty)", "alerts-dlx"));
+      return;
+    }
+    var className = token.replace(/^\./, "");
+    if (!className) {
+      invalidTokens.push((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("(empty)", "alerts-dlx"));
+      return;
+    }
+    if (!/^[-_a-zA-Z][-_a-zA-Z0-9]*$/.test(className)) {
+      invalidTokens.push(token);
+    }
+  });
+  return {
+    valid: invalidTokens.length === 0,
+    invalidTokens: invalidTokens
+  };
+};
+var formatHeadlineCustomClassesForDisplay = function formatHeadlineCustomClassesForDisplay(value) {
+  if (!value) {
+    return "";
+  }
+  return value.split(" ").filter(Boolean).join(", ");
+};
 var retrieveDefaults = function retrieveDefaults() {
   return (0,_Utils_SendCommand__WEBPACK_IMPORTED_MODULE_9__["default"])("alerts_dlx_retrieve_settings", {
     nonce: alertsDlxAdmin.retrieveNonce
@@ -12055,6 +12098,8 @@ var Interface = function Interface(_ref) {
   var getDefaultValues = function getDefaultValues() {
     return {
       headlineStyle: data.values.headlineStyle || "h2",
+      headlineCustomClasses: formatHeadlineCustomClassesForDisplay(data.values.headlineCustomClasses || ""),
+      headlineForceSize: data.values.headlineForceSize || false,
       enabledBlockStyles: data.values.enabledBlockStyles || [],
       debugMode: data.values.debugMode || false
     };
@@ -12087,6 +12132,11 @@ var Interface = function Interface(_ref) {
       setAjaxError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("At least one alert theme must remain enabled.", "alerts-dlx"));
       return;
     }
+    var classValidation = validateHeadlineCustomClasses(formValues.headlineCustomClasses || "");
+    if (!classValidation.valid) {
+      setAjaxError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Invalid headline CSS class names: ", "alerts-dlx") + classValidation.invalidTokens.join(", "));
+      return;
+    }
     setSaving(true);
     setAjaxError(null);
     (0,_Utils_SendCommand__WEBPACK_IMPORTED_MODULE_9__["default"])("alerts_dlx_save_settings", {
@@ -12100,6 +12150,8 @@ var Interface = function Interface(_ref) {
       var savedValues = ajaxResponse.data.data.values;
       reset({
         headlineStyle: savedValues.headlineStyle,
+        headlineCustomClasses: formatHeadlineCustomClassesForDisplay(savedValues.headlineCustomClasses || ""),
+        headlineForceSize: savedValues.headlineForceSize,
         enabledBlockStyles: savedValues.enabledBlockStyles,
         debugMode: savedValues.debugMode
       });
@@ -12124,6 +12176,8 @@ var Interface = function Interface(_ref) {
       var savedValues = ajaxResponse.data.data.values;
       reset({
         headlineStyle: savedValues.headlineStyle,
+        headlineCustomClasses: formatHeadlineCustomClassesForDisplay(savedValues.headlineCustomClasses || ""),
+        headlineForceSize: savedValues.headlineForceSize,
         enabledBlockStyles: savedValues.enabledBlockStyles,
         debugMode: savedValues.debugMode
       });
@@ -12139,6 +12193,8 @@ var Interface = function Interface(_ref) {
     if (checkpointData) {
       reset({
         headlineStyle: checkpointData.headlineStyle,
+        headlineCustomClasses: formatHeadlineCustomClassesForDisplay(checkpointData.headlineCustomClasses || ""),
+        headlineForceSize: checkpointData.headlineForceSize,
         enabledBlockStyles: checkpointData.enabledBlockStyles,
         debugMode: checkpointData.debugMode
       });
@@ -12166,11 +12222,11 @@ var Interface = function Interface(_ref) {
     className: "adlx-admin-component-wrapper"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "adlx-admin-content-subheading"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Headline Style", "highlight-and-share")), /*#__PURE__*/React.createElement("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Alert Title Options", "alerts-dlx")), /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-component-row"
   }, /*#__PURE__*/React.createElement("p", {
     className: "description"
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Choose the HTML element used for alert titles across your site.", "alerts-dlx"))), /*#__PURE__*/React.createElement("div", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Choose the HTML element, add CSS classes, and force the alert title styles.", "alerts-dlx"))), /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-component-row"
   }, /*#__PURE__*/React.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_2__.Controller, {
     name: "headlineStyle",
@@ -12184,6 +12240,38 @@ var Interface = function Interface(_ref) {
         selected: value,
         options: data.headlineStyleOptions || [],
         onChange: onChange
+      });
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "adlx-admin-component-row"
+  }, /*#__PURE__*/React.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_2__.Controller, {
+    name: "headlineCustomClasses",
+    control: control,
+    render: function render(_ref3) {
+      var _ref3$field = _ref3.field,
+        onChange = _ref3$field.onChange,
+        value = _ref3$field.value;
+      return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Custom Headline Classes", "alerts-dlx"),
+        value: value,
+        onChange: onChange,
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Comma-separated CSS class names applied to alert titles in addition to alerts-dlx-title. Accepts my-class or .my-class.", "alerts-dlx")
+      });
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "adlx-admin-component-row"
+  }, /*#__PURE__*/React.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_2__.Controller, {
+    name: "headlineForceSize",
+    control: control,
+    render: function render(_ref4) {
+      var _ref4$field = _ref4.field,
+        onChange = _ref4$field.onChange,
+        value = _ref4$field.value;
+      return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Force Headline Size", "alerts-dlx"),
+        checked: value,
+        onChange: onChange,
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Adds CSS important rules to the headline styles so the plugin title font size/styles win over theme CSS.", "alerts-dlx")
       });
     }
   })))), /*#__PURE__*/React.createElement("div", {
@@ -12201,10 +12289,10 @@ var Interface = function Interface(_ref) {
   }, /*#__PURE__*/React.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_2__.Controller, {
     name: "enabledBlockStyles",
     control: control,
-    render: function render(_ref3) {
-      var _ref3$field = _ref3.field,
-        onChange = _ref3$field.onChange,
-        value = _ref3$field.value;
+    render: function render(_ref5) {
+      var _ref5$field = _ref5.field,
+        onChange = _ref5$field.onChange,
+        value = _ref5$field.value;
       return /*#__PURE__*/React.createElement(_Components_BlockStylesControl__WEBPACK_IMPORTED_MODULE_8__["default"], {
         options: data.blockStyleOptions || [],
         value: value,
@@ -12226,10 +12314,10 @@ var Interface = function Interface(_ref) {
   }, /*#__PURE__*/React.createElement(react_hook_form__WEBPACK_IMPORTED_MODULE_2__.Controller, {
     name: "debugMode",
     control: control,
-    render: function render(_ref4) {
-      var _ref4$field = _ref4.field,
-        onChange = _ref4$field.onChange,
-        value = _ref4$field.value;
+    render: function render(_ref6) {
+      var _ref6$field = _ref6.field,
+        onChange = _ref6$field.onChange,
+        value = _ref6$field.value;
       return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Enable Debug Mode", "alerts-dlx"),
         checked: value,

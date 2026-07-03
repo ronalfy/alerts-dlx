@@ -459,6 +459,9 @@ class Blocks {
 		if ( 'rounded' === $icon_appearance ) {
 			$container_classes[] = 'icon-appearance-rounded';
 		}
+		if ( Options::is_headline_force_size() ) {
+			$container_classes[] = 'is-headline-size-forced';
+		}
 		?>
 		<!-- begin AlertsDLX output -->
 		<style>
@@ -549,8 +552,9 @@ class Blocks {
 					if ( $title_enabled ) {
 						$title_tag = Options::get_headline_style();
 						printf(
-							'<%1$s class="alerts-dlx-title">%2$s</%1$s>',
+							'<%1$s class="%2$s">%3$s</%1$s>',
 							tag_escape( $title_tag ),
+							esc_attr( Options::get_headline_title_classes() ),
 							esc_html( $alert_title )
 						);
 					}
@@ -677,14 +681,16 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'    => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'           => current_user_can( 'edit_others_posts' ),
-				'isAuthor'           => current_user_can( 'edit_posts' ),
-				'isAdmin'            => current_user_can( 'manage_options' ),
-				'colorPalette'       => Functions::get_theme_color_palette(),
-				'defaultImage'       => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'      => Options::get_headline_style(),
-				'enabledBlockStyles' => Options::get_enabled_block_styles(),
+				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'isEditor'              => current_user_can( 'edit_others_posts' ),
+				'isAuthor'              => current_user_can( 'edit_posts' ),
+				'isAdmin'               => current_user_can( 'manage_options' ),
+				'colorPalette'          => Functions::get_theme_color_palette(),
+				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'         => Options::get_headline_style(),
+				'headlineCustomClasses' => Options::get_headline_custom_classes(),
+				'headlineForceSize'     => Options::is_headline_force_size(),
+				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
 			)
 		);
 

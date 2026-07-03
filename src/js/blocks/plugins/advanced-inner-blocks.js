@@ -12,7 +12,10 @@ registerPlugin("alerts-dlx-advanced-inner-blocks-slot-fills", {
             <>
               <PanelRow>
                 <ToggleControl
-                  label={__("Enable Flexible InnerBlocks", "alerts-dlx")}
+                  label={__(
+                    "Flexible InnerBlocks (Advanced)",
+                    "alerts-dlx"
+                  )}
                   checked={innerBlocksEnabled}
                   onChange={(value) => {
                     setAttributes({
@@ -20,7 +23,7 @@ registerPlugin("alerts-dlx-advanced-inner-blocks-slot-fills", {
                     });
                   }}
                   help={__(
-                    "Enable this option to allow the use of any block within the alert.",
+                    "Allows any block in the alert body. AlertsDLX styles the alert shell and default paragraph description text. Lists and other inner blocks may inherit your theme or block styles. Leave this off for simple alert text.",
                     "alerts-dlx"
                   )}
                 />

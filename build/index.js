@@ -3702,6 +3702,7 @@ var BlockMain = function BlockMain(props) {
   var baseFontSizeStyles = "#".concat(uniqueId, " { font-size: ").concat(parseInt(baseFontSize), "px; }");
   var allowedHeadlineStyles = ["h1", "h2", "h3", "h4", "h5", "h6", "div"];
   var headlineTag = allowedHeadlineStyles.includes(alertsDlxBlock.headlineStyle) ? alertsDlxBlock.headlineStyle : "h2";
+  var headlineTitleClasses = classnames__WEBPACK_IMPORTED_MODULE_1___default()("alerts-dlx-title", (alertsDlxBlock.headlineCustomClasses || "").split(" ").filter(Boolean));
   return /*#__PURE__*/React.createElement(React.Fragment, null, inspectorControls && /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, inspectorControls), styleControls && /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
     group: "styles"
   }, styleControls), advancedControls && /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorAdvancedControls, null, advancedControls), /*#__PURE__*/React.createElement("style", null, baseFontSizeStyles), /*#__PURE__*/React.createElement("link", {
@@ -3739,7 +3740,7 @@ var BlockMain = function BlockMain(props) {
     tagName: headlineTag,
     placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Alert title", "alerts-dlx"),
     value: alertTitle,
-    className: "alerts-dlx-title",
+    className: headlineTitleClasses,
     disableLineBreaks: true,
     allowedFormats: [],
     onChange: function onChange(value) {
@@ -6951,14 +6952,14 @@ __webpack_require__.r(__webpack_exports__);
         setAttributes = _ref.setAttributes;
       var innerBlocksEnabled = attributes.innerBlocksEnabled;
       return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.ToggleControl, {
-        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Enable Flexible InnerBlocks", "alerts-dlx"),
+        label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Flexible InnerBlocks (Advanced)", "alerts-dlx"),
         checked: innerBlocksEnabled,
         onChange: function onChange(value) {
           setAttributes({
             innerBlocksEnabled: value
           });
         },
-        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Enable this option to allow the use of any block within the alert.", "alerts-dlx")
+        help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)("Allows any block in the alert body. AlertsDLX styles the alert shell and default paragraph description text. Lists and other inner blocks may inherit your theme or block styles. Leave this off for simple alert text.", "alerts-dlx")
       })));
     });
   }
@@ -8789,6 +8790,7 @@ function buildAlertStyleClassName(className, styleName) {
  * @return {string}
  */
 function getAlertWrapperClassName(_ref) {
+  var _alertsDlxBlock;
   var className = _ref.className,
     alertType = _ref.alertType,
     templateSlug = _ref.templateSlug,
@@ -8796,7 +8798,9 @@ function getAlertWrapperClassName(_ref) {
     blockClasses = _ref$blockClasses === void 0 ? {} : _ref$blockClasses;
   var styleSlug = alertType || 'success';
   var normalizedClassName = buildAlertStyleClassName(className, styleSlug);
-  return classnames__WEBPACK_IMPORTED_MODULE_1___default()(normalizedClassName, "alerts-dlx template-".concat(templateSlug), blockClasses);
+  return classnames__WEBPACK_IMPORTED_MODULE_1___default()(normalizedClassName, "alerts-dlx template-".concat(templateSlug), {
+    'is-headline-size-forced': (_alertsDlxBlock = alertsDlxBlock) === null || _alertsDlxBlock === void 0 ? void 0 : _alertsDlxBlock.headlineForceSize
+  }, blockClasses);
 }
 
 /**

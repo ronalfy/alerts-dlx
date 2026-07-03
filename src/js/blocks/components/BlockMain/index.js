@@ -70,6 +70,12 @@ const BlockMain = (props) => {
   )
     ? alertsDlxBlock.headlineStyle
     : "h2";
+  const headlineTitleClasses = classnames(
+    "alerts-dlx-title",
+    (alertsDlxBlock.headlineCustomClasses || "")
+      .split(" ")
+      .filter(Boolean)
+  );
 
   return (
     <>
@@ -130,7 +136,7 @@ const BlockMain = (props) => {
               tagName={headlineTag}
               placeholder={__("Alert title", "alerts-dlx")}
               value={alertTitle}
-              className="alerts-dlx-title"
+              className={headlineTitleClasses}
               disableLineBreaks={true}
               allowedFormats={[]}
               onChange={(value) => {

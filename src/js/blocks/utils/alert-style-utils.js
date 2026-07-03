@@ -93,6 +93,9 @@ export function getAlertWrapperClassName( {
 	return classnames(
 		normalizedClassName,
 		`alerts-dlx template-${ templateSlug }`,
+		{
+			'is-headline-size-forced': alertsDlxBlock?.headlineForceSize,
+		},
 		blockClasses
 	);
 }

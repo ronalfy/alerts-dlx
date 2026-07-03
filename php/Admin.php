@@ -108,11 +108,20 @@ class Admin {
 
 		$debug_mode = filter_var( $form_data['debug_mode'] ?? false, FILTER_VALIDATE_BOOLEAN );
 
+		$headline_custom_classes_result = Options::sanitize_headline_custom_classes( $form_data['headline_custom_classes'] ?? '' );
+		if ( is_wp_error( $headline_custom_classes_result ) ) {
+			wp_send_json_error( array( 'message' => $headline_custom_classes_result->get_error_message() ) );
+		}
+
+		$headline_force_size = filter_var( $form_data['headline_force_size'] ?? false, FILTER_VALIDATE_BOOLEAN );
+
 		$settings = array(
-			'headline_style'       => $headline_style,
-			'enabled_block_styles' => $enabled_block_styles,
-			'debug_mode'           => $debug_mode,
-			'options_version'      => Options::get_defaults()['options_version'],
+			'headline_style'          => $headline_style,
+			'headline_custom_classes' => $headline_custom_classes_result['value'],
+			'headline_force_size'     => $headline_force_size,
+			'enabled_block_styles'    => $enabled_block_styles,
+			'debug_mode'              => $debug_mode,
+			'options_version'         => Options::get_defaults()['options_version'],
 		);
 
 		update_option( 'alerts_dlx', $settings );

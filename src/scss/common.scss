@@ -204,6 +204,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
 .template-material .alerts-dlx-alert[role="alert"] .alerts-dlx-material section .alerts-dlx-title,
 .template-shoelace .alerts-dlx-alert[role="alert"] .alerts-dlx-shoelace section .alerts-dlx-title {
 	font-size: 1.2em;
+	font-weight: 600;
+	line-height: 1.5em;
+	text-transform: none;
+}
+
+/* Force headline size over aggressive theme styles when enabled in admin. */
+.alerts-dlx.is-headline-size-forced section .alerts-dlx-title,
+.template-chakra .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role="alert"] .alerts-dlx-chakra section .alerts-dlx-title,
+.template-bootstrap .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role="alert"] .alerts-dlx-bootstrap section .alerts-dlx-title,
+.template-material .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role="alert"] .alerts-dlx-material section .alerts-dlx-title,
+.template-shoelace .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role="alert"] .alerts-dlx-shoelace section .alerts-dlx-title,
+.editor-styles-wrapper .alerts-dlx.is-headline-size-forced section .alerts-dlx-title {
+	font-size: 1.2em !important;
+	font-weight: 600 !important;
+	line-height: 1.5em !important;
+	text-transform: none !important;
 }
 
 .editor-styles-wrapper .alerts-dlx-alert[role="alert"] .alerts-dlx-content p {

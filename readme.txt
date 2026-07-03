@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: alert box, notifications, alerts, notify, blocks
 Requires at least: 6.5
 Tested up to: 6.9
-Stable tag: 2.3.1
+Stable tag: 2.4.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -17,7 +17,7 @@ AlertsDLX offers beautifully styled alerts, callouts, and notification boxes for
 
 This plugin is a clean and modern timesaving solution to quickly adding customizable alerts, with a focus on being lightweight and user friendly.
 
-Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagine can really go wild. For example, you can create an "Empty Cart" alert for WooCommerce or Easy Digital Downloads when a cart is empty. Create dismissible alerts for site-wide notices, or per-page notifications that can be dismissed.
+Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagination can really go wild. For example, you can create an "Empty Cart" alert for WooCommerce or Easy Digital Downloads when a cart is empty. Create dismissible alerts for site-wide notices, or per-page notifications that can be dismissed.
 
 https://www.youtube.com/watch?v=7dKpw5uBi5o
 
@@ -32,11 +32,12 @@ https://www.youtube.com/watch?v=7dKpw5uBi5o
 1. Four modern alert styles: Material, Bootstrap, Chakra, and Shoelace.
 2. Use pre-selected colors, styles, and variants, or choose custom for your own branded colors.
 3. Add your own SVG icons, or choose from the ones included. Include a custom image if desired.
-4. Add dismissble alerts, and have it remember the user's choice.
+4. Add dismissible alerts, and have it remember the user's choice.
 5. Add an optional title, description, and button.
 6. Mark an Alert Block as Editorial, and have it only visible in the block editor.
 7. Shortcode/page builder support: use AlertsDLX anywhere shortcodes are supported.
-8. Lightweight: the plugin only loads what is needed where it's needed.
+8. Site-wide settings for headline tags, custom title classes, enabled alert themes, and more.
+9. Lightweight: the plugin only loads what is needed where it's needed.
 
 Blocks are styled with inspiration from:
 
@@ -52,6 +53,20 @@ Icons included are from:
 * <a href="https://fonts.google.com/icons">Google Fonts Material Icons</a>
 * <a href="https://github.com/chakra-ui/chakra-ui/tree/main/packages/components/icons/src">Chakra UI Icons</a> (GitHub)
 * <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a>
+
+## Use cases
+
+AlertsDLX is more than a warning box in post content. Here are some popular ways to use it:
+
+* **Documentation callouts** — Tips, notes, warnings, prerequisites, and step summaries in tutorials and knowledge base articles.
+* **Editorial workflow** — Mark blocks as Editorial Only so author notes and review reminders stay in the block editor and never publish to the frontend.
+* **CTAs and promos** — Title, description, and button combinations for downloads, newsletter signups, event promos, or "read more" nudges.
+* **Branded message boxes** — Custom colors and four design-system themes (Bootstrap, Material, Chakra, Shoelace) for client sites that need a consistent look.
+* **Flexible content panels (Advanced)** — Enable Flexible InnerBlocks to add lists, images, and other blocks inside the styled alert shell. Inner block styling beyond basic paragraph text may depend on your theme.
+* **Template and global messaging** — Place alerts in FSE template parts, headers, or footers for site-wide or section-specific notices.
+* **Shortcode embeds** — Output alerts in page builders, widgets, or form plugin areas (such as empty-cart or confirmation messages) anywhere shortcodes are supported.
+* **Conditional messaging** — Pair with plugins like <a href="https://blockvisibilitywp.com/">Block Visibility</a> for logged-in-only notices, role-based messages, cart states, and scheduled promos.
+* **Compliance and disclaimers** — Reusable affiliate, legal, medical, or financial disclaimer boxes with consistent styling across your site.
 
 ## Development
 
@@ -95,7 +110,11 @@ Yes, each alert can be dismissed, and can be set to expire after a certain amoun
 
 = Where are the admin settings? =
 
-There are no admin settings for this plugin. Please use the included blocks or shortcode to output the alerts notification.
+Go to **Settings → AlertsDLX** in your WordPress admin. From there you can choose the headline HTML element, add custom headline CSS classes, force headline sizing over aggressive theme styles, enable or disable alert themes in the block inserter, and toggle debug mode.
+
+= Does AlertsDLX work on Multisite? =
+
+Yes. Admin settings are stored per site in the network.
 
 = Can I use custom colors? =
 
@@ -109,9 +128,13 @@ Yes. The icon picker allows you to enter an SVG. For the shortcode, you must sup
 
 Yes. It's recommended to use a square image, and there is a built-in cropper available. Custom images look best center-aligned.
 
-= Does AlertsDLX work on Multisite? =
+= What does Flexible InnerBlocks (Advanced) do? =
 
-Yes. There are no admin options, so there's nothing to configure on a network.
+By default, the alert description is a single paragraph styled to match the alert. When you enable **Flexible InnerBlocks (Advanced)** in the block settings, you can insert any block inside the alert body (lists, images, columns, and more).
+
+AlertsDLX fully styles the alert shell — icon, title, colors, button, and default paragraph text. Other inner blocks may inherit styles from your theme or from the blocks themselves. For simple alert messages, leave Flexible InnerBlocks off.
+
+Users have used Flexible InnerBlocks to write a simple alert description followed by a code block, to show off code recipes. Others have used it to create checklists from other blocks.
 
 = Can I show alerts on specific posts or pages? =
 
@@ -120,6 +143,8 @@ AlertsDLX can be used in conjunction with free plugin <a href="https://blockvisi
 = Does the plugin support countdowns? =
 
 AlertsDLX does not support countdowns or auto-expiration. If you need an alert to auto-expire, I suggest using it with <a href="https://blockvisibilitywp.com/">Block Visibility</a> and setting a date-based visibility setting.
+
+If you have a favorite countdown block, you can enable Flexible InnerBlocks (advanced) and add it as part of the alert description.
 
 = Can I disable the custom font used (Lato)? =
 
@@ -140,6 +165,27 @@ Please leave a note on <a href="https://dlxplugins.com/support/">our support pag
 6. Each alert type supports light and dark mode colors.
 
 == Changelog ==
+
+= 2.4.0 =
+* Released 2026-07-03
+* New: Added an admin settings panel under Settings → AlertsDLX.
+* New: Choose the headline HTML element (h1–h6 or div) used for alert titles site-wide. This allows the alerts headline to match your site's SEO structure, and can help reduce style conflicts with your theme.
+* New: Add custom alert title headline CSS classes for third-party integrations/exclusions (such as table of contents plugins).
+* New: Option to force intended headline font size over aggressive theme styles.
+* New: Enable or disable individual alert block themes from displaying in the block inserter. For example, if you prefer Chakra, you can disable the remaining ones (shoelace, material, bootstrap).
+* New: Block toolbar style picker for quickly changing alert types (info, success, etc). Changing to "Custom" will select the styles panel of the block for you, allowing you to customize the colors.
+* New: Block toolbar toggles for icon, title, description, button, and close button visibility. This aims to put some sidebar visibility options in the toolbar for easier access.
+* New: Added a toolbar shortcut in all child blocks so that it's easier to navigate between the alert and its innerblocks (the alert description). A shortcut to the parent's settings and styles panels are included, and will take you to theh appropriate panel when clicked on, even if the sidebar is closed.
+* New: The alert's button options have been duplicated in the sidebar for convenience and for cases where editing the button on the block isn't obvious. You can change the button label, and button link from the sidebar.
+* New: The link selector for the button has been improved with better search, and it is now much more obvious when a link has been applied.
+* New: The icon picker has been redesigned into a tabbed interface, with one allowing you to select from available icons, and the otherh to set a custom SVG. This fixes the old design where users had to scroll all the way down the icon list just to set a custom icon.
+* Fix: Custom colors now show up under the block styles tab when "Custom" is selected. Before, they were in a separate tab, at the very bottom, so it wasn't obvious how to set custom colors in the sidebar.
+* Update: Block editor sidebars are aligned across all blocks, with Appearance controls in the Styles tab.
+* Update: Advanced Flexible InnerBlocks toggle moved to the Settings sidebar panel for better visibility.
+* Update: Block alignment support has been restricted to center, wide, and full across all blocks to mimimize style conflicts. Existing blocks are unaffected.
+* Fix: Switching block styles via the native block style picker could corrupt the alert theme and break layout.
+* Fix: Custom color rendering for Chakra solid and Shoelace alert styles wasn't working.
+* Misc: Safer block transform handling and internal architecture documentation.
 
 = 2.3.1 =
 * Released 2025-12-13
@@ -244,5 +290,5 @@ Please leave a note on <a href="https://dlxplugins.com/support/">our support pag
 
 == Upgrade Notice ==
 
-= 2.3.1 =
-Fix: Disabling the Lato font via filter wasn't loading the alternate stylesheet font.
+= 2.4.0 =
+New: Admin settings panel, block editor toolbar improvements, unified Styles sidebar, headline options, and fixes for block style switching. Recommended update for all users. This release also solves some alert title/headline issues, allowing you to select which HTML element is used for the title, allowing you to set a custom CSS class, and force the intended headline styles, regardless of theme specificity.
