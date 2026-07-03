@@ -225,7 +225,11 @@
   ],
   "supports": {
     "anchor": true,
-    "align": true,
+    "align": [
+      "center",
+      "wide",
+      "full"
+    ],
     "className": true
   },
   "editorScript": "alerts-dlx-block",

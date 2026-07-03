@@ -5,6 +5,7 @@ import { useAsyncResource } from "use-async-resource";
 import {
   RadioControl,
   ToggleControl,
+  TextControl,
   Fill,
   Notice,
 } from "@wordpress/components";
@@ -15,6 +16,51 @@ import BlockStylesControl from "../Components/BlockStylesControl";
 import sendCommand from "../Utils/SendCommand";
 
 let checkpointData = null;
+
+/**
+ * Validate comma-separated CSS class names for headline custom classes.
+ *
+ * @param {string} input Comma-separated class names.
+ * @return {{ valid: boolean, invalidTokens: string[] }}
+ */
+const validateHeadlineCustomClasses = (input) => {
+  if (!input || !input.trim()) {
+    return { valid: true, invalidTokens: [] };
+  }
+
+  const invalidTokens = [];
+  const tokens = input.split(",").map((token) => token.trim());
+
+  tokens.forEach((token) => {
+    if (!token) {
+      invalidTokens.push(__("(empty)", "alerts-dlx"));
+      return;
+    }
+
+    const className = token.replace(/^\./, "");
+    if (!className) {
+      invalidTokens.push(__("(empty)", "alerts-dlx"));
+      return;
+    }
+
+    if (!/^[-_a-zA-Z][-_a-zA-Z0-9]*$/.test(className)) {
+      invalidTokens.push(token);
+    }
+  });
+
+  return {
+    valid: invalidTokens.length === 0,
+    invalidTokens,
+  };
+};
+
+const formatHeadlineCustomClassesForDisplay = (value) => {
+  if (!value) {
+    return "";
+  }
+
+  return value.split(" ").filter(Boolean).join(", ");
+};
 
 const retrieveDefaults = () => {
   return sendCommand("alerts_dlx_retrieve_settings", {
@@ -62,6 +108,10 @@ const Interface = ({ defaults }) => {
 
   const getDefaultValues = () => ({
     headlineStyle: data.values.headlineStyle || "h2",
+    headlineCustomClasses: formatHeadlineCustomClassesForDisplay(
+      data.values.headlineCustomClasses || ""
+    ),
+    headlineForceSize: data.values.headlineForceSize || false,
     enabledBlockStyles: data.values.enabledBlockStyles || [],
     debugMode: data.values.debugMode || false,
   });
@@ -89,7 +139,18 @@ const Interface = ({ defaults }) => {
 
     if (!formValues.enabledBlockStyles?.length) {
       setAjaxError(
-        __("At least one block style must remain enabled.", "alerts-dlx")
+        __("At least one alert theme must remain enabled.", "alerts-dlx")
+      );
+      return;
+    }
+
+    const classValidation = validateHeadlineCustomClasses(
+      formValues.headlineCustomClasses || ""
+    );
+    if (!classValidation.valid) {
+      setAjaxError(
+        __("Invalid headline CSS class names: ", "alerts-dlx") +
+          classValidation.invalidTokens.join(", ")
       );
       return;
     }
@@ -112,6 +173,10 @@ const Interface = ({ defaults }) => {
         const savedValues = ajaxResponse.data.data.values;
         reset({
           headlineStyle: savedValues.headlineStyle,
+          headlineCustomClasses: formatHeadlineCustomClassesForDisplay(
+            savedValues.headlineCustomClasses || ""
+          ),
+          headlineForceSize: savedValues.headlineForceSize,
           enabledBlockStyles: savedValues.enabledBlockStyles,
           debugMode: savedValues.debugMode,
         });
@@ -144,6 +209,10 @@ const Interface = ({ defaults }) => {
         const savedValues = ajaxResponse.data.data.values;
         reset({
           headlineStyle: savedValues.headlineStyle,
+          headlineCustomClasses: formatHeadlineCustomClassesForDisplay(
+            savedValues.headlineCustomClasses || ""
+          ),
+          headlineForceSize: savedValues.headlineForceSize,
           enabledBlockStyles: savedValues.enabledBlockStyles,
           debugMode: savedValues.debugMode,
         });
@@ -162,6 +231,10 @@ const Interface = ({ defaults }) => {
     if (checkpointData) {
       reset({
         headlineStyle: checkpointData.headlineStyle,
+        headlineCustomClasses: formatHeadlineCustomClassesForDisplay(
+          checkpointData.headlineCustomClasses || ""
+        ),
+        headlineForceSize: checkpointData.headlineForceSize,
         enabledBlockStyles: checkpointData.enabledBlockStyles,
         debugMode: checkpointData.debugMode,
       });
@@ -199,12 +272,12 @@ const Interface = ({ defaults }) => {
           <div className="adlx-admin-content-body">
             <div className="adlx-admin-component-wrapper">
               <h3 className="adlx-admin-content-subheading">
-                {__("Headline Style", "highlight-and-share")}
+                {__("Alert Title Options", "alerts-dlx")}
               </h3>
               <div className="adlx-admin-component-row">
                 <p className="description">
                   {__(
-                    "Choose the HTML element used for alert titles across your site.",
+                    "Choose the HTML element, add CSS classes, and force the alert title styles.",
                     "alerts-dlx"
                   )}
                 </p>
@@ -223,17 +296,51 @@ const Interface = ({ defaults }) => {
                   )}
                 />
               </div>
+              <div className="adlx-admin-component-row">
+                <Controller
+                  name="headlineCustomClasses"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <TextControl
+                      label={__("Custom Headline Classes", "alerts-dlx")}
+                      value={value}
+                      onChange={onChange}
+                      help={__(
+                        "Comma-separated CSS class names applied to alert titles in addition to alerts-dlx-title. Accepts my-class or .my-class.",
+                        "alerts-dlx"
+                      )}
+                    />
+                  )}
+                />
+              </div>
+              <div className="adlx-admin-component-row">
+                <Controller
+                  name="headlineForceSize"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <ToggleControl
+                      label={__("Force Headline Size", "alerts-dlx")}
+                      checked={value}
+                      onChange={onChange}
+                      help={__(
+                        "Adds CSS important rules to the headline styles so the plugin title font size/styles win over theme CSS.",
+                        "alerts-dlx"
+                      )}
+                    />
+                  )}
+                />
+              </div>
             </div>
           </div>
           <div className="adlx-admin-content-body">
             <div className="adlx-admin-component-wrapper">
               <h3 className="adlx-admin-content-subheading">
-                {__("Block Styles", "highlight-and-share")}
+                {__("Alert Themes", "alerts-dlx")}
               </h3>
               <div className="adlx-admin-component-row">
                 <p className="description">
                   {__(
-                    "Select which blocks are available to be inserted into your site. This will not affect existing blocks on your site.",
+                    "Select which alert themes are available in the block inserter. This will not affect existing alerts on your site.",
                     "alerts-dlx"
                   )}
                 </p>
@@ -256,7 +363,7 @@ const Interface = ({ defaults }) => {
           <div className="adlx-admin-content-body">
             <div className="adlx-admin-component-wrapper">
               <h3 className="adlx-admin-content-subheading">
-                {__("Debug Mode", "highlight-and-share")}
+                {__("Debug Mode", "alerts-dlx")}
               </h3>
               <div className="adlx-admin-component-row">
                 <p className="description">

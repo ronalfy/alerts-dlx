@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "^7.18.2",
     "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-proposal-optional-chaining-assign": "^7.29.7",
     "@babel/plugin-transform-arrow-functions": "^7.17.12",
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",

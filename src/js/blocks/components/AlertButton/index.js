@@ -1,130 +1,159 @@
 import {
-	ToggleControl,
-	Button,
-	Popover,
-	BaseControl,
-	SlotFillProvider,
-} from '@wordpress/components';
-import { URLInput, RichText } from '@wordpress/block-editor';
-import { link } from '@wordpress/icons';
-import { useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
-import './editor.scss';
+  ToggleControl,
+  Button,
+  Popover,
+  BaseControl,
+} from "@wordpress/components";
+import { RichText } from "@wordpress/block-editor";
+import { link } from "@wordpress/icons";
+import { useState, useRef } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
 
-const AlertButton = ( props ) => {
-	const [ isPopOverVisible, setIsPopOverVisible ] = useState( false );
-	const [ isFocusedOutside, setIsFocusedOutside ] = useState( false );
+import AlertButtonLinkControl from "../AlertButtonLinkControl";
+import "./editor.scss";
 
-	const { attributes, setAttributes } = props;
+const AlertButton = (props) => {
+  const [isPopOverVisible, setIsPopOverVisible] = useState(false);
+  const [linkIconAnchor, setLinkIconAnchor] = useState(null);
+  const ignoreCloseRef = useRef(false);
 
-	const { buttonText, buttonUrl, buttonTarget, buttonRelNoFollow, buttonRelSponsored } =
-		attributes;
+  const { attributes, setAttributes } = props;
 
-	const toggleVisible = () => {
-		setIsPopOverVisible( ( state ) => ! state );
-	};
+  const {
+    buttonText,
+    buttonUrl,
+    buttonTarget,
+    buttonRelNoFollow,
+    buttonRelSponsored,
+  } = attributes;
 
-	return (
-		<>
-			<div
-				className="alerts-dlx-button-wrapper"
-				style={ { display: 'inline-flex' } }
-			>
-				<Button
-					className={ `alerts-dlx-button button-reset` }
-				>
-					<RichText
-						tagName="span"
-						placeholder={ __( 'Button text', 'quotes-dlx' ) }
-						value={ buttonText }
-						className="alerts-dlx-button-text"
-						disableLineBreaks={ true }
-						allowedFormats={ [
-						] }
-						onChange={ ( value ) => {
-							setAttributes( { buttonText: value } );
-						} }
-					/>
-				</Button>
-				<Button
-					className="button-reset alertx-dlx-button-link-icon"
-					icon={ link }
-					iconSize={ 25 }
-					label={ __( 'Choose Link', 'quotes-dlx' ) }
-					onClick={ () => {
-						if ( isFocusedOutside && ! isPopOverVisible ) {
-							setIsFocusedOutside( false );
-						}
-						if ( ! isPopOverVisible && ! isFocusedOutside ) {
-							toggleVisible();
-							setIsFocusedOutside( false );
-						}
-					} }
-				/>
+  const closeLinkPopover = () => {
+    if (ignoreCloseRef.current) {
+      return;
+    }
 
-				{ isPopOverVisible && (
-					<Popover
-						noArrow={ false }
-						onFocusOutside={ () => {
-							setIsPopOverVisible( false );
-							setIsFocusedOutside( true );
-						} }
-					>
-						<BaseControl className="alerts-dlx-button-popover-base-control">
-							<div className="alerts-dlx-button-link-select">
-								<URLInput
-									className={ 'alertx-dlx-button-link' }
-									value={ buttonUrl }
-									onChange={ ( value ) => {
-										setAttributes( {
-											buttonUrl: value,
-											buttonHasUrl: !! value,
-										} );
-									} }
-									__nextHasNoMarginBottom={ true }
-								/>
+    setIsPopOverVisible(false);
+  };
 
-								<>
-									<ToggleControl
-										label={ __( 'Open link in a new tab', 'alerts-dlx' ) }
-										checked={ buttonTarget || '' }
-										onChange={ ( value ) => {
-											setAttributes( {
-												buttonTarget: value,
-											} );
-										} }
-										className="alerts-dlx-link-toggle"
-									/>
+  const openLinkPopover = () => {
+    ignoreCloseRef.current = true;
+    setIsPopOverVisible(true);
 
-									<ToggleControl
-										label={ __( 'Add rel="nofollow"', 'alerts-dlx' ) }
-										checked={ buttonRelNoFollow || '' }
-										onChange={ ( value ) => {
-											setAttributes( {
-												buttonRelNoFollow: value,
-											} );
-										} }
-										className="alerts-dlx-link-toggle"
-									/>
+    requestAnimationFrame(() => {
+      ignoreCloseRef.current = false;
+    });
+  };
 
-									<ToggleControl
-										label={ __( 'Add rel="sponsored"', 'alerts-dlx' ) }
-										checked={ buttonRelSponsored || '' }
-										onChange={ ( value ) => {
-											setAttributes( {
-												buttonRelSponsored: value,
-											} );
-										} }
-										className="alerts-dlx-link-toggle"
-									/>
-								</>
-							</div>
-						</BaseControl>
-					</Popover>
-				) }
-			</div>
-		</>
-	);
+  const onLinkToggleMouseDown = (event) => {
+    event.preventDefault();
+
+    if (isPopOverVisible) {
+      ignoreCloseRef.current = false;
+      setIsPopOverVisible(false);
+    } else {
+      openLinkPopover();
+    }
+  };
+
+  const onLinkToggleKeyDown = (event) => {
+    if ("Enter" !== event.key && " " !== event.key) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (isPopOverVisible) {
+      ignoreCloseRef.current = false;
+      setIsPopOverVisible(false);
+    } else {
+      openLinkPopover();
+    }
+  };
+
+  return (
+    <div
+      className="alerts-dlx-button-wrapper"
+      style={{ display: "inline-flex" }}
+    >
+      <Button className="alerts-dlx-button button-reset">
+        <RichText
+          tagName="span"
+          placeholder={__("Button text", "alerts-dlx")}
+          value={buttonText}
+          className="alerts-dlx-button-text"
+          disableLineBreaks={true}
+          allowedFormats={[]}
+          onChange={(value) => {
+            setAttributes({ buttonText: value });
+          }}
+        />
+      </Button>
+      <Button
+        ref={setLinkIconAnchor}
+        className="button-reset alertx-dlx-button-link-icon"
+        icon={link}
+        iconSize={25}
+        label={__("Choose Link", "alerts-dlx")}
+        onMouseDown={onLinkToggleMouseDown}
+        onKeyDown={onLinkToggleKeyDown}
+      />
+
+      {isPopOverVisible && linkIconAnchor && (
+        <Popover
+          anchor={linkIconAnchor}
+          noArrow={false}
+          onClose={closeLinkPopover}
+        >
+          <BaseControl
+            label={__("Button Link", "alerts-dlx")}
+            className="alerts-dlx-button-popover-base-control"
+          >
+            <div className="alerts-dlx-button-link-select">
+              <AlertButtonLinkControl
+                buttonUrl={buttonUrl}
+                setAttributes={setAttributes}
+                inlinePicker={true}
+                isActive={isPopOverVisible}
+              />
+
+              <ToggleControl
+                label={__("Open link in a new tab", "alerts-dlx")}
+                checked={buttonTarget || ""}
+                onChange={(value) => {
+                  setAttributes({
+                    buttonTarget: value,
+                  });
+                }}
+                className="alerts-dlx-link-toggle"
+              />
+
+              <ToggleControl
+                label={__('Add rel="nofollow"', "alerts-dlx")}
+                checked={buttonRelNoFollow || ""}
+                onChange={(value) => {
+                  setAttributes({
+                    buttonRelNoFollow: value,
+                  });
+                }}
+                className="alerts-dlx-link-toggle"
+              />
+
+              <ToggleControl
+                label={__('Add rel="sponsored"', "alerts-dlx")}
+                checked={buttonRelSponsored || ""}
+                onChange={(value) => {
+                  setAttributes({
+                    buttonRelSponsored: value,
+                  });
+                }}
+                className="alerts-dlx-link-toggle"
+              />
+            </div>
+          </BaseControl>
+        </Popover>
+      )}
+    </div>
+  );
 };
 
 export default AlertButton;

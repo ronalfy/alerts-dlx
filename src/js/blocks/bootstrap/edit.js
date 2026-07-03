@@ -5,7 +5,6 @@
  * External dependencies
  */
 
-import classnames from 'classnames';
 
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -35,6 +34,10 @@ import UnitChooser from '../components/unit-picker';
 import BootstrapIcons from '../components/icons/BootstrapIcons';
 import { BootstrapCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
+import {
+	getAlertWrapperClassName,
+	useAlertStyleSync,
+} from '../utils/alert-style-utils';
 
 // For storing unique IDs.
 const uniqueIds = [];
@@ -201,6 +204,12 @@ const BootstrapAlerts = ( props ) => {
 					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ props } />
 				</>
 			</PanelBody>
+		</>
+	);
+
+	const styleControls = (
+		<>
+			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
 			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
 				<>
 					<UnitChooser
@@ -342,41 +351,16 @@ const BootstrapAlerts = ( props ) => {
 				</PanelRow>
 				<Slot name="alertsDLXAppearancePanelEnd" fillProps={ props } />
 			</PanelBody>
+			<Slot name="alertsDLXStylePanelEnd" fillProps={ props } />
 		</>
 	);
 
-	const advancedControls = (
-		<PanelRow>
-			<ToggleControl
-				label={ __( 'Enable Flexible InnerBlocks', 'alerts-dlx' ) }
-				checked={ innerBlocksEnabled }
-				onChange={ ( value ) => {
-					setAttributes( {
-						innerBlocksEnabled: value,
-					} );
-				} }
-				help={ __(
-					'Enable this option to allow the use of any block within the alert.',
-					'alerts-dlx'
-				) }
-			/>
-		</PanelRow>
-	);
+	const advancedControls = null;
 
 	/**
 	 * Attempt to check when block styles are changed.
 	 */
-	useEffect( () => {
-		if ( undefined === className ) {
-			return;
-		}
-
-		const styleMatch = new RegExp( /is-style-([^\s]*)/g ).exec( className );
-		if ( null !== styleMatch ) {
-			const match = styleMatch[ 1 ];
-			setAttributes( { alertType: match } );
-		}
-	}, [ className ] );
+	useAlertStyleSync( { className, alertType, setAttributes } );
 
 	const block = (
 		<BlockMain
@@ -384,6 +368,7 @@ const BootstrapAlerts = ( props ) => {
 			setAttributes={ setAttributes }
 			iconSet={ BootstrapIcons }
 			inspectorControls={ inspectorControls }
+			styleControls={ styleControls }
 			advancedControls={ advancedControls }
 			CloseButtonIcon={ BootstrapCloseIcon }
 			innerBlockProps={ innerBlockProps }
@@ -414,11 +399,12 @@ const BootstrapAlerts = ( props ) => {
 	);
 
 	const blockProps = useBlockProps( {
-		className: classnames(
+		className: getAlertWrapperClassName( {
 			className,
-			`alerts-dlx template-bootstrap is-style-${ alertType }`,
-			blockClasses
-		),
+			alertType,
+			templateSlug: 'bootstrap',
+			blockClasses,
+		} ),
 	} );
 
 	return (

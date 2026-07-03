@@ -56,6 +56,12 @@ module.exports = ( env ) => {
 							plugins: [
 								'@babel/plugin-proposal-class-properties',
 								'@babel/plugin-transform-arrow-functions',
+								[
+									'@babel/plugin-proposal-optional-chaining-assign',
+									{
+										version: '2023-07',
+									},
+								],
 							],
 						},
 					},

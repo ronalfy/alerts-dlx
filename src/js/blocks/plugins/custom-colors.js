@@ -12,12 +12,29 @@
 import { addFilter } from "@wordpress/hooks";
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { InspectorControls, PanelColorSettings } from "@wordpress/block-editor";
-import { PanelBody } from "@wordpress/components";
+import { Fill, PanelBody } from "@wordpress/components";
+import { registerPlugin } from "@wordpress/plugins";
 import { __ } from "@wordpress/i18n";
 import BootstrapColors from "../bootstrap/colors";
 import ChakraColors from "../chakraui/colors";
 import MaterialColors from "../material/colors";
 import ShoelaceColors from "../shoelace/colors";
+
+// Get the colors for the block.
+const getColors = (alertGroup) => {
+  switch (alertGroup) {
+    case "bootstrap":
+      return BootstrapColors;
+    case "chakra":
+      return ChakraColors;
+    case "material":
+      return MaterialColors;
+    case "shoelace":
+      return ShoelaceColors;
+    default:
+      return [];
+  }
+};
 
 /**
  * Higher-order component that wraps block edit functions to add our custom panel.
@@ -71,22 +88,6 @@ const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
     // Create the block content with or without the panel.
     let blockContent = <BlockEdit {...props} />;
 
-    // Get the colors for the block.
-    const getColors = () => {
-      switch (props.name) {
-        case "mediaron/alerts-dlx-bootstrap":
-          return BootstrapColors;
-        case "mediaron/alerts-dlx-chakra":
-          return ChakraColors;
-        case "mediaron/alerts-dlx-material":
-          return MaterialColors;
-        case "mediaron/alerts-dlx-shoelace":
-          return ShoelaceColors;
-        default:
-          return [];
-      }
-    };
-
     const styles = `
 		#${uniqueId} {
 			--alerts-dlx-${alertGroup}-color-primary: ${colorPrimary};
@@ -105,84 +106,6 @@ const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
       <>
         <style>{styles}</style>
         <BlockEdit {...props} />
-        <InspectorControls group="styles">
-          <PanelBody
-            title={__("Custom Colors", "alerts-dlx")}
-            initialOpen={true}
-            className="alerts-dlx-panel"
-          >
-            <PanelColorSettings
-              __experimentalIsRenderedInSidebar
-              title={__("Alert Colors", "alerts-dlx")}
-              colorSettings={[
-                {
-                  label: __("Text Color", "alerts-dlx"),
-                  value: colorPrimary,
-                  onChange: (value) => {
-                    setAttributes({ colorPrimary: value });
-                  },
-                },
-                {
-                  label: __("Border Color", "alerts-dlx"),
-                  value: colorBorder,
-                  onChange: (value) => {
-                    setAttributes({ colorBorder: value });
-                  },
-                },
-                {
-                  label: __("Accent Color", "alerts-dlx"),
-                  value: colorAccent,
-                  onChange: (value) => {
-                    setAttributes({ colorAccent: value });
-                  },
-                },
-                {
-                  label: __("Button Color", "alerts-dlx"),
-                  value: colorAlt,
-                  onChange: (value) => {
-                    setAttributes({ colorAlt: value });
-                  },
-                },
-                {
-                  label: __("Button Hover Color", "alerts-dlx"),
-                  value: colorAltHover,
-                  onChange: (value) => {
-                    setAttributes({ colorAltHover: value });
-                  },
-                },
-                {
-                  label: __("Button Text Color", "alerts-dlx"),
-                  value: colorAltText,
-                  onChange: (value) => {
-                    setAttributes({ colorAltText: value });
-                  },
-                },
-                {
-                  label: __("Button Text Hover Color", "alerts-dlx"),
-                  value: colorAltTextHover,
-                  onChange: (value) => {
-                    setAttributes({ colorAltTextHover: value });
-                  },
-                },
-                {
-                  label: __("Icon Color", "alerts-dlx"),
-                  value: colorBold,
-                  onChange: (value) => {
-                    setAttributes({ colorBold: value });
-                  },
-                },
-                {
-                  label: __("Background Color", "alerts-dlx"),
-                  value: colorLight,
-                  onChange: (value) => {
-                    setAttributes({ colorLight: value });
-                  },
-                },
-              ]}
-              colors={getColors()}
-            />
-          </PanelBody>
-        </InspectorControls>
       </>
     );
 
@@ -198,3 +121,105 @@ const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
  * add CSS classes for editorial-only and read-only blocks.
  */
 addFilter("editor.BlockEdit", "alerts-dlx/with-alerts-panel", withAlertsPanel);
+registerPlugin("custom-colors", {
+  render: () => {
+    return (
+      <Fill name="alertsDLXStylePanelStart">
+        {({ attributes, setAttributes }) => {
+          if ("custom" !== attributes.alertType) {
+            return null;
+          }
+          const {
+            colorPrimary,
+            colorBorder,
+            colorAccent,
+            colorAlt,
+            colorAltHover,
+            colorAltText,
+            colorAltTextHover,
+            colorBold,
+            colorLight,
+          } = attributes;
+          return (
+            <PanelBody
+              title={__("Custom Alert Colors", "alerts-dlx")}
+              initialOpen={true}
+              className="alerts-dlx-panel"
+            >
+              <PanelColorSettings
+                __experimentalIsRenderedInSidebar
+                title={__("Alert Colors", "alerts-dlx")}
+                colorSettings={[
+                  {
+                    label: __("Text Color", "alerts-dlx"),
+                    value: colorPrimary,
+                    onChange: (value) => {
+                      setAttributes({ colorPrimary: value });
+                    },
+                  },
+                  {
+                    label: __("Border Color", "alerts-dlx"),
+                    value: colorBorder,
+                    onChange: (value) => {
+                      setAttributes({ colorBorder: value });
+                    },
+                  },
+                  {
+                    label: __("Accent Color", "alerts-dlx"),
+                    value: colorAccent,
+                    onChange: (value) => {
+                      setAttributes({ colorAccent: value });
+                    },
+                  },
+                  {
+                    label: __("Button Color", "alerts-dlx"),
+                    value: colorAlt,
+                    onChange: (value) => {
+                      setAttributes({ colorAlt: value });
+                    },
+                  },
+                  {
+                    label: __("Button Hover Color", "alerts-dlx"),
+                    value: colorAltHover,
+                    onChange: (value) => {
+                      setAttributes({ colorAltHover: value });
+                    },
+                  },
+                  {
+                    label: __("Button Text Color", "alerts-dlx"),
+                    value: colorAltText,
+                    onChange: (value) => {
+                      setAttributes({ colorAltText: value });
+                    },
+                  },
+                  {
+                    label: __("Button Text Hover Color", "alerts-dlx"),
+                    value: colorAltTextHover,
+                    onChange: (value) => {
+                      setAttributes({ colorAltTextHover: value });
+                    },
+                  },
+                  {
+                    label: __("Icon Color", "alerts-dlx"),
+                    value: colorBold,
+                    onChange: (value) => {
+                      setAttributes({ colorBold: value });
+                    },
+                  },
+                  {
+                    label: __("Background Color", "alerts-dlx"),
+                    value: colorLight,
+                    onChange: (value) => {
+                      setAttributes({ colorLight: value });
+                    },
+                  },
+                ]}
+                colors={getColors(attributes.alertGroup)}
+              />
+            </PanelBody>
+          );
+        }}
+      </Fill>
+    );
+  },
+});

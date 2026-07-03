@@ -5,7 +5,6 @@
  * External dependencies
  */
 
-import classnames from 'classnames';
 
 import { useEffect, useRef } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
@@ -38,6 +37,10 @@ import UnitChooser from '../components/unit-picker';
 import MaterialIcons from '../components/icons/MaterialIcons';
 import { MaterialCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
+import {
+	getAlertWrapperClassName,
+	useAlertStyleSync,
+} from '../utils/alert-style-utils';
 
 const MaterialAlerts = ( props ) => {
 	const generatedUniqueId = useInstanceId( MaterialAlerts, 'adlx-material' );
@@ -106,7 +109,7 @@ const MaterialAlerts = ( props ) => {
 	const inspectorControls = (
 		<>
 			<Slot name="alertsDLXPanelStart" fillProps={ props } />
-			<PanelBody initialOpen={ true } title={ __( 'Alert Settings', 'quotes-dlx' ) }>
+			<PanelBody title={ __( 'Alert Settings', 'alerts-dlx' ) }>
 				<>
 					<PanelRow>
 						<ToggleControl
@@ -188,10 +191,16 @@ const MaterialAlerts = ( props ) => {
 					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ props } />
 				</>
 			</PanelBody>
-			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'quotes-dlx' ) }>
+		</>
+	);
+
+	const styleControls = (
+		<>
+			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
+			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
 				<>
 					<UnitChooser
-						label={ __( 'Maximum Width', 'quotes-dlx' ) }
+						label={ __( 'Maximum Width', 'alerts-dlx' ) }
 						value={ maximumWidthUnit }
 						units={ [ 'px', '%', 'vw' ] }
 						onClick={ ( value ) => {
@@ -214,7 +223,7 @@ const MaterialAlerts = ( props ) => {
 				<PanelRow>
 					<BaseControl
 						id="alerts-dlx-variants-button-group"
-						label={ __( 'Set the Alert Variant', 'quotes-dlx' ) }
+						label={ __( 'Set the Alert Variant', 'alerts-dlx' ) }
 						className="alerts-dlx-material-variants"
 					>
 						<ButtonGroup>
@@ -264,7 +273,7 @@ const MaterialAlerts = ( props ) => {
 				<PanelRow>
 					<BaseControl
 						id="alerts-dlx-mode-button-group"
-						label={ __( 'Set Light or Dark Mode', 'quotes-dlx' ) }
+						label={ __( 'Set Light or Dark Mode', 'alerts-dlx' ) }
 						className="alerts-dlx-chakra-mode"
 					>
 						<ButtonGroup>
@@ -295,7 +304,7 @@ const MaterialAlerts = ( props ) => {
 					<PanelRow>
 						<BaseControl
 							id="alerts-dlx-button-group-icon-alignment"
-							label={ __( 'Icon Vertical Alignment', 'quotes-dlx' ) }
+							label={ __( 'Icon Vertical Alignment', 'alerts-dlx' ) }
 							className="alerts-dlx-material-variants"
 						>
 							<ButtonGroup>
@@ -366,45 +375,17 @@ const MaterialAlerts = ( props ) => {
 				) }
 				<Slot name="alertsDLXAppearancePanelEnd" fillProps={ props } />
 			</PanelBody>
+			<Slot name="alertsDLXStylePanelEnd" fillProps={ props } />
 		</>
 	);
 
-	const advancedControls = (
-		<PanelRow>
-			<ToggleControl
-				label={ __( 'Enable Flexible InnerBlocks', 'alerts-dlx' ) }
-				checked={ innerBlocksEnabled }
-				onChange={ ( value ) => {
-					setAttributes( {
-						innerBlocksEnabled: value,
-					} );
-				} }
-				help={ __(
-					'Enable this option to allow the use of any block within the alert.',
-					'alerts-dlx'
-				) }
-			/>
-		</PanelRow>
-	);
+	const advancedControls = null;
 
 	useEffect( () => {
 		setAttributes( { uniqueId: generatedUniqueId } );
 	}, [] );
 
-	/**
-	 * Attempt to check when block styles are changed.
-	 */
-	useEffect( () => {
-		if ( undefined === className ) {
-			return;
-		}
-
-		const styleMatch = new RegExp( /is-style-([^\s]*)/g ).exec( className );
-		if ( null !== styleMatch ) {
-			const match = styleMatch[ 1 ];
-			setAttributes( { alertType: match } );
-		}
-	}, [ className ] );
+	useAlertStyleSync( { className, alertType, setAttributes } );
 
 	const block = (
 		<BlockMain
@@ -412,6 +393,7 @@ const MaterialAlerts = ( props ) => {
 			setAttributes={ setAttributes }
 			iconSet={ MaterialIcons }
 			inspectorControls={ inspectorControls }
+			styleControls={ styleControls }
 			advancedControls={ advancedControls }
 			CloseButtonIcon={ MaterialCloseIcon }
 			innerBlockProps={ innerBlockProps }
@@ -431,10 +413,6 @@ const MaterialAlerts = ( props ) => {
 	const blockClasses = applyFilters(
 		'alertsDlx.blockClasses',
 		{
-			'is-style-success': className === undefined && 'success' === alertType,
-			'is-style-info': className === undefined && 'info' === alertType,
-			'is-style-warning': className === undefined && 'warning' === alertType,
-			'is-style-error': className === undefined && 'error' === alertType,
 			'is-dark-mode': 'dark' === mode,
 			'custom-fonts-enabled': enableCustomFonts,
 			'is-appearance-default': 'default' === variant,
@@ -449,8 +427,11 @@ const MaterialAlerts = ( props ) => {
 	);
 
 	const blockProps = useBlockProps( {
-		className: classnames( className, 'alerts-dlx template-material', {
-			...blockClasses,
+		className: getAlertWrapperClassName( {
+			className,
+			alertType,
+			templateSlug: 'material',
+			blockClasses,
 		} ),
 	} );
 

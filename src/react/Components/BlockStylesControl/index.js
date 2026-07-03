@@ -19,9 +19,9 @@ const BlockStylesControl = ( { options, value, onChange } ) => {
 	return (
 		<BaseControl
 			id="enabledBlockStyles"
-			label={ __( 'Enabled Block Styles', 'alerts-dlx' ) }
+			label={ __( 'Enabled Alert Themes', 'alerts-dlx' ) }
 			help={ __(
-				'Unchecked styles are hidden from the block inserter. Existing alerts of that style are unaffected.',
+				'Unchecked themes are hidden from the block inserter. Existing alerts using a disabled theme are unaffected.',
 				'alerts-dlx'
 			) }
 		>
@@ -38,7 +38,7 @@ const BlockStylesControl = ( { options, value, onChange } ) => {
 			</div>
 			{ enabledStyles.length <= 1 && (
 				<p className="description alerts-dlx-block-styles-notice">
-					{ __( 'At least one block style must remain enabled.', 'alerts-dlx' ) }
+					{ __( 'At least one alert theme must remain enabled.', 'alerts-dlx' ) }
 				</p>
 			) }
 		</BaseControl>

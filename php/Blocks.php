@@ -249,14 +249,24 @@ class Blocks {
 	/**
 	 * Output the front-end structure.
 	 *
-	 * @param array  $attributes Block editor attributes.
-	 * @param string $content   Current content.
+	 * @param array          $attributes Block editor attributes.
+	 * @param string         $content    Current content.
+	 * @param \WP_Block|null $block      Block instance.
+	 * @return string
 	 */
-	public function frontend( array $attributes, string $content ) {
+	public function frontend( array $attributes, string $content, $block = null ) {
 
-		$unique_id               = Functions::sanitize_attribute( $attributes, 'uniqueId', 'text' );
-		$alert_group             = Functions::sanitize_attribute( $attributes, 'alertGroup', 'text' );
-		$alert_type              = Functions::sanitize_attribute( $attributes, 'alertType', 'text' );
+		$unique_id   = Functions::sanitize_attribute( $attributes, 'uniqueId', 'text' );
+		$alert_group = Functions::sanitize_attribute( $attributes, 'alertGroup', 'text' );
+		$alert_type  = Functions::sanitize_attribute( $attributes, 'alertType', 'text' );
+
+		if ( $block instanceof \WP_Block ) {
+			$expected_alert_group = $this->get_alert_group_for_block_name( $block->name );
+			if ( null !== $expected_alert_group && $alert_group !== $expected_alert_group ) {
+				$alert_group = $expected_alert_group;
+			}
+		}
+
 		$align                   = Functions::sanitize_attribute( $attributes, 'align', 'text' );
 		$alert_title             = Functions::sanitize_attribute( $attributes, 'alertTitle', 'text' );
 		$alert_description       = Functions::sanitize_attribute( $attributes, 'alertDescription', 'raw' );
@@ -449,6 +459,9 @@ class Blocks {
 		if ( 'rounded' === $icon_appearance ) {
 			$container_classes[] = 'icon-appearance-rounded';
 		}
+		if ( Options::is_headline_force_size() ) {
+			$container_classes[] = 'is-headline-size-forced';
+		}
 		?>
 		<!-- begin AlertsDLX output -->
 		<style>
@@ -537,10 +550,11 @@ class Blocks {
 						<?php
 					}
 					if ( $title_enabled ) {
-						$title_tag = Options::get_headline_style();
+						$title_tag = Options::get_headline_tag();
 						printf(
-							'<%1$s class="alerts-dlx-title">%2$s</%1$s>',
-							tag_escape( $title_tag ),
+							'<%1$s class="%2$s">%3$s</%1$s>',
+							$title_tag,
+							esc_attr( Options::get_headline_title_classes() ),
 							esc_html( $alert_title )
 						);
 					}
@@ -607,6 +621,23 @@ class Blocks {
 	}
 
 	/**
+	 * Get the expected alert group slug for a block name.
+	 *
+	 * @param string $block_name Block name.
+	 * @return string|null
+	 */
+	private function get_alert_group_for_block_name( $block_name ) {
+		$style_map = array(
+			'mediaron/alerts-dlx-bootstrap' => 'bootstrap',
+			'mediaron/alerts-dlx-chakra'    => 'chakra',
+			'mediaron/alerts-dlx-material'  => 'material',
+			'mediaron/alerts-dlx-shoelace'  => 'shoelace',
+		);
+
+		return $style_map[ $block_name ] ?? null;
+	}
+
+	/**
 	 * Register the block editor script for the iframe.
 	 */
 	public function register_block_editor_scripts_iframe(): void {
@@ -650,14 +681,16 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'    => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'           => current_user_can( 'edit_others_posts' ),
-				'isAuthor'           => current_user_can( 'edit_posts' ),
-				'isAdmin'            => current_user_can( 'manage_options' ),
-				'colorPalette'       => Functions::get_theme_color_palette(),
-				'defaultImage'       => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'      => Options::get_headline_style(),
-				'enabledBlockStyles' => Options::get_enabled_block_styles(),
+				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'isEditor'              => current_user_can( 'edit_others_posts' ),
+				'isAuthor'              => current_user_can( 'edit_posts' ),
+				'isAdmin'               => current_user_can( 'manage_options' ),
+				'colorPalette'          => Functions::get_theme_color_palette(),
+				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'         => Options::get_headline_tag(),
+				'headlineCustomClasses' => Options::get_headline_custom_classes(),
+				'headlineForceSize'     => Options::is_headline_force_size(),
+				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
 			)
 		);
 
