@@ -4,9 +4,8 @@
   "description": "An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.",
   "main": "src/index.js",
   "scripts": {
-    "build": "wp-scripts build --blocks-manifest --source-path=src --env mode=production && npm run build:dist",
-    "start": "wp-scripts start --blocks-manifest --source-path=src --env mode=development",
-    "build:dist": "webpack --env mode=production"
+    "build": "wp-scripts build --blocks-manifest --source-path=src --env mode=production",
+    "start": "wp-scripts start --blocks-manifest --source-path=src --env mode=development"
   },
   "repository": {
     "type": "git",
