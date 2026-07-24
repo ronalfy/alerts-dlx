@@ -60,7 +60,6 @@
     "sass": "^1.66.1",
     "sass-loader": "^13.0.2",
     "scss-tokenizer": "^0.4.3",
-    "set-cookie": "^0.0.4",
     "use-async-resource": "^2.2.2",
     "util": "^0.12.4",
     "webpack": "^5.73.0",

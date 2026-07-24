@@ -313,8 +313,10 @@ class Blocks {
 		}
 
 		// Check to see if expiration cookie is set.
-		$cookie_name = 'alerts-dlx-' . $unique_id;
-		if ( $close_button_enabled && isset( $_COOKIE[ $cookie_name ] ) ) {
+		// Prefer uniqueId as cookie name; also accept legacy double-prefixed name.
+		$cookie_name        = $unique_id;
+		$legacy_cookie_name = 'alerts-dlx-' . $unique_id;
+		if ( $close_button_enabled && ( isset( $_COOKIE[ $cookie_name ] ) || isset( $_COOKIE[ $legacy_cookie_name ] ) ) ) {
 			return '';
 		}
 
