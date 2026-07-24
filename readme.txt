@@ -1,6 +1,6 @@
 === Alerts DLX - Alert Block, Alert Box, Callout Box, and Notifications ===
 Contributors: ronalfy
-Tags: alert box, notifications, alerts, dismissible, callouts
+Tags: alert box, adopt-me, alerts, dismissible, callouts
 Requires at least: 6.8
 Tested up to: 7.1
 Stable tag: 2.4.1
@@ -12,6 +12,9 @@ Donate link: https://github.com/sponsors/DLXPlugins
 Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance your site's content and user engagement.
 
 == Description ==
+
+> **Plugin Up for Adoption**
+> <a href="https://mediaron.com/contact/adopt-a-plugin/">Adoption Form</a> | <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a>
 
 Elevate your WordPress site's content and user engagement with AlertsDLX, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, AlertsDLX features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 
