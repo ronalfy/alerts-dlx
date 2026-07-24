@@ -6,7 +6,7 @@
  * Version:           2.4.1
  * Requires at least: 6.8
  * Requires PHP:      8.0
- * Author:            DLX Plugins
+ * Author:            Ronald Huereca
  * Author URI:        https://wordpress.org/plugins/alerts-dlx/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
