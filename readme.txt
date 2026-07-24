@@ -2,8 +2,8 @@
 Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.8
-Tested up to: 7.0
-Stable tag: 2.4.0
+Tested up to: 7.1
+Stable tag: 2.4.1
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -187,6 +187,12 @@ Please leave a note on <a href="https://dlxplugins.com/support/">our support pag
 
 == Changelog ==
 
+= 2.4.1 =
+* Released 2026-07-24
+* Announcement: This plugin is looking for a new developer <a href="https://mediaron.com/contact/adopt-a-plugin/">to adopt this plugin</a>.
+* Bug fix: Cookie expiration is now more strict and honors caching.
+* Testing with WP 7.1 beta1.
+
 = 2.4.0 =
 * Released 2026-07-03
 * New: Added an admin settings panel under Settings → AlertsDLX.
@@ -311,5 +317,5 @@ Please leave a note on <a href="https://dlxplugins.com/support/">our support pag
 
 == Upgrade Notice ==
 
-= 2.4.0 =
-New: Admin settings panel, block editor toolbar improvements, unified Styles sidebar, headline options, and fixes for block style switching. Recommended update for all users. This release also solves some alert title/headline issues, allowing you to select which HTML element is used for the title, allowing you to set a custom CSS class, and force the intended headline styles, regardless of theme specificity.
+= 2.4.1 =
+Fix: Cookie expiration now honors caching and hard-refreshing.
