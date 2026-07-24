@@ -10,9 +10,8 @@ Create styled alerts, tips, warnings, and callout boxes for the WordPress block 
 | Resource | URL |
 |----------|-----|
 | WordPress.org | [wordpress.org/plugins/alerts-dlx](https://wordpress.org/plugins/alerts-dlx/) |
-| Documentation | [docs.dlxplugins.com/product/alertsdlx](https://docs.dlxplugins.com/product/alertsdlx/) |
 | Docs source | [github.com/ronalfy/alerts-dlx-docs](https://github.com/ronalfy/alerts-dlx-docs) |
-| Support | [dlxplugins.com/support](https://dlxplugins.com/support/) |
+| Support | [wordpress.org/plugins/alerts-dlx](https://wordpress.org/plugins/alerts-dlx/) |
 | Demo video | [YouTube](https://www.youtube.com/watch?v=7dKpw5uBi5o) |
 
 ## Development
