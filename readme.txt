@@ -14,7 +14,7 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 == Description ==
 
 > **Plugin Up for Adoption**
-> <a href="https://mediaron.com/contact/adopt-a-plugin/">Adoption Form</a> | <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a>
+> <a href="https://mediaron.com/contact/adopt-a-plugin/">Adoption Form</a> | <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://github.com/ronalfy/alerts-dlx-docs">Docs</a> (GitHub)
 
 Elevate your WordPress site's content and user engagement with AlertsDLX, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, AlertsDLX features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 
@@ -23,10 +23,6 @@ AlertsDLX is designed to be lightweight, user-friendly, and highly customizable.
 Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagination can really go wild. For example, you can create an "Empty Cart" callout for WooCommerce or Easy Digital Downloads when a cart is empty. For site-wide notifications, most themes and builders (including FSE) allow for site-wide template parts. Just add the notification to it, make it dismissible, and you now have a site-wide callout or notification that can be hidden when dismissed.
 
 https://www.youtube.com/watch?v=7dKpw5uBi5o
-
-## Quick Links
-
-<a href="https://docs.dlxplugins.com/product/alertsdlx/">AlertsDLX Docs</a> | <a href="https://dlxplugins.com/plugins/alerts-dlx/">AlertsDLX Home</a> | <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">Shortcode Usage</a> | <a href="https://dlxplugins.com/support/">Support</a>
 
 ## Major features
 
@@ -69,25 +65,9 @@ AlertsDLX is more than just a beautiful alert block in post content. Here are so
 * **Conditional messaging** — Pair with plugins like <a href="https://blockvisibilitywp.com/">Block Visibility</a> for logged-in-only notices, role-based messages, cart states, and scheduled promos.
 * **Compliance and disclaimers** — Reusable affiliate, legal, medical, or financial disclaimer boxes with consistent styling across your site.
 
-## Future Features and Growth
-
-This plugin has a small (but growing) install base. Please help spread the word by leaving a feature, support request, or review, by <a href="https://github.com/DLXPlugins/alerts-dlx/issues">filing a GitHub issue</a>, or sponsoring the plugin monetarily <a href="https://github.com/sponsors/MediaRon">via a GitHub sponsorship</a> (highly recommended and appreciated).
-
-Future plans include:
-
-1. Consolidating all four alert blocks into one (one alert block to rule them all).
-2. Providing global styles, so you can create a style, customize its colors and configuration, and use it on a block or shortcode to set global site-wide alert style that you can edit in one place. If inserting a block and adding a global style, the block is configured for you, with only the content parts editable.
-3. Provide presets, so you can insert the block, click on a preset, and the block is configured for you, setting the icon, style (info, success), configuration (left accent, right accent), and enabling/disabling other toggles. From there, you can edit as desired.
-4. Admin shortcode builder. So users using page builders and widgets have a visual way of creating an AlertsDLX shortcode.
-5. Lightbox support. Support being placed in a lightbox, with the dismiss and button click closing the encasing lightbox.
-
-Do you have other ideas for the plugin or ways to improve it? Please leave a feature request.
-
-All of the above features and your requests depend on continued support from the community. Thank you.
-
 ## Development
 
-Development happens on GitHub. Please <a href="https://github.com/dlxplugins/alerts-dlx">check out the GitHub code repository for AlertsDLX</a>.
+Development happens on GitHub. Please <a href="https://github.com/ronalfy/alerts-dlx">check out the GitHub code repository for AlertsDLX</a>.
 
 ❤️ Please help spread the word about this plugin <a href="https://wordpress.org/support/plugin/alerts-dlx/reviews/#new-post">through your kind review</a>.
 
@@ -101,15 +81,15 @@ If you have any issues with headlines being misstyled, please visit the admin op
 
 = Does AlertsDLX work with the Classic Editor and Page Builders? =
 
-Yes. AlertsDLX works with the Classic Editor <a href="https://docs.dlxplugins.com/v/alertsdlx/shortcode-usage">via its shortcode support</a>.
+Yes. AlertsDLX works with the Classic Editor via its shortcode support</a>.
 
 = Does AlertsDLX work with Elementor or Divi? =
 
-Yes, via the <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">built-in shortcode</a>, you can output in just about any page builder, including Elementor and Divi.
+Yes, via the built-in shortcode, you can output in just about any page builder, including Elementor and Divi.
 
 = Does AlertsDLX work with shortcodes? =
 
-Yes, via the <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">built-in shortcode</a>.
+Yes, via the built-in shortcode.
 
 = Does this work with the Block Editor (aka, Gutenberg)? =
 
@@ -172,11 +152,11 @@ From there, add any additional blocks you need for the review, enable the alert 
 
 = Can I disable the custom font used (Lato)? =
 
-Yes, you can improve performance further by disabling the custom font supplied with AlertsDLX and supplying your own. Please see <a href="https://docs.dlxplugins.com/product/alertsdlx/custom-fonts/">disabling custom fonts in AlertsDLX</a>
+Yes, you can improve performance further by disabling the custom font supplied with AlertsDLX and supplying your own.
 
 = How can I get support or leave a feature request? =
 
-Please leave a note on <a href="https://dlxplugins.com/support/">our support page</a> or leave a detailed support request here on .org.
+Please leave a detailed support request here on .org.
 
 
 == Screenshots ==
@@ -285,8 +265,6 @@ Please leave a note on <a href="https://dlxplugins.com/support/">our support pag
 = 1.3.0 =
 * Released 2023-09-23
 * Added support for shortcodes.
-* <a href="https://dlxplugins.com/announcements/alertsdlx-1-3-0-includes-shortcode-support/">Read the announcement post</a>.
-* <a href="https://docs.dlxplugins.com/product/alertsdlx/alertsdlx/">See shortcode usage</a>.
 
 = 1.2.5 =
 * Released 2023-09-10
