@@ -1,0 +1,17 @@
+---
+description: WordPress PHP standards for AlertsDLX
+globs: "**/*.php"
+alwaysApply: false
+---
+
+# AlertsDLX PHP
+
+- Namespace: `DLXPlugins\AlertsDLX`. Autoload maps to `php/` via Composer (`lib/`).
+- Follow WordPress PHP Coding Standards (`phpcs.xml.dist`: WordPress-Core + WordPress-Docs).
+- End every code comment with a period.
+- Prefer helpers in `php/Functions.php` and allowlists/sanitizers in `php/Options.php`.
+- Option key is `alerts_dlx`. Do not invent a second options store without migration.
+- Headline tags and theme slugs must stay allowlisted (`Options::resolve_headline_tag`, `get_allowed_block_styles`).
+- Admin AJAX and REST callbacks need capability checks and nonces / permission callbacks.
+- After PHP edits, run PHPCS / the project PHP beautifier when available.
+- Read `AGENTS.md` and `docs/ARCHITECTURE.md` before structural changes.

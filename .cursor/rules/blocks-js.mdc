@@ -1,0 +1,17 @@
+---
+description: Block editor JS and SCSS patterns for AlertsDLX
+globs: "src/**/*.{js,jsx,scss}"
+alwaysApply: false
+---
+
+# AlertsDLX blocks and styles
+
+- Four themes only: `bootstrap`, `chakra`, `material`, `shoelace`. Do not add a fifth group without updating PHP allowlists, SCSS, registration, admin settings, and `styles.md`.
+- Block names are `mediaron/alerts-dlx-{theme}`. Never rename without a content migration.
+- Shared editor UX belongs in `src/js/blocks/plugins/` and `src/js/blocks/components/`, not copied into each theme folder.
+- Chakra sources live in `src/js/blocks/chakraui/`; the alert group slug remains `chakra`.
+- Preserve the CSS contract from `styles.md`: `alerts-dlx`, `template-{group}`, `is-style-{type}`, `is-appearance-{variant}`, `is-dark-mode`.
+- Theme SCSS: `src/scss/{theme}/styles.scss`. Shared rules: `src/scss/common.scss`.
+- Prefer existing `@wordpress/*` packages and project utilities (`alert-style-utils`, SVG sanitize, etc.).
+- After JS/SCSS changes, run `npm run build` so `build/` and `dist/` stay in sync for releases.
+- Read `AGENTS.md` before changing block attributes or enqueue behavior.
