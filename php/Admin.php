@@ -174,12 +174,6 @@ class Admin {
 					<div class="alerts-dlx-logo-wrapper">
 						<h1 id="alerts-dlx-logo"><?php echo esc_html( Functions::get_plugin_name() ); ?></h1>
 					</div>
-					<div class="alerts-dlx-header__btn-wrap">
-						<a class="alerts-dlx__btn-primary" href="<?php echo esc_url( Functions::get_plugin_support_uri() ); ?>" target="_blank" rel="noopener noreferrer">
-							<i class="dashicons dashicons-external"></i>
-							<?php esc_html_e( 'Get Support', 'alerts-dlx' ); ?>
-						</a>
-					</div>
 				</div>
 			</header>
 			<div class="alerts-dlx-admin-container-body-wrapper">

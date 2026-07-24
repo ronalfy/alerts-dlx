@@ -312,7 +312,7 @@ class Functions {
 		 *
 		 * @param string Plugin URI.
 		 */
-		return apply_filters( 'alerts_dlx_plugin_uri', 'https://dlxplugins.com/plugins/alertsdlx' );
+		return apply_filters( 'alerts_dlx_plugin_uri', 'https://github.com/ronalfy/alerts-dlx' );
 	}
 
 	/**
@@ -328,7 +328,7 @@ class Functions {
 		 *
 		 * @param string Plugin Support URI.
 		 */
-		return apply_filters( 'alerts_dlx_plugin_support_uri', 'https://dlxplugins.com/support/' );
+		return apply_filters( 'alerts_dlx_plugin_support_uri', 'https://github.com/ronalfy/alerts-dlx/issues' );
 	}
 
 	/**
@@ -344,7 +344,7 @@ class Functions {
 		 *
 		 * @param string Plugin Docs URI.
 		 */
-		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://alertsdlx.dlxplugins.com/' );
+		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://github.com/ronalfy/alerts-dlx-docs' );
 	}
 
 	/**
@@ -360,7 +360,7 @@ class Functions {
 		 *
 		 * @param string Plugin ratings URI.
 		 */
-		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://dlxplugins.com/support/' );
+		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://wordpress.org/plugins/alerts-dlx/' );
 	}
 
 	/**
