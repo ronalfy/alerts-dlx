@@ -112,6 +112,6 @@ When a close button is enabled, frontend dismiss JS (`src/js/dismiss`) hides the
 | `readme.txt` | WordPress.org (version, FAQ, changelog) |
 | `README.md` | GitHub |
 | `alerts-dlx.zip` via `npx grunt` | Packaged plugin (PHP, lib, dist, build, assets, readme) |
-| [alerts-dlx-docs](https://github.com/ronalfy/alerts-dlx-docs) | End-user / developer documentation site |
+| [alerts-dlx-docs](https://github.com/MediaRon/alertsdlx-docs) | End-user / developer documentation site |
 
 Source maps and `node_modules` are not part of the Grunt zip.

@@ -29,7 +29,7 @@ AlertsDLX is a WordPress plugin for styled alert boxes, callouts, and notificati
 | `readme.txt` | WordPress.org plugin readme (changelog, FAQ) |
 | `README.md` | GitHub landing page |
 
-User-facing documentation lives in a **separate** repo: [alerts-dlx-docs](https://github.com/ronalfy/alerts-dlx-docs). Do not duplicate GitBook content here.
+User-facing documentation lives in a **separate** repo: [alerts-dlx-docs](https://github.com/MediaRon/alertsdlx-docs). Do not duplicate GitBook content here.
 
 ## Commands
 

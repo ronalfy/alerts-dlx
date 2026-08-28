@@ -9,7 +9,7 @@ Adoption interest: [Adopt a Plugin form](https://mediaron.com/contact/adopt-a-pl
 | Asset | Location | Notes |
 |-------|----------|-------|
 | Plugin source | [github.com/ronalfy/alerts-dlx](https://github.com/ronalfy/alerts-dlx) | Primary development |
-| User / developer docs | [github.com/ronalfy/alerts-dlx-docs](https://github.com/ronalfy/alerts-dlx-docs) | GitBook-style docs; not inside the plugin zip |
+| User / developer docs | [github.com/ronalfy/alerts-dlx-docs](https://github.com/MediaRon/alertsdlx-docs) | GitBook-style docs; not inside the plugin zip |
 | WordPress.org plugin | Slug `alerts-dlx` | SVN deployment + plugin directory listing |
 | Product / marketing pages | dlxplugins.com / mediaron.com | May need rebrand or redirects after transfer |
 

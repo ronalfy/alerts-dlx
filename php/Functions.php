@@ -344,7 +344,7 @@ class Functions {
 		 *
 		 * @param string Plugin Docs URI.
 		 */
-		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://github.com/ronalfy/alerts-dlx-docs' );
+		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://github.com/MediaRon/alertsdlx-docs' );
 	}
 
 	/**

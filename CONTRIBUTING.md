@@ -75,7 +75,7 @@ phpcs --standard=phpcs.xml.dist php/ alerts-dlx.php
 3. Run `npm run build`.
 4. Package a zip if needed: `npx grunt` → `alerts-dlx.zip`.
 5. Tag the release on GitHub and deploy to WordPress.org SVN as appropriate.
-6. User docs / announcements live in [alerts-dlx-docs](https://github.com/ronalfy/alerts-dlx-docs) — update there when behavior changes.
+6. User docs / announcements live in [alerts-dlx-docs](https://github.com/MediaRon/alertsdlx-docs) — update there when behavior changes.
 
 ## Support and issues
 

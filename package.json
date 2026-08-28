@@ -5,7 +5,15 @@
   "main": "src/index.js",
   "scripts": {
     "build": "wp-scripts build --blocks-manifest --source-path=src --env mode=production",
-    "start": "wp-scripts start --blocks-manifest --source-path=src --env mode=development"
+    "start": "wp-scripts start --blocks-manifest --source-path=src --env mode=development",
+    "test:dependency-health": "node maintenance-tests/dependency-health.mjs",
+    "test:public-contracts": "node maintenance-tests/public-contracts.mjs",
+    "test:block-metadata": "node maintenance-tests/block-metadata.mjs",
+    "test:transforms": "node maintenance-tests/transform-contracts.mjs",
+    "test:settings": "node maintenance-tests/settings-contracts.mjs",
+    "test:release-package": "node maintenance-tests/release-package.mjs",
+    "test:docs": "node maintenance-tests/check-doc-links.mjs",
+    "test:maintenance": "npm run test:dependency-health && npm run test:public-contracts && npm run test:block-metadata && npm run test:transforms && npm run test:settings && npm run test:release-package && npm run test:docs"
   },
   "repository": {
     "type": "git",
