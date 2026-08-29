@@ -14,7 +14,7 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 == Description ==
 
 > **Plugin Up for Adoption**
-> <a href="https://mediaron.com/contact/adopt-a-plugin/">Adoption Form</a> | <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://github.com/ronalfy/alerts-dlx-docs">Docs</a> (GitHub)
+> <a href="https://mediaron.com/contact/adopt-a-plugin/">Adoption Form</a> | <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://github.com/MediaRon/alertsdlx-docs">Docs</a> (GitHub)
 
 Elevate your WordPress site's content and user engagement with AlertsDLX, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, AlertsDLX features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 

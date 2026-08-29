@@ -1,0 +1,50 @@
+name: Maintenance checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-contracts:
+    name: Node ${{ matrix.node-version }} maintenance checks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - '20'
+          - '22'
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install the locked dependencies
+        run: |
+          set -euo pipefail
+          npm ci --no-audit 2>&1 | tee "$RUNNER_TEMP/npm-ci.log"
+          if grep -q 'ERESOLVE' "$RUNNER_TEMP/npm-ci.log"; then
+            echo 'npm emitted an ERESOLVE message.' >&2
+            exit 1
+          fi
+          git diff --exit-code -- package-lock.json
+
+      - name: Check compatibility promises and release files
+        run: npm run test:maintenance
+
+      - name: Build production assets
+        run: npm run build
+
+      - name: Make sure the build did not create uncommitted assets
+        run: git diff --exit-code -- build dist
