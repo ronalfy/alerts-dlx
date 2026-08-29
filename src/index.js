@@ -1,3 +1,4 @@
+import "./js/blocks/alert";
 import "./js/blocks/material";
 import "./js/blocks/chakraui";
 import "./js/blocks/bootstrap";

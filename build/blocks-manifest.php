@@ -1,6 +1,290 @@
 <?php
 // This file is generated. Do not modify it manually.
 return array(
+	'alert' => array(
+		'$schema' => 'https://schemas.wp.org/trunk/block.json',
+		'title' => 'Alert',
+		'apiVersion' => 3,
+		'name' => 'mediaron/alerts-dlx-alert',
+		'category' => 'alertsdlx',
+		'icon' => 'warning',
+		'description' => 'Create one alert and choose its design.',
+		'keywords' => array(
+			'alert',
+			'info',
+			'success',
+			'error',
+			'notice',
+			'notification',
+			'warning'
+		),
+		'version' => '1.0.0',
+		'textdomain' => 'alerts-dlx',
+		'attributes' => array(
+			'align' => array(
+				'type' => 'string',
+				'default' => 'center'
+			),
+			'alertType' => array(
+				'type' => 'string',
+				'default' => 'success'
+			),
+			'purpose' => array(
+				'type' => 'string',
+				'default' => 'success'
+			),
+			'alertTitle' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'alertDescription' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'descriptionEnabled' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'titleEnabled' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'buttonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'iconEnabled' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'innerBlocksEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'closeButtonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'closeButtonExpiration' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'colorPrimary' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-primary, #084298)'
+			),
+			'colorBorder' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-border, #b6d4fe)'
+			),
+			'colorAccent' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-accent, #26559c)'
+			),
+			'colorAlt' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-alt, #084298)'
+			),
+			'colorAltHover' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-alt-hover, #084298)'
+			),
+			'colorAltText' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-alt-text, #ffffff)'
+			),
+			'colorAltTextHover' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-alt-text-hover, #ffffff)'
+			),
+			'colorBold' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-bold, #084298)'
+			),
+			'colorLight' => array(
+				'type' => 'string',
+				'default' => 'var(--alerts-dlx-bootstrap-color-light, #cfe2ff)'
+			),
+			'buttonText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'buttonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'buttonHasUrl' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'buttonTarget' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'buttonRelNoFollow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'buttonRelSponsored' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'maximumWidthUnit' => array(
+				'type' => 'string',
+				'default' => 'px'
+			),
+			'maximumWidth' => array(
+				'type' => 'string',
+				'default' => '650'
+			),
+			'baseFontSize' => array(
+				'type' => 'number',
+				'default' => 18
+			),
+			'icon' => array(
+				'type' => 'string',
+				'default' => '<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' fill=\'currentColor\' className=\'bi bi-check\' viewBox=\'0 0 16 16\'><path d=\'M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z\' /></svg>'
+			),
+			'enableCustomFonts' => array(
+				'type' => 'boolean',
+				'default' => true
+			),
+			'variant' => array(
+				'type' => 'string',
+				'default' => 'default'
+			),
+			'mode' => array(
+				'type' => 'string',
+				'default' => 'light'
+			),
+			'enableDropShadow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'iconVerticalAlignment' => array(
+				'type' => 'string',
+				'default' => 'top'
+			),
+			'uniqueId' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'alertGroup' => array(
+				'type' => 'string',
+				'default' => 'bootstrap'
+			),
+			'isBlockAdminOnly' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'adminOnlyBlockExpiresEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'adminOnlyBlockExpires' => array(
+				'type' => 'string',
+				'default' => null
+			),
+			'isBlockEditorialOnly' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'isBlockReadOnly' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'iconSource' => array(
+				'type' => 'string',
+				'default' => 'icon'
+			),
+			'imageUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'imageId' => array(
+				'type' => 'number',
+				'default' => 0
+			),
+			'iconAppearance' => array(
+				'type' => 'string',
+				'default' => 'rounded'
+			)
+		),
+		'example' => array(
+			'attributes' => array(
+				'alertType' => 'success',
+				'alertTitle' => 'Sample alert title',
+				'descriptionEnabled' => true,
+				'titleEnabled' => true,
+				'iconEnabled' => true
+			)
+		),
+		'styles' => array(
+			array(
+				'name' => 'success',
+				'label' => 'Success',
+				'isDefault' => true
+			),
+			array(
+				'name' => 'info',
+				'label' => 'Info'
+			),
+			array(
+				'name' => 'warning',
+				'label' => 'Warning'
+			),
+			array(
+				'name' => 'danger',
+				'label' => 'Danger'
+			),
+			array(
+				'name' => 'error',
+				'label' => 'Error'
+			),
+			array(
+				'name' => 'primary',
+				'label' => 'Primary'
+			),
+			array(
+				'name' => 'secondary',
+				'label' => 'Secondary'
+			),
+			array(
+				'name' => 'neutral',
+				'label' => 'Neutral'
+			),
+			array(
+				'name' => 'light',
+				'label' => 'Light'
+			),
+			array(
+				'name' => 'dark',
+				'label' => 'Dark'
+			),
+			array(
+				'name' => 'custom',
+				'label' => 'Custom'
+			)
+		),
+		'supports' => array(
+			'anchor' => true,
+			'align' => array(
+				'center',
+				'wide',
+				'full'
+			),
+			'className' => true
+		),
+		'editorScript' => 'alerts-dlx-block',
+		'editorStyle' => array(
+			'alerts-dlx-block-editor-styles',
+			'alerts-dlx-bootstrap-styles',
+			'alerts-dlx-chakra-styles',
+			'alerts-dlx-material-styles',
+			'alerts-dlx-shoelace-styles',
+			'alerts-dlx-block-editor-styles-lato'
+		)
+	),
 	'bootstrap' => array(
 		'$schema' => 'https://schemas.wp.org/trunk/block.json',
 		'title' => 'Bootstrap Alert',

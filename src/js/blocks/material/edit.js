@@ -6,24 +6,18 @@
  */
 
 
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
 	PanelRow,
 	ToggleControl,
-	TextControl,
-	Button,
-	ButtonGroup,
-	RangeControl,
-	BaseControl,
 	Slot,
 } from '@wordpress/components';
 
 import {
 	useBlockProps,
-	useInnerBlocksProps,
 	InnerBlocks,
 } from '@wordpress/block-editor';
 
@@ -33,15 +27,35 @@ import UnitChooser from '../components/unit-picker';
 import MaterialIcons from '../components/icons/MaterialIcons';
 import { MaterialCloseIcon } from '../components/CloseButtonIcons';
 import BlockMain from '../components/BlockMain';
+import AlertSettingsPanel from '../components/AlertSettingsPanel';
+import HistoricalAlertVariantControl from '../components/HistoricalAlertVariantControl';
+import {
+	AlertModeControl,
+	BaseFontSizeControl,
+	IconVerticalAlignmentControl,
+	MaximumWidthControls,
+} from '../components/HistoricalAlertAppearanceControls';
 import {
 	getAlertWrapperClassName,
 	useAlertStyleSync,
 } from '../utils/alert-style-utils';
 
 import useLegacyDescriptionMigration from "../utils/use-legacy-description-migration";
+import useHistoricalAlertInnerBlocks from '../utils/use-historical-alert-inner-blocks';
+import {
+	createHistoricalAlertThemeAdapter,
+	getHistoricalAlertBlockClasses,
+	isHistoricalIconAlignmentVisible,
+} from '../utils/historical-alert-theme-adapter';
+import themeDefinition from './theme-definition';
+
 // Track the editor block that currently owns each persisted Material alert ID.
 const materialAlertIdOwners = new Map();
 
+const themeAdapter = createHistoricalAlertThemeAdapter( themeDefinition, {
+	iconSet: MaterialIcons,
+	CloseButtonIcon: MaterialCloseIcon,
+} );
 const MaterialAlerts = ( props ) => {
 	const generatedUniqueId = useInstanceId( MaterialAlerts, 'adlx-material' );
 	// Shortcuts.
@@ -77,18 +91,7 @@ const MaterialAlerts = ( props ) => {
 		innerBlocksEnabled,
 	} = attributes;
 
-	const innerBlocksRef = useRef( null );
-	const innerBlockProps = useInnerBlocksProps(
-		{
-			className: 'alerts-dlx-content',
-			ref: innerBlocksRef,
-		},
-		{
-			allowedBlocks: innerBlocksEnabled ? true : [ 'core/paragraph' ],
-			template: [ [ 'core/paragraph', { placeholder: '' } ] ],
-			renderAppender: InnerBlocks.DefaultBlockAppender,
-		}
-	);
+	const { innerBlocksRef, innerBlockProps } = useHistoricalAlertInnerBlocks( { innerBlocksEnabled, renderAppender: InnerBlocks.DefaultBlockAppender } );
 
 	useLegacyDescriptionMigration({
     alertDescription,
@@ -98,255 +101,29 @@ const MaterialAlerts = ( props ) => {
   });
 
 	const inspectorControls = (
-		<>
-			<Slot name="alertsDLXPanelStart" fillProps={ props } />
-			<PanelBody title={ __( 'Alert Settings', 'alerts-dlx' ) }>
-				<>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Enable Alert Icon', 'alerts-dlx' ) }
-							checked={ iconEnabled }
-							onChange={ ( value ) => {
-								setAttributes( {
-									iconEnabled: value,
-								} );
-							} }
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Enable Title', 'alerts-dlx' ) }
-							checked={ titleEnabled }
-							onChange={ ( value ) => {
-								setAttributes( {
-									titleEnabled: value,
-								} );
-							} }
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Enable Alert Description', 'alerts-dlx' ) }
-							checked={ descriptionEnabled }
-							onChange={ ( value ) => {
-								setAttributes( {
-									descriptionEnabled: value,
-								} );
-							} }
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Enable Alert Button', 'alerts-dlx' ) }
-							checked={ buttonEnabled }
-							onChange={ ( value ) => {
-								setAttributes( {
-									buttonEnabled: value,
-								} );
-							} }
-						/>
-					</PanelRow>
-					<PanelRow>
-						<ToggleControl
-							label={ __( 'Enable Close Button', 'alerts-dlx' ) }
-							checked={ closeButtonEnabled }
-							onChange={ ( value ) => {
-								setAttributes( {
-									closeButtonEnabled: value,
-								} );
-							} }
-							help={ __(
-								'Enable this option to allow the alert to be dismissible.',
-								'alerts-dlx'
-							) }
-						/>
-					</PanelRow>
-					{ closeButtonEnabled && (
-						<PanelRow>
-							<TextControl
-								label={ __( 'Set the Close Button save expiration', 'alerts-dlx' ) }
-								value={ closeButtonExpiration }
-								onChange={ ( value ) => {
-									setAttributes( {
-										closeButtonExpiration: parseInt( value ),
-									} );
-								} }
-								help={ __(
-									'Set the expiration time in seconds for the close button to reappear. Set to zero to never expire.',
-									'alerts-dlx'
-								) }
-								type={ 'number' }
-							/>
-						</PanelRow>
-					) }
-					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ props } />
-				</>
-			</PanelBody>
-		</>
+
+		<AlertSettingsPanel
+
+			attributes={ attributes }
+
+			setAttributes={ setAttributes }
+
+			fillProps={ props }
+
+		/>
+
 	);
+
 
 	const styleControls = (
 		<>
 			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
 			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
-				<>
-					<UnitChooser
-						label={ __( 'Maximum Width', 'alerts-dlx' ) }
-						value={ maximumWidthUnit }
-						units={ [ 'px', '%', 'vw' ] }
-						onClick={ ( value ) => {
-							setAttributes( {
-								maximumWidthUnit: value,
-							} );
-						} }
-					/>
-
-					<TextControl
-						type={ 'text' }
-						value={ maximumWidth }
-						onChange={ ( value ) => {
-							setAttributes( {
-								maximumWidth: value,
-							} );
-						} }
-					/>
-				</>
-				<PanelRow>
-					<BaseControl
-						id="alerts-dlx-variants-button-group"
-						label={ __( 'Set the Alert Variant', 'alerts-dlx' ) }
-						className="alerts-dlx-material-variants"
-					>
-						<ButtonGroup>
-							<Button
-								variant={ variant === 'default' ? 'primary' : 'secondary' }
-								onClick={ ( e ) => {
-									setAttributes( {
-										variant: 'default',
-									} );
-								} }
-							>
-								{ __( 'Default', 'alerts-dlx' ) }
-							</Button>
-							<Button
-								variant={ variant === 'outlined' ? 'primary' : 'secondary' }
-								onClick={ ( e ) => {
-									setAttributes( {
-										variant: 'outlined',
-									} );
-								} }
-							>
-								{ __( 'Outlined', 'alerts-dlx' ) }
-							</Button>
-							<Button
-								variant={ variant === 'filled' ? 'primary' : 'secondary' }
-								onClick={ ( e ) => {
-									setAttributes( {
-										variant: 'filled',
-									} );
-								} }
-							>
-								{ __( 'Filled', 'alerts-dlx' ) }
-							</Button>
-							<Button
-								variant={ variant === 'centered' ? 'primary' : 'secondary' }
-								onClick={ ( e ) => {
-									setAttributes( {
-										variant: 'centered',
-									} );
-								} }
-							>
-								{ __( 'Centered', 'alerts-dlx' ) }
-							</Button>
-						</ButtonGroup>
-					</BaseControl>
-				</PanelRow>
-				<PanelRow>
-					<BaseControl
-						id="alerts-dlx-mode-button-group"
-						label={ __( 'Set Light or Dark Mode', 'alerts-dlx' ) }
-						className="alerts-dlx-chakra-mode"
-					>
-						<ButtonGroup>
-							<Button
-								variant={ mode === 'light' ? 'primary' : 'secondary' }
-								onClick={ ( e ) => {
-									setAttributes( {
-										mode: 'light',
-									} );
-								} }
-							>
-								{ __( 'Light Mode', 'alerts-dlx' ) }
-							</Button>
-							<Button
-								variant={ mode === 'dark' ? 'primary' : 'secondary' }
-								onClick={ ( e ) => {
-									setAttributes( {
-										mode: 'dark',
-									} );
-								} }
-							>
-								{ __( 'Dark Mode', 'alerts-dlx' ) }
-							</Button>
-						</ButtonGroup>
-					</BaseControl>
-				</PanelRow>
-				{ iconEnabled && 'centered' !== variant && (
-					<PanelRow>
-						<BaseControl
-							id="alerts-dlx-button-group-icon-alignment"
-							label={ __( 'Icon Vertical Alignment', 'alerts-dlx' ) }
-							className="alerts-dlx-material-variants"
-						>
-							<ButtonGroup>
-								<Button
-									variant={
-										iconVerticalAlignment === 'top' ? 'primary' : 'secondary'
-									}
-									onClick={ ( e ) => {
-										setAttributes( {
-											iconVerticalAlignment: 'top',
-										} );
-									} }
-								>
-									{ __( 'Top', 'alerts-dlx' ) }
-								</Button>
-								<Button
-									variant={
-										iconVerticalAlignment === 'centered'
-											? 'primary'
-											: 'secondary'
-									}
-									onClick={ ( e ) => {
-										setAttributes( {
-											iconVerticalAlignment: 'centered',
-										} );
-									} }
-								>
-									{ __( 'Centered', 'alerts-dlx' ) }
-								</Button>
-							</ButtonGroup>
-						</BaseControl>
-					</PanelRow>
-				) }
-				<PanelRow>
-					<RangeControl
-						label={ __( 'Set the Base Font Size', 'alerts-dlx' ) }
-						step={ 1 }
-						value={ baseFontSize }
-						max={ 36 }
-						min={ 12 }
-						currentInput={ 16 }
-						initialPosition={ 16 }
-						allowReset={ true }
-						onChange={ ( fontSizeValue ) => {
-							setAttributes( {
-								baseFontSize: fontSizeValue,
-							} );
-						} }
-						help={ __( 'Set the base font size for the alert.', 'alerts-dlx' ) }
-					/>
-				</PanelRow>
+				<MaximumWidthControls attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="alerts-dlx" UnitChooserComponent={ UnitChooser } />
+				<HistoricalAlertVariantControl attributes={ attributes } setAttributes={ setAttributes } themeAdapter={ themeAdapter } />
+				<AlertModeControl attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="alerts-dlx" className="alerts-dlx-chakra-mode" />
+				<IconVerticalAlignmentControl attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="alerts-dlx" isVisible={ isHistoricalIconAlignmentVisible( themeAdapter, iconEnabled, variant ) } />
+				<BaseFontSizeControl attributes={ attributes } setAttributes={ setAttributes } />
 				{ 'default' === variant && (
 					<PanelRow>
 						<ToggleControl
@@ -409,11 +186,11 @@ const MaterialAlerts = ( props ) => {
 		<BlockMain
 			attributes={ attributes }
 			setAttributes={ setAttributes }
-			iconSet={ MaterialIcons }
+			iconSet={ themeAdapter.iconSet }
 			inspectorControls={ inspectorControls }
 			styleControls={ styleControls }
 			advancedControls={ advancedControls }
-			CloseButtonIcon={ MaterialCloseIcon }
+			CloseButtonIcon={ themeAdapter.CloseButtonIcon }
 			innerBlockProps={ innerBlockProps }
 		/>
 	);
@@ -430,17 +207,7 @@ const MaterialAlerts = ( props ) => {
 	 */
 	const blockClasses = applyFilters(
 		'alertsDlx.blockClasses',
-		{
-			'is-dark-mode': 'dark' === mode,
-			'custom-fonts-enabled': enableCustomFonts,
-			'is-appearance-default': 'default' === variant,
-			'is-appearance-outlined': 'outlined' === variant,
-			'is-appearance-filled': 'filled' === variant,
-			'is-appearance-centered': 'centered' === variant,
-			'is-dropshadow-enabled': enableDropShadow,
-			'icon-vertical-align-top': 'top' === iconVerticalAlignment,
-			'icon-vertical-align-centered': 'centered' === iconVerticalAlignment,
-		},
+		getHistoricalAlertBlockClasses( themeAdapter, attributes ),
 		attributes
 	);
 
@@ -448,7 +215,7 @@ const MaterialAlerts = ( props ) => {
 		className: getAlertWrapperClassName( {
 			className,
 			alertType,
-			templateSlug: 'material',
+			templateSlug: themeAdapter.templateSlug,
 			blockClasses,
 		} ),
 	} );
