@@ -7,6 +7,7 @@ const mainPlugin = fs.readFileSync( 'alerts-dlx.php', 'utf8' );
 const readme = fs.readFileSync( 'readme.txt', 'utf8' );
 const blocks = fs.readFileSync( 'php/Blocks.php', 'utf8' );
 const options = fs.readFileSync( 'php/Options.php', 'utf8' );
+const customColors = fs.readFileSync( 'src/js/blocks/plugins/custom-colors.js', 'utf8' );
 
 assert.match( mainPlugin, /Version:\s*2\.4\.1\b/, 'Plugin version remains 2.4.1 during RC validation' );
 assert.match( mainPlugin, /define\(\s*'ALERTS_DLX_VERSION',\s*'2\.4\.1'\s*\)/, 'Runtime version constant remains 2.4.1' );
@@ -23,5 +24,11 @@ for ( const blockName of [
 ] ) {
 	assert.ok( blocks.includes( blockName ), `Runtime still recognizes ${ blockName }` );
 }
+
+assert.match(
+	customColors,
+	/const alertsDLXBlockNamespaces = \[[\s\S]*?"mediaron\/alerts-dlx-alert"/,
+	'Canonical Alert remains opted into custom-color editor styling'
+);
 
 console.log( 'Public compatibility contracts remain present.' );
