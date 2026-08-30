@@ -1,0 +1,35 @@
+import { __ } from '@wordpress/i18n';
+
+export default {
+	key: 'chakra',
+	blockName: 'mediaron/alerts-dlx-chakra',
+	templateSlug: 'chakra',
+	supportedAlertTypes: [ 'success', 'info', 'warning', 'error', 'custom' ],
+	defaultAlertType: 'success',
+	defaultVariant: 'subtle',
+	variants: [
+		{ value: 'subtle', label: __( 'Subtle', 'alerts-dlx' ) },
+		{ value: 'solid', label: __( 'Solid', 'alerts-dlx' ) },
+		{ value: 'left-accent', label: __( 'Left Accent', 'alerts-dlx' ) },
+		{ value: 'top-accent', label: __( 'Top Accent', 'alerts-dlx' ) },
+		{ value: 'centered', label: __( 'Centered', 'alerts-dlx' ) },
+	],
+	variantControlClassName: 'alerts-dlx-chakra-variants',
+	variantControlTextDomain: 'quotes-dlx',
+	iconSetName: 'ChakraIcons',
+	closeButtonIconName: 'ChakraCloseIcon',
+	colorTokenNamespace: 'alerts-dlx-chakra',
+	themeOnlyAttributes: [],
+	hideIconAlignmentForVariants: [ 'centered' ],
+	classRules: [
+		{ className: 'is-dark-mode', attribute: 'mode', equals: 'dark' },
+		{ className: 'custom-fonts-enabled', attribute: 'enableCustomFonts' },
+		{ className: 'is-appearance-subtle', attribute: 'variant', equals: 'subtle' },
+		{ className: 'is-appearance-solid', attribute: 'variant', equals: 'solid' },
+		{ className: 'is-appearance-left-accent', attribute: 'variant', equals: 'left-accent' },
+		{ className: 'is-appearance-top-accent', attribute: 'variant', equals: 'top-accent' },
+		{ className: 'is-appearance-centered', attribute: 'variant', equals: 'centered' },
+		{ className: 'icon-vertical-align-top', attribute: 'iconVerticalAlignment', equals: 'top' },
+		{ className: 'icon-vertical-align-centered', attribute: 'iconVerticalAlignment', equals: 'centered' },
+	],
+};

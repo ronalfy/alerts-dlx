@@ -50,6 +50,7 @@ const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
   return (props) => {
     // List of AlertsDLX block namespaces.
     const alertsDLXBlockNamespaces = [
+      "mediaron/alerts-dlx-alert",
       "mediaron/alerts-dlx-bootstrap",
       "mediaron/alerts-dlx-chakra",
       "mediaron/alerts-dlx-material",
