@@ -21,14 +21,10 @@ import {
 	Slot,
 } from '@wordpress/components';
 
-import { rawHandler } from '@wordpress/blocks';
-import { useDispatch } from '@wordpress/data';
-
 import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InnerBlocks,
-	store,
 } from '@wordpress/block-editor';
 
 import { useInstanceId } from '@wordpress/compose';
@@ -42,11 +38,12 @@ import {
 	useAlertStyleSync,
 } from '../utils/alert-style-utils';
 
+import useLegacyDescriptionMigration from "../utils/use-legacy-description-migration";
+// Track the editor block that currently owns each persisted Material alert ID.
+const materialAlertIdOwners = new Map();
+
 const MaterialAlerts = ( props ) => {
 	const generatedUniqueId = useInstanceId( MaterialAlerts, 'adlx-material' );
-
-	const { replaceInnerBlocks } = useDispatch( store );
-
 	// Shortcuts.
 	const { attributes, setAttributes, clientId } = props;
 
@@ -93,18 +90,12 @@ const MaterialAlerts = ( props ) => {
 		}
 	);
 
-	/**
-	 * Migrate RichText to InnerBlocks.
-	 */
-	useEffect( () => {
-		// Port shareText attribute to use innerBlocks instead.
-		if ( alertDescription !== '' && null !== innerBlocksRef.current ) {
-			// Convert text over to blocks.
-			const richTextConvertedToBlocks = rawHandler( { HTML: alertDescription } );
-			replaceInnerBlocks( clientId, richTextConvertedToBlocks );
-			setAttributes( { alertDescription: '' } );
-		}
-	}, [ innerBlocksRef ] );
+	useLegacyDescriptionMigration({
+    alertDescription,
+    innerBlocksRef,
+    clientId,
+    setAttributes,
+  });
 
 	const inspectorControls = (
 		<>
@@ -381,9 +372,36 @@ const MaterialAlerts = ( props ) => {
 
 	const advancedControls = null;
 
+	/**
+	 * Keep a saved Material alert's identity stable. New blocks, duplicates,
+	 * copies, and transforms from another alert family still receive a fresh
+	 * Material ID. The ID also scopes styles and identifies dismiss cookies.
+	 */
 	useEffect( () => {
-		setAttributes( { uniqueId: generatedUniqueId } );
-	}, [] );
+		const isPersistedMaterialId =
+			typeof uniqueId === 'string' &&
+			uniqueId.startsWith( 'adlx-material-' );
+		const currentOwner = materialAlertIdOwners.get( uniqueId );
+
+		if (
+			isPersistedMaterialId &&
+			( ! currentOwner || currentOwner === clientId )
+		) {
+			materialAlertIdOwners.set( uniqueId, clientId );
+			return;
+		}
+
+		let nextUniqueId = generatedUniqueId;
+		if ( materialAlertIdOwners.has( nextUniqueId ) ) {
+			nextUniqueId =
+				'adlx-material-' + clientId.replace( /-/g, '' );
+		}
+
+		if ( nextUniqueId !== uniqueId ) {
+			setAttributes( { uniqueId: nextUniqueId } );
+		}
+		materialAlertIdOwners.set( nextUniqueId, clientId );
+	}, [ clientId, generatedUniqueId, setAttributes, uniqueId ] );
 
 	useAlertStyleSync( { className, alertType, setAttributes } );
 

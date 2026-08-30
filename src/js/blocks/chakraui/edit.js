@@ -21,13 +21,9 @@ import {
   Slot,
 } from "@wordpress/components";
 
-import { rawHandler } from "@wordpress/blocks";
-import { useDispatch } from "@wordpress/data";
-
 import {
   useBlockProps,
   useInnerBlocksProps,
-  store,
 } from "@wordpress/block-editor";
 
 import UnitChooser from "../components/unit-picker";
@@ -39,14 +35,12 @@ import {
   useAlertStyleSync,
 } from "../utils/alert-style-utils";
 
+import useLegacyDescriptionMigration from "../utils/use-legacy-description-migration";
 // For storing unique IDs.
 const uniqueIds = [];
 
 const ChakraAlerts = (props) => {
   const innerBlocksRef = useRef(null);
-
-  const { replaceInnerBlocks } = useDispatch(store);
-
   // Shortcuts.
   const { attributes, setAttributes, clientId } = props;
 
@@ -90,18 +84,12 @@ const ChakraAlerts = (props) => {
     }
   );
 
-  /**
-   * Migrate RichText to InnerBlocks.
-   */
-  useEffect(() => {
-    // Port shareText attribute to use innerBlocks instead.
-    if (alertDescription !== "" && null !== innerBlocksRef.current) {
-      // Convert text over to blocks.
-      const richTextConvertedToBlocks = rawHandler({ HTML: alertDescription });
-      replaceInnerBlocks(clientId, richTextConvertedToBlocks);
-      setAttributes({ alertDescription: "" });
-    }
-  }, [innerBlocksRef]);
+  useLegacyDescriptionMigration({
+    alertDescription,
+    innerBlocksRef,
+    clientId,
+    setAttributes,
+  });
 
   /**
    * Get a unique ID for the block for inline styling if necessary.
