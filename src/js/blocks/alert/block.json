@@ -216,53 +216,6 @@
       "iconEnabled": true
     }
   },
-  "styles": [
-    {
-      "name": "success",
-      "label": "Success",
-      "isDefault": true
-    },
-    {
-      "name": "info",
-      "label": "Info"
-    },
-    {
-      "name": "warning",
-      "label": "Warning"
-    },
-    {
-      "name": "danger",
-      "label": "Danger"
-    },
-    {
-      "name": "error",
-      "label": "Error"
-    },
-    {
-      "name": "primary",
-      "label": "Primary"
-    },
-    {
-      "name": "secondary",
-      "label": "Secondary"
-    },
-    {
-      "name": "neutral",
-      "label": "Neutral"
-    },
-    {
-      "name": "light",
-      "label": "Light"
-    },
-    {
-      "name": "dark",
-      "label": "Dark"
-    },
-    {
-      "name": "custom",
-      "label": "Custom"
-    }
-  ],
   "supports": {
     "anchor": true,
     "align": [

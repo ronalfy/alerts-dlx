@@ -5,6 +5,7 @@
 import ChakraIcons from "../components/icons/ChakraIcons";
 import BootstrapIcons from "../components/icons/BootstrapIcons";
 import MaterialIcons from "../components/icons/MaterialIcons";
+import { resolveAlertDesignBlockName } from "./alert-block-registry";
 
 const ICON_SETS_BY_BLOCK = {
   "mediaron/alerts-dlx-chakra": ChakraIcons,
@@ -19,6 +20,7 @@ const ICON_SETS_BY_BLOCK = {
  * @param {string} blockName Block name.
  * @return {Object} Preset icon map.
  */
-export function getIconSetForBlock(blockName) {
-  return ICON_SETS_BY_BLOCK[blockName] || ChakraIcons;
+export function getIconSetForBlock(blockName, alertGroup = null) {
+  const designBlockName = resolveAlertDesignBlockName(blockName, alertGroup);
+  return ICON_SETS_BY_BLOCK[designBlockName] || ChakraIcons;
 }
