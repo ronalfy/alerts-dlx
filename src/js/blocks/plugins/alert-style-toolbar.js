@@ -37,11 +37,11 @@ const withAlertStyleToolbar = createHigherOrderComponent((BlockEdit) => {
       return <BlockEdit {...props} />;
     }
 
-    const { alertType, className } = attributes;
+    const { alertType, className, alertGroup } = attributes;
 
     const { presets, customLabel } = useMemo(
-      () => getAlertStyleOptions(name),
-      [name]
+      () => getAlertStyleOptions(name, alertGroup),
+      [name, alertGroup]
     );
 
     const currentStyleLabel = getCurrentStyleLabel(

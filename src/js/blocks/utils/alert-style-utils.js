@@ -7,16 +7,16 @@ import classnames from 'classnames';
 import { getBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { openAlertParentInspectorTab } from './alert-parent-inspector';
+import {
+	HISTORICAL_ALERT_BLOCK_GROUPS,
+	getRegisteredAlertGroupForBlockName,
+	resolveAlertDesignBlockName,
+} from './alert-block-registry';
 
 /**
  * Map block names to their alert group slugs.
  */
-export const BLOCK_ALERT_GROUPS = {
-	'mediaron/alerts-dlx-bootstrap': 'bootstrap',
-	'mediaron/alerts-dlx-chakra': 'chakra',
-	'mediaron/alerts-dlx-material': 'material',
-	'mediaron/alerts-dlx-shoelace': 'shoelace',
-};
+export const BLOCK_ALERT_GROUPS = HISTORICAL_ALERT_BLOCK_GROUPS;
 
 export const HEADLINE_TAG_MAP = {
 	h1: 'h1',
@@ -51,7 +51,7 @@ export function resolveHeadlineTag( tag ) {
  * @return {string|null}
  */
 export function getAlertGroupForBlockName( blockName ) {
-	return BLOCK_ALERT_GROUPS[ blockName ] ?? null;
+	return getRegisteredAlertGroupForBlockName( blockName );
 }
 
 /**
@@ -167,8 +167,9 @@ export function useAlertStyleSync( { className, alertType, setAttributes } ) {
  * @param {string} blockName Block name.
  * @return {{ presets: Object[], hasCustom: boolean, customLabel: string }}
  */
-export function getAlertStyleOptions( blockName ) {
-	const blockStyles = getBlockType( blockName )?.styles ?? [];
+export function getAlertStyleOptions( blockName, alertGroup = null ) {
+	const styleSourceBlockName = resolveAlertDesignBlockName( blockName, alertGroup );
+	const blockStyles = getBlockType( styleSourceBlockName )?.styles ?? [];
 	const presets = blockStyles.filter( ( style ) => style.name !== 'custom' );
 	const customFromMeta = blockStyles.find( ( style ) => style.name === 'custom' );
 

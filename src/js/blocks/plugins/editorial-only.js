@@ -15,6 +15,7 @@ import { Fragment } from '@wordpress/element';
 import { InspectorControls } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { ALERT_BLOCK_NAMES } from '../utils/alert-block-registry';
 
 /**
  * Higher-order component that wraps block edit functions to add our custom panel.
@@ -28,17 +29,9 @@ import { __ } from '@wordpress/i18n';
  */
 const withAlertsPanel = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
-		// List of AlertsDLX block namespaces.
-		const alertsDLXBlockNamespaces = [
-			'mediaron/alerts-dlx-bootstrap',
-			'mediaron/alerts-dlx-chakra',
-			'mediaron/alerts-dlx-material',
-			'mediaron/alerts-dlx-shoelace',
-		];
-
-		// Check if this is an AlertsDLX block.
+		// Check against the single AlertsDLX integration registry.
 		const isAlertsDLXBlock =
-			props.name && alertsDLXBlockNamespaces.includes( props.name );
+			props.name && ALERT_BLOCK_NAMES.includes( props.name );
 
 		// If it's not an AlertsDLX block, return the original component without our panel.
 		if ( ! isAlertsDLXBlock ) {

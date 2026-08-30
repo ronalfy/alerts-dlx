@@ -4,13 +4,9 @@
 
 import { dispatch, select } from "@wordpress/data";
 import { store as blockEditorStore } from "@wordpress/block-editor";
+import { ALERT_BLOCK_NAMES } from "./alert-block-registry";
 
-export const ALERT_BLOCK_NAMES = [
-  "mediaron/alerts-dlx-bootstrap",
-  "mediaron/alerts-dlx-chakra",
-  "mediaron/alerts-dlx-material",
-  "mediaron/alerts-dlx-shoelace",
-];
+export { ALERT_BLOCK_NAMES } from "./alert-block-registry";
 
 /**
  * Find the nearest AlertsDLX alert ancestor for a block.

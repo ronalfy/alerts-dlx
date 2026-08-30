@@ -219,53 +219,6 @@ return array(
 				'iconEnabled' => true
 			)
 		),
-		'styles' => array(
-			array(
-				'name' => 'success',
-				'label' => 'Success',
-				'isDefault' => true
-			),
-			array(
-				'name' => 'info',
-				'label' => 'Info'
-			),
-			array(
-				'name' => 'warning',
-				'label' => 'Warning'
-			),
-			array(
-				'name' => 'danger',
-				'label' => 'Danger'
-			),
-			array(
-				'name' => 'error',
-				'label' => 'Error'
-			),
-			array(
-				'name' => 'primary',
-				'label' => 'Primary'
-			),
-			array(
-				'name' => 'secondary',
-				'label' => 'Secondary'
-			),
-			array(
-				'name' => 'neutral',
-				'label' => 'Neutral'
-			),
-			array(
-				'name' => 'light',
-				'label' => 'Light'
-			),
-			array(
-				'name' => 'dark',
-				'label' => 'Dark'
-			),
-			array(
-				'name' => 'custom',
-				'label' => 'Custom'
-			)
-		),
 		'supports' => array(
 			'anchor' => true,
 			'align' => array(

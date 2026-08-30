@@ -15,6 +15,7 @@ import { InspectorControls, PanelColorSettings } from "@wordpress/block-editor";
 import { Fill, PanelBody } from "@wordpress/components";
 import { registerPlugin } from "@wordpress/plugins";
 import { __ } from "@wordpress/i18n";
+import { ALERT_BLOCK_NAMES } from "../utils/alert-block-registry";
 import BootstrapColors from "../bootstrap/colors";
 import ChakraColors from "../chakraui/colors";
 import MaterialColors from "../material/colors";
@@ -48,18 +49,9 @@ const getColors = (alertGroup) => {
  */
 const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
   return (props) => {
-    // List of AlertsDLX block namespaces.
-    const alertsDLXBlockNamespaces = [
-      "mediaron/alerts-dlx-alert",
-      "mediaron/alerts-dlx-bootstrap",
-      "mediaron/alerts-dlx-chakra",
-      "mediaron/alerts-dlx-material",
-      "mediaron/alerts-dlx-shoelace",
-    ];
-
-    // Check if this is an AlertsDLX block.
+    // Check against the single AlertsDLX integration registry.
     const isAlertsDLXBlock =
-      props.name && alertsDLXBlockNamespaces.includes(props.name);
+      props.name && ALERT_BLOCK_NAMES.includes(props.name);
 
     // If it's not an AlertsDLX block, return the original component without our panel.
     if (!isAlertsDLXBlock) {

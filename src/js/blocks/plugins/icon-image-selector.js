@@ -17,7 +17,7 @@ registerPlugin("custom-slot-fills", {
     return (
       <Fill name="alertsDLXSettingsPanelEnd">
         {({ attributes, setAttributes, name }) => {
-          const { iconSource, imageUrl, imageId, icon } = attributes;
+          const { iconSource, imageUrl, imageId, icon, alertGroup } = attributes;
 
           const { openMediaUploader } = useMediaUploader();
 
@@ -117,7 +117,7 @@ registerPlugin("custom-slot-fills", {
                     <IconPicker
                       defaultSvg={icon}
                       setAttributes={setAttributes}
-                      icons={getIconSetForBlock(name)}
+                      icons={getIconSetForBlock(name, alertGroup)}
                       popoverPlacement="left-start"
                     />
                   </div>
