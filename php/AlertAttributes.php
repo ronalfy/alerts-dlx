@@ -61,6 +61,62 @@ final class AlertAttributes {
 	);
 
 	/**
+	 * Get the renderer schema used by blocks and the shortcode builder.
+	 *
+	 * @return array
+	 */
+	public static function get_schema() {
+		return self::SCHEMA;
+	}
+
+	/**
+	 * Get the existing shortcode defaults from one shared authority.
+	 *
+	 * The generated identifier remains per-call so the historical shortcode
+	 * identity and Dismiss behavior stay unchanged.
+	 *
+	 * @return array
+	 */
+	public static function get_shortcode_defaults() {
+		return array(
+			'unique_id'               => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
+			'alert_group'             => 'chakra',
+			'alert_type'              => 'success',
+			'align'                   => 'center',
+			'alert_title'             => '',
+			'alert_description'       => '',
+			'maximum_width_unit'      => 'px',
+			'maximum_width'           => 650,
+			'icon'                    => '',
+			'base_font_size'          => 16,
+			'icon_vertical_alignment' => 'top',
+			'variant'                 => '',
+			'mode'                    => 'light',
+			'button_text'             => '',
+			'button_url'              => '',
+			'button_target'           => false,
+			'button_rel_no_follow'    => false,
+			'button_rel_sponsored'    => false,
+			'icon_appearance'         => 'default',
+			'color_primary'           => '',
+			'color_border'            => '',
+			'color_accent'            => '',
+			'color_alt'               => '',
+			'color_alt_hover'         => '',
+			'color_alt_text'          => '',
+			'color_alt_text_hover'    => '',
+			'color_bold'              => '',
+			'color_light'             => '',
+			'close_button_enabled'    => false,
+			'close_button_expiration' => 0,
+			'is_block_editorial_only' => false,
+			'icon_source'             => 'icon',
+			'image_url'               => '',
+			'image_id'                => 0,
+		);
+	}
+
+	/**
 	 * Normalize attributes without adding defaults or changing stored values.
 	 *
 	 * @param array          $attributes Block or shortcode attributes.

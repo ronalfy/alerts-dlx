@@ -124,42 +124,7 @@ class Blocks {
 	 * @return string
 	 */
 	public function shortcode( $atts = array(), $content = '' ) {
-		$defaults = array(
-			'unique_id'               => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
-			'alert_group'             => 'chakra',
-			'alert_type'              => 'success',
-			'align'                   => 'center',
-			'alert_title'             => '',
-			'alert_description'       => '',
-			'maximum_width_unit'      => 'px',
-			'maximum_width'           => 650,
-			'icon'                    => '',
-			'base_font_size'          => 16,
-			'icon_vertical_alignment' => 'top',
-			'variant'                 => '',
-			'mode'                    => 'light', /* can be dark */
-			'button_text'             => '',
-			'button_url'              => '',
-			'button_target'           => false,
-			'button_rel_no_follow'    => false,
-			'button_rel_sponsored'    => false,
-			'icon_appearance'         => 'default', /* can be rounded */
-			'color_primary'           => '',
-			'color_border'            => '',
-			'color_accent'            => '',
-			'color_alt'               => '',
-			'color_alt_hover'         => '',
-			'color_alt_text'          => '',
-			'color_alt_text_hover'    => '',
-			'color_bold'              => '',
-			'color_light'             => '',
-			'close_button_enabled'    => false,
-			'close_button_expiration' => 0,
-			'is_block_editorial_only' => false,
-			'icon_source'             => 'icon',
-			'image_url'               => '',
-			'image_id'                => 0,
-		);
+		$defaults = AlertAttributes::get_shortcode_defaults();
 		$atts     = shortcode_atts( $defaults, $atts, 'alertsdlx' );
 
 		// If alert description is empty, use content.
