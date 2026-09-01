@@ -54,13 +54,34 @@ for (const [group, item] of Object.entries(historical)) {
 
 const variationSource = fs.readFileSync('src/js/blocks/alert/variations.js', 'utf8');
 const executableVariations = variationSource
-	.replace(/^import .*;\n/gm, '')
-	.replace(/export default \[/, 'const variations = [');
+	.replace(/^import \{ __ \} from '@wordpress\/i18n';\n/m, '')
+	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/canonical-alert-presets';\n/m, '')
+	.replace(/export function createGoalFirstCanonicalVariations/, 'function createGoalFirstCanonicalVariations')
+	.replace(/export default createGoalFirstCanonicalVariations\(\);?\s*$/m, '');
 const loadVariations = new Function(
 	'__',
-	`${executableVariations}\nreturn { commonAttributes, variations };`
+	'getCanonicalAlertDefaults',
+	'getCanonicalAlertTypeForPurpose',
+	'snapshotCanonicalAlertAttributes',
+	`${executableVariations}\nreturn { commonAttributes, createGoalFirstCanonicalVariations };`
 );
-const { commonAttributes, variations } = loadVariations((value) => value);
+const alertTypeForPurpose = (purpose) => ({
+	info: 'info',
+	success: 'success',
+	warning: 'warning',
+	error: 'danger',
+	tip: 'info',
+	announcement: 'primary',
+	cta: 'primary',
+})[purpose] || 'success';
+const variationRuntime = loadVariations(
+	(value) => value,
+	() => ({}),
+	alertTypeForPurpose,
+	(attributes) => ({ ...attributes })
+);
+const { commonAttributes } = variationRuntime;
+const variations = variationRuntime.createGoalFirstCanonicalVariations({});
 assert.equal(
 	Object.hasOwn(commonAttributes, 'alertDescription'),
 	false,
@@ -74,6 +95,19 @@ for (const variation of variations) {
 		`${variation.name} insertion attributes must not seed preview description content`
 	);
 }
+const ctaVariation = variations.find((variation) => variation.name === 'cta');
+assert.equal(
+	Object.hasOwn(ctaVariation.attributes, 'alertTitle'),
+	false,
+	'CTA preview title must not leak into inserted CTA attributes'
+);
+assert.equal(
+	Object.hasOwn(ctaVariation.attributes, 'buttonText'),
+	false,
+	'CTA preview button text must not leak into inserted CTA attributes'
+);
+assert.equal(ctaVariation.example?.attributes?.alertTitle, 'Click here to learn more', 'CTA preview title remains available');
+assert.equal(ctaVariation.example?.attributes?.buttonText, 'Learn More', 'CTA preview button text remains available');
 
 const sidebar = fs.readFileSync(
 	'src/js/blocks/components/AlertTypeStyleControl.js',

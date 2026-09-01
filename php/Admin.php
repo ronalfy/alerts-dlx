@@ -124,6 +124,17 @@ class Admin {
 			'options_version'         => Options::get_defaults()['options_version'],
 		);
 
+		// The settings screen owns the legacy fields above. Preserve the
+		// separately capability-protected canonical preset snapshots.
+		$current_settings = get_option( CanonicalAlertPresets::OPTION_NAME, array() );
+		if ( is_array( $current_settings ) ) {
+			foreach ( array( CanonicalAlertPresets::PRESETS_KEY, CanonicalAlertPresets::DEFAULTS_KEY ) as $preserved_key ) {
+				if ( array_key_exists( $preserved_key, $current_settings ) ) {
+					$settings[ $preserved_key ] = $current_settings[ $preserved_key ];
+				}
+			}
+		}
+
 		update_option( 'alerts_dlx', $settings );
 
 		wp_send_json_success(

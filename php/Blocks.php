@@ -23,6 +23,7 @@ class Blocks {
 	 */
 	public static function run() {
 		$self = new self();
+		CanonicalAlertPresets::run();
 		add_action( 'init', array( $self, 'init' ) );
 		return $self;
 	}
@@ -284,6 +285,7 @@ class Blocks {
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
+		$can_manage_presets = current_user_can( 'manage_options' );
 
 		// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
 		wp_register_style(
@@ -324,6 +326,11 @@ class Blocks {
 				'headlineCustomClasses' => Options::get_headline_custom_classes(),
 				'headlineForceSize'     => Options::is_headline_force_size(),
 				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
+				'canonicalPresets'      => CanonicalAlertPresets::get_presets_for_editor(),
+				'canonicalDefaults'     => CanonicalAlertPresets::get_defaults_for_editor(),
+				'canonicalCanManagePresets' => $can_manage_presets,
+				'canonicalPresetNonce'  => $can_manage_presets ? wp_create_nonce( CanonicalAlertPresets::NONCE_ACTION ) : '',
+				'ajaxUrl'               => $can_manage_presets ? admin_url( 'admin-ajax.php' ) : '',
 			)
 		);
 
