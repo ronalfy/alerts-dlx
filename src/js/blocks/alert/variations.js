@@ -6,7 +6,6 @@ const commonAttributes = {
 	titleEnabled: true,
 	descriptionEnabled: true,
 	iconEnabled: true,
-	alertDescription: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>",
 };
 
 export default [
