@@ -1,1 +1,1131 @@
-button.button-reset,button.button-reset:focus,button.button-reset:hover{background:none;color:inherit;border:none;padding:0;cursor:pointer;outline:inherit;text-transform:unset}button.button-reset.show-cursor{cursor:pointer}.button-reset button,.button-reset:focus button,.button-reset:hover button{background:none;color:inherit;border:none;padding:0;cursor:pointer;outline:inherit;text-transform:unset}button.button-reset.alerts-dlx-icon-preview-button.components-button,button.button-reset.alerts-dlx-icon-preview-button.components-button:hover{margin:0;padding:0}.template-material,.template-chakra,.template-bootstrap{margin-top:1.5rem !important;margin-bottom:1.5rem !important}.dlx-admin-only-block-expires .components-number-control{margin-bottom:0}.alerts-dlx-editorial-only{padding:48px;border:4px dashed #ff9800}.alerts-dlx-icon-image{max-width:64px;max-height:64px}.alerts-dlx-icon-image-buttons-wrapper{display:flex;justify-content:space-between;align-items:center;gap:10px}.alerts-dlx-icon-sidebar-wrapper{display:flex;justify-content:center;width:100%;padding:8px 0}.alerts-dlx-icon-sidebar-wrapper .alerts-dlx-icon-preview svg{width:32px;height:32px}.alerts-dlx-icon-source-toggle-group.components-toggle-group-control{border:1px solid #eaeaea;border-radius:4px;background-color:#fff;box-shadow:0 0 0 1px #eaeaea}.alerts-dlx-inner-block-parent-toolbar{border-left:1px solid #ddd;margin-left:4px;padding-left:4px}.alerts-dlx-alert-style-toolbar .components-dropdown-menu__toggle{max-width:160px}.template-material *,.template-chakra *,.template-bootstrap *{font-family:var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif)}a.alerts-dlx-button.button-reset,a.alerts-dlx-button,button.button-reset,button.button-reset:hover,a.alerts-dlx-button,button.button-reset.components-button,button.button-reset.components-button:hover{padding:10px 30px;border-radius:.3125em;margin-top:.8em;line-height:1.2em;font-size:1em;height:auto;text-decoration:none;transition:all .3s ease-in-out}a.alerts-dlx-button.button-reset~.button-reset,a.alerts-dlx-button.button-reset~.button-reset:hover,a.alerts-dlx-button~.button-reset,a.alerts-dlx-button~.button-reset:hover,button.button-reset~.button-reset,button.button-reset~.button-reset:hover,button.button-reset:hover~.button-reset,button.button-reset:hover~.button-reset:hover,a.alerts-dlx-button~.button-reset,a.alerts-dlx-button~.button-reset:hover,button.button-reset.components-button~.button-reset,button.button-reset.components-button~.button-reset:hover,button.button-reset.components-button:hover~.button-reset,button.button-reset.components-button:hover~.button-reset:hover{margin-top:.5em;padding:0;transition:all .3s ease-in-out}.template-chakra a.alerts-dlx-button.button-reset,.template-chakra a.alerts-dlx-button,.template-chakra button.button-reset,.template-chakra button.button-reset:hover,.template-chakra a.alerts-dlx-button,.template-chakra button.button-reset.components-button,.template-chakra button.button-reset.components-button:hover{border-radius:0}.template-material,.template-chakra,.template-bootstrap,.template-shoelace{margin-top:1.5rem;margin-bottom:1.5rem;margin-block-start:1.5rem;margin-block-end:1.5rem}.template-material section h2,.template-chakra section h2,.template-bootstrap section h2,.template-shoelace section h2{font-family:var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);font-weight:900}.alerts-dlx-close{position:absolute;cursor:pointer;top:0;right:0;padding:1.25rem 1rem;padding-top:.75rem}.alerts-dlx-close svg,.alerts-dlx-close svg:hover{transition:color .3s ease-in-out;width:16px;height:16px}.alerts-dlx-chakra-variants .components-button-group,.alerts-dlx-material-variants .components-button-group,.alerts-dlx-shoelace-variants .components-button-group,.alerts-dlx-chakra-mode .components-button-group,.alerts-dlx-material-mode .components-button-group,.alerts-dlx-bootstrap-mode .components-button-group{display:grid;grid-template-columns:1fr 1fr;row-gap:8px;column-gap:8px;justify-content:center}.alerts-dlx-chakra-variants .components-button-group button,.alerts-dlx-material-variants .components-button-group button,.alerts-dlx-shoelace-variants .components-button-group button,.alerts-dlx-chakra-mode .components-button-group button,.alerts-dlx-material-mode .components-button-group button,.alerts-dlx-bootstrap-mode .components-button-group button{display:flex;justify-content:center;width:100%}figure.alerts-dlx-alert{text-align:left;box-sizing:border-box;position:relative}.alerts-dlx-alert[role=alert]{font-size:var(--alerts-dlx-base-font-size, 16px)}.alerts-dlx-alert[role=alert] *:not(svg,svg path,svg g){font-size:inherit}.alerts-dlx-alert[role=alert] section .alerts-dlx-title{font-size:1.2em;font-weight:600}.alerts-dlx-alert[role=alert] .alerts-dlx-content p{font-size:1.2em}.alerts-dlx-alert[role=alert] button.button-reset,.alerts-dlx-alert[role=alert] a.alerts-dlx-button,.alerts-dlx-alert[role=alert] button.button-reset.components-button{font-size:1.2em}.alerts-dlx-alert[role=alert] .alerts-dlx-icon-preview svg{width:1.4em;height:1.4em}.alerts-dlx-alert[role=alert] .alerts-dlx-icon img{max-width:2em;max-height:2em;width:100%;height:auto;margin-bottom:.5em}.alerts-dlx-alert[role=alert] .alerts-dlx-icon-frontend .alerts-dlx-icon-preview{font-size:1.2em;line-height:2.2em}body .alerts-dlx-alert[role=alert] section .alerts-dlx-close~.alerts-dlx-title{padding-right:16px}body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert]{padding:.75em 1.25em}body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .alerts-dlx-icon img{max-height:3.8em;max-width:unset;width:auto}.template-chakra .alerts-dlx-alert[role=alert],.template-bootstrap .alerts-dlx-alert[role=alert],.template-material .alerts-dlx-alert[role=alert],.template-shoelace .alerts-dlx-alert[role=alert]{font-size:var(--alerts-dlx-base-font-size, 16px)}.alerts-dlx .template-chakra .alerts-dlx-alert[role=alert],.alerts-dlx .template-bootstrap .alerts-dlx-alert[role=alert],.alerts-dlx .template-material .alerts-dlx-alert[role=alert],.alerts-dlx .template-shoelace .alerts-dlx-alert[role=alert]{font-size:var(--alerts-dlx-base-font-size, 16px)}.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace{font-size:inherit}.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra *,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap *,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material *,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace *{font-size:inherit}.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra section .alerts-dlx-title,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap section .alerts-dlx-title,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material section .alerts-dlx-title,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace section .alerts-dlx-title{font-size:1.2em;font-weight:600;line-height:1.5em;text-transform:none}.alerts-dlx.is-headline-size-forced section .alerts-dlx-title,.template-chakra .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-chakra section .alerts-dlx-title,.template-bootstrap .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap section .alerts-dlx-title,.template-material .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-material section .alerts-dlx-title,.template-shoelace .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace section .alerts-dlx-title,.editor-styles-wrapper .alerts-dlx.is-headline-size-forced section .alerts-dlx-title{font-size:1.2em !important;font-weight:600 !important;line-height:1.5em !important;text-transform:none !important}.editor-styles-wrapper .alerts-dlx-alert[role=alert] .alerts-dlx-content p{font-family:var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);font-weight:400;font-size:1.2em}.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra .alerts-dlx-content p,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap .alerts-dlx-content p,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material .alerts-dlx-content p,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace .alerts-dlx-content p{font-family:var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);font-weight:400;font-size:1.2em}.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra button.button-reset,.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra a.alerts-dlx-button,.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra button.button-reset.components-button,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap button.button-reset,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap a.alerts-dlx-button,.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap button.button-reset.components-button,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material button.button-reset,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material a.alerts-dlx-button,.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material button.button-reset.components-button,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace button.button-reset,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace a.alerts-dlx-button,.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace button.button-reset.components-button{font-size:1.2em}.alerts-dlx-content a,.alerts-dlx-content a:hover{color:inherit;text-decoration:underline}@keyframes alerts-dlx-dismiss{0%{opacity:1}100%{opacity:0;height:0}}.alerts-dlx-remove{animation-name:alerts-dlx-dismiss;animation-duration:.8s;animation-timing-function:ease-in-out;animation-fill-mode:forwards}.entry-content .alerts-dlx-alert section,.alerts-dlx-alert section{margin:0;padding:0}.template-material{--material-success-color: #1e4620;--material-success-color-accent: #295e2c;--material-success-color-alt: #2e7d32;--material-success-color-bold: #4caf50;--material-success-color-light: #edf7ed;--material-success-subtle-button-text: #ffffff;--material-success-subtle-button-background: #1e4620;--material-success-outlined-background: #ffffff;--material-success-outlined-button-text: #1e4620;--material-success-outlined-button-background: #ffffff;--material-success-outlined-button-text-hover: #ffffff;--material-success-outlined-button-background-hover: #2e7d32;--material-success-filled-background: #2e7d32;--material-success-filled-border: #2e7d32;--material-success-filled-button-text: #2e7d32;--material-success-filled-button-border: #2e7d32;--material-success-filled-button-background: #ffffff;--material-success-filled-button-background-hover: #2e7d32;--material-success-filled-button-border-hover: #ffffff;--material-info-color: #014361;--material-info-color-accent: #035e88;--material-info-color-alt: #0277bd;--material-info-color-bold: #03a9f4;--material-info-color-light: #e5f6fd;--material-info-subtle-button-text: #ffffff;--material-info-subtle-button-background: #014361;--material-info-outlined-background: #ffffff;--material-info-outlined-button-text: #014361;--material-info-outlined-button-background: #ffffff;--material-info-outlined-button-text-hover: #ffffff;--material-info-outlined-button-background-hover: #0277bd;--material-info-filled-background: #0277bd;--material-info-filled-border: #0277bd;--material-info-filled-button-text: #0277bd;--material-info-filled-button-border: #0277bd;--material-info-filled-button-background: #ffffff;--material-info-filled-button-background-hover: #0277bd;--material-info-filled-button-border-hover: #ffffff;--material-warning-color: #663c00;--material-warning-color-accent: #8c5e00;--material-warning-color-alt: #ed6c02;--material-warning-color-bold: #ff9800;--material-warning-color-light: #fff4e5;--material-warning-subtle-button-text: #ffffff;--material-warning-subtle-button-background: #663c00;--material-warning-outlined-background: #ffffff;--material-warning-outlined-button-text: #663c00;--material-warning-outlined-button-background: #ffffff;--material-warning-outlined-button-text-hover: #ffffff;--material-warning-outlined-button-background-hover: #ed6c02;--material-warning-filled-background: #ed6c02;--material-warning-filled-border: #ed6c02;--material-warning-filled-button-text: #ed6c02;--material-warning-filled-button-border: #ed6c02;--material-warning-filled-button-background: #ffffff;--material-warning-filled-button-background-hover: #ed6c02;--material-warning-filled-button-border-hover: #ffffff;--material-error-color: #5f2120;--material-error-color-accent: #8c2d2b;--material-error-color-alt: #d32f2f;--material-error-color-bold: #ef5350;--material-error-color-light: #fdeded;--material-error-subtle-button-text: #ffffff;--material-error-subtle-button-background: #5f2120;--material-error-outlined-background: #ffffff;--material-error-outlined-button-text: #5f2120;--material-error-outlined-button-background: #ffffff;--material-error-outlined-button-text-hover: #ffffff;--material-error-outlined-button-background-hover: #d32f2f;--material-error-filled-background: #d32f2f;--material-error-filled-border: #d32f2f;--material-error-filled-button-text: #d32f2f;--material-error-filled-button-border: #d32f2f;--material-error-filled-button-background: #ffffff;--material-error-filled-button-background-hover: #d32f2f;--material-error-filled-button-border-hover: #ffffff;--alerts-dlx-material-title-weight: 900}.template-material.is-dark-mode{--material-success-color: #cce8cd;--material-success-color-accent: #49a44e;--material-success-color-alt: #5cbb60;--material-success-color-bold: #66bb6a;--material-success-color-light: #0c130d;--material-success-subtle-button-text: #0c130d;--material-success-subtle-button-background: #66bb6a;--material-success-outlined-background: #160b0b;--material-success-outlined-button-text: #0c130d;--material-success-outlined-button-background: #66bb6a;--material-success-outlined-button-text-hover: #0c130d;--material-success-outlined-button-background-hover: #49a44e;--material-success-filled-background: #66bb6a;--material-success-filled-border: #66bb6a;--material-success-filled-button-text: #ffffff;--material-success-filled-button-border: #ffffff;--material-success-filled-button-background: transparent;--material-success-filled-button-background-hover: #0c130d;--material-success-filled-button-border-hover: #0c130d;--material-info-color: #b8e7fb;--material-info-color-accent: #23abea;--material-info-color-alt: #20a2df;--material-info-color-bold: #29b6f6;--material-info-color-light: #071318;--material-info-subtle-button-text: #ffffff;--material-info-subtle-button-background: #29b6f6;--material-info-outlined-background: #071318;--material-info-outlined-button-text: #ffffff;--material-info-outlined-button-background: #29b6f6;--material-info-outlined-button-text-hover: #ffffff;--material-info-outlined-button-background-hover: #20a2df;--material-info-filled-background: #29b6f6;--material-info-filled-border: #29b6f6;--material-info-filled-button-text: #ffffff;--material-info-filled-button-border: #ffffff;--material-info-filled-button-background: transparent;--material-info-filled-button-background-hover: #071318;--material-info-filled-button-border-hover: #071318;--material-warning-color: #ffe2b7;--material-warning-color-accent: #e3a03a;--material-warning-color-alt: #f9aa33;--material-warning-color-bold: #ffa726;--material-warning-color-light: #191207;--material-warning-subtle-button-text: #191207;--material-warning-subtle-button-background: #ffa726;--material-warning-outlined-background: #191207;--material-warning-outlined-button-text: #191207;--material-warning-outlined-button-background: #ffa726;--material-warning-outlined-button-text-hover: #191207;--material-warning-outlined-button-background-hover: #f9aa33;--material-warning-filled-background: #ffa726;--material-warning-filled-border: #ffa726;--material-warning-filled-button-text: #191207;--material-warning-filled-button-border: #191207;--material-warning-filled-button-background: transparent;--material-warning-filled-button-background-hover: #191207;--material-warning-filled-button-border-hover: #191207;--material-error-color: #f4c7c7;--material-error-color-accent: #c93328;--material-error-color-alt: #d43c31;--material-error-color-bold: #f44336;--material-error-color-light: #160b0b;--material-error-subtle-button-text: #ffffff;--material-error-subtle-button-background: #f44336;--material-error-outlined-background: #160b0b;--material-error-outlined-button-text: #ffffff;--material-error-outlined-button-background: #f44336;--material-error-outlined-button-text-hover: #ffffff;--material-error-outlined-button-background-hover: #d43c31;--material-error-filled-background: #f44336;--material-error-filled-border: #f44336;--material-error-filled-button-text: #ffffff;--material-error-filled-button-border: #ffffff;--material-error-filled-button-background: transparent;--material-error-filled-button-background-hover: #160b0b;--material-error-filled-button-border-hover: #160b0b;--alerts-dlx-material-title-weight: 500}.template-material .alerts-dlx-material{display:grid;grid-template-columns:1fr;font-size:var(--alerts-dlx-material-base-size, 16px);padding:16px;border-radius:4px;margin:0 auto}.template-material .alerts-dlx-material .alerts-dlx-icon-preview svg{width:1.8em;height:1.8em}.template-material .alerts-dlx-material.alerts-dlx-has-icon{grid-template-columns:3.8em 1fr;padding-left:0}.template-material .alerts-dlx-material section .alerts-dlx-title{font-size:1.2em;font-weight:var(--alerts-dlx-material-title-weight, 900);line-height:1.5em;margin:0 0 .35em;padding:0}.template-material .alerts-dlx-material .alerts-dlx-content p{font-size:1.2em;font-weight:400;line-height:1.5em;margin:0;padding:0}.template-material .alerts-dlx-material .alerts-dlx-content p:not(:first-child){margin-top:.5em}.template-material .alerts-dlx-material button.button-reset,.template-material .alerts-dlx-material a.alerts-dlx-button,.template-material .alerts-dlx-material button.button-reset.components-button{font-size:1.2em}.template-material .alerts-dlx-material .alerts-dlx-icon-preview svg{width:1.4em;height:1.4em}.template-material .alerts-dlx-material .alerts-dlx-icon{display:flex;align-items:flex-start;justify-content:center}.template-material.icon-vertical-align-centered .alerts-dlx-icon{align-items:center}.template-material.is-style-success.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material{box-shadow:1px 1px 5px 1px rgba(46,125,50,.2)}.template-material.is-style-info.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material{box-shadow:1px 1px 5px 1px rgba(2,119,189,.2)}.template-material.is-style-warning.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material{box-shadow:1px 1px 5px 1px rgba(237,108,2,.2)}.template-material.is-style-error.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material{box-shadow:1px 1px 5px 1px rgba(211,47,47,.2)}.template-material.is-appearance-centered .alerts-dlx-material{display:block}.template-material.is-appearance-centered .alerts-dlx-icon-preview svg{width:1.6em;height:1.6em}.template-material.is-appearance-centered section{text-align:center}.template-material.is-appearance-centered .alerts-dlx-button-wrapper{position:relative;flex-wrap:wrap}.template-material.is-appearance-centered .alerts-dlx-button-wrapper button:first-child{width:100%;justify-content:center}.template-material.is-appearance-centered .alerts-dlx-button-wrapper button:not(:first-child){position:absolute;right:-35px}.template-material.is-style-custom .alerts-dlx-title{color:var(--alerts-dlx-material-color-primary, var(--material-info-color))}.template-material.is-style-custom .alerts-dlx-content p{color:var(--alerts-dlx-material-color-primary, var(--material-info-color))}.template-material.is-style-custom.is-appearance-default .alerts-dlx-material,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material{background-color:var(--alerts-dlx-material-color-light, var(--material-info-color-light));color:var(--alerts-dlx-material-color-primary, var(--material-info-color))}.template-material.is-style-custom.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-custom.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-custom.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--alerts-dlx-material-color-alt-text, #ffffff);border:1px solid rgba(0,0,0,0);background-color:var(--alerts-dlx-material-color-alt, var(--material-info-color-alt))}.template-material.is-style-custom.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));color:var(--alerts-dlx-material-color-alt-text-hover, #ffffff)}.template-material.is-style-custom.is-appearance-default .alerts-dlx-material svg,.template-material.is-style-custom.is-appearance-default .alerts-dlx-material svg path,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material svg,.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material svg path{color:var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));fill:var(--alerts-dlx-material-color-bold, var(--material-info-color-bold))}.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material{background-color:var(--alerts-dlx-material-color-light, #ffffff);color:var(--alerts-dlx-material-color-primary, var(--material-info-color));border:2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold))}.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--alerts-dlx-material-color-alt-text, var(--material-info-color));border:2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));background-color:var(--alerts-dlx-material-color-alt, #ffffff)}.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));color:var(--alerts-dlx-material-color-alt-text-hover, #ffffff);border:2px solid var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent))}.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material svg,.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material svg path{color:var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));fill:var(--alerts-dlx-material-color-bold, var(--material-info-color-bold))}.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material{background-color:var(--alerts-dlx-material-color-light, var(--material-info-color-light));color:var(--alerts-dlx-material-color-alt-text, #ffffff);border:2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold))}.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--alerts-dlx-material-color-alt-text, var(--material-info-color));border:2px solid var(--alerts-dlx-material-color-alt, var(--material-info-color));background-color:var(--alerts-dlx-material-color-alt, #ffffff)}.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));color:var(--alerts-dlx-material-color-alt-text-hover, #ffffff);border:2px solid var(--alerts-dlx-material-color-alt, #ffffff)}.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material svg,.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material svg path{color:var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));fill:var(--alerts-dlx-material-color-bold, var(--material-info-color-bold))}.template-material.is-style-success.is-appearance-default .alerts-dlx-title,.template-material.is-style-success.is-appearance-centered .alerts-dlx-title{color:var(--material-success-color)}.template-material.is-style-success.is-appearance-default .alerts-dlx-content p,.template-material.is-style-success.is-appearance-centered .alerts-dlx-content p{color:var(--material-success-color)}.template-material.is-style-success.is-appearance-default .alerts-dlx-material,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material{background-color:var(--material-success-color-light);color:var(--material-success-color)}.template-material.is-style-success.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-success.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-success.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-success-subtle-button-text, #ffffff);border:1px solid rgba(0,0,0,0);background-color:var(--material-success-subtle-button-background, var(--material-success-color))}.template-material.is-style-success.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-success-color-accent);color:var(--material-success-subtle-button-text, #ffffff)}.template-material.is-style-success.is-appearance-default .alerts-dlx-material svg,.template-material.is-style-success.is-appearance-default .alerts-dlx-material svg path,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material svg,.template-material.is-style-success.is-appearance-centered .alerts-dlx-material svg path{fill:var(--material-success-color-bold)}.template-material.is-style-success.is-appearance-default .alerts-dlx-close svg,.template-material.is-style-success.is-appearance-centered .alerts-dlx-close svg{color:var(--material-success-color-bold)}.template-material.is-style-success.is-appearance-default .alerts-dlx-close svg:hover,.template-material.is-style-success.is-appearance-centered .alerts-dlx-close svg:hover{color:var(--material-success-color-accent)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-title{color:var(--material-success-color)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-content p{color:var(--material-success-color)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material{background-color:var(--material-success-outlined-background, var(--material-success-color-light));color:var(--material-success-color);border:2px solid var(--material-success-color-bold)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-success-outlined-button-text, var(--material-success-color));border:2px solid var(--material-success-color-bold);background-color:var(--material-success-outlined-button-background, #ffffff)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-success-outlined-button-background-hover, var(--material-success-color-alt));color:var(--material-success-outlined-button-text-hover, #ffffff);border:2px solid var(--material-success-outlined-button-background-hover, var(--material-success-color-alt))}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material svg,.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material svg path{fill:var(--material-success-color-bold)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-close svg{color:var(--material-success-color-bold)}.template-material.is-style-success.is-appearance-outlined .alerts-dlx-close svg:hover{color:var(--material-success-color-accent)}.template-material.is-style-success.is-appearance-filled .alerts-dlx-title{color:#fff}.template-material.is-style-success.is-appearance-filled .alerts-dlx-content p{color:#fff}.template-material.is-style-success.is-appearance-filled .alerts-dlx-material{background-color:var(--material-success-filled-background, var(--material-success-color-alt));color:#fff;border:2px solid var(--material-success-filled-border, var(--material-success-color-alt))}.template-material.is-style-success.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-success.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-success.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-success-filled-button-text, var(--material-success-color-alt));border:2px solid var(--material-success-filled-button-border, var(--material-success-color-alt));background-color:var(--material-success-filled-button-background, #ffffff)}.template-material.is-style-success.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-success.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-success-filled-button-background-hover, var(--material-success-color-light));color:#fff;border:2px solid var(--material-success-filled-button-border-hover, var(--material-success-color-light))}.template-material.is-style-success.is-appearance-filled .alerts-dlx-material svg,.template-material.is-style-success.is-appearance-filled .alerts-dlx-material svg path{fill:#fff}.template-material.is-style-success.is-appearance-filled .alerts-dlx-close svg{color:#fff}.template-material.is-style-success.is-appearance-filled .alerts-dlx-close svg:hover{color:var(--material-success-color-accent)}.template-material.is-style-info.is-appearance-default .alerts-dlx-title,.template-material.is-style-info.is-appearance-centered .alerts-dlx-title{color:var(--material-info-color)}.template-material.is-style-info.is-appearance-default .alerts-dlx-content p,.template-material.is-style-info.is-appearance-centered .alerts-dlx-content p{color:var(--material-info-color)}.template-material.is-style-info.is-appearance-default .alerts-dlx-material,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material{background-color:var(--material-info-color-light);color:var(--material-info-color)}.template-material.is-style-info.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-info.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-info.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-info-subtle-button-text, #ffffff);border:1px solid rgba(0,0,0,0);background-color:var(--material-info-subtle-button-background, var(--material-info-color))}.template-material.is-style-info.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-info-color-accent);color:var(--material-info-subtle-button-text, #ffffff)}.template-material.is-style-info.is-appearance-default .alerts-dlx-material svg,.template-material.is-style-info.is-appearance-default .alerts-dlx-material svg path,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material svg,.template-material.is-style-info.is-appearance-centered .alerts-dlx-material svg path{fill:var(--material-info-color-bold)}.template-material.is-style-info.is-appearance-default .alerts-dlx-close svg,.template-material.is-style-info.is-appearance-centered .alerts-dlx-close svg{color:var(--material-info-color-bold)}.template-material.is-style-info.is-appearance-default .alerts-dlx-close svg:hover,.template-material.is-style-info.is-appearance-centered .alerts-dlx-close svg:hover{color:var(--material-info-color-accent)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-title{color:var(--material-info-color)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-content p{color:var(--material-info-color)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material{background-color:var(--material-info-outlined-background, var(--material-info-color-light));color:var(--material-info-color);border:2px solid var(--material-info-color-bold)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-info-outlined-button-text, var(--material-info-color));border:2px solid var(--material-info-color-bold);background-color:var(--material-info-outlined-button-background, #ffffff)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-info-outlined-button-background-hover, var(--material-info-color-alt));color:var(--material-info-outlined-button-text-hover, #ffffff);border:2px solid var(--material-info-outlined-button-background-hover, var(--material-info-color-alt))}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material svg,.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material svg path{fill:var(--material-info-color-bold)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-close svg{color:var(--material-info-color-bold)}.template-material.is-style-info.is-appearance-outlined .alerts-dlx-close svg:hover{color:var(--material-info-color-accent)}.template-material.is-style-info.is-appearance-filled .alerts-dlx-title{color:#fff}.template-material.is-style-info.is-appearance-filled .alerts-dlx-content p{color:#fff}.template-material.is-style-info.is-appearance-filled .alerts-dlx-material{background-color:var(--material-info-filled-background, var(--material-info-color-alt));color:#fff;border:2px solid var(--material-info-filled-border, var(--material-info-color-alt))}.template-material.is-style-info.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-info.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-info.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-info-filled-button-text, var(--material-info-color-alt));border:2px solid var(--material-info-filled-button-border, var(--material-info-color-alt));background-color:var(--material-info-filled-button-background, #ffffff)}.template-material.is-style-info.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-info.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-info-filled-button-background-hover, var(--material-info-color-light));color:#fff;border:2px solid var(--material-info-filled-button-border-hover, var(--material-info-color-light))}.template-material.is-style-info.is-appearance-filled .alerts-dlx-material svg,.template-material.is-style-info.is-appearance-filled .alerts-dlx-material svg path{fill:#fff}.template-material.is-style-info.is-appearance-filled .alerts-dlx-close svg{color:#fff}.template-material.is-style-info.is-appearance-filled .alerts-dlx-close svg:hover{color:var(--material-info-color-accent)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-title,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-title{color:var(--material-warning-color)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-content p,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-content p{color:var(--material-warning-color)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-material,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material{background-color:var(--material-warning-color-light);color:var(--material-warning-color)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-warning.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-warning.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-warning-subtle-button-text, #ffffff);border:1px solid rgba(0,0,0,0);background-color:var(--material-warning-subtle-button-background, var(--material-warning-color))}.template-material.is-style-warning.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-warning-color-accent);color:var(--material-warning-subtle-button-text, #ffffff)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-material svg,.template-material.is-style-warning.is-appearance-default .alerts-dlx-material svg path,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material svg,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material svg path{fill:var(--material-warning-color-bold)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-close svg,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-close svg{color:var(--material-warning-color-bold)}.template-material.is-style-warning.is-appearance-default .alerts-dlx-close svg:hover,.template-material.is-style-warning.is-appearance-centered .alerts-dlx-close svg:hover{color:var(--material-warning-color-accent)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-title{color:var(--material-warning-color)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-content p{color:var(--material-warning-color)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material{background-color:var(--material-warning-outlined-background, var(--material-warning-color-light));color:var(--material-warning-color);border:2px solid var(--material-warning-color-bold)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-warning-outlined-button-text, var(--material-warning-color));border:2px solid var(--material-warning-color-bold);background-color:var(--material-warning-outlined-button-background, #ffffff)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-warning-outlined-button-background-hover, var(--material-warning-color-alt));color:var(--material-warning-outlined-button-text-hover, #ffffff);border:2px solid var(--material-warning-outlined-button-background-hover, var(--material-warning-color-alt))}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material svg,.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material svg path{fill:var(--material-warning-color-bold)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-close svg{color:var(--material-warning-color-bold)}.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-close svg:hover{color:var(--material-warning-color-accent)}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-title{color:#fff}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-content p{color:#fff}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material{background-color:var(--material-warning-filled-background, var(--material-warning-color-alt));color:#fff;border:2px solid var(--material-warning-filled-border, var(--material-warning-color-alt))}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-warning-filled-button-text, var(--material-warning-color-alt));border:2px solid var(--material-warning-filled-button-border, var(--material-warning-color-alt));background-color:var(--material-warning-filled-button-background, #ffffff)}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-warning-filled-button-background-hover, var(--material-warning-color-light));color:#fff;border:2px solid var(--material-warning-filled-button-border-hover, var(--material-warning-color-light))}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material svg,.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material svg path{fill:#fff}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-close svg{color:#fff}.template-material.is-style-warning.is-appearance-filled .alerts-dlx-close svg:hover{color:var(--material-warning-color-accent)}.template-material.is-style-error.is-appearance-default .alerts-dlx-title,.template-material.is-style-error.is-appearance-centered .alerts-dlx-title{color:var(--material-error-color)}.template-material.is-style-error.is-appearance-default .alerts-dlx-content p,.template-material.is-style-error.is-appearance-centered .alerts-dlx-content p{color:var(--material-error-color)}.template-material.is-style-error.is-appearance-default .alerts-dlx-material,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material{background-color:var(--material-error-color-light);color:var(--material-error-color)}.template-material.is-style-error.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-error.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-error.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-error-subtle-button-text, #ffffff);border:1px solid rgba(0,0,0,0);background-color:var(--material-error-subtle-button-background, var(--material-error-color))}.template-material.is-style-error.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-error-color-accent);color:var(--material-error-subtle-button-text, #ffffff)}.template-material.is-style-error.is-appearance-default .alerts-dlx-material svg,.template-material.is-style-error.is-appearance-default .alerts-dlx-material svg path,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material svg,.template-material.is-style-error.is-appearance-centered .alerts-dlx-material svg path{fill:var(--material-error-color-bold)}.template-material.is-style-error.is-appearance-default .alerts-dlx-close svg,.template-material.is-style-error.is-appearance-centered .alerts-dlx-close svg{color:var(--material-error-color-bold)}.template-material.is-style-error.is-appearance-default .alerts-dlx-close svg:hover,.template-material.is-style-error.is-appearance-centered .alerts-dlx-close svg:hover{color:var(--material-error-color-accent)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-title{color:var(--material-error-color)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-content p{color:var(--material-error-color)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material{background-color:var(--material-error-outlined-background, var(--material-error-color-light));color:var(--material-error-color);border:2px solid var(--material-error-color-bold)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-error-outlined-button-text, var(--material-error-color));border:2px solid var(--material-error-color-bold);background-color:var(--material-error-outlined-button-background, #ffffff)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-error-outlined-button-background-hover, var(--material-error-color-alt));color:var(--material-error-outlined-button-text-hover, #ffffff);border:2px solid var(--material-error-outlined-button-background-hover, var(--material-error-color-alt))}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material svg,.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material svg path{fill:var(--material-error-color-bold)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-close svg{color:var(--material-error-color-bold)}.template-material.is-style-error.is-appearance-outlined .alerts-dlx-close svg:hover{color:var(--material-error-color-accent)}.template-material.is-style-error.is-appearance-filled .alerts-dlx-title{color:#fff}.template-material.is-style-error.is-appearance-filled .alerts-dlx-content p{color:#fff}.template-material.is-style-error.is-appearance-filled .alerts-dlx-material{background-color:var(--material-error-filled-background, var(--material-error-color-alt));color:#fff;border:2px solid var(--material-error-filled-border, var(--material-error-color-alt))}.template-material.is-style-error.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,.template-material.is-style-error.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,.template-material.is-style-error.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{color:var(--material-error-filled-button-text, var(--material-error-color-alt));border:2px solid var(--material-error-filled-button-border, var(--material-error-color-alt));background-color:var(--material-error-filled-button-background, #ffffff)}.template-material.is-style-error.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,.template-material.is-style-error.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover{background-color:var(--material-error-filled-button-background-hover, var(--material-error-color-light));color:#fff;border:2px solid var(--material-error-filled-button-border-hover, var(--material-error-color-light))}.template-material.is-style-error.is-appearance-filled .alerts-dlx-material svg,.template-material.is-style-error.is-appearance-filled .alerts-dlx-material svg path{fill:#fff}.template-material.is-style-error.is-appearance-filled .alerts-dlx-close svg{color:#fff}.template-material.is-style-error.is-appearance-filled .alerts-dlx-close svg:hover{color:var(--material-error-color-accent)}
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/resolve-url-loader/index.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./src/scss/material/styles.scss ***!
+  \***************************************************************************************************************************************************************************************************************************/
+button.button-reset, button.button-reset:focus, button.button-reset:hover {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: inherit;
+  text-transform: unset;
+}
+button.button-reset.show-cursor {
+  cursor: pointer;
+}
+
+.button-reset button,
+.button-reset:focus button,
+.button-reset:hover button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: inherit;
+  text-transform: unset;
+}
+
+button.button-reset.alerts-dlx-icon-preview-button.components-button,
+button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
+  margin: 0;
+  padding: 0;
+}
+
+.template-material,
+.template-chakra,
+.template-bootstrap {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.dlx-admin-only-block-expires .components-number-control {
+  margin-bottom: 0;
+}
+
+.alerts-dlx-editorial-only {
+  padding: 48px;
+  border: 4px dashed #ff9800;
+}
+
+.alerts-dlx-icon-image {
+  max-width: 64px;
+  max-height: 64px;
+}
+
+.alerts-dlx-icon-image-buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerts-dlx-icon-sidebar-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0;
+}
+.alerts-dlx-icon-sidebar-wrapper .alerts-dlx-icon-preview svg {
+  width: 32px;
+  height: 32px;
+}
+
+.alerts-dlx-icon-source-toggle-group.components-toggle-group-control {
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px #eaeaea;
+}
+
+.alerts-dlx-inner-block-parent-toolbar {
+  border-left: 1px solid #ddd;
+  margin-left: 4px;
+  padding-left: 4px;
+}
+
+.alerts-dlx-alert-style-toolbar .components-dropdown-menu__toggle {
+  max-width: 160px;
+}
+
+/* MaterialUI Fonts */
+.template-material *,
+.template-chakra *,
+.template-bootstrap * {
+  font-family: var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);
+}
+
+a.alerts-dlx-button.button-reset,
+a.alerts-dlx-button,
+button.button-reset,
+button.button-reset:hover,
+a.alerts-dlx-button,
+button.button-reset.components-button,
+button.button-reset.components-button:hover {
+  padding: 10px 30px;
+  border-radius: 0.3125em;
+  margin-top: 0.8em;
+  line-height: 1.2em;
+  font-size: 1em;
+  height: auto;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+a.alerts-dlx-button.button-reset ~ .button-reset, a.alerts-dlx-button.button-reset ~ .button-reset:hover,
+a.alerts-dlx-button ~ .button-reset,
+a.alerts-dlx-button ~ .button-reset:hover,
+button.button-reset ~ .button-reset,
+button.button-reset ~ .button-reset:hover,
+button.button-reset:hover ~ .button-reset,
+button.button-reset:hover ~ .button-reset:hover,
+a.alerts-dlx-button ~ .button-reset,
+a.alerts-dlx-button ~ .button-reset:hover,
+button.button-reset.components-button ~ .button-reset,
+button.button-reset.components-button ~ .button-reset:hover,
+button.button-reset.components-button:hover ~ .button-reset,
+button.button-reset.components-button:hover ~ .button-reset:hover {
+  margin-top: 0.5em;
+  padding: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.template-chakra a.alerts-dlx-button.button-reset,
+.template-chakra a.alerts-dlx-button,
+.template-chakra button.button-reset,
+.template-chakra button.button-reset:hover,
+.template-chakra a.alerts-dlx-button,
+.template-chakra button.button-reset.components-button,
+.template-chakra button.button-reset.components-button:hover {
+  border-radius: 0;
+}
+
+/* Block margins on front-end and block editor */
+.template-material,
+.template-chakra,
+.template-bootstrap,
+.template-shoelace {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-block-start: 1.5rem;
+  margin-block-end: 1.5rem;
+}
+.template-material section h2,
+.template-chakra section h2,
+.template-bootstrap section h2,
+.template-shoelace section h2 {
+  font-family: var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);
+  font-weight: 900;
+}
+
+.alerts-dlx-close {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  padding: 1.25rem 1rem;
+  padding-top: 0.75rem;
+}
+.alerts-dlx-close svg,
+.alerts-dlx-close svg:hover {
+  transition: color 0.3s ease-in-out;
+  width: 16px;
+  height: 16px;
+}
+
+/* Consolidate variants for ChakraUI options */
+.alerts-dlx-chakra-variants .components-button-group,
+.alerts-dlx-material-variants .components-button-group,
+.alerts-dlx-shoelace-variants .components-button-group,
+.alerts-dlx-chakra-mode .components-button-group,
+.alerts-dlx-material-mode .components-button-group,
+.alerts-dlx-bootstrap-mode .components-button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 8px;
+  column-gap: 8px;
+  justify-content: center;
+}
+.alerts-dlx-chakra-variants .components-button-group button,
+.alerts-dlx-material-variants .components-button-group button,
+.alerts-dlx-shoelace-variants .components-button-group button,
+.alerts-dlx-chakra-mode .components-button-group button,
+.alerts-dlx-material-mode .components-button-group button,
+.alerts-dlx-bootstrap-mode .components-button-group button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+figure.alerts-dlx-alert {
+  text-align: left;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Font size reset and inheritance - using high specificity selectors */
+.alerts-dlx-alert[role=alert] {
+  font-size: var(--alerts-dlx-base-font-size, 16px);
+  /* Ensure all child elements inherit the base font size */
+  /* Specific overrides for alert content with higher specificity */
+  /* Icon sizing */
+}
+.alerts-dlx-alert[role=alert] *:not(svg, svg path, svg g) {
+  font-size: inherit;
+}
+.alerts-dlx-alert[role=alert] section .alerts-dlx-title {
+  font-size: 1.2em;
+  font-weight: 600;
+}
+.alerts-dlx-alert[role=alert] .alerts-dlx-content p {
+  font-size: 1.2em;
+}
+.alerts-dlx-alert[role=alert] button.button-reset,
+.alerts-dlx-alert[role=alert] a.alerts-dlx-button,
+.alerts-dlx-alert[role=alert] button.button-reset.components-button {
+  font-size: 1.2em;
+}
+.alerts-dlx-alert[role=alert] .alerts-dlx-icon-preview svg {
+  width: 1.4em;
+  height: 1.4em;
+}
+.alerts-dlx-alert[role=alert] .alerts-dlx-icon img {
+  max-width: 2em;
+  max-height: 2em;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.5em;
+}
+.alerts-dlx-alert[role=alert] .alerts-dlx-icon-frontend .alerts-dlx-icon-preview {
+  font-size: 1.2em;
+  line-height: 2.2em;
+}
+
+body .alerts-dlx-alert[role=alert] section .alerts-dlx-close ~ .alerts-dlx-title {
+  padding-right: 16px;
+}
+
+body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
+  padding: 0.75em 1.25em;
+}
+body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .alerts-dlx-icon img {
+  max-height: 3.8em;
+  max-width: unset;
+  width: auto;
+}
+
+/* Theme-specific font size inheritance with higher specificity */
+.template-chakra .alerts-dlx-alert[role=alert],
+.template-bootstrap .alerts-dlx-alert[role=alert],
+.template-material .alerts-dlx-alert[role=alert],
+.template-shoelace .alerts-dlx-alert[role=alert] {
+  font-size: var(--alerts-dlx-base-font-size, 16px);
+}
+
+/* Multiple instances support with even higher specificity */
+.alerts-dlx .template-chakra .alerts-dlx-alert[role=alert],
+.alerts-dlx .template-bootstrap .alerts-dlx-alert[role=alert],
+.alerts-dlx .template-material .alerts-dlx-alert[role=alert],
+.alerts-dlx .template-shoelace .alerts-dlx-alert[role=alert] {
+  font-size: var(--alerts-dlx-base-font-size, 16px);
+}
+
+/* High specificity selectors to override theme-specific font sizes */
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace {
+  font-size: inherit;
+}
+
+/* Ensure proper font inheritance for all child elements */
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra *,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap *,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material *,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace * {
+  font-size: inherit;
+}
+
+/* Specific overrides for content elements with high specificity */
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra section .alerts-dlx-title,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap section .alerts-dlx-title,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material section .alerts-dlx-title,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace section .alerts-dlx-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  line-height: 1.5em;
+  text-transform: none;
+}
+
+/* Force headline size over aggressive theme styles when enabled in admin. */
+.alerts-dlx.is-headline-size-forced section .alerts-dlx-title,
+.template-chakra .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-chakra section .alerts-dlx-title,
+.template-bootstrap .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap section .alerts-dlx-title,
+.template-material .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-material section .alerts-dlx-title,
+.template-shoelace .alerts-dlx.is-headline-size-forced .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace section .alerts-dlx-title,
+.editor-styles-wrapper .alerts-dlx.is-headline-size-forced section .alerts-dlx-title {
+  font-size: 1.2em !important;
+  font-weight: 600 !important;
+  line-height: 1.5em !important;
+  text-transform: none !important;
+}
+
+.editor-styles-wrapper .alerts-dlx-alert[role=alert] .alerts-dlx-content p {
+  font-family: var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra .alerts-dlx-content p,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap .alerts-dlx-content p,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material .alerts-dlx-content p,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace .alerts-dlx-content p {
+  font-family: var(--alerts-dlx-font-family, "Helvetica", "Arial", sans-serif);
+  font-weight: 400;
+  font-size: 1.2em;
+}
+
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra button.button-reset,
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra a.alerts-dlx-button,
+.template-chakra .alerts-dlx-alert[role=alert] .alerts-dlx-chakra button.button-reset.components-button,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap button.button-reset,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap a.alerts-dlx-button,
+.template-bootstrap .alerts-dlx-alert[role=alert] .alerts-dlx-bootstrap button.button-reset.components-button,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material button.button-reset,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material a.alerts-dlx-button,
+.template-material .alerts-dlx-alert[role=alert] .alerts-dlx-material button.button-reset.components-button,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace button.button-reset,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace a.alerts-dlx-button,
+.template-shoelace .alerts-dlx-alert[role=alert] .alerts-dlx-shoelace button.button-reset.components-button {
+  font-size: 1.2em;
+}
+
+.alerts-dlx-content a,
+.alerts-dlx-content a:hover {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@keyframes alerts-dlx-dismiss {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+  }
+}
+/** Animation for removal **/
+.alerts-dlx-remove {
+  animation-name: alerts-dlx-dismiss;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.entry-content .alerts-dlx-alert section,
+.alerts-dlx-alert section {
+  margin: 0;
+  padding: 0;
+}
+
+.template-material {
+  /* Light theme defaults. */
+  --material-success-color: #1e4620;
+  --material-success-color-accent: #295e2c;
+  --material-success-color-alt: #2e7d32;
+  --material-success-color-bold: #4caf50;
+  --material-success-color-light: #edf7ed;
+  --material-success-subtle-button-text: #ffffff;
+  --material-success-subtle-button-background: #1e4620;
+  --material-success-outlined-background: #ffffff;
+  --material-success-outlined-button-text: #1e4620;
+  --material-success-outlined-button-background: #ffffff;
+  --material-success-outlined-button-text-hover: #ffffff;
+  --material-success-outlined-button-background-hover: #2e7d32;
+  --material-success-filled-background: #2e7d32;
+  --material-success-filled-border: #2e7d32;
+  --material-success-filled-button-text: #2e7d32;
+  --material-success-filled-button-border: #2e7d32;
+  --material-success-filled-button-background: #ffffff;
+  --material-success-filled-button-background-hover: #2e7d32;
+  --material-success-filled-button-border-hover: #ffffff;
+  --material-info-color: #014361;
+  --material-info-color-accent: #035e88;
+  --material-info-color-alt: #0277bd;
+  --material-info-color-bold: #03a9f4;
+  --material-info-color-light: #e5f6fd;
+  --material-info-subtle-button-text: #ffffff;
+  --material-info-subtle-button-background: #014361;
+  --material-info-outlined-background: #ffffff;
+  --material-info-outlined-button-text: #014361;
+  --material-info-outlined-button-background: #ffffff;
+  --material-info-outlined-button-text-hover: #ffffff;
+  --material-info-outlined-button-background-hover: #0277bd;
+  --material-info-filled-background: #0277bd;
+  --material-info-filled-border: #0277bd;
+  --material-info-filled-button-text: #0277bd;
+  --material-info-filled-button-border: #0277bd;
+  --material-info-filled-button-background: #ffffff;
+  --material-info-filled-button-background-hover: #0277bd;
+  --material-info-filled-button-border-hover: #ffffff;
+  --material-warning-color: #663c00;
+  --material-warning-color-accent: #8c5e00;
+  --material-warning-color-alt: #ed6c02;
+  --material-warning-color-bold: #ff9800;
+  --material-warning-color-light: #fff4e5;
+  --material-warning-subtle-button-text: #ffffff;
+  --material-warning-subtle-button-background: #663c00;
+  --material-warning-outlined-background: #ffffff;
+  --material-warning-outlined-button-text: #663c00;
+  --material-warning-outlined-button-background: #ffffff;
+  --material-warning-outlined-button-text-hover: #ffffff;
+  --material-warning-outlined-button-background-hover: #ed6c02;
+  --material-warning-filled-background: #ed6c02;
+  --material-warning-filled-border: #ed6c02;
+  --material-warning-filled-button-text: #ed6c02;
+  --material-warning-filled-button-border: #ed6c02;
+  --material-warning-filled-button-background: #ffffff;
+  --material-warning-filled-button-background-hover: #ed6c02;
+  --material-warning-filled-button-border-hover: #ffffff;
+  --material-error-color: #5f2120;
+  --material-error-color-accent: #8c2d2b;
+  --material-error-color-alt: #d32f2f;
+  --material-error-color-bold: #ef5350;
+  --material-error-color-light: #fdeded;
+  --material-error-subtle-button-text: #ffffff;
+  --material-error-subtle-button-background: #5f2120;
+  --material-error-outlined-background: #ffffff;
+  --material-error-outlined-button-text: #5f2120;
+  --material-error-outlined-button-background: #ffffff;
+  --material-error-outlined-button-text-hover: #ffffff;
+  --material-error-outlined-button-background-hover: #d32f2f;
+  --material-error-filled-background: #d32f2f;
+  --material-error-filled-border: #d32f2f;
+  --material-error-filled-button-text: #d32f2f;
+  --material-error-filled-button-border: #d32f2f;
+  --material-error-filled-button-background: #ffffff;
+  --material-error-filled-button-background-hover: #d32f2f;
+  --material-error-filled-button-border-hover: #ffffff;
+  --alerts-dlx-material-title-weight: 900;
+  /* Alert layout base. */
+  /* Dropshadows. */
+}
+.template-material.is-dark-mode {
+  /* Dark theme overrides. */
+  --material-success-color: #cce8cd;
+  --material-success-color-accent: #49a44e;
+  --material-success-color-alt: #5cbb60;
+  --material-success-color-bold: #66bb6a;
+  --material-success-color-light: #0c130d;
+  --material-success-subtle-button-text: #0c130d;
+  --material-success-subtle-button-background: #66bb6a;
+  --material-success-outlined-background: #160b0b;
+  --material-success-outlined-button-text: #0c130d;
+  --material-success-outlined-button-background: #66bb6a;
+  --material-success-outlined-button-text-hover: #0c130d;
+  --material-success-outlined-button-background-hover: #49a44e;
+  --material-success-filled-background: #66bb6a;
+  --material-success-filled-border: #66bb6a;
+  --material-success-filled-button-text: #ffffff;
+  --material-success-filled-button-border: #ffffff;
+  --material-success-filled-button-background: transparent;
+  --material-success-filled-button-background-hover: #0c130d;
+  --material-success-filled-button-border-hover: #0c130d;
+  --material-info-color: #b8e7fb;
+  --material-info-color-accent: #23abea;
+  --material-info-color-alt: #20a2df;
+  --material-info-color-bold: #29b6f6;
+  --material-info-color-light: #071318;
+  --material-info-subtle-button-text: #ffffff;
+  --material-info-subtle-button-background: #29b6f6;
+  --material-info-outlined-background: #071318;
+  --material-info-outlined-button-text: #ffffff;
+  --material-info-outlined-button-background: #29b6f6;
+  --material-info-outlined-button-text-hover: #ffffff;
+  --material-info-outlined-button-background-hover: #20a2df;
+  --material-info-filled-background: #29b6f6;
+  --material-info-filled-border: #29b6f6;
+  --material-info-filled-button-text: #ffffff;
+  --material-info-filled-button-border: #ffffff;
+  --material-info-filled-button-background: transparent;
+  --material-info-filled-button-background-hover: #071318;
+  --material-info-filled-button-border-hover: #071318;
+  --material-warning-color: #ffe2b7;
+  --material-warning-color-accent: #e3a03a;
+  --material-warning-color-alt: #f9aa33;
+  --material-warning-color-bold: #ffa726;
+  --material-warning-color-light: #191207;
+  --material-warning-subtle-button-text: #191207;
+  --material-warning-subtle-button-background: #ffa726;
+  --material-warning-outlined-background: #191207;
+  --material-warning-outlined-button-text: #191207;
+  --material-warning-outlined-button-background: #ffa726;
+  --material-warning-outlined-button-text-hover: #191207;
+  --material-warning-outlined-button-background-hover: #f9aa33;
+  --material-warning-filled-background: #ffa726;
+  --material-warning-filled-border: #ffa726;
+  --material-warning-filled-button-text: #191207;
+  --material-warning-filled-button-border: #191207;
+  --material-warning-filled-button-background: transparent;
+  --material-warning-filled-button-background-hover: #191207;
+  --material-warning-filled-button-border-hover: #191207;
+  --material-error-color: #f4c7c7;
+  --material-error-color-accent: #c93328;
+  --material-error-color-alt: #d43c31;
+  --material-error-color-bold: #f44336;
+  --material-error-color-light: #160b0b;
+  --material-error-subtle-button-text: #ffffff;
+  --material-error-subtle-button-background: #f44336;
+  --material-error-outlined-background: #160b0b;
+  --material-error-outlined-button-text: #ffffff;
+  --material-error-outlined-button-background: #f44336;
+  --material-error-outlined-button-text-hover: #ffffff;
+  --material-error-outlined-button-background-hover: #d43c31;
+  --material-error-filled-background: #f44336;
+  --material-error-filled-border: #f44336;
+  --material-error-filled-button-text: #ffffff;
+  --material-error-filled-button-border: #ffffff;
+  --material-error-filled-button-background: transparent;
+  --material-error-filled-button-background-hover: #160b0b;
+  --material-error-filled-button-border-hover: #160b0b;
+  --alerts-dlx-material-title-weight: 500;
+}
+.template-material .alerts-dlx-material {
+  display: grid;
+  grid-template-columns: 1fr;
+  font-size: var(--alerts-dlx-material-base-size, 16px);
+  padding: 16px;
+  border-radius: 4px;
+  margin: 0 auto;
+}
+.template-material .alerts-dlx-material .alerts-dlx-icon-preview svg {
+  width: 1.8em;
+  height: 1.8em;
+}
+.template-material .alerts-dlx-material.alerts-dlx-has-icon {
+  grid-template-columns: 3.8em 1fr;
+  padding-left: 0;
+}
+.template-material .alerts-dlx-material section .alerts-dlx-title {
+  font-size: 1.2em;
+  font-weight: var(--alerts-dlx-material-title-weight, 900);
+  line-height: 1.5em;
+  margin: 0 0 0.35em;
+  padding: 0;
+}
+.template-material .alerts-dlx-material .alerts-dlx-content p {
+  font-size: 1.2em;
+  font-weight: 400;
+  line-height: 1.5em;
+  margin: 0;
+  padding: 0;
+}
+.template-material .alerts-dlx-material .alerts-dlx-content p:not(:first-child) {
+  margin-top: 0.5em;
+}
+.template-material .alerts-dlx-material button.button-reset,
+.template-material .alerts-dlx-material a.alerts-dlx-button,
+.template-material .alerts-dlx-material button.button-reset.components-button {
+  font-size: 1.2em;
+}
+.template-material .alerts-dlx-material .alerts-dlx-icon-preview svg {
+  width: 1.4em;
+  height: 1.4em;
+}
+.template-material .alerts-dlx-material .alerts-dlx-icon {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.template-material.icon-vertical-align-centered .alerts-dlx-icon {
+  align-items: center;
+}
+.template-material.is-style-success.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
+  box-shadow: 1px 1px 5px 1px rgba(46, 125, 50, 0.2);
+}
+.template-material.is-style-info.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
+  box-shadow: 1px 1px 5px 1px rgba(2, 119, 189, 0.2);
+}
+.template-material.is-style-warning.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
+  box-shadow: 1px 1px 5px 1px rgba(237, 108, 2, 0.2);
+}
+.template-material.is-style-error.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
+  box-shadow: 1px 1px 5px 1px rgba(211, 47, 47, 0.2);
+}
+.template-material.is-appearance-centered .alerts-dlx-material {
+  display: block;
+}
+.template-material.is-appearance-centered .alerts-dlx-icon-preview svg {
+  width: 1.6em;
+  height: 1.6em;
+}
+.template-material.is-appearance-centered section {
+  text-align: center;
+}
+.template-material.is-appearance-centered .alerts-dlx-button-wrapper {
+  position: relative;
+  flex-wrap: wrap;
+}
+.template-material.is-appearance-centered .alerts-dlx-button-wrapper button:first-child {
+  width: 100%;
+  justify-content: center;
+}
+.template-material.is-appearance-centered .alerts-dlx-button-wrapper button:not(:first-child) {
+  position: absolute;
+  right: -35px;
+}
+.template-material.is-style-custom .alerts-dlx-title {
+  color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
+}
+.template-material.is-style-custom .alerts-dlx-content p {
+  color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
+}
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material, .template-material.is-style-custom.is-appearance-centered .alerts-dlx-material {
+  background-color: var(--alerts-dlx-material-color-light, var(--material-info-color-light));
+  color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
+}
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-custom.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--alerts-dlx-material-color-alt-text, #ffffff);
+  border: 1px solid transparent;
+  background-color: var(--alerts-dlx-material-color-alt, var(--material-info-color-alt));
+}
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-custom.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+  color: var(--alerts-dlx-material-color-alt-text-hover, #ffffff);
+}
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material svg,
+.template-material.is-style-custom.is-appearance-default .alerts-dlx-material svg path, .template-material.is-style-custom.is-appearance-centered .alerts-dlx-material svg,
+.template-material.is-style-custom.is-appearance-centered .alerts-dlx-material svg path {
+  color: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+  fill: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+}
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material {
+  background-color: var(--alerts-dlx-material-color-light, #ffffff);
+  color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
+  border: 2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));
+}
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--alerts-dlx-material-color-alt-text, var(--material-info-color));
+  border: 2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));
+  background-color: var(--alerts-dlx-material-color-alt, #ffffff);
+}
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+  color: var(--alerts-dlx-material-color-alt-text-hover, #ffffff);
+  border: 2px solid var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+}
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material svg,
+.template-material.is-style-custom.is-appearance-outlined .alerts-dlx-material svg path {
+  color: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+  fill: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+}
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material {
+  background-color: var(--alerts-dlx-material-color-light, var(--material-info-color-light));
+  color: var(--alerts-dlx-material-color-alt-text, #ffffff);
+  border: 2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));
+}
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--alerts-dlx-material-color-alt-text, var(--material-info-color));
+  border: 2px solid var(--alerts-dlx-material-color-alt, var(--material-info-color));
+  background-color: var(--alerts-dlx-material-color-alt, #ffffff);
+}
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+  color: var(--alerts-dlx-material-color-alt-text-hover, #ffffff);
+  border: 2px solid var(--alerts-dlx-material-color-alt, #ffffff);
+}
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material svg,
+.template-material.is-style-custom.is-appearance-filled .alerts-dlx-material svg path {
+  color: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+  fill: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-title, .template-material.is-style-success.is-appearance-centered .alerts-dlx-title {
+  color: var(--material-success-color);
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-content p, .template-material.is-style-success.is-appearance-centered .alerts-dlx-content p {
+  color: var(--material-success-color);
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material, .template-material.is-style-success.is-appearance-centered .alerts-dlx-material {
+  background-color: var(--material-success-color-light);
+  color: var(--material-success-color);
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-success.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-success-subtle-button-text, #ffffff);
+  border: 1px solid transparent;
+  background-color: var(--material-success-subtle-button-background, var(--material-success-color));
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-success.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-success-color-accent);
+  color: var(--material-success-subtle-button-text, #ffffff);
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material svg,
+.template-material.is-style-success.is-appearance-default .alerts-dlx-material svg path, .template-material.is-style-success.is-appearance-centered .alerts-dlx-material svg,
+.template-material.is-style-success.is-appearance-centered .alerts-dlx-material svg path {
+  fill: var(--material-success-color-bold);
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-close svg, .template-material.is-style-success.is-appearance-centered .alerts-dlx-close svg {
+  color: var(--material-success-color-bold);
+}
+.template-material.is-style-success.is-appearance-default .alerts-dlx-close svg:hover, .template-material.is-style-success.is-appearance-centered .alerts-dlx-close svg:hover {
+  color: var(--material-success-color-accent);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-title {
+  color: var(--material-success-color);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-content p {
+  color: var(--material-success-color);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material {
+  background-color: var(--material-success-outlined-background, var(--material-success-color-light));
+  color: var(--material-success-color);
+  border: 2px solid var(--material-success-color-bold);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-success-outlined-button-text, var(--material-success-color));
+  border: 2px solid var(--material-success-color-bold);
+  background-color: var(--material-success-outlined-button-background, #ffffff);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-success-outlined-button-background-hover, var(--material-success-color-alt));
+  color: var(--material-success-outlined-button-text-hover, #ffffff);
+  border: 2px solid var(--material-success-outlined-button-background-hover, var(--material-success-color-alt));
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material svg,
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-material svg path {
+  fill: var(--material-success-color-bold);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-close svg {
+  color: var(--material-success-color-bold);
+}
+.template-material.is-style-success.is-appearance-outlined .alerts-dlx-close svg:hover {
+  color: var(--material-success-color-accent);
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-title {
+  color: #ffffff;
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-content p {
+  color: #ffffff;
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material {
+  background-color: var(--material-success-filled-background, var(--material-success-color-alt));
+  color: #ffffff;
+  border: 2px solid var(--material-success-filled-border, var(--material-success-color-alt));
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-success-filled-button-text, var(--material-success-color-alt));
+  border: 2px solid var(--material-success-filled-button-border, var(--material-success-color-alt));
+  background-color: var(--material-success-filled-button-background, #ffffff);
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-success-filled-button-background-hover, var(--material-success-color-light));
+  color: #ffffff;
+  border: 2px solid var(--material-success-filled-button-border-hover, var(--material-success-color-light));
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material svg,
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-material svg path {
+  fill: #ffffff;
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-close svg {
+  color: #ffffff;
+}
+.template-material.is-style-success.is-appearance-filled .alerts-dlx-close svg:hover {
+  color: var(--material-success-color-accent);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-title, .template-material.is-style-info.is-appearance-centered .alerts-dlx-title {
+  color: var(--material-info-color);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-content p, .template-material.is-style-info.is-appearance-centered .alerts-dlx-content p {
+  color: var(--material-info-color);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material, .template-material.is-style-info.is-appearance-centered .alerts-dlx-material {
+  background-color: var(--material-info-color-light);
+  color: var(--material-info-color);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-info.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-info-subtle-button-text, #ffffff);
+  border: 1px solid transparent;
+  background-color: var(--material-info-subtle-button-background, var(--material-info-color));
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-info.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-info-color-accent);
+  color: var(--material-info-subtle-button-text, #ffffff);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material svg,
+.template-material.is-style-info.is-appearance-default .alerts-dlx-material svg path, .template-material.is-style-info.is-appearance-centered .alerts-dlx-material svg,
+.template-material.is-style-info.is-appearance-centered .alerts-dlx-material svg path {
+  fill: var(--material-info-color-bold);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-close svg, .template-material.is-style-info.is-appearance-centered .alerts-dlx-close svg {
+  color: var(--material-info-color-bold);
+}
+.template-material.is-style-info.is-appearance-default .alerts-dlx-close svg:hover, .template-material.is-style-info.is-appearance-centered .alerts-dlx-close svg:hover {
+  color: var(--material-info-color-accent);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-title {
+  color: var(--material-info-color);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-content p {
+  color: var(--material-info-color);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material {
+  background-color: var(--material-info-outlined-background, var(--material-info-color-light));
+  color: var(--material-info-color);
+  border: 2px solid var(--material-info-color-bold);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-info-outlined-button-text, var(--material-info-color));
+  border: 2px solid var(--material-info-color-bold);
+  background-color: var(--material-info-outlined-button-background, #ffffff);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-info-outlined-button-background-hover, var(--material-info-color-alt));
+  color: var(--material-info-outlined-button-text-hover, #ffffff);
+  border: 2px solid var(--material-info-outlined-button-background-hover, var(--material-info-color-alt));
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material svg,
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-material svg path {
+  fill: var(--material-info-color-bold);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-close svg {
+  color: var(--material-info-color-bold);
+}
+.template-material.is-style-info.is-appearance-outlined .alerts-dlx-close svg:hover {
+  color: var(--material-info-color-accent);
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-title {
+  color: #ffffff;
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-content p {
+  color: #ffffff;
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material {
+  background-color: var(--material-info-filled-background, var(--material-info-color-alt));
+  color: #ffffff;
+  border: 2px solid var(--material-info-filled-border, var(--material-info-color-alt));
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-info-filled-button-text, var(--material-info-color-alt));
+  border: 2px solid var(--material-info-filled-button-border, var(--material-info-color-alt));
+  background-color: var(--material-info-filled-button-background, #ffffff);
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-info-filled-button-background-hover, var(--material-info-color-light));
+  color: #ffffff;
+  border: 2px solid var(--material-info-filled-button-border-hover, var(--material-info-color-light));
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material svg,
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-material svg path {
+  fill: #ffffff;
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-close svg {
+  color: #ffffff;
+}
+.template-material.is-style-info.is-appearance-filled .alerts-dlx-close svg:hover {
+  color: var(--material-info-color-accent);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-title, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-title {
+  color: var(--material-warning-color);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-content p, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-content p {
+  color: var(--material-warning-color);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-material {
+  background-color: var(--material-warning-color-light);
+  color: var(--material-warning-color);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-warning-subtle-button-text, #ffffff);
+  border: 1px solid transparent;
+  background-color: var(--material-warning-subtle-button-background, var(--material-warning-color));
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-warning-color-accent);
+  color: var(--material-warning-subtle-button-text, #ffffff);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material svg,
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-material svg path, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-material svg,
+.template-material.is-style-warning.is-appearance-centered .alerts-dlx-material svg path {
+  fill: var(--material-warning-color-bold);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-close svg, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-close svg {
+  color: var(--material-warning-color-bold);
+}
+.template-material.is-style-warning.is-appearance-default .alerts-dlx-close svg:hover, .template-material.is-style-warning.is-appearance-centered .alerts-dlx-close svg:hover {
+  color: var(--material-warning-color-accent);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-title {
+  color: var(--material-warning-color);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-content p {
+  color: var(--material-warning-color);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material {
+  background-color: var(--material-warning-outlined-background, var(--material-warning-color-light));
+  color: var(--material-warning-color);
+  border: 2px solid var(--material-warning-color-bold);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-warning-outlined-button-text, var(--material-warning-color));
+  border: 2px solid var(--material-warning-color-bold);
+  background-color: var(--material-warning-outlined-button-background, #ffffff);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-warning-outlined-button-background-hover, var(--material-warning-color-alt));
+  color: var(--material-warning-outlined-button-text-hover, #ffffff);
+  border: 2px solid var(--material-warning-outlined-button-background-hover, var(--material-warning-color-alt));
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material svg,
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-material svg path {
+  fill: var(--material-warning-color-bold);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-close svg {
+  color: var(--material-warning-color-bold);
+}
+.template-material.is-style-warning.is-appearance-outlined .alerts-dlx-close svg:hover {
+  color: var(--material-warning-color-accent);
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-title {
+  color: #ffffff;
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-content p {
+  color: #ffffff;
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material {
+  background-color: var(--material-warning-filled-background, var(--material-warning-color-alt));
+  color: #ffffff;
+  border: 2px solid var(--material-warning-filled-border, var(--material-warning-color-alt));
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-warning-filled-button-text, var(--material-warning-color-alt));
+  border: 2px solid var(--material-warning-filled-button-border, var(--material-warning-color-alt));
+  background-color: var(--material-warning-filled-button-background, #ffffff);
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-warning-filled-button-background-hover, var(--material-warning-color-light));
+  color: #ffffff;
+  border: 2px solid var(--material-warning-filled-button-border-hover, var(--material-warning-color-light));
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material svg,
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-material svg path {
+  fill: #ffffff;
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-close svg {
+  color: #ffffff;
+}
+.template-material.is-style-warning.is-appearance-filled .alerts-dlx-close svg:hover {
+  color: var(--material-warning-color-accent);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-title, .template-material.is-style-error.is-appearance-centered .alerts-dlx-title {
+  color: var(--material-error-color);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-content p, .template-material.is-style-error.is-appearance-centered .alerts-dlx-content p {
+  color: var(--material-error-color);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material, .template-material.is-style-error.is-appearance-centered .alerts-dlx-material {
+  background-color: var(--material-error-color-light);
+  color: var(--material-error-color);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-error.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-error-subtle-button-text, #ffffff);
+  border: 1px solid transparent;
+  background-color: var(--material-error-subtle-button-background, var(--material-error-color));
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material button.button-reset.alerts-dlx-button:hover, .template-material.is-style-error.is-appearance-centered .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-centered .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-error-color-accent);
+  color: var(--material-error-subtle-button-text, #ffffff);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material svg,
+.template-material.is-style-error.is-appearance-default .alerts-dlx-material svg path, .template-material.is-style-error.is-appearance-centered .alerts-dlx-material svg,
+.template-material.is-style-error.is-appearance-centered .alerts-dlx-material svg path {
+  fill: var(--material-error-color-bold);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-close svg, .template-material.is-style-error.is-appearance-centered .alerts-dlx-close svg {
+  color: var(--material-error-color-bold);
+}
+.template-material.is-style-error.is-appearance-default .alerts-dlx-close svg:hover, .template-material.is-style-error.is-appearance-centered .alerts-dlx-close svg:hover {
+  color: var(--material-error-color-accent);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-title {
+  color: var(--material-error-color);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-content p {
+  color: var(--material-error-color);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material {
+  background-color: var(--material-error-outlined-background, var(--material-error-color-light));
+  color: var(--material-error-color);
+  border: 2px solid var(--material-error-color-bold);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-error-outlined-button-text, var(--material-error-color));
+  border: 2px solid var(--material-error-color-bold);
+  background-color: var(--material-error-outlined-button-background, #ffffff);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-error-outlined-button-background-hover, var(--material-error-color-alt));
+  color: var(--material-error-outlined-button-text-hover, #ffffff);
+  border: 2px solid var(--material-error-outlined-button-background-hover, var(--material-error-color-alt));
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material svg,
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-material svg path {
+  fill: var(--material-error-color-bold);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-close svg {
+  color: var(--material-error-color-bold);
+}
+.template-material.is-style-error.is-appearance-outlined .alerts-dlx-close svg:hover {
+  color: var(--material-error-color-accent);
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-title {
+  color: #ffffff;
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-content p {
+  color: #ffffff;
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material {
+  background-color: var(--material-error-filled-background, var(--material-error-color-alt));
+  color: #ffffff;
+  border: 2px solid var(--material-error-filled-border, var(--material-error-color-alt));
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button,
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  color: var(--material-error-filled-button-text, var(--material-error-color-alt));
+  border: 2px solid var(--material-error-filled-button-border, var(--material-error-color-alt));
+  background-color: var(--material-error-filled-button-background, #ffffff);
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material a.alerts-dlx-button:hover,
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material button.button-reset.alerts-dlx-button:hover {
+  background-color: var(--material-error-filled-button-background-hover, var(--material-error-color-light));
+  color: #ffffff;
+  border: 2px solid var(--material-error-filled-button-border-hover, var(--material-error-color-light));
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material svg,
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-material svg path {
+  fill: #ffffff;
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-close svg {
+  color: #ffffff;
+}
+.template-material.is-style-error.is-appearance-filled .alerts-dlx-close svg:hover {
+  color: var(--material-error-color-accent);
+}
+
+/*# sourceMappingURL=alerts-dlx-material-styles.css.map*/

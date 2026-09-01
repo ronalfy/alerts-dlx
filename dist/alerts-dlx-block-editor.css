@@ -1,1 +1,66 @@
-button.button-reset.alerts-dlx-icon-preview-button.components-button,button.button-reset.alerts-dlx-icon-preview-button.components-button:hover{margin:0;padding:0}.template-material,.template-chakra,.template-bootstrap{margin-top:1.5rem !important;margin-bottom:1.5rem !important}.dlx-admin-only-block-expires .components-number-control{margin-bottom:0}.alerts-dlx-editorial-only{padding:48px;border:4px dashed #ff9800}.alerts-dlx-icon-image{max-width:64px;max-height:64px}.alerts-dlx-icon-image-buttons-wrapper{display:flex;justify-content:space-between;align-items:center;gap:10px}.alerts-dlx-icon-sidebar-wrapper{display:flex;justify-content:center;width:100%;padding:8px 0}.alerts-dlx-icon-sidebar-wrapper .alerts-dlx-icon-preview svg{width:32px;height:32px}.alerts-dlx-icon-source-toggle-group.components-toggle-group-control{border:1px solid #eaeaea;border-radius:4px;background-color:#fff;box-shadow:0 0 0 1px #eaeaea}.alerts-dlx-inner-block-parent-toolbar{border-left:1px solid #ddd;margin-left:4px;padding-left:4px}.alerts-dlx-alert-style-toolbar .components-dropdown-menu__toggle{max-width:160px}
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/resolve-url-loader/index.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./src/scss/block-editor.scss ***!
+  \************************************************************************************************************************************************************************************************************************/
+button.button-reset.alerts-dlx-icon-preview-button.components-button,
+button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
+  margin: 0;
+  padding: 0;
+}
+
+.template-material,
+.template-chakra,
+.template-bootstrap {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.dlx-admin-only-block-expires .components-number-control {
+  margin-bottom: 0;
+}
+
+.alerts-dlx-editorial-only {
+  padding: 48px;
+  border: 4px dashed #ff9800;
+}
+
+.alerts-dlx-icon-image {
+  max-width: 64px;
+  max-height: 64px;
+}
+
+.alerts-dlx-icon-image-buttons-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.alerts-dlx-icon-sidebar-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0;
+}
+.alerts-dlx-icon-sidebar-wrapper .alerts-dlx-icon-preview svg {
+  width: 32px;
+  height: 32px;
+}
+
+.alerts-dlx-icon-source-toggle-group.components-toggle-group-control {
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 0 0 1px #eaeaea;
+}
+
+.alerts-dlx-inner-block-parent-toolbar {
+  border-left: 1px solid #ddd;
+  margin-left: 4px;
+  padding-left: 4px;
+}
+
+.alerts-dlx-alert-style-toolbar .components-dropdown-menu__toggle {
+  max-width: 160px;
+}
+
+/*# sourceMappingURL=alerts-dlx-block-editor.css.map*/
