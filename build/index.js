@@ -2129,14 +2129,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _bootstrap_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../bootstrap/edit */ "./src/js/blocks/bootstrap/edit.js");
-/* harmony import */ var _bootstrap_theme_definition__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../bootstrap/theme-definition */ "./src/js/blocks/bootstrap/theme-definition.js");
-/* harmony import */ var _chakraui_edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../chakraui/edit */ "./src/js/blocks/chakraui/edit.js");
-/* harmony import */ var _chakraui_theme_definition__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../chakraui/theme-definition */ "./src/js/blocks/chakraui/theme-definition.js");
-/* harmony import */ var _material_edit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../material/edit */ "./src/js/blocks/material/edit.js");
-/* harmony import */ var _material_theme_definition__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../material/theme-definition */ "./src/js/blocks/material/theme-definition.js");
-/* harmony import */ var _shoelace_edit__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shoelace/edit */ "./src/js/blocks/shoelace/edit.js");
-/* harmony import */ var _shoelace_theme_definition__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../shoelace/theme-definition */ "./src/js/blocks/shoelace/theme-definition.js");
+/* harmony import */ var _components_AlertTypeStyleControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/AlertTypeStyleControl */ "./src/js/blocks/components/AlertTypeStyleControl.js");
+/* harmony import */ var _bootstrap_edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../bootstrap/edit */ "./src/js/blocks/bootstrap/edit.js");
+/* harmony import */ var _bootstrap_theme_definition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../bootstrap/theme-definition */ "./src/js/blocks/bootstrap/theme-definition.js");
+/* harmony import */ var _chakraui_edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../chakraui/edit */ "./src/js/blocks/chakraui/edit.js");
+/* harmony import */ var _chakraui_theme_definition__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../chakraui/theme-definition */ "./src/js/blocks/chakraui/theme-definition.js");
+/* harmony import */ var _material_edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../material/edit */ "./src/js/blocks/material/edit.js");
+/* harmony import */ var _material_theme_definition__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../material/theme-definition */ "./src/js/blocks/material/theme-definition.js");
+/* harmony import */ var _shoelace_edit__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../shoelace/edit */ "./src/js/blocks/shoelace/edit.js");
+/* harmony import */ var _shoelace_theme_definition__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../shoelace/theme-definition */ "./src/js/blocks/shoelace/theme-definition.js");
+/* harmony import */ var _utils_alert_style_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/alert-style-utils */ "./src/js/blocks/utils/alert-style-utils.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -2154,42 +2156,46 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
 var designs = {
   bootstrap: {
     label: 'Bootstrap',
-    Edit: _bootstrap_edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-    definition: _bootstrap_theme_definition__WEBPACK_IMPORTED_MODULE_4__["default"]
+    Edit: _bootstrap_edit__WEBPACK_IMPORTED_MODULE_4__["default"],
+    definition: _bootstrap_theme_definition__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   chakra: {
     label: 'Chakra',
-    Edit: _chakraui_edit__WEBPACK_IMPORTED_MODULE_5__["default"],
-    definition: _chakraui_theme_definition__WEBPACK_IMPORTED_MODULE_6__["default"]
+    Edit: _chakraui_edit__WEBPACK_IMPORTED_MODULE_6__["default"],
+    definition: _chakraui_theme_definition__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   material: {
     label: 'Material',
-    Edit: _material_edit__WEBPACK_IMPORTED_MODULE_7__["default"],
-    definition: _material_theme_definition__WEBPACK_IMPORTED_MODULE_8__["default"]
+    Edit: _material_edit__WEBPACK_IMPORTED_MODULE_8__["default"],
+    definition: _material_theme_definition__WEBPACK_IMPORTED_MODULE_9__["default"]
   },
   shoelace: {
     label: 'Shoelace',
-    Edit: _shoelace_edit__WEBPACK_IMPORTED_MODULE_9__["default"],
-    definition: _shoelace_theme_definition__WEBPACK_IMPORTED_MODULE_10__["default"]
+    Edit: _shoelace_edit__WEBPACK_IMPORTED_MODULE_10__["default"],
+    definition: _shoelace_theme_definition__WEBPACK_IMPORTED_MODULE_11__["default"]
   }
 };
 function CanonicalAlertEdit(props) {
   var attributes = props.attributes,
-    setAttributes = props.setAttributes;
+    setAttributes = props.setAttributes,
+    name = props.name,
+    clientId = props.clientId;
   var design = designs[attributes.alertGroup] || designs.bootstrap;
   var DesignEdit = design.Edit;
   var selectDesign = function selectDesign(alertGroup) {
     var nextDesign = designs[alertGroup] || designs.bootstrap;
+    var nextAlertType = nextDesign.definition.supportedAlertTypes.includes(attributes.alertType) ? attributes.alertType : nextDesign.definition.defaultAlertType;
     var nextAttributes = {
       alertGroup: alertGroup,
-      variant: nextDesign.definition.defaultVariant
+      variant: nextDesign.definition.defaultVariant,
+      alertType: nextAlertType,
+      className: (0,_utils_alert_style_utils__WEBPACK_IMPORTED_MODULE_12__.buildAlertStyleClassName)(attributes.className, nextAlertType)
     };
-    if (!nextDesign.definition.supportedAlertTypes.includes(attributes.alertType)) {
-      nextAttributes.alertType = nextDesign.definition.defaultAlertType;
-    }
     setAttributes(nextAttributes);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
@@ -2209,6 +2215,16 @@ function CanonicalAlertEdit(props) {
     }),
     onChange: selectDesign,
     __nextHasNoMarginBottom: true
+  }))), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
+    group: "styles"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Styles', 'alerts-dlx'),
+    initialOpen: true
+  }, /*#__PURE__*/React.createElement(_components_AlertTypeStyleControl__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    name: name,
+    attributes: attributes,
+    setAttributes: setAttributes,
+    clientId: clientId
   }))), /*#__PURE__*/React.createElement(DesignEdit, props));
 }
 
@@ -3723,6 +3739,100 @@ function AlertSettingsPanel(_ref) {
     name: "alertsDLXSettingsPanelEnd",
     fillProps: fillProps
   }))));
+}
+
+/***/ }),
+
+/***/ "./src/js/blocks/components/AlertTypeStyleControl.js":
+/*!***********************************************************!*\
+  !*** ./src/js/blocks/components/AlertTypeStyleControl.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AlertTypeStyleControl)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_alert_style_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/alert-style-utils */ "./src/js/blocks/utils/alert-style-utils.js");
+/**
+ * Styles sidebar control for selecting alert types on the canonical Alert block.
+ */
+
+
+
+
+
+
+/**
+ * Render a wrapping button group of alert type styles for the Styles sidebar.
+ *
+ * @param {Object}   props               Component props.
+ * @param {string}   props.name          Block name.
+ * @param {Object}   props.attributes    Current block attributes.
+ * @param {Function} props.setAttributes Block attribute updater.
+ * @param {string}   props.clientId      Block client ID.
+ * @return {import('react').JSX.Element} Alert type style control.
+ */
+function AlertTypeStyleControl(_ref) {
+  var name = _ref.name,
+    attributes = _ref.attributes,
+    setAttributes = _ref.setAttributes,
+    clientId = _ref.clientId;
+  var alertType = attributes.alertType,
+    className = attributes.className,
+    alertGroup = attributes.alertGroup;
+  var _useMemo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+      return (0,_utils_alert_style_utils__WEBPACK_IMPORTED_MODULE_3__.getAlertStyleOptions)(name, alertGroup);
+    }, [name, alertGroup]),
+    presets = _useMemo.presets,
+    customLabel = _useMemo.customLabel;
+
+  /**
+   * Apply a style and open the Styles tab when Custom is selected.
+   *
+   * @param {string} styleName Style slug to apply.
+   */
+  var selectStyle = function selectStyle(styleName) {
+    (0,_utils_alert_style_utils__WEBPACK_IMPORTED_MODULE_3__.applyAlertStyle)({
+      className: className,
+      styleName: styleName,
+      setAttributes: setAttributes
+    });
+    if ('custom' === styleName) {
+      (0,_utils_alert_style_utils__WEBPACK_IMPORTED_MODULE_3__.openAlertInspectorTab)(clientId, 'styles');
+    }
+  };
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.BaseControl, {
+    id: "alerts-dlx-alert-type-styles",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Alert style', 'alerts-dlx'),
+    __nextHasNoMarginBottom: true
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "alerts-dlx-alert-type-styles",
+    role: "group",
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Alert style', 'alerts-dlx')
+  }, presets.map(function (style) {
+    return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      key: style.name,
+      variant: alertType === style.name ? 'primary' : 'secondary',
+      onClick: function onClick() {
+        return selectStyle(style.name);
+      },
+      "aria-pressed": alertType === style.name
+    }, style.label);
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+    variant: 'custom' === alertType ? 'primary' : 'secondary',
+    onClick: function onClick() {
+      return selectStyle('custom');
+    },
+    "aria-pressed": 'custom' === alertType
+  }, customLabel)));
 }
 
 /***/ }),

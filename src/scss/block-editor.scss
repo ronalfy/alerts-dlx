@@ -60,3 +60,16 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 .alerts-dlx-alert-style-toolbar .components-dropdown-menu__toggle {
 	max-width: 160px;
 }
+
+.alerts-dlx-alert-type-styles {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	align-items: center;
+
+	button.components-button {
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+	}
+}
