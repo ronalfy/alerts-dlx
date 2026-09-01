@@ -216,7 +216,8 @@ return array(
 				'alertTitle' => 'Sample alert title',
 				'descriptionEnabled' => true,
 				'titleEnabled' => true,
-				'iconEnabled' => true
+				'iconEnabled' => true,
+				'alertDescription' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
 			)
 		),
 		'supports' => array(

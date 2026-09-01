@@ -6,6 +6,7 @@ const commonAttributes = {
 	titleEnabled: true,
 	descriptionEnabled: true,
 	iconEnabled: true,
+	alertDescription: "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>",
 };
 
 export default [
@@ -69,6 +70,18 @@ export default [
 			alertType: 'primary',
 			className: 'is-style-primary',
 			buttonEnabled: true,
+		},
+		example: {
+			attributes: {
+				...commonAttributes,
+				purpose: 'cta',
+				alertType: 'primary',
+				className: 'is-style-primary',
+				buttonEnabled: true,
+				alertTitle: 'Click here to learn more',
+				buttonText: 'Learn More',
+				descriptionEnabled: false,
+			},
 		},
 	},
 ];
