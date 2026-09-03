@@ -19,4 +19,7 @@ import AlertsLogo from "./js/blocks/components/icons/AlertsLogo";
   wp.blocks.updateCategory("alertsdlx", {
     icon: <AlertsLogo width={16} height={16} />,
   });
+  wp.blocks.updateCategory("alertsdlx-legacy", {
+    icon: <AlertsLogo width={16} height={16} />,
+  });
 })();

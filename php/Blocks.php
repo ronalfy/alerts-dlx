@@ -102,6 +102,10 @@ class Blocks {
 							'slug'  => 'alertsdlx',
 							'title' => __( 'AlertsDLX', 'alerts-dlx' ),
 						),
+						array(
+							'slug'  => 'alertsdlx-legacy',
+							'title' => __( 'AlertsDLX Legacy', 'alerts-dlx' ),
+						),
 					)
 				);
 			}

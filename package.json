@@ -13,8 +13,9 @@
     "test:settings": "node maintenance-tests/settings-contracts.mjs",
     "test:release-package": "node maintenance-tests/release-package.mjs",
     "test:docs": "node maintenance-tests/check-doc-links.mjs",
-    "test:maintenance": "npm run test:dependency-health && npm run test:public-contracts && npm run test:block-metadata && npm run test:transforms && npm run test:settings && npm run test:editor-integrations && npm run test:release-package && npm run test:docs",
-    "test:editor-integrations": "node maintenance-tests/editor-integration-contracts.mjs"
+    "test:maintenance": "npm run test:dependency-health && npm run test:public-contracts && npm run test:block-metadata && npm run test:transforms && npm run test:settings && npm run test:editor-integrations && npm run test:canonical-alert-regressions && npm run test:release-package && npm run test:docs",
+    "test:editor-integrations": "node maintenance-tests/editor-integration-contracts.mjs",
+    "test:canonical-alert-regressions": "node maintenance-tests/canonical-alert-regressions.mjs"
   },
   "repository": {
     "type": "git",
