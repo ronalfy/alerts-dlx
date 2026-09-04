@@ -25,6 +25,9 @@ final class ShortcodeBuilder {
 	/** Maximum supported SVG/icon bytes. */
 	private const MAX_ICON_LENGTH = 12000;
 
+	/** Maximum filter-owned attributes preserved during one round trip. */
+	private const MAX_EXTRA_ATTRIBUTES = 32;
+
 	/**
 	 * Renderer-derived attributes that are calculated by Blocks::shortcode().
 	 */
@@ -197,6 +200,15 @@ final class ShortcodeBuilder {
 		}
 
 		$defaults  = self::get_editor_defaults();
+
+		// Every declared builder input is scalar. Reject PHP array-shaped request
+		// parameters before any cast so malformed payloads fail closed cleanly.
+		foreach ( self::get_input_names() as $input_name ) {
+			if ( array_key_exists( $input_name, $values ) && ! is_scalar( $values[ $input_name ] ) && null !== $values[ $input_name ] ) {
+				return new \WP_Error( 'alerts_dlx_builder_scalar', __( 'A shortcode builder field had an invalid value type.', 'alerts-dlx' ) );
+			}
+		}
+
 		$sanitized = $defaults;
 		foreach ( self::BOOLEAN_FIELDS as $field ) {
 			$sanitized[ $field ] = filter_var( $values[ $field ] ?? $defaults[ $field ], FILTER_VALIDATE_BOOLEAN );
@@ -260,6 +272,10 @@ final class ShortcodeBuilder {
 
 		$extra_attributes = array();
 		if ( isset( $values['extra_attributes'] ) && is_array( $values['extra_attributes'] ) ) {
+			// Filters may add attributes, but a preview request must remain bounded.
+			if ( count( $values['extra_attributes'] ) > self::MAX_EXTRA_ATTRIBUTES ) {
+				return new \WP_Error( 'alerts_dlx_builder_extra_limit', __( 'Too many additional shortcode attributes were supplied.', 'alerts-dlx' ) );
+			}
 			foreach ( $values['extra_attributes'] as $name => $value ) {
 				$key = sanitize_key( $name );
 				if ( $key !== $name || in_array( $key, self::get_input_names(), true ) || ! is_scalar( $value ) ) {

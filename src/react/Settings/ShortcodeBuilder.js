@@ -70,10 +70,14 @@ const BuilderField = ({ field, values, onChange }) => {
     );
   }
 
+  const inputType = ["number", "url", "color"].includes(field.control)
+    ? field.control
+    : "text";
+
   return (
     <TextControl
       label={field.label}
-      type={"number" === field.control ? "number" : "text"}
+      type={inputType}
       min={field.min}
       max={field.max}
       value={value ?? ""}
@@ -231,12 +235,12 @@ const ShortcodeBuilder = () => {
         </div>
 
         {error && (
-          <Notice status="error" isDismissible={false}>
+          <Notice status="error" isDismissible={false} aria-live="assertive">
             {error}
           </Notice>
         )}
         {status && (
-          <Notice status="success" isDismissible={false}>
+          <Notice status="success" isDismissible={false} aria-live="polite">
             {status}
           </Notice>
         )}
@@ -289,7 +293,14 @@ const ShortcodeBuilder = () => {
             <h3 className="adlx-admin-content-subheading">
               {__("Generated shortcode", "alerts-dlx")}
             </h3>
-            {loading && <Spinner />}
+            {loading && (
+              <span role="status" aria-live="polite">
+                <Spinner />
+                <span className="screen-reader-text">
+                  {__("Updating shortcode preview.", "alerts-dlx")}
+                </span>
+              </span>
+            )}
             <TextareaControl
               label={__("Copy this shortcode", "alerts-dlx")}
               value={shortcode}
@@ -310,6 +321,7 @@ const ShortcodeBuilder = () => {
             <div
               className="alerts-dlx-shortcode-builder-preview"
               aria-live="polite"
+              aria-busy={loading}
               dangerouslySetInnerHTML={{ __html: previewHtml }}
             />
           </div>
