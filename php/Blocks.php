@@ -124,48 +124,60 @@ class Blocks {
 	 * @return string
 	 */
 	public function shortcode( $atts = array(), $content = '' ) {
-		$defaults = array(
-			'unique_id'               => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
-			'alert_group'             => 'chakra',
-			'alert_type'              => 'success',
-			'align'                   => 'center',
-			'alert_title'             => '',
-			'alert_description'       => '',
-			'maximum_width_unit'      => 'px',
-			'maximum_width'           => 650,
-			'icon'                    => '',
-			'base_font_size'          => 16,
-			'icon_vertical_alignment' => 'top',
-			'variant'                 => '',
-			'mode'                    => 'light', /* can be dark */
-			'button_text'             => '',
-			'button_url'              => '',
-			'button_target'           => false,
-			'button_rel_no_follow'    => false,
-			'button_rel_sponsored'    => false,
-			'icon_appearance'         => 'default', /* can be rounded */
-			'color_primary'           => '',
-			'color_border'            => '',
-			'color_accent'            => '',
-			'color_alt'               => '',
-			'color_alt_hover'         => '',
-			'color_alt_text'          => '',
-			'color_alt_text_hover'    => '',
-			'color_bold'              => '',
-			'color_light'             => '',
-			'close_button_enabled'    => false,
-			'close_button_expiration' => 0,
-			'is_block_editorial_only' => false,
-			'icon_source'             => 'icon',
-			'image_url'               => '',
-			'image_id'                => 0,
-		);
+		$defaults = AlertAttributes::get_shortcode_defaults();
 		$atts     = shortcode_atts( $defaults, $atts, 'alertsdlx' );
+
+		// Sanitize values used before the shared renderer. Inline CSS is emitted
+		// below, so waiting for renderer normalization would be too late.
+		$sanitized_id = sanitize_html_class( (string) $atts['unique_id'] );
+		$atts['unique_id'] = '' !== $sanitized_id ? $sanitized_id : $defaults['unique_id'];
+
+		// Values embedded into CSS syntax need strict allowlists; HTML escaping
+		// alone does not neutralize braces or declaration separators. Preserve
+		// every unit exposed by the existing builder and fall back to defaults.
+		$allowed_alert_groups = array( 'bootstrap', 'chakra', 'material', 'shoelace' );
+		if ( ! in_array( $atts['alert_group'], $allowed_alert_groups, true ) ) {
+			$atts['alert_group'] = $defaults['alert_group'];
+		}
+		$allowed_width_units = array( 'px', 'em', 'rem', '%', 'vw' );
+		if ( ! in_array( $atts['maximum_width_unit'], $allowed_width_units, true ) ) {
+			$atts['maximum_width_unit'] = $defaults['maximum_width_unit'];
+		}
+
+		$color_fields = array(
+			'color_primary', 'color_border', 'color_accent', 'color_alt',
+			'color_alt_hover', 'color_alt_text', 'color_alt_text_hover',
+			'color_bold', 'color_light',
+		);
+		foreach ( $color_fields as $color_field ) {
+			$color = sanitize_hex_color( (string) $atts[ $color_field ] );
+			$atts[ $color_field ] = null === $color ? $defaults[ $color_field ] : $color;
+		}
+
+		// Keep the legacy public shortcode within the same resource limits as
+		// the visual builder. Oversized icons fail closed before expensive KSES.
+		if ( strlen( (string) $atts['icon'] ) > 12000 ) {
+			$atts['icon'] = '';
+		} else {
+			$atts['icon'] = wp_kses( (string) $atts['icon'], Functions::get_kses_allowed_html() );
+		}
+		if ( preg_match( '/\b(?:xlink:href|href)\s*=\s*([\"\'])(?!#)/i', $atts['icon'] ) ) {
+			$atts['icon'] = '';
+		}
+
+		// Numeric shortcode attributes share the builder's documented bounds.
+		// This prevents extreme values from reaching CSS or cookie metadata.
+		$atts['maximum_width'] = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
+		$atts['base_font_size'] = min( 96, max( 8, (int) $atts['base_font_size'] ) );
+		$atts['close_button_expiration'] = min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) );
 
 		// If alert description is empty, use content.
 		if ( empty( $atts['alert_description'] ) && ! empty( $content ) ) {
+			// Bound content before filters and their result after filtering.
+			$content = substr( (string) $content, 0, 20000 );
 			$atts['alert_description'] = apply_filters( 'alerts_dlx_the_content', $content );
 		}
+		$atts['alert_description'] = substr( (string) $atts['alert_description'], 0, 20000 );
 
 		// Set the default variant.
 		if ( '' === $atts['variant'] ) {

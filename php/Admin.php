@@ -28,6 +28,7 @@ class Admin {
 		add_action( 'wp_ajax_alerts_dlx_retrieve_settings', array( $this, 'ajax_retrieve_settings' ) );
 		add_action( 'wp_ajax_alerts_dlx_save_settings', array( $this, 'ajax_save_settings' ) );
 		add_action( 'wp_ajax_alerts_dlx_reset_settings', array( $this, 'ajax_reset_settings' ) );
+		add_action( 'wp_ajax_alerts_dlx_shortcode_builder', array( ShortcodeBuilder::class, 'handle_ajax' ) );
 	}
 
 	/**
@@ -219,6 +220,16 @@ class Admin {
 			'all'
 		);
 
+		// The visual builder previews the existing production renderer. These
+		// styles are limited to this admin screen and never change frontend
+		// conditional-loading behavior.
+		$blocks = new Blocks();
+		$blocks->register_block_editor_scripts();
+		foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
+			wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
+		}
+		wp_enqueue_style( 'alerts-dlx-block-editor-styles-lato' );
+
 		$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-settings.asset.php' );
 		if ( ! file_exists( $asset_file ) ) {
 			return;
@@ -237,9 +248,12 @@ class Admin {
 			'alerts-dlx-settings-admin-js',
 			'alertsDlxAdmin',
 			array(
-				'retrieveNonce' => wp_create_nonce( 'alerts_dlx_retrieve_settings' ),
-				'saveNonce'     => wp_create_nonce( 'alerts_dlx_save_settings' ),
-				'resetNonce'    => wp_create_nonce( 'alerts_dlx_reset_settings' ),
+				'retrieveNonce'            => wp_create_nonce( 'alerts_dlx_retrieve_settings' ),
+				'saveNonce'                => wp_create_nonce( 'alerts_dlx_save_settings' ),
+				'resetNonce'               => wp_create_nonce( 'alerts_dlx_reset_settings' ),
+				'shortcodeBuilderNonce'    => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
+				'shortcodeBuilderDefaults' => ShortcodeBuilder::get_editor_defaults(),
+				'shortcodeBuilderFields'   => ShortcodeBuilder::get_editor_fields(),
 			)
 		);
 	}

@@ -30,7 +30,16 @@ const getCookie = ( name ) => {
 	const match = document.cookie.match(
 		new RegExp( '(?:^|; )' + name.replace( /([.$?*|{}()[\]\\/+^])/g, '\\$1' ) + '=([^;]*)' )
 	);
-	return match ? decodeURIComponent( match[ 1 ] ) : null;
+	if ( ! match ) {
+		return null;
+	}
+
+	// A malformed third-party cookie must not disable every alert handler.
+	try {
+		return decodeURIComponent( match[ 1 ] );
+	} catch ( error ) {
+		return null;
+	}
 };
 
 /**
@@ -56,10 +65,12 @@ const hasDismissCookie = ( uniqueId ) => {
  * @param {number} maxAge  Lifetime in seconds.
  */
 const setDismissCookie = ( name, value, maxAge ) => {
-	const expires = new Date( Date.now() + maxAge * 1000 ).toUTCString();
+	// Mirror the server-side one-year bound even if DOM attributes are modified.
+	const boundedMaxAge = Math.min( 31536000, Math.max( 1, maxAge ) );
+	const expires = new Date( Date.now() + boundedMaxAge * 1000 ).toUTCString();
 	let cookie = `${ name }=${ encodeURIComponent( value ) }`;
 	cookie += `; Path=/`;
-	cookie += `; Max-Age=${ maxAge }`;
+	cookie += `; Max-Age=${ boundedMaxAge }`;
 	cookie += `; Expires=${ expires }`;
 	cookie += `; SameSite=Lax`;
 
@@ -106,6 +117,11 @@ const hideDismissedAlerts = () => {
  */
 const bindCloseButtons = () => {
 	document.querySelectorAll( '.alerts-dlx-close' ).forEach( ( closeButton ) => {
+		if ( 'true' === closeButton.dataset.alertsDlxBound ) {
+			return;
+		}
+		closeButton.dataset.alertsDlxBound = 'true';
+
 		closeButton.addEventListener( 'click', () => {
 			const alert = closeButton.closest( '.alerts-dlx' );
 			if ( ! alert ) {
@@ -115,10 +131,21 @@ const bindCloseButtons = () => {
 			// Add removal class.
 			alert.classList.add( 'alerts-dlx-remove' );
 
-			// Remove alert after animation.
-			alert.addEventListener( 'animationend', () => {
+			// Remove once even when reduced-motion CSS disables the animation.
+			let removed = false;
+			const removeAlert = () => {
+				if ( removed ) {
+					return;
+				}
+				removed = true;
 				alert.remove();
-			} );
+			};
+			alert.addEventListener( 'animationend', removeAlert, { once: true } );
+			if ( window.matchMedia?.( '(prefers-reduced-motion: reduce)' ).matches ) {
+				removeAlert();
+			} else {
+				window.setTimeout( removeAlert, 1000 );
+			}
 
 			const cookieExpiration = parseInt( alert.getAttribute( 'data-expiration' ), 10 );
 
