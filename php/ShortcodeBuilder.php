@@ -316,12 +316,6 @@ final class ShortcodeBuilder {
 				'control' => 'text',
 				'label'   => __( 'Fixed unique ID', 'alerts-dlx' ),
 			),
-			array(
-				'name'    => 'is_block_editorial_only',
-				'group'   => 'advanced',
-				'control' => 'toggle',
-				'label'   => __( 'Editorial-only output', 'alerts-dlx' ),
-			),
 		);
 
 		$color_labels = array(
