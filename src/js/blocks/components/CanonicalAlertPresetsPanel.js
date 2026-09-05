@@ -134,7 +134,7 @@ export default function CanonicalAlertPresetsPanel( { attributes, setAttributes 
 	);
 
 	return (
-		<PanelBody title={ __( 'Presets and new-Alert defaults', 'alerts-dlx' ) } initialOpen={ false }>
+		<PanelBody title={ __( 'Presets and Defaults', 'alerts-dlx' ) } initialOpen={ false }>
 			<p>
 				{ __( 'A preset copies presentation and settings only. Title, body, button copy, links, unique ID, and InnerBlocks stay unchanged.', 'alerts-dlx' ) }
 			</p>
