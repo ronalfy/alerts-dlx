@@ -8545,7 +8545,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Utils_SendCommand__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utils/SendCommand */ "./src/react/Utils/SendCommand.js");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Utils_SendCommand__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Utils/SendCommand */ "./src/react/Utils/SendCommand.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -8563,6 +8565,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 var groupLabels = {
   content: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Content", "alerts-dlx"),
   appearance: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Appearance", "alerts-dlx"),
@@ -8572,6 +8575,7 @@ var groupLabels = {
   dismiss: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Dismiss", "alerts-dlx"),
   advanced: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Advanced", "alerts-dlx")
 };
+var colorSettings = [];
 
 /**
  * Render one schema-driven control.
@@ -8617,7 +8621,18 @@ var BuilderField = function BuilderField(_ref) {
       }
     });
   }
-  var inputType = ["number", "url", "color"].includes(field.control) ? field.control : "text";
+  var maybeInputColor = ["color"].includes(field.control) ? field.control : null;
+  if (maybeInputColor) {
+    colorSettings.push({
+      label: field.label,
+      value: '#FF0000',
+      onChange: function onChange(nextValue) {
+        return _onChange(field.name, nextValue);
+      }
+    });
+    return null;
+  }
+  var inputType = ["number", "url"].includes(field.control) ? field.control : "text";
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: field.label,
     type: inputType,
@@ -8671,7 +8686,7 @@ var ShortcodeBuilder = function ShortcodeBuilder() {
     setLoading = _useState12[1];
   var requestSequence = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(0);
   var requestBuilder = function requestBuilder(operation, data) {
-    return (0,_Utils_SendCommand__WEBPACK_IMPORTED_MODULE_3__["default"])("alerts_dlx_shortcode_builder", _objectSpread({
+    return (0,_Utils_SendCommand__WEBPACK_IMPORTED_MODULE_4__["default"])("alerts_dlx_shortcode_builder", _objectSpread({
       nonce: alertsDlxAdmin.shortcodeBuilderNonce,
       operation: operation
     }, data));
@@ -8770,6 +8785,7 @@ var ShortcodeBuilder = function ShortcodeBuilder() {
       return setError((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Could not copy the shortcode.", "alerts-dlx"));
     });
   };
+  console.log(colorSettings);
   return /*#__PURE__*/React.createElement("section", {
     className: "adlx-admin-content-wrapper alerts-dlx-shortcode-builder",
     "aria-labelledby": "alerts-dlx-shortcode-builder-title"
@@ -8789,7 +8805,10 @@ var ShortcodeBuilder = function ShortcodeBuilder() {
     status: "success",
     isDismissible: false,
     "aria-live": "polite"
-  }, status), /*#__PURE__*/React.createElement("div", {
+  }, status), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit an existing shortcode", "alerts-dlx"),
+    initialOpen: false
+  }, /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-content-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-component-wrapper"
@@ -8804,7 +8823,7 @@ var ShortcodeBuilder = function ShortcodeBuilder() {
     variant: "secondary",
     onClick: parseSource,
     disabled: !source || loading
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Load shortcode", "alerts-dlx")))), Object.entries(groupLabels).map(function (_ref2) {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Load shortcode", "alerts-dlx"))))), Object.entries(groupLabels).map(function (_ref2) {
     var _ref3 = _slicedToArray(_ref2, 2),
       group = _ref3[0],
       label = _ref3[1];
@@ -8831,7 +8850,13 @@ var ShortcodeBuilder = function ShortcodeBuilder() {
         onChange: handleChange
       }));
     })));
-  }), /*#__PURE__*/React.createElement("div", {
+  }), colorSettings.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+    className: "adlx-admin-content-subheading"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Custom colorss", "alerts-dlx")), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.PanelColorSettings, {
+    __experimentalIsRenderedInSidebar: false,
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Custom colorss", "alerts-dlx"),
+    colorSettings: colorSettings
+  })), /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-content-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-component-wrapper"
@@ -8980,6 +9005,17 @@ function sendCommand(action, data, maybeAjaxUrl) {
 /***/ (() => {
 
 /* (ignored) */
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!*************************************!*\
+  !*** external ["wp","blockEditor"] ***!
+  \*************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["blockEditor"];
 
 /***/ }),
 
