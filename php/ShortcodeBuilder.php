@@ -123,10 +123,13 @@ final class ShortcodeBuilder {
 	/**
 	 * Get stable values for the visual editor without preselecting an ID.
 	 *
+	 * Uses builder-only starter content so the first-run preview is not empty.
+	 * Frontend omit-attribute fallbacks stay in get_shortcode_defaults().
+	 *
 	 * @return array
 	 */
 	public static function get_editor_defaults() {
-		$defaults              = AlertAttributes::get_shortcode_defaults();
+		$defaults              = AlertAttributes::get_builder_defaults();
 		$defaults['unique_id'] = '';
 		$defaults['variant']   = self::THEME_DEFINITIONS[ $defaults['alert_group'] ]['default_variant'];
 
@@ -513,6 +516,10 @@ final class ShortcodeBuilder {
 
 		foreach ( self::get_input_names() as $name ) {
 			if ( 'alert_description' === $name ) {
+				continue;
+			}
+			// Custom colors only apply when alert_type is custom.
+			if ( 'custom' !== $values['alert_type'] && in_array( $name, self::COLOR_FIELDS, true ) ) {
 				continue;
 			}
 			$value   = $values[ $name ];

@@ -29,6 +29,85 @@ const groupLabels = {
 	advanced: __("Advanced", "alerts-dlx"),
 };
 
+const COLOR_FIELD_NAMES = [
+	"color_primary",
+	"color_border",
+	"color_accent",
+	"color_alt",
+	"color_alt_hover",
+	"color_alt_text",
+	"color_alt_text_hover",
+	"color_bold",
+	"color_light",
+];
+
+/**
+ * Return the info palette for one alert group.
+ *
+ * @param {string} alertGroup Alert design slug.
+ * @return {Object} Color attribute map.
+ */
+const getInfoColors = (alertGroup) =>
+	alertsDlxAdmin.shortcodeBuilderInfoColors?.[alertGroup] || {};
+
+/**
+ * Return true when every custom color field is empty.
+ *
+ * @param {Object} values Current builder values.
+ * @return {boolean} Whether all nine colors are blank.
+ */
+const colorsAreEmpty = (values) =>
+	COLOR_FIELD_NAMES.every((name) => !values[name]);
+
+/**
+ * Return true when colors still match a group's info starter palette.
+ *
+ * @param {Object} values     Current builder values.
+ * @param {string} alertGroup Alert design slug.
+ * @return {boolean} Whether colors equal that group's info defaults.
+ */
+const colorsMatchInfo = (values, alertGroup) => {
+	const infoColors = getInfoColors(alertGroup);
+	if (!Object.keys(infoColors).length) {
+		return false;
+	}
+	return COLOR_FIELD_NAMES.every(
+		(name) => (values[name] || "") === (infoColors[name] || "")
+	);
+};
+
+/**
+ * Fill empty color fields, or replace untouched info defaults, for a group.
+ *
+ * User-edited colors are kept. Empty fields receive the group's info colors.
+ * When every field is empty or still matches a previous group's info palette,
+ * the full info set is applied.
+ *
+ * @param {Object} values       Current builder values.
+ * @param {string} alertGroup   Alert design slug to apply.
+ * @param {string} [fromGroup]  Previous group when switching designs.
+ * @return {Object} Values with starter colors applied where allowed.
+ */
+const applyInfoColors = (values, alertGroup, fromGroup) => {
+	const infoColors = getInfoColors(alertGroup);
+	if (!Object.keys(infoColors).length) {
+		return values;
+	}
+	if (
+		colorsAreEmpty(values) ||
+		(fromGroup && colorsMatchInfo(values, fromGroup))
+	) {
+		return { ...values, ...infoColors };
+	}
+	const next = { ...values };
+	COLOR_FIELD_NAMES.forEach((name) => {
+		if (!next[name] && infoColors[name]) {
+			next[name] = infoColors[name];
+		}
+	});
+	return next;
+};
+
 /**
  * Group color fields by their localized subgroup label.
  *
@@ -377,7 +456,7 @@ const ShortcodeBuilder = () => {
 	const handleChange = (name, value) => {
 		setStatus("");
 		setValues((current) => {
-			const next = { ...current, [name]: value };
+			let next = { ...current, [name]: value };
 			if ("alert_group" === name) {
 				const typeField = fields.find((field) => "alert_type" === field.name);
 				const variantField = fields.find((field) => "variant" === field.name);
@@ -387,6 +466,10 @@ const ShortcodeBuilder = () => {
 					next.alert_type = typeOptions[0]?.value || "success";
 				}
 				next.variant = variantOptions[0]?.value || "default";
+				next = applyInfoColors(next, value, current.alert_group);
+			}
+			if ("alert_type" === name && "custom" === value) {
+				next = applyInfoColors(next, next.alert_group);
 			}
 			return next;
 		});

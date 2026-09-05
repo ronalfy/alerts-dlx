@@ -295,10 +295,11 @@ class Admin {
 				'alerts-dlx-shortcode-builder-admin-js',
 				'alertsDlxAdmin',
 				array(
-					'shortcodeBuilderNonce'    => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
-					'shortcodeBuilderDefaults' => ShortcodeBuilder::get_editor_defaults(),
-					'shortcodeBuilderFields'   => ShortcodeBuilder::get_editor_fields(),
-					'colorPalette'             => Functions::get_theme_color_palette(),
+					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
+					'shortcodeBuilderDefaults'   => ShortcodeBuilder::get_editor_defaults(),
+					'shortcodeBuilderFields'     => ShortcodeBuilder::get_editor_fields(),
+					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
+					'colorPalette'               => Functions::get_theme_color_palette(),
 				)
 			);
 
