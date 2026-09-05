@@ -48,9 +48,26 @@ contains(blocks, "$atts['alert_description'] = substr( (string) $atts['alert_des
 
 contains(builder, '["number", "url"].includes(field.control)', 'Builder exposes semantic input types');
 contains(builder, '"color" === field.control', 'Builder exposes a dedicated color control');
+contains(builder, 'const isFieldVisible = (field, values)', 'Builder evaluates field visibility from schema metadata');
+contains(builder, 'isFieldVisible(field, values)', 'Builder filters controls through field visibility');
+contains(builder, 'field.show_when.every', 'Builder ANDs every show_when condition');
 contains(builder, 'aria-live="assertive"', 'Builder errors are announced assertively');
 contains(builder, 'aria-busy={loading}', 'Builder preview exposes busy state');
 contains(builder, 'Updating shortcode preview', 'Builder exposes readable loading status');
+assert.equal(
+	builder.includes('"colors" === group && "custom" !== values.alert_type'),
+	false,
+	'Builder no longer hardcodes the custom-colors group gate'
+);
+assertions += 1;
+
+contains(php, 'private static function field_is_visible', 'Builder generation shares the field visibility helper');
+contains(php, "self::field_is_visible( $fields_by_name[ $name ], $values )", 'Builder omits hidden attributes from generated shortcodes');
+contains(php, "'field'    => 'button_url',\n\t\t\t\t\t\t'operator' => 'filled',", 'Button URL dependents use a filled visibility rule');
+contains(php, "'field'    => 'icon_source',\n\t\t\t\t\t\t'operator' => 'equals',\n\t\t\t\t\t\t'value'    => 'icon',", 'Icon SVG is gated on icon source');
+contains(php, "'field'    => 'icon_source',\n\t\t\t\t\t\t'operator' => 'equals',\n\t\t\t\t\t\t'value'    => 'image',", 'Image fields are gated on icon source');
+contains(php, "'field'    => 'close_button_enabled',\n\t\t\t\t\t\t'operator' => 'is_true',", 'Dismiss duration is gated on the dismiss toggle');
+contains(php, "'field'    => 'alert_type',\n\t\t\t\t\t\t'operator' => 'equals',\n\t\t\t\t\t\t'value'    => 'custom',", 'Custom colors are gated on alert type');
 
 contains(dismiss, 'try {\n\t\treturn decodeURIComponent( match[ 1 ] );', 'Malformed cookies fail closed');
 contains(dismiss, 'const boundedMaxAge = Math.min( 31536000, Math.max( 1, maxAge ) );', 'Client cookie lifetime is bounded');

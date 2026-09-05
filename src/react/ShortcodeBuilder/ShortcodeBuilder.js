@@ -109,6 +109,49 @@ const applyInfoColors = (values, alertGroup, fromGroup) => {
 };
 
 /**
+ * Return true when a visibility condition matches current builder values.
+ *
+ * @param {Object} condition Field show_when condition.
+ * @param {Object} values    Current builder values.
+ * @return {boolean} Whether the condition passes.
+ */
+const conditionMatches = (condition, values) => {
+	if (!condition?.field || !condition?.operator) {
+		return false;
+	}
+
+	const actual = values[condition.field];
+	switch (condition.operator) {
+		case "equals":
+			return String(actual ?? "") === String(condition.value ?? "");
+		case "not_equals":
+			return String(actual ?? "") !== String(condition.value ?? "");
+		case "filled":
+			return "" !== String(actual ?? "").trim();
+		case "is_true":
+			return true === actual || "true" === actual || 1 === actual || "1" === actual;
+		case "is_false":
+			return true !== actual && "true" !== actual && 1 !== actual && "1" !== actual;
+		default:
+			return false;
+	}
+};
+
+/**
+ * Return true when a schema field should render for the current values.
+ *
+ * @param {Object} field  Localized field metadata.
+ * @param {Object} values Current builder values.
+ * @return {boolean} Whether the field is visible.
+ */
+const isFieldVisible = (field, values) => {
+	if (!Array.isArray(field.show_when) || !field.show_when.length) {
+		return true;
+	}
+	return field.show_when.every((condition) => conditionMatches(condition, values));
+};
+
+/**
  * Group color fields by their localized subgroup label.
  *
  * @param {Array} fields Color field metadata.
@@ -574,11 +617,10 @@ const ShortcodeBuilder = () => {
 				</PanelBody>
 
 				{Object.entries(groupLabels).map(([group, label]) => {
-					const groupFields = fields.filter((field) => field.group === group);
+					const groupFields = fields.filter(
+						(field) => field.group === group && isFieldVisible(field, values)
+					);
 					if (!groupFields.length) {
-						return null;
-					}
-					if ("colors" === group && "custom" !== values.alert_type) {
 						return null;
 					}
 					return (

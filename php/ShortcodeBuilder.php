@@ -238,22 +238,40 @@ final class ShortcodeBuilder {
 				'label'   => __( 'Button URL', 'alerts-dlx' ),
 			),
 			array(
-				'name'    => 'button_target',
-				'group'   => 'action',
-				'control' => 'toggle',
-				'label'   => __( 'Open button in a new tab', 'alerts-dlx' ),
+				'name'      => 'button_target',
+				'group'     => 'action',
+				'control'   => 'toggle',
+				'label'     => __( 'Open button in a new tab', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'button_url',
+						'operator' => 'filled',
+					),
+				),
 			),
 			array(
-				'name'    => 'button_rel_no_follow',
-				'group'   => 'action',
-				'control' => 'toggle',
-				'label'   => __( 'Add nofollow', 'alerts-dlx' ),
+				'name'      => 'button_rel_no_follow',
+				'group'     => 'action',
+				'control'   => 'toggle',
+				'label'     => __( 'Add nofollow', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'button_url',
+						'operator' => 'filled',
+					),
+				),
 			),
 			array(
-				'name'    => 'button_rel_sponsored',
-				'group'   => 'action',
-				'control' => 'toggle',
-				'label'   => __( 'Mark as sponsored', 'alerts-dlx' ),
+				'name'      => 'button_rel_sponsored',
+				'group'     => 'action',
+				'control'   => 'toggle',
+				'label'     => __( 'Mark as sponsored', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'button_url',
+						'operator' => 'filled',
+					),
+				),
 			),
 			array(
 				'name'    => 'icon_source',
@@ -263,24 +281,45 @@ final class ShortcodeBuilder {
 				'options' => self::options_from_values( array( 'icon', 'image' ) ),
 			),
 			array(
-				'name'    => 'icon',
-				'group'   => 'icon',
-				'control' => 'textarea',
-				'label'   => __( 'Icon SVG', 'alerts-dlx' ),
+				'name'      => 'icon',
+				'group'     => 'icon',
+				'control'   => 'textarea',
+				'label'     => __( 'Icon SVG', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'icon_source',
+						'operator' => 'equals',
+						'value'    => 'icon',
+					),
+				),
 			),
 			array(
-				'name'    => 'image_url',
-				'group'   => 'icon',
-				'control' => 'url',
-				'label'   => __( 'Image URL', 'alerts-dlx' ),
+				'name'      => 'image_url',
+				'group'     => 'icon',
+				'control'   => 'url',
+				'label'     => __( 'Image URL', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'icon_source',
+						'operator' => 'equals',
+						'value'    => 'image',
+					),
+				),
 			),
 			array(
-				'name'    => 'image_id',
-				'group'   => 'icon',
-				'control' => 'number',
-				'label'   => __( 'Image attachment ID', 'alerts-dlx' ),
-				'min'     => 0,
-				'max'     => 2147483647,
+				'name'      => 'image_id',
+				'group'     => 'icon',
+				'control'   => 'number',
+				'label'     => __( 'Image attachment ID', 'alerts-dlx' ),
+				'min'       => 0,
+				'max'       => 2147483647,
+				'show_when' => array(
+					array(
+						'field'    => 'icon_source',
+						'operator' => 'equals',
+						'value'    => 'image',
+					),
+				),
 			),
 			array(
 				'name'    => 'icon_appearance',
@@ -303,12 +342,18 @@ final class ShortcodeBuilder {
 				'label'   => __( 'Allow visitors to dismiss this alert', 'alerts-dlx' ),
 			),
 			array(
-				'name'    => 'close_button_expiration',
-				'group'   => 'dismiss',
-				'control' => 'number',
-				'label'   => __( 'Dismiss duration in seconds', 'alerts-dlx' ),
-				'min'     => 0,
-				'max'     => 31536000,
+				'name'      => 'close_button_expiration',
+				'group'     => 'dismiss',
+				'control'   => 'number',
+				'label'     => __( 'Dismiss duration in seconds', 'alerts-dlx' ),
+				'min'       => 0,
+				'max'       => 31536000,
+				'show_when' => array(
+					array(
+						'field'    => 'close_button_enabled',
+						'operator' => 'is_true',
+					),
+				),
 			),
 			array(
 				'name'    => 'unique_id',
@@ -344,11 +389,18 @@ final class ShortcodeBuilder {
 
 		foreach ( self::COLOR_FIELDS as $color_field ) {
 			$fields[] = array(
-				'name'     => $color_field,
-				'group'    => 'colors',
-				'subgroup' => $color_subgroups[ $color_field ],
-				'control'  => 'color',
-				'label'    => $color_labels[ $color_field ],
+				'name'      => $color_field,
+				'group'     => 'colors',
+				'subgroup'  => $color_subgroups[ $color_field ],
+				'control'   => 'color',
+				'label'     => $color_labels[ $color_field ],
+				'show_when' => array(
+					array(
+						'field'    => 'alert_type',
+						'operator' => 'equals',
+						'value'    => 'custom',
+					),
+				),
 			);
 		}
 
@@ -507,13 +559,16 @@ final class ShortcodeBuilder {
 		$defaults['unique_id'] = '';
 		$theme_default_variant = self::THEME_DEFINITIONS[ $values['alert_group'] ]['default_variant'];
 		$attributes            = array();
+		$fields_by_name        = array();
+		foreach ( self::get_editor_fields() as $field ) {
+			$fields_by_name[ $field['name'] ] = $field;
+		}
 
 		foreach ( self::get_input_names() as $name ) {
 			if ( 'alert_description' === $name ) {
 				continue;
 			}
-			// Custom colors only apply when alert_type is custom.
-			if ( 'custom' !== $values['alert_type'] && in_array( $name, self::COLOR_FIELDS, true ) ) {
+			if ( isset( $fields_by_name[ $name ] ) && ! self::field_is_visible( $fields_by_name[ $name ], $values ) ) {
 				continue;
 			}
 			$value   = $values[ $name ];
@@ -600,6 +655,57 @@ final class ShortcodeBuilder {
 		}
 
 		wp_send_json_success( $result );
+	}
+
+	/**
+	 * Return true when a field should appear for the current builder values.
+	 *
+	 * @param array $field  Field metadata.
+	 * @param array $values Current builder values.
+	 * @return bool
+	 */
+	private static function field_is_visible( $field, $values ) {
+		if ( empty( $field['show_when'] ) || ! is_array( $field['show_when'] ) ) {
+			return true;
+		}
+
+		foreach ( $field['show_when'] as $condition ) {
+			if ( ! self::condition_matches( $condition, $values ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Evaluate one allowlisted visibility condition.
+	 *
+	 * @param array $condition Visibility condition.
+	 * @param array $values    Current builder values.
+	 * @return bool
+	 */
+	private static function condition_matches( $condition, $values ) {
+		if ( ! is_array( $condition ) || empty( $condition['field'] ) || empty( $condition['operator'] ) ) {
+			return false;
+		}
+
+		$actual   = $values[ $condition['field'] ] ?? '';
+		$expected = (string) ( $condition['value'] ?? '' );
+		switch ( $condition['operator'] ) {
+			case 'equals':
+				return $expected === (string) $actual;
+			case 'not_equals':
+				return $expected !== (string) $actual;
+			case 'filled':
+				return '' !== trim( (string) $actual );
+			case 'is_true':
+				return true === filter_var( $actual, FILTER_VALIDATE_BOOLEAN );
+			case 'is_false':
+				return false === filter_var( $actual, FILTER_VALIDATE_BOOLEAN );
+			default:
+				return false;
+		}
 	}
 
 	/**
