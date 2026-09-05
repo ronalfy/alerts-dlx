@@ -215,7 +215,7 @@ final class ShortcodeBuilder {
 				'group'   => 'appearance',
 				'control' => 'select',
 				'label'   => __( 'Width unit', 'alerts-dlx' ),
-				'options' => self::options_from_values( array( 'px', 'em', 'rem', '%', 'vw' ) ),
+				'options' => self::options_from_values( array( 'px', 'em', 'rem', '%', 'vw' ), uppercase:true ),
 			),
 			array(
 				'name'    => 'base_font_size',
@@ -612,14 +612,15 @@ final class ShortcodeBuilder {
 	 * Create translated select options from public slugs.
 	 *
 	 * @param array $values Option values.
+	 * @param bool  $uppercase Whether to uppercase the label.
 	 * @return array
 	 */
-	private static function options_from_values( $values ) {
+	private static function options_from_values( $values, bool $uppercase = false ) {
 		return array_map(
-			static function ( $value ) {
+			static function ( $value ) use ( $uppercase ) {
 				return array(
 					'value' => $value,
-					'label' => ucwords( str_replace( '-', ' ', $value ) ),
+					'label' => $uppercase ? strtoupper( str_replace( '-', ' ', $value ) ) : ucwords( str_replace( '-', ' ', $value ) ),
 				);
 			},
 			$values
