@@ -477,6 +477,19 @@ body.alerts-dlx-body .updated {
 	transform: translate(-4px, -4px) !important;
 }
 
+.adlx-admin-panel {
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	button {
+		background: #f0f0f0;
+	}
+
+	.adlx-admin-content-body {
+		margin-top: 20px;
+	}
+}
+
 /* Panel content */
 .adlx-admin-content-body {
 	background: #fff;

@@ -731,6 +731,7 @@ const ShortcodeBuilder = () => {
 				<PanelBody
 					title={__("Edit an existing shortcode", "alerts-dlx")}
 					initialOpen={false}
+					className="adlx-admin-panel"
 				>
 					<div className="adlx-admin-content-body">
 						<div className="adlx-admin-component-wrapper">
