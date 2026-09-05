@@ -194,12 +194,35 @@ class Functions {
 	}
 
 	/**
-	 * Return the URL to the admin settings screen.
+	 * Get the current admin tab.
+	 *
+	 * @return null|string Current admin tab.
+	 */
+	public static function get_admin_tab() {
+		$tab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'tab', FILTER_DEFAULT ) ) );
+		if ( $tab && is_string( $tab ) ) {
+			return sanitize_key( $tab );
+		}
+		return null;
+	}
+
+	/**
+	 * Return the URL to the admin screen
+	 *
+	 * @param string $tab     Tab path to load.
+	 * @param string $sub_tab Subtab path to load.
 	 *
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
-	public static function get_settings_url() {
-		return admin_url( 'options-general.php?page=alerts-dlx' );
+	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
+		$options_url = admin_url( 'options-general.php?page=alerts-dlx' );
+		if ( ! empty( $tab ) ) {
+			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
+			if ( ! empty( $sub_tab ) ) {
+				$options_url = add_query_arg( array( 'subtab' => sanitize_title( $sub_tab ) ), $options_url );
+			}
+		}
+		return $options_url;
 	}
 
 	/**

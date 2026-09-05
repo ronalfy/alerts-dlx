@@ -14,7 +14,6 @@ import Snackbar from "../Components/Snackbar";
 import Loader from "../Components/Loader";
 import BlockStylesControl from "../Components/BlockStylesControl";
 import sendCommand from "../Utils/SendCommand";
-import ShortcodeBuilder from "./ShortcodeBuilder";
 
 let checkpointData = null;
 
@@ -391,8 +390,6 @@ const Interface = ({ defaults }) => {
           </div>
         </div>
       </div>
-
-      <ShortcodeBuilder />
 
       <Fill name="alertsDlxSettingsFooter">
         <Snackbar

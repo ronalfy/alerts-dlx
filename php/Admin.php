@@ -179,6 +179,15 @@ class Admin {
 	 * Render the settings page shell.
 	 */
 	public function options_page() {
+		$current_tab        = Functions::get_admin_tab();
+		$settings_tab_class = array( 'nav-tab' );
+		if ( null === $current_tab || 'settings' === $current_tab ) {
+			$settings_tab_class[] = 'nav-tab-active';
+		}
+		$shortcode_builder_tab_class = array( 'nav-tab' );
+		if ( 'shortcode-builder' === $current_tab ) {
+			$shortcode_builder_tab_class[] = 'nav-tab-active';
+		}
 		?>
 		<div class="alerts-dlx-form-wrapper">
 			<header>
@@ -190,11 +199,30 @@ class Admin {
 			</header>
 			<div class="alerts-dlx-admin-container-body-wrapper">
 				<div class="alerts-dlx-admin-container-body">
-					<div class="alerts-dlx-admin-container-body__content">
-						<div id="alerts-dlx-settings-admin">
-							<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
+					<nav class="nav-tab-wrapper">
+						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'alerts-dlx' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $shortcode_builder_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'shortcode-builder' ) ); ?>"><?php esc_html_e( 'Shortcode Builder', 'alerts-dlx' ); ?></a>
+					</nav>
+					<?php
+					if ( null === $current_tab || 'settings' === $current_tab ) {
+						?>
+						<div class="alerts-dlx-admin-container-body__content">
+							<div id="alerts-dlx-settings">
+								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
+							</div>
 						</div>
-					</div>
+						<?php
+					}
+					if ( 'shortcode-builder' === $current_tab ) {
+						?>
+						<div class="alerts-dlx-admin-container-body__content">
+							<div id="alerts-dlx-shortcode-builder">
+								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
+							</div>
+						</div>
+						<?php
+					}
+					?>
 				</div>
 				<div id="alerts-dlx-admin-container-slot"></div>
 			</div>
@@ -220,42 +248,64 @@ class Admin {
 			'all'
 		);
 
-		// The visual builder previews the existing production renderer. These
-		// styles are limited to this admin screen and never change frontend
-		// conditional-loading behavior.
-		$blocks = new Blocks();
-		$blocks->register_block_editor_scripts();
-		foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
-			wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
+		$current_tab = Functions::get_admin_tab();
+
+		if ( null === $current_tab || 'settings' === $current_tab ) {
+			$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-settings.asset.php' );
+			if ( ! file_exists( $asset_file ) ) {
+				return;
+			}
+
+			$deps = require $asset_file;
+			wp_enqueue_script(
+				'alerts-dlx-settings-admin-js',
+				Functions::get_plugin_url( '/dist/alerts-dlx-admin-settings.js' ),
+				$deps['dependencies'],
+				$deps['version'],
+				true
+			);
+
+			wp_localize_script(
+				'alerts-dlx-settings-admin-js',
+				'alertsDlxAdmin',
+				array(
+					'retrieveNonce' => wp_create_nonce( 'alerts_dlx_retrieve_settings' ),
+					'saveNonce'     => wp_create_nonce( 'alerts_dlx_save_settings' ),
+					'resetNonce'    => wp_create_nonce( 'alerts_dlx_reset_settings' ),
+				)
+			);
+
+		} elseif ( null === $current_tab || 'shortcode-builder' === $current_tab ) {
+			$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-shortcode-builder.asset.php' );
+			if ( ! file_exists( $asset_file ) ) {
+				return;
+			}
+
+			$deps = require $asset_file;
+			wp_enqueue_script(
+				'alerts-dlx-shortcode-builder-admin-js',
+				Functions::get_plugin_url( '/dist/alerts-dlx-admin-shortcode-builder.js' ),
+				$deps['dependencies'],
+				$deps['version'],
+				true
+			);
+
+			wp_localize_script(
+				'alerts-dlx-shortcode-builder-admin-js',
+				'alertsDlxAdmin',
+				array(
+					'shortcodeBuilderNonce'    => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
+					'shortcodeBuilderDefaults' => ShortcodeBuilder::get_editor_defaults(),
+					'shortcodeBuilderFields'   => ShortcodeBuilder::get_editor_fields(),
+				)
+			);
+
+			$blocks = new Blocks();
+			$blocks->register_block_editor_scripts();
+			foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
+				wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
+			}
 		}
-		wp_enqueue_style( 'alerts-dlx-block-editor-styles-lato' );
-
-		$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-settings.asset.php' );
-		if ( ! file_exists( $asset_file ) ) {
-			return;
-		}
-
-		$deps = require $asset_file;
-		wp_enqueue_script(
-			'alerts-dlx-settings-admin-js',
-			Functions::get_plugin_url( '/dist/alerts-dlx-admin-settings.js' ),
-			$deps['dependencies'],
-			$deps['version'],
-			true
-		);
-
-		wp_localize_script(
-			'alerts-dlx-settings-admin-js',
-			'alertsDlxAdmin',
-			array(
-				'retrieveNonce'            => wp_create_nonce( 'alerts_dlx_retrieve_settings' ),
-				'saveNonce'                => wp_create_nonce( 'alerts_dlx_save_settings' ),
-				'resetNonce'               => wp_create_nonce( 'alerts_dlx_reset_settings' ),
-				'shortcodeBuilderNonce'    => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
-				'shortcodeBuilderDefaults' => ShortcodeBuilder::get_editor_defaults(),
-				'shortcodeBuilderFields'   => ShortcodeBuilder::get_editor_fields(),
-			)
-		);
 	}
 
 	/**
