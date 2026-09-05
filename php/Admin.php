@@ -240,10 +240,11 @@ class Admin {
 			return;
 		}
 
+		// ColorPalette and other wp.components need core styles on this screen.
 		wp_enqueue_style(
 			'alerts-dlx-admin-css',
 			Functions::get_plugin_url( '/dist/alerts-dlx-admin-style.css' ),
-			array(),
+			array( 'dashicons', 'wp-components' ),
 			Functions::get_plugin_version(),
 			'all'
 		);
@@ -297,6 +298,7 @@ class Admin {
 					'shortcodeBuilderNonce'    => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
 					'shortcodeBuilderDefaults' => ShortcodeBuilder::get_editor_defaults(),
 					'shortcodeBuilderFields'   => ShortcodeBuilder::get_editor_fields(),
+					'colorPalette'             => Functions::get_theme_color_palette(),
 				)
 			);
 

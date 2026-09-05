@@ -8,8 +8,9 @@ const root = path.resolve('.');
 const read = (relative) => fs.readFileSync(path.join(root, relative), 'utf8');
 
 const php = read('php/ShortcodeBuilder.php');
+const functions = read('php/Functions.php');
 const blocks = read('php/Blocks.php');
-const builder = read('src/react/Settings/ShortcodeBuilder.js');
+const builder = read('src/react/ShortcodeBuilder/ShortcodeBuilder.js');
 const dismiss = read('src/js/dismiss/index.js');
 
 let assertions = 0;
@@ -33,7 +34,8 @@ contains(blocks, "$allowed_alert_groups = array( 'bootstrap', 'chakra', 'materia
 contains(blocks, "$atts['alert_group'] = $defaults['alert_group'];", 'Invalid shortcode design systems fall back safely');
 contains(blocks, "$allowed_width_units = array( 'px', 'em', 'rem', '%', 'vw' );", 'Shortcode width units are allowlisted');
 contains(blocks, "$atts['maximum_width_unit'] = $defaults['maximum_width_unit'];", 'Invalid shortcode width units fall back safely');
-contains(blocks, "sanitize_hex_color( (string) $atts[ $color_field ] )", 'Shortcode colors are allowlisted');
+contains(functions, 'public static function sanitize_css_color( $value )', 'Shared CSS color sanitizer is present');
+contains(blocks, "Functions::sanitize_css_color( (string) $atts[ $color_field ] )", 'Shortcode colors are allowlisted');
 contains(blocks, "strlen( (string) $atts['icon'] ) > 12000", 'Shortcode icon bytes are bounded before KSES');
 contains(blocks, "wp_kses( (string) $atts['icon'], Functions::get_kses_allowed_html() )", 'Shortcode icon markup is sanitized');
 contains(blocks, 'xlink:href|href', 'Shortcode icon references are inspected');
@@ -41,10 +43,11 @@ contains(blocks, '(?!#)', 'Only local SVG fragments survive the reference guard'
 contains(blocks, "min( 5000, max( 1, (int) $atts['maximum_width'] ) )", 'Shortcode width is bounded');
 contains(blocks, "min( 96, max( 8, (int) $atts['base_font_size'] ) )", 'Shortcode font size is bounded');
 contains(blocks, "min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) )", 'Shortcode cookie lifetime is bounded');
-contains(blocks, '$content = substr( (string) $content, 0, 20000 );', 'Shortcode content is bounded before filters');
+contains(blocks, 'substr( (string) $content, 0, 20000 )', 'Shortcode content is bounded before filters');
 contains(blocks, "$atts['alert_description'] = substr( (string) $atts['alert_description'], 0, 20000 );", 'Filtered shortcode content is bounded before rendering');
 
-contains(builder, '["number", "url", "color"].includes(field.control)', 'Builder exposes semantic input types');
+contains(builder, '["number", "url"].includes(field.control)', 'Builder exposes semantic input types');
+contains(builder, '"color" === field.control', 'Builder exposes a dedicated color control');
 contains(builder, 'aria-live="assertive"', 'Builder errors are announced assertively');
 contains(builder, 'aria-busy={loading}', 'Builder preview exposes busy state');
 contains(builder, 'Updating shortcode preview', 'Builder exposes readable loading status');
@@ -55,7 +58,7 @@ contains(dismiss, 'closeButton.dataset.alertsDlxBound', 'Dismiss controls bind o
 contains(dismiss, '(prefers-reduced-motion: reduce)', 'Reduced-motion dismissal is supported');
 contains(dismiss, 'window.setTimeout( removeAlert, 1000 )', 'Dismissal has an animation fallback');
 
-const combined = [php, blocks, builder, dismiss].join('\n');
+const combined = [php, functions, blocks, builder, dismiss].join('\n');
 for (const [label, forbidden] of [
 	['WordPress HTTP API', /\bwp_(?:safe_)?remote_(?:get|post|request|head)\s*\(/i],
 	['direct external fetch', /\bfetch\s*\(\s*['"`]\s*https?:/i],
@@ -74,6 +77,6 @@ console.log(JSON.stringify({
 	status: 'PASS',
 	milestone: 'RELEASE_HARDENING',
 	assertions,
-	files_checked: 4,
+	files_checked: 5,
 	remote_or_tracking_surface_added: false,
 }));

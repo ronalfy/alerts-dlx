@@ -129,7 +129,7 @@ class Blocks {
 
 		// Sanitize values used before the shared renderer. Inline CSS is emitted
 		// below, so waiting for renderer normalization would be too late.
-		$sanitized_id = sanitize_html_class( (string) $atts['unique_id'] );
+		$sanitized_id      = sanitize_html_class( (string) $atts['unique_id'] );
 		$atts['unique_id'] = '' !== $sanitized_id ? $sanitized_id : $defaults['unique_id'];
 
 		// Values embedded into CSS syntax need strict allowlists; HTML escaping
@@ -145,13 +145,19 @@ class Blocks {
 		}
 
 		$color_fields = array(
-			'color_primary', 'color_border', 'color_accent', 'color_alt',
-			'color_alt_hover', 'color_alt_text', 'color_alt_text_hover',
-			'color_bold', 'color_light',
+			'color_primary',
+			'color_border',
+			'color_accent',
+			'color_alt',
+			'color_alt_hover',
+			'color_alt_text',
+			'color_alt_text_hover',
+			'color_bold',
+			'color_light',
 		);
 		foreach ( $color_fields as $color_field ) {
-			$color = sanitize_hex_color( (string) $atts[ $color_field ] );
-			$atts[ $color_field ] = null === $color ? $defaults[ $color_field ] : $color;
+			$color                = Functions::sanitize_css_color( (string) $atts[ $color_field ] );
+			$atts[ $color_field ] = false === $color ? $defaults[ $color_field ] : $color;
 		}
 
 		// Keep the legacy public shortcode within the same resource limits as
@@ -167,14 +173,14 @@ class Blocks {
 
 		// Numeric shortcode attributes share the builder's documented bounds.
 		// This prevents extreme values from reaching CSS or cookie metadata.
-		$atts['maximum_width'] = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
-		$atts['base_font_size'] = min( 96, max( 8, (int) $atts['base_font_size'] ) );
+		$atts['maximum_width']           = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
+		$atts['base_font_size']          = min( 96, max( 8, (int) $atts['base_font_size'] ) );
 		$atts['close_button_expiration'] = min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) );
 
 		// If alert description is empty, use content.
 		if ( empty( $atts['alert_description'] ) && ! empty( $content ) ) {
 			// Bound content before filters and their result after filtering.
-			$content = substr( (string) $content, 0, 20000 );
+			$content                   = substr( (string) $content, 0, 20000 );
 			$atts['alert_description'] = apply_filters( 'alerts_dlx_the_content', $content );
 		}
 		$atts['alert_description'] = substr( (string) $atts['alert_description'], 0, 20000 );
@@ -328,21 +334,21 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'              => current_user_can( 'edit_others_posts' ),
-				'isAuthor'              => current_user_can( 'edit_posts' ),
-				'isAdmin'               => current_user_can( 'manage_options' ),
-				'colorPalette'          => Functions::get_theme_color_palette(),
-				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'         => Options::get_headline_tag(),
-				'headlineCustomClasses' => Options::get_headline_custom_classes(),
-				'headlineForceSize'     => Options::is_headline_force_size(),
-				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
-				'canonicalPresets'      => CanonicalAlertPresets::get_presets_for_editor(),
-				'canonicalDefaults'     => CanonicalAlertPresets::get_defaults_for_editor(),
+				'font_stylesheet'           => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'isEditor'                  => current_user_can( 'edit_others_posts' ),
+				'isAuthor'                  => current_user_can( 'edit_posts' ),
+				'isAdmin'                   => current_user_can( 'manage_options' ),
+				'colorPalette'              => Functions::get_theme_color_palette(),
+				'defaultImage'              => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'             => Options::get_headline_tag(),
+				'headlineCustomClasses'     => Options::get_headline_custom_classes(),
+				'headlineForceSize'         => Options::is_headline_force_size(),
+				'enabledBlockStyles'        => Options::get_enabled_block_styles(),
+				'canonicalPresets'          => CanonicalAlertPresets::get_presets_for_editor(),
+				'canonicalDefaults'         => CanonicalAlertPresets::get_defaults_for_editor(),
 				'canonicalCanManagePresets' => $can_manage_presets,
-				'canonicalPresetNonce'  => $can_manage_presets ? wp_create_nonce( CanonicalAlertPresets::NONCE_ACTION ) : '',
-				'ajaxUrl'               => $can_manage_presets ? admin_url( 'admin-ajax.php' ) : '',
+				'canonicalPresetNonce'      => $can_manage_presets ? wp_create_nonce( CanonicalAlertPresets::NONCE_ACTION ) : '',
+				'ajaxUrl'                   => $can_manage_presets ? admin_url( 'admin-ajax.php' ) : '',
 			)
 		);
 

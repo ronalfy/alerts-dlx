@@ -1,8 +1,12 @@
 /* eslint-disable no-undef */
 import { useEffect, useRef, useState } from "@wordpress/element";
-import { __ } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 import {
+	BaseControl,
 	Button,
+	ColorIndicator,
+	ColorPalette,
+	Dropdown,
 	Notice,
 	SelectControl,
 	Spinner,
@@ -11,9 +15,9 @@ import {
 	PanelBody,
 	ToggleControl,
 } from "@wordpress/components";
-import { PanelColorSettings } from '@wordpress/block-editor';
 
 import sendCommand from "../Utils/SendCommand";
+import { getAlertColorPalette } from "../../js/blocks/utils/alert-color-palette";
 
 const groupLabels = {
 	content: __("Content", "alerts-dlx"),
@@ -25,7 +29,203 @@ const groupLabels = {
 	advanced: __("Advanced", "alerts-dlx"),
 };
 
-let colorSettings = [];
+/**
+ * Group color fields by their localized subgroup label.
+ *
+ * @param {Array} fields Color field metadata.
+ * @return {Array} Subgroup sections with fields.
+ */
+const groupColorFields = (fields) => {
+	const sections = [];
+	const indexBySubgroup = {};
+
+	fields.forEach((field) => {
+		const subgroup = field.subgroup || "";
+		if (undefined === indexBySubgroup[subgroup]) {
+			indexBySubgroup[subgroup] = sections.length;
+			sections.push({
+				subgroup,
+				fields: [],
+			});
+		}
+		sections[indexBySubgroup[subgroup]].fields.push(field);
+	});
+
+	return sections;
+};
+
+/**
+ * Return true when a typed color is complete enough to send to the server.
+ *
+ * Incomplete hex fragments such as #58 must not trigger a preview render.
+ *
+ * @param {string} raw Candidate color value.
+ * @return {boolean} Whether the value should be committed.
+ */
+const isCommitableColor = (raw) => {
+	const next = (raw || "").trim();
+	if ("" === next) {
+		return true;
+	}
+	if (/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(next)) {
+		return true;
+	}
+	if (/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+/\-]+\)$/i.test(next)) {
+		return true;
+	}
+	if (/^var\(\s*--[a-zA-Z0-9_-]+(?:\s*,\s*(?:#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+/\-]+\)|var\(\s*--[a-zA-Z0-9_-]+\s*\)|[a-zA-Z]+))?\s*\)$/.test(next)) {
+		return true;
+	}
+	if (/^[a-zA-Z]+$/.test(next)) {
+		return true;
+	}
+	return false;
+};
+
+/**
+ * Compact inspector-style color row with a dropdown palette.
+ *
+ * @param {Object}   props          Component properties.
+ * @param {Object}   props.field    Localized field metadata.
+ * @param {string}   props.value    Current color value.
+ * @param {Array}    props.colors   Palette entries.
+ * @param {Function} props.onChange Value change callback.
+ * @return {Element} Color field control.
+ */
+const CompactColorField = ({ field, value, colors, onChange }) => {
+	const committedValue = value || "";
+	const [draft, setDraft] = useState(committedValue);
+	const debounceRef = useRef(null);
+	const hasColor = Boolean(draft);
+	const inputId = `alerts-dlx-${field.name}`;
+	const triggerLabel = hasColor
+		? sprintf(
+				/* translators: 1: color field label, 2: current color value. */
+				__("%1$s, %2$s", "alerts-dlx"),
+				field.label,
+				draft
+		  )
+		: sprintf(
+				/* translators: %s: color field label. */
+				__("%s, no color selected.", "alerts-dlx"),
+				field.label
+		  );
+
+	useEffect(() => {
+		setDraft(committedValue);
+	}, [committedValue]);
+
+	useEffect(() => {
+		return () => {
+			if (debounceRef.current) {
+				window.clearTimeout(debounceRef.current);
+			}
+		};
+	}, []);
+
+	const commit = (nextValue) => {
+		if (debounceRef.current) {
+			window.clearTimeout(debounceRef.current);
+			debounceRef.current = null;
+		}
+		const next = nextValue || "";
+		setDraft(next);
+		onChange(field.name, next);
+	};
+
+	const handleTextChange = (nextValue) => {
+		const next = nextValue || "";
+		setDraft(next);
+		if (debounceRef.current) {
+			window.clearTimeout(debounceRef.current);
+		}
+		debounceRef.current = window.setTimeout(() => {
+			if (isCommitableColor(next) && next !== committedValue) {
+				onChange(field.name, next);
+			}
+		}, 450);
+	};
+
+	const handleTextBlur = () => {
+		if (debounceRef.current) {
+			window.clearTimeout(debounceRef.current);
+			debounceRef.current = null;
+		}
+		if (draft !== committedValue) {
+			onChange(field.name, draft);
+		}
+	};
+
+	return (
+		<BaseControl
+			id={inputId}
+			className="alerts-dlx-shortcode-builder-color-control"
+		>
+			<div className="alerts-dlx-shortcode-builder-color-row">
+				<Dropdown
+					className="alerts-dlx-shortcode-builder-color-dropdown"
+					contentClassName="alerts-dlx-shortcode-builder-color-popover"
+					popoverProps={{
+						className: "alerts-dlx-shortcode-builder-color-popover",
+						placement: "bottom-start",
+					}}
+					renderToggle={({ isOpen, onToggle }) => (
+						<Button
+							className="alerts-dlx-shortcode-builder-color-trigger"
+							onClick={onToggle}
+							aria-expanded={isOpen}
+							aria-haspopup="true"
+							aria-label={triggerLabel}
+						>
+							<ColorIndicator colorValue={draft} />
+							<span className="alerts-dlx-shortcode-builder-color-label">
+								{field.label}
+							</span>
+						</Button>
+					)}
+					renderContent={({ onClose }) => (
+						<ColorPalette
+							colors={colors}
+							value={committedValue}
+							clearable={false}
+							disableCustomColors
+							onChange={(nextValue) => {
+								commit(nextValue || "");
+								if (onClose) {
+									onClose();
+								}
+							}}
+						/>
+					)}
+				/>
+				<div className="alerts-dlx-shortcode-builder-color-hex">
+					<TextControl
+						id={inputId}
+						label={field.label}
+						hideLabelFromVision
+						value={draft}
+						onChange={handleTextChange}
+						onBlur={handleTextBlur}
+						__nextHasNoMarginBottom
+					/>
+				</div>
+				<Button
+					variant="tertiary"
+					isSmall
+					onClick={() => commit("")}
+					disabled={!hasColor}
+					aria-label={sprintf(
+						/* translators: %s: color field label. */
+						__("Clear %s", "alerts-dlx"),
+						field.label
+					)}
+				>
+					{__("Clear", "alerts-dlx")}
+				</Button>
+			</div>
+		</BaseControl>
+	);
+};
 
 /**
  * Render one schema-driven control.
@@ -74,16 +274,18 @@ const BuilderField = ({ field, values, onChange }) => {
 		);
 	}
 
-	const maybeInputColor = ["color"].includes(field.control)
-		? field.control
-		: null;
-	if (maybeInputColor) {
-		colorSettings.push({
-			label: field.label,
-			value: '#FF0000',
-			onChange: (nextValue) => onChange(field.name, nextValue),
-		});
-		return null;
+	if ("color" === field.control) {
+		return (
+			<CompactColorField
+				field={field}
+				value={value || ""}
+				colors={getAlertColorPalette(
+					values.alert_group,
+					alertsDlxAdmin.colorPalette
+				)}
+				onChange={onChange}
+			/>
+		);
 	}
 
 	const inputType = ["number", "url"].includes(field.control)
@@ -234,8 +436,6 @@ const ShortcodeBuilder = () => {
 			);
 	};
 
-	console.log(colorSettings);
-
 	return (
 		<section
 			className="adlx-admin-content-wrapper alerts-dlx-shortcode-builder"
@@ -295,35 +495,61 @@ const ShortcodeBuilder = () => {
 					if (!groupFields.length) {
 						return null;
 					}
+					if ("colors" === group && "custom" !== values.alert_type) {
+						return null;
+					}
 					return (
-						<div className="adlx-admin-content-body" key={group}>
+						<div
+							className={`adlx-admin-content-body${
+								"colors" === group
+									? " alerts-dlx-shortcode-builder-colors"
+									: ""
+							}`}
+							key={group}
+						>
 							<div className="adlx-admin-component-wrapper">
 								<h3 className="adlx-admin-content-subheading">{label}</h3>
-								{groupFields.map((field) => (
-									<div className="adlx-admin-component-row" key={field.name}>
-										<BuilderField
-											field={field}
-											values={values}
-											onChange={handleChange}
-										/>
-									</div>
-								))}
+								{"colors" === group
+									? groupColorFields(groupFields).map((section) => (
+											<div
+												className="alerts-dlx-shortcode-builder-color-subgroup"
+												key={section.subgroup || "colors"}
+											>
+												{section.subgroup && (
+													<h4 className="alerts-dlx-shortcode-builder-color-subgroup-title">
+														{section.subgroup}
+													</h4>
+												)}
+												{section.fields.map((field) => (
+													<div
+														className="adlx-admin-component-row"
+														key={field.name}
+													>
+														<BuilderField
+															field={field}
+															values={values}
+															onChange={handleChange}
+														/>
+													</div>
+												))}
+											</div>
+									  ))
+									: groupFields.map((field) => (
+											<div
+												className="adlx-admin-component-row"
+												key={field.name}
+											>
+												<BuilderField
+													field={field}
+													values={values}
+													onChange={handleChange}
+												/>
+											</div>
+									  ))}
 							</div>
 						</div>
 					);
 				})}
-				{colorSettings.length > 0 && (
-					<>
-						<h3 className="adlx-admin-content-subheading">
-							{__("Custom colorss", "alerts-dlx")}
-						</h3>
-						<PanelColorSettings
-							__experimentalIsRenderedInSidebar={ false }
-							title={__("Custom colorss", "alerts-dlx")}
-							colorSettings={colorSettings}
-						/>
-					</>
-				)}
 
 				<div className="adlx-admin-content-body">
 					<div className="adlx-admin-component-wrapper">

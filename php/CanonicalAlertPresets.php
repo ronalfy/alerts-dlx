@@ -241,8 +241,8 @@ class CanonicalAlertPresets {
 			if ( ! array_key_exists( $key, $attributes ) ) {
 				continue;
 			}
-			$color = self::sanitize_css_color( $attributes[ $key ] );
-			if ( null !== $color ) {
+			$color = Functions::sanitize_css_color( $attributes[ $key ] );
+			if ( false !== $color && '' !== $color ) {
 				$clean[ $key ] = $color;
 			}
 		}
@@ -441,32 +441,5 @@ class CanonicalAlertPresets {
 			$snapshot['className'] = 'is-style-' . sanitize_html_class( $snapshot['alertType'] );
 		}
 		return $snapshot;
-	}
-
-	/**
-	 * Accept the CSS color forms already used by block metadata while refusing
-	 * declarations, URLs and other executable CSS fragments.
-	 *
-	 * @param mixed $value Untrusted CSS color.
-	 * @return string|null
-	 */
-	private static function sanitize_css_color( $value ) {
-		$color = trim( sanitize_text_field( (string) $value ) );
-		if ( '' === $color || strlen( $color ) > 200 ) {
-			return null;
-		}
-		if ( preg_match( '/^#[0-9a-f]{3,8}$/i', $color ) ) {
-			return $color;
-		}
-		if ( preg_match( '/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+\/-]+\)$/i', $color ) ) {
-			return $color;
-		}
-		if ( preg_match( '/^var\(--[a-z0-9-]+(?:,\s*#[0-9a-f]{3,8})?\)$/i', $color ) ) {
-			return $color;
-		}
-		if ( preg_match( '/^(?:transparent|currentcolor)$/i', $color ) ) {
-			return $color;
-		}
-		return null;
 	}
 }

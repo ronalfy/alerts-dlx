@@ -69,31 +69,31 @@ final class ShortcodeBuilder {
 	 */
 	private const THEME_DEFINITIONS = array(
 		'bootstrap' => array(
-			'label'       => 'Bootstrap',
-			'alert_types' => array( 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'custom' ),
-			'variants'    => array( 'default', 'centered' ),
-			'default_type' => 'success',
+			'label'           => 'Bootstrap',
+			'alert_types'     => array( 'primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark', 'custom' ),
+			'variants'        => array( 'default', 'centered' ),
+			'default_type'    => 'success',
 			'default_variant' => 'default',
 		),
 		'chakra'    => array(
-			'label'       => 'Chakra UI',
-			'alert_types' => array( 'success', 'info', 'warning', 'error', 'custom' ),
-			'variants'    => array( 'subtle', 'solid', 'left-accent', 'top-accent', 'centered' ),
-			'default_type' => 'success',
+			'label'           => 'Chakra UI',
+			'alert_types'     => array( 'success', 'info', 'warning', 'error', 'custom' ),
+			'variants'        => array( 'subtle', 'solid', 'left-accent', 'top-accent', 'centered' ),
+			'default_type'    => 'success',
 			'default_variant' => 'subtle',
 		),
 		'material'  => array(
-			'label'       => 'Material',
-			'alert_types' => array( 'success', 'info', 'warning', 'error', 'custom' ),
-			'variants'    => array( 'default', 'outlined', 'filled', 'centered' ),
-			'default_type' => 'success',
+			'label'           => 'Material',
+			'alert_types'     => array( 'success', 'info', 'warning', 'error', 'custom' ),
+			'variants'        => array( 'default', 'outlined', 'filled', 'centered' ),
+			'default_type'    => 'success',
 			'default_variant' => 'default',
 		),
 		'shoelace'  => array(
-			'label'       => 'Shoelace',
-			'alert_types' => array( 'primary', 'success', 'neutral', 'warning', 'danger', 'custom' ),
-			'variants'    => array( 'top-accent', 'left-accent', 'solid', 'centered' ),
-			'default_type' => 'success',
+			'label'           => 'Shoelace',
+			'alert_types'     => array( 'primary', 'success', 'neutral', 'warning', 'danger', 'custom' ),
+			'variants'        => array( 'top-accent', 'left-accent', 'solid', 'centered' ),
+			'default_type'    => 'success',
 			'default_variant' => 'top-accent',
 		),
 	);
@@ -139,49 +139,219 @@ final class ShortcodeBuilder {
 	 * @return array
 	 */
 	public static function get_editor_fields() {
-		$theme_options = array();
-		$type_options  = array();
+		$theme_options   = array();
+		$type_options    = array();
 		$variant_options = array();
 		foreach ( self::THEME_DEFINITIONS as $slug => $definition ) {
-			$theme_options[]          = array( 'value' => $slug, 'label' => $definition['label'] );
+			$theme_options[]          = array(
+				'value' => $slug,
+				'label' => $definition['label'],
+			);
 			$type_options[ $slug ]    = self::options_from_values( $definition['alert_types'] );
 			$variant_options[ $slug ] = self::options_from_values( $definition['variants'] );
 		}
 
 		$fields = array(
-			array( 'name' => 'alert_title', 'group' => 'content', 'control' => 'text', 'label' => __( 'Title', 'alerts-dlx' ) ),
-			array( 'name' => 'alert_description', 'group' => 'content', 'control' => 'textarea', 'label' => __( 'Description', 'alerts-dlx' ) ),
-			array( 'name' => 'alert_group', 'group' => 'appearance', 'control' => 'select', 'label' => __( 'Design system', 'alerts-dlx' ), 'options' => $theme_options ),
-			array( 'name' => 'alert_type', 'group' => 'appearance', 'control' => 'select', 'label' => __( 'Alert type', 'alerts-dlx' ), 'options_by_theme' => $type_options ),
-			array( 'name' => 'variant', 'group' => 'appearance', 'control' => 'select', 'label' => __( 'Appearance', 'alerts-dlx' ), 'options_by_theme' => $variant_options ),
-			array( 'name' => 'align', 'group' => 'appearance', 'control' => 'select', 'label' => __( 'Alignment', 'alerts-dlx' ), 'options' => self::options_from_values( array( 'left', 'center', 'right', 'wide', 'full' ) ) ),
-			array( 'name' => 'mode', 'group' => 'appearance', 'control' => 'select', 'label' => __( 'Color mode', 'alerts-dlx' ), 'options' => self::options_from_values( array( 'light', 'dark' ) ) ),
-			array( 'name' => 'maximum_width', 'group' => 'appearance', 'control' => 'number', 'label' => __( 'Maximum width', 'alerts-dlx' ), 'min' => 1, 'max' => 5000 ),
-			array( 'name' => 'maximum_width_unit', 'group' => 'appearance', 'control' => 'select', 'label' => __( 'Width unit', 'alerts-dlx' ), 'options' => self::options_from_values( array( 'px', 'em', 'rem', '%', 'vw' ) ) ),
-			array( 'name' => 'base_font_size', 'group' => 'appearance', 'control' => 'number', 'label' => __( 'Base font size', 'alerts-dlx' ), 'min' => 8, 'max' => 96 ),
-			array( 'name' => 'button_text', 'group' => 'action', 'control' => 'text', 'label' => __( 'Button text', 'alerts-dlx' ) ),
-			array( 'name' => 'button_url', 'group' => 'action', 'control' => 'url', 'label' => __( 'Button URL', 'alerts-dlx' ) ),
-			array( 'name' => 'button_target', 'group' => 'action', 'control' => 'toggle', 'label' => __( 'Open button in a new tab', 'alerts-dlx' ) ),
-			array( 'name' => 'button_rel_no_follow', 'group' => 'action', 'control' => 'toggle', 'label' => __( 'Add nofollow', 'alerts-dlx' ) ),
-			array( 'name' => 'button_rel_sponsored', 'group' => 'action', 'control' => 'toggle', 'label' => __( 'Mark as sponsored', 'alerts-dlx' ) ),
-			array( 'name' => 'icon_source', 'group' => 'icon', 'control' => 'select', 'label' => __( 'Icon source', 'alerts-dlx' ), 'options' => self::options_from_values( array( 'icon', 'image' ) ) ),
-			array( 'name' => 'icon', 'group' => 'icon', 'control' => 'textarea', 'label' => __( 'Icon SVG', 'alerts-dlx' ) ),
-			array( 'name' => 'image_url', 'group' => 'icon', 'control' => 'url', 'label' => __( 'Image URL', 'alerts-dlx' ) ),
-			array( 'name' => 'image_id', 'group' => 'icon', 'control' => 'number', 'label' => __( 'Image attachment ID', 'alerts-dlx' ), 'min' => 0, 'max' => 2147483647 ),
-			array( 'name' => 'icon_appearance', 'group' => 'icon', 'control' => 'select', 'label' => __( 'Icon appearance', 'alerts-dlx' ), 'options' => self::options_from_values( array( 'default', 'rounded' ) ) ),
-			array( 'name' => 'icon_vertical_alignment', 'group' => 'icon', 'control' => 'select', 'label' => __( 'Icon alignment', 'alerts-dlx' ), 'options' => self::options_from_values( array( 'top', 'centered' ) ) ),
-			array( 'name' => 'close_button_enabled', 'group' => 'dismiss', 'control' => 'toggle', 'label' => __( 'Allow visitors to dismiss this alert', 'alerts-dlx' ) ),
-			array( 'name' => 'close_button_expiration', 'group' => 'dismiss', 'control' => 'number', 'label' => __( 'Dismiss duration in seconds', 'alerts-dlx' ), 'min' => 0, 'max' => 31536000 ),
-			array( 'name' => 'unique_id', 'group' => 'advanced', 'control' => 'text', 'label' => __( 'Fixed unique ID', 'alerts-dlx' ) ),
-			array( 'name' => 'is_block_editorial_only', 'group' => 'advanced', 'control' => 'toggle', 'label' => __( 'Editorial-only output', 'alerts-dlx' ) ),
+			array(
+				'name'    => 'alert_title',
+				'group'   => 'content',
+				'control' => 'text',
+				'label'   => __( 'Title', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'alert_description',
+				'group'   => 'content',
+				'control' => 'textarea',
+				'label'   => __( 'Description', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'alert_group',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Design system', 'alerts-dlx' ),
+				'options' => $theme_options,
+			),
+			array(
+				'name'             => 'alert_type',
+				'group'            => 'appearance',
+				'control'          => 'select',
+				'label'            => __( 'Alert type', 'alerts-dlx' ),
+				'options_by_theme' => $type_options,
+			),
+			array(
+				'name'             => 'variant',
+				'group'            => 'appearance',
+				'control'          => 'select',
+				'label'            => __( 'Appearance', 'alerts-dlx' ),
+				'options_by_theme' => $variant_options,
+			),
+			array(
+				'name'    => 'align',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Alignment', 'alerts-dlx' ),
+				'options' => self::options_from_values( array( 'left', 'center', 'right', 'wide', 'full' ) ),
+			),
+			array(
+				'name'    => 'mode',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Color mode', 'alerts-dlx' ),
+				'options' => self::options_from_values( array( 'light', 'dark' ) ),
+			),
+			array(
+				'name'    => 'maximum_width',
+				'group'   => 'appearance',
+				'control' => 'number',
+				'label'   => __( 'Maximum width', 'alerts-dlx' ),
+				'min'     => 1,
+				'max'     => 5000,
+			),
+			array(
+				'name'    => 'maximum_width_unit',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Width unit', 'alerts-dlx' ),
+				'options' => self::options_from_values( array( 'px', 'em', 'rem', '%', 'vw' ) ),
+			),
+			array(
+				'name'    => 'base_font_size',
+				'group'   => 'appearance',
+				'control' => 'number',
+				'label'   => __( 'Base font size', 'alerts-dlx' ),
+				'min'     => 8,
+				'max'     => 96,
+			),
+			array(
+				'name'    => 'button_text',
+				'group'   => 'action',
+				'control' => 'text',
+				'label'   => __( 'Button text', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'button_url',
+				'group'   => 'action',
+				'control' => 'url',
+				'label'   => __( 'Button URL', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'button_target',
+				'group'   => 'action',
+				'control' => 'toggle',
+				'label'   => __( 'Open button in a new tab', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'button_rel_no_follow',
+				'group'   => 'action',
+				'control' => 'toggle',
+				'label'   => __( 'Add nofollow', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'button_rel_sponsored',
+				'group'   => 'action',
+				'control' => 'toggle',
+				'label'   => __( 'Mark as sponsored', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'icon_source',
+				'group'   => 'icon',
+				'control' => 'select',
+				'label'   => __( 'Icon source', 'alerts-dlx' ),
+				'options' => self::options_from_values( array( 'icon', 'image' ) ),
+			),
+			array(
+				'name'    => 'icon',
+				'group'   => 'icon',
+				'control' => 'textarea',
+				'label'   => __( 'Icon SVG', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'image_url',
+				'group'   => 'icon',
+				'control' => 'url',
+				'label'   => __( 'Image URL', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'image_id',
+				'group'   => 'icon',
+				'control' => 'number',
+				'label'   => __( 'Image attachment ID', 'alerts-dlx' ),
+				'min'     => 0,
+				'max'     => 2147483647,
+			),
+			array(
+				'name'    => 'icon_appearance',
+				'group'   => 'icon',
+				'control' => 'select',
+				'label'   => __( 'Icon appearance', 'alerts-dlx' ),
+				'options' => self::options_from_values( array( 'default', 'rounded' ) ),
+			),
+			array(
+				'name'    => 'icon_vertical_alignment',
+				'group'   => 'icon',
+				'control' => 'select',
+				'label'   => __( 'Icon alignment', 'alerts-dlx' ),
+				'options' => self::options_from_values( array( 'top', 'centered' ) ),
+			),
+			array(
+				'name'    => 'close_button_enabled',
+				'group'   => 'dismiss',
+				'control' => 'toggle',
+				'label'   => __( 'Allow visitors to dismiss this alert', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'close_button_expiration',
+				'group'   => 'dismiss',
+				'control' => 'number',
+				'label'   => __( 'Dismiss duration in seconds', 'alerts-dlx' ),
+				'min'     => 0,
+				'max'     => 31536000,
+			),
+			array(
+				'name'    => 'unique_id',
+				'group'   => 'advanced',
+				'control' => 'text',
+				'label'   => __( 'Fixed unique ID', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'is_block_editorial_only',
+				'group'   => 'advanced',
+				'control' => 'toggle',
+				'label'   => __( 'Editorial-only output', 'alerts-dlx' ),
+			),
+		);
+
+		$color_labels = array(
+			'color_primary'        => __( 'Text Color', 'alerts-dlx' ),
+			'color_border'         => __( 'Border Color', 'alerts-dlx' ),
+			'color_accent'         => __( 'Accent Color', 'alerts-dlx' ),
+			'color_alt'            => __( 'Button Color', 'alerts-dlx' ),
+			'color_alt_hover'      => __( 'Button Hover Color', 'alerts-dlx' ),
+			'color_alt_text'       => __( 'Button Text Color', 'alerts-dlx' ),
+			'color_alt_text_hover' => __( 'Button Text Hover Color', 'alerts-dlx' ),
+			'color_bold'           => __( 'Icon Color', 'alerts-dlx' ),
+			'color_light'          => __( 'Background Color', 'alerts-dlx' ),
+		);
+
+		$color_subgroups = array(
+			'color_primary'        => __( 'Alert surface', 'alerts-dlx' ),
+			'color_border'         => __( 'Alert surface', 'alerts-dlx' ),
+			'color_accent'         => __( 'Alert surface', 'alerts-dlx' ),
+			'color_light'          => __( 'Alert surface', 'alerts-dlx' ),
+			'color_alt'            => __( 'Button', 'alerts-dlx' ),
+			'color_alt_hover'      => __( 'Button', 'alerts-dlx' ),
+			'color_alt_text'       => __( 'Button', 'alerts-dlx' ),
+			'color_alt_text_hover' => __( 'Button', 'alerts-dlx' ),
+			'color_bold'           => __( 'Icon', 'alerts-dlx' ),
 		);
 
 		foreach ( self::COLOR_FIELDS as $color_field ) {
 			$fields[] = array(
-				'name'    => $color_field,
-				'group'   => 'colors',
-				'control' => 'color',
-				'label'   => ucwords( str_replace( '_', ' ', preg_replace( '/^color_/', '', $color_field ) ) ),
+				'name'     => $color_field,
+				'group'    => 'colors',
+				'subgroup' => $color_subgroups[ $color_field ],
+				'control'  => 'color',
+				'label'    => $color_labels[ $color_field ],
 			);
 		}
 
@@ -199,7 +369,7 @@ final class ShortcodeBuilder {
 			return new \WP_Error( 'alerts_dlx_builder_values', __( 'Invalid shortcode builder values.', 'alerts-dlx' ) );
 		}
 
-		$defaults  = self::get_editor_defaults();
+		$defaults = self::get_editor_defaults();
 
 		// Every declared builder input is scalar. Reject PHP array-shaped request
 		// parameters before any cast so malformed payloads fail closed cleanly.
@@ -232,23 +402,23 @@ final class ShortcodeBuilder {
 		}
 		$sanitized['variant'] = $variant;
 
-		$sanitized['align'] = self::sanitize_choice( $values['align'] ?? $defaults['align'], array( 'left', 'center', 'right', 'wide', 'full' ), $defaults['align'] );
-		$sanitized['mode'] = self::sanitize_choice( $values['mode'] ?? $defaults['mode'], array( 'light', 'dark' ), $defaults['mode'] );
-		$sanitized['maximum_width_unit'] = self::sanitize_choice( $values['maximum_width_unit'] ?? $defaults['maximum_width_unit'], array( 'px', 'em', 'rem', '%', 'vw' ), $defaults['maximum_width_unit'] );
+		$sanitized['align']                   = self::sanitize_choice( $values['align'] ?? $defaults['align'], array( 'left', 'center', 'right', 'wide', 'full' ), $defaults['align'] );
+		$sanitized['mode']                    = self::sanitize_choice( $values['mode'] ?? $defaults['mode'], array( 'light', 'dark' ), $defaults['mode'] );
+		$sanitized['maximum_width_unit']      = self::sanitize_choice( $values['maximum_width_unit'] ?? $defaults['maximum_width_unit'], array( 'px', 'em', 'rem', '%', 'vw' ), $defaults['maximum_width_unit'] );
 		$sanitized['icon_vertical_alignment'] = self::sanitize_choice( $values['icon_vertical_alignment'] ?? $defaults['icon_vertical_alignment'], array( 'top', 'centered' ), $defaults['icon_vertical_alignment'] );
-		$sanitized['icon_appearance'] = self::sanitize_choice( $values['icon_appearance'] ?? $defaults['icon_appearance'], array( 'default', 'rounded' ), $defaults['icon_appearance'] );
-		$sanitized['icon_source'] = self::sanitize_choice( $values['icon_source'] ?? $defaults['icon_source'], array( 'icon', 'image' ), $defaults['icon_source'] );
+		$sanitized['icon_appearance']         = self::sanitize_choice( $values['icon_appearance'] ?? $defaults['icon_appearance'], array( 'default', 'rounded' ), $defaults['icon_appearance'] );
+		$sanitized['icon_source']             = self::sanitize_choice( $values['icon_source'] ?? $defaults['icon_source'], array( 'icon', 'image' ), $defaults['icon_source'] );
 
-		$sanitized['maximum_width'] = self::bounded_integer( $values['maximum_width'] ?? $defaults['maximum_width'], 1, 5000 );
-		$sanitized['base_font_size'] = self::bounded_integer( $values['base_font_size'] ?? $defaults['base_font_size'], 8, 96 );
+		$sanitized['maximum_width']           = self::bounded_integer( $values['maximum_width'] ?? $defaults['maximum_width'], 1, 5000 );
+		$sanitized['base_font_size']          = self::bounded_integer( $values['base_font_size'] ?? $defaults['base_font_size'], 8, 96 );
 		$sanitized['close_button_expiration'] = self::bounded_integer( $values['close_button_expiration'] ?? $defaults['close_button_expiration'], 0, 31536000 );
-		$sanitized['image_id'] = self::bounded_integer( $values['image_id'] ?? $defaults['image_id'], 0, 2147483647 );
+		$sanitized['image_id']                = self::bounded_integer( $values['image_id'] ?? $defaults['image_id'], 0, 2147483647 );
 
-		$sanitized['unique_id'] = sanitize_html_class( (string) ( $values['unique_id'] ?? '' ) );
+		$sanitized['unique_id']   = sanitize_html_class( (string) ( $values['unique_id'] ?? '' ) );
 		$sanitized['alert_title'] = self::bounded_text( $values['alert_title'] ?? '', 300 );
 		$sanitized['button_text'] = self::bounded_text( $values['button_text'] ?? '', 200 );
-		$sanitized['button_url'] = esc_url_raw( self::bounded_text( $values['button_url'] ?? '', 2048 ) );
-		$sanitized['image_url'] = esc_url_raw( self::bounded_text( $values['image_url'] ?? '', 2048 ) );
+		$sanitized['button_url']  = esc_url_raw( self::bounded_text( $values['button_url'] ?? '', 2048 ) );
+		$sanitized['image_url']   = esc_url_raw( self::bounded_text( $values['image_url'] ?? '', 2048 ) );
 
 		$description = (string) ( $values['alert_description'] ?? '' );
 		if ( strlen( $description ) > self::MAX_DESCRIPTION_LENGTH || false !== stripos( $description, '[alertsdlx' ) || false !== stripos( $description, '[/alertsdlx]' ) ) {
@@ -494,18 +664,11 @@ final class ShortcodeBuilder {
 	 * @return string|\WP_Error
 	 */
 	private static function sanitize_color_value( $value ) {
-		$value = trim( sanitize_text_field( (string) $value ) );
-		if ( '' === $value ) {
-			return '';
+		$color = Functions::sanitize_css_color( $value );
+		if ( false === $color ) {
+			return new \WP_Error( 'alerts_dlx_builder_color', __( 'A custom color contains an unsupported value.', 'alerts-dlx' ) );
 		}
-		$hex = sanitize_hex_color( $value );
-		if ( $hex ) {
-			return $hex;
-		}
-		if ( preg_match( '/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s]+\)$/i', $value ) || preg_match( '/^var\(--[-a-zA-Z0-9_]+(?:,\s*#[0-9a-fA-F]{3,8})?\)$/', $value ) || preg_match( '/^[a-zA-Z]+$/', $value ) ) {
-			return $value;
-		}
-		return new \WP_Error( 'alerts_dlx_builder_color', __( 'A custom color contains an unsupported value.', 'alerts-dlx' ) );
+		return $color;
 	}
 
 	/**
