@@ -20,6 +20,7 @@ import sendCommand from "../Utils/SendCommand";
 import { getAlertColorPalette } from "../../js/blocks/utils/alert-color-palette";
 import { getIconSetForGroup } from "../../js/blocks/utils/icon-sets";
 import IconPicker from "../../js/blocks/components/IconPicker";
+import useMediaUploader from "../../js/blocks/hooks/useMediaUploader";
 
 const groupLabels = {
 	content: __("Content", "alerts-dlx"),
@@ -396,15 +397,76 @@ const CompactIconField = ({ field, value, alertGroup, onChange }) => {
 };
 
 /**
+ * Compact image URL field with a media library picker beside the input.
+ *
+ * @param {Object}   props               Component properties.
+ * @param {Object}   props.field         Localized field metadata.
+ * @param {Object}   props.values        Current shortcode values.
+ * @param {Function} props.onChange      Value change callback.
+ * @param {Function} props.onSelectImage Media selection callback.
+ * @return {Element} Image field control.
+ */
+const CompactImageField = ({ field, values, onChange, onSelectImage }) => {
+	const inputId = `alerts-dlx-${field.name}`;
+	const { openMediaUploader } = useMediaUploader();
+	const urlValue = values.image_url || "";
+
+	return (
+		<BaseControl
+			id={inputId}
+			label={field.label}
+			className="alerts-dlx-shortcode-builder-image-control"
+		>
+			<div className="alerts-dlx-shortcode-builder-image-row">
+				<div className="alerts-dlx-shortcode-builder-image-url">
+					<TextControl
+						id={inputId}
+						label={field.label}
+						hideLabelFromVision
+						type="url"
+						value={urlValue}
+						onChange={(nextValue) => onChange(field.name, nextValue || "")}
+						__nextHasNoMarginBottom
+					/>
+				</div>
+				<Button
+					variant="secondary"
+					onClick={() => {
+						openMediaUploader(
+							{
+								title: __("Set Your Image", "alerts-dlx"),
+								buttonLabel: __("Save Image", "alerts-dlx"),
+								removeLabel: __("Remove Image", "alerts-dlx"),
+								suggestedWidth: 96,
+								suggestedHeight: 96,
+								aspectRatio: "1:1",
+								attachmentId: values.image_id || 0,
+								canSkipCrop: true,
+							},
+							(attachment) => {
+								onSelectImage(attachment);
+							}
+						);
+					}}
+				>
+					{__("Select Image", "alerts-dlx")}
+				</Button>
+			</div>
+		</BaseControl>
+	);
+};
+
+/**
  * Render one schema-driven control.
  *
- * @param {Object}   props          Component properties.
- * @param {Object}   props.field    Localized field metadata.
- * @param {Object}   props.values   Current shortcode values.
- * @param {Function} props.onChange Value change callback.
+ * @param {Object}   props               Component properties.
+ * @param {Object}   props.field         Localized field metadata.
+ * @param {Object}   props.values        Current shortcode values.
+ * @param {Function} props.onChange      Value change callback.
+ * @param {Function} props.onSelectImage Media selection callback.
  * @return {Element} Field control.
  */
-const BuilderField = ({ field, values, onChange }) => {
+const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 	const value = values[field.name];
 	const options = field.options_by_theme
 		? field.options_by_theme[values.alert_group] || []
@@ -467,11 +529,20 @@ const BuilderField = ({ field, values, onChange }) => {
 		);
 	}
 
+	if ("image_url" === field.name) {
+		return (
+			<CompactImageField
+				field={field}
+				values={values}
+				onChange={onChange}
+				onSelectImage={onSelectImage}
+			/>
+		);
+	}
+
 	const inputType = ["number", "url"].includes(field.control)
 		? field.control
 		: "text";
-
-
 
 	return (
 		<TextControl
@@ -573,6 +644,15 @@ const ShortcodeBuilder = () => {
 			}
 			return next;
 		});
+	};
+
+	const handleImageSelect = (attachment) => {
+		setStatus("");
+		setValues((current) => ({
+			...current,
+			image_url: attachment.url || "",
+			image_id: attachment.id || 0,
+		}));
 	};
 
 	const parseSource = () => {
@@ -711,6 +791,7 @@ const ShortcodeBuilder = () => {
 															field={field}
 															values={values}
 															onChange={handleChange}
+															onSelectImage={handleImageSelect}
 														/>
 													</div>
 												))}
@@ -725,6 +806,7 @@ const ShortcodeBuilder = () => {
 													field={field}
 													values={values}
 													onChange={handleChange}
+													onSelectImage={handleImageSelect}
 												/>
 											</div>
 									  ))}

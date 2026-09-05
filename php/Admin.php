@@ -282,11 +282,18 @@ class Admin {
 				return;
 			}
 
-			$deps = require $asset_file;
+			// Media modal and CustomizeImageCropper for the image URL picker.
+			wp_enqueue_media();
+
+			$deps         = require $asset_file;
+			$dependencies = $deps['dependencies'];
+			if ( ! in_array( 'media-editor', $dependencies, true ) ) {
+				$dependencies[] = 'media-editor';
+			}
 			wp_enqueue_script(
 				'alerts-dlx-shortcode-builder-admin-js',
 				Functions::get_plugin_url( '/dist/alerts-dlx-admin-shortcode-builder.js' ),
-				$deps['dependencies'],
+				$dependencies,
 				$deps['version'],
 				true
 			);
@@ -319,6 +326,9 @@ class Admin {
 			foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
 				wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
 			}
+
+			// Preview close icons use <use> hrefs into this sprite. Frontend prints it on wp_footer.
+			add_action( 'admin_footer', array( $blocks, 'print_close_button_svgs' ) );
 		}
 	}
 

@@ -379,6 +379,30 @@ body.alerts-dlx-body .updated {
 	}
 }
 
+.alerts-dlx-shortcode-builder-image-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 12px;
+	max-width: 720px;
+}
+
+.alerts-dlx-shortcode-builder-image-url {
+	flex: 1 1 240px;
+	min-width: 0;
+
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+}
+
+.alerts-dlx-shortcode-builder-image-control {
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+}
+
 .alerts-dlx-icon-popover {
 	z-index: 100000;
 }
