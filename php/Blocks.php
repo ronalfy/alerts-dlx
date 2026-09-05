@@ -23,6 +23,7 @@ class Blocks {
 	 */
 	public static function run() {
 		$self = new self();
+		CanonicalAlertPresets::run();
 		add_action( 'init', array( $self, 'init' ) );
 		return $self;
 	}
@@ -123,48 +124,66 @@ class Blocks {
 	 * @return string
 	 */
 	public function shortcode( $atts = array(), $content = '' ) {
-		$defaults = array(
-			'unique_id'               => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
-			'alert_group'             => 'chakra',
-			'alert_type'              => 'success',
-			'align'                   => 'center',
-			'alert_title'             => '',
-			'alert_description'       => '',
-			'maximum_width_unit'      => 'px',
-			'maximum_width'           => 650,
-			'icon'                    => '',
-			'base_font_size'          => 16,
-			'icon_vertical_alignment' => 'top',
-			'variant'                 => '',
-			'mode'                    => 'light', /* can be dark */
-			'button_text'             => '',
-			'button_url'              => '',
-			'button_target'           => false,
-			'button_rel_no_follow'    => false,
-			'button_rel_sponsored'    => false,
-			'icon_appearance'         => 'default', /* can be rounded */
-			'color_primary'           => '',
-			'color_border'            => '',
-			'color_accent'            => '',
-			'color_alt'               => '',
-			'color_alt_hover'         => '',
-			'color_alt_text'          => '',
-			'color_alt_text_hover'    => '',
-			'color_bold'              => '',
-			'color_light'             => '',
-			'close_button_enabled'    => false,
-			'close_button_expiration' => 0,
-			'is_block_editorial_only' => false,
-			'icon_source'             => 'icon',
-			'image_url'               => '',
-			'image_id'                => 0,
-		);
+		$defaults = AlertAttributes::get_shortcode_defaults();
 		$atts     = shortcode_atts( $defaults, $atts, 'alertsdlx' );
+
+		// Sanitize values used before the shared renderer. Inline CSS is emitted
+		// below, so waiting for renderer normalization would be too late.
+		$sanitized_id      = sanitize_html_class( (string) $atts['unique_id'] );
+		$atts['unique_id'] = '' !== $sanitized_id ? $sanitized_id : $defaults['unique_id'];
+
+		// Values embedded into CSS syntax need strict allowlists; HTML escaping
+		// alone does not neutralize braces or declaration separators. Preserve
+		// every unit exposed by the existing builder and fall back to defaults.
+		$allowed_alert_groups = array( 'bootstrap', 'chakra', 'material', 'shoelace' );
+		if ( ! in_array( $atts['alert_group'], $allowed_alert_groups, true ) ) {
+			$atts['alert_group'] = $defaults['alert_group'];
+		}
+		$allowed_width_units = array( 'px', 'em', 'rem', '%', 'vw' );
+		if ( ! in_array( $atts['maximum_width_unit'], $allowed_width_units, true ) ) {
+			$atts['maximum_width_unit'] = $defaults['maximum_width_unit'];
+		}
+
+		$color_fields = array(
+			'color_primary',
+			'color_border',
+			'color_accent',
+			'color_alt',
+			'color_alt_hover',
+			'color_alt_text',
+			'color_alt_text_hover',
+			'color_bold',
+			'color_light',
+		);
+		foreach ( $color_fields as $color_field ) {
+			$color                = Functions::sanitize_css_color( (string) $atts[ $color_field ] );
+			$atts[ $color_field ] = false === $color ? $defaults[ $color_field ] : $color;
+		}
+
+		// Keep the legacy public shortcode within the same resource limits as
+		// the visual builder. Oversized icons fail closed before expensive KSES.
+		if ( strlen( (string) $atts['icon'] ) > 12000 ) {
+			$atts['icon'] = '';
+		} else {
+			$atts['icon'] = wp_kses( (string) $atts['icon'], Functions::get_kses_allowed_html() );
+		}
+		if ( preg_match( '/\b(?:xlink:href|href)\s*=\s*([\"\'])(?!#)/i', $atts['icon'] ) ) {
+			$atts['icon'] = '';
+		}
+
+		// Numeric shortcode attributes share the builder's documented bounds.
+		// This prevents extreme values from reaching CSS or cookie metadata.
+		$atts['maximum_width']           = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
+		$atts['base_font_size']          = min( 96, max( 8, (int) $atts['base_font_size'] ) );
+		$atts['close_button_expiration'] = min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) );
 
 		// If alert description is empty, use content.
 		if ( empty( $atts['alert_description'] ) && ! empty( $content ) ) {
+			// Bound content before filters and their result after filtering.
+			$content                   = substr( (string) $content, 0, 20000 );
 			$atts['alert_description'] = apply_filters( 'alerts_dlx_the_content', $content );
 		}
+		$atts['alert_description'] = substr( (string) $atts['alert_description'], 0, 20000 );
 
 		// Set the default variant.
 		if ( '' === $atts['variant'] ) {
@@ -284,6 +303,7 @@ class Blocks {
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
+		$can_manage_presets = current_user_can( 'manage_options' );
 
 		// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
 		wp_register_style(
@@ -314,16 +334,21 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'              => current_user_can( 'edit_others_posts' ),
-				'isAuthor'              => current_user_can( 'edit_posts' ),
-				'isAdmin'               => current_user_can( 'manage_options' ),
-				'colorPalette'          => Functions::get_theme_color_palette(),
-				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'         => Options::get_headline_tag(),
-				'headlineCustomClasses' => Options::get_headline_custom_classes(),
-				'headlineForceSize'     => Options::is_headline_force_size(),
-				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
+				'font_stylesheet'           => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'isEditor'                  => current_user_can( 'edit_others_posts' ),
+				'isAuthor'                  => current_user_can( 'edit_posts' ),
+				'isAdmin'                   => current_user_can( 'manage_options' ),
+				'colorPalette'              => Functions::get_theme_color_palette(),
+				'defaultImage'              => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'             => Options::get_headline_tag(),
+				'headlineCustomClasses'     => Options::get_headline_custom_classes(),
+				'headlineForceSize'         => Options::is_headline_force_size(),
+				'enabledBlockStyles'        => Options::get_enabled_block_styles(),
+				'canonicalPresets'          => CanonicalAlertPresets::get_presets_for_editor(),
+				'canonicalDefaults'         => CanonicalAlertPresets::get_defaults_for_editor(),
+				'canonicalCanManagePresets' => $can_manage_presets,
+				'canonicalPresetNonce'      => $can_manage_presets ? wp_create_nonce( CanonicalAlertPresets::NONCE_ACTION ) : '',
+				'ajaxUrl'                   => $can_manage_presets ? admin_url( 'admin-ajax.php' ) : '',
 			)
 		);
 
@@ -412,7 +437,6 @@ class Blocks {
 			<symbol id="alerts-dlx-material-close-button" viewBox="0 0 24 24" width="16" height="16">
 				<path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
 			</symbol>
-	</svg>
 		</svg>
 		<?php
 	}

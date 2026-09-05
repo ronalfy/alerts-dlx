@@ -1,5 +1,6 @@
 @import '../node_modules/@wordpress/components/build-style/style.css';
 @import './breakpoints-mixin.scss';
+@import './js/blocks/components/IconPicker/editor.scss';
 
 #wpcontent {
 	padding-left: 0 !important;
@@ -27,12 +28,17 @@ body.alerts-dlx-body .updated {
 }
 
 .alerts-dlx-form-wrapper header {
-	background: #fff;
+	background: var(--wp-admin-theme-color);
+	color: #fff;
 	border: 1px solid #c3c4c7;
 	border-radius: 4px;
 	padding: 1.5rem;
 	margin: 0 auto;
 	text-align: right;
+
+	h1 {
+		color: #fff;
+	}
 }
 
 .alerts-dlx-logo-wrapper h2 {
@@ -114,6 +120,293 @@ body.alerts-dlx-body .updated {
 	max-width: 640px;
 }
 
+.alerts-dlx-shortcode-builder-colors .adlx-admin-component-row {
+	max-width: 720px;
+}
+
+.alerts-dlx-shortcode-builder-color-subgroup-title {
+	margin: 20px 0 10px;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.alerts-dlx-shortcode-builder-color-subgroup:first-child .alerts-dlx-shortcode-builder-color-subgroup-title {
+	margin-top: 0;
+}
+
+.alerts-dlx-shortcode-builder-color-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	max-width: 720px;
+}
+
+.alerts-dlx-shortcode-builder-color-dropdown {
+	flex: 1 1 160px;
+	min-width: 0;
+}
+
+.alerts-dlx-shortcode-builder-color-trigger.components-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 8px;
+	height: auto;
+	min-height: 32px;
+	padding: 4px 8px 4px 4px;
+	width: 100%;
+
+	.component-color-indicator {
+		display: inline-block;
+		width: 24px;
+		height: 24px;
+		flex-shrink: 0;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 50%;
+	}
+
+	.alerts-dlx-shortcode-builder-color-label {
+		display: inline;
+		font-weight: 600;
+		font-size: 14px;
+		text-align: left;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+.alerts-dlx-shortcode-builder-color-hex {
+	flex: 1 1 240px;
+	min-width: 0;
+
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+
+	.components-input-control__container,
+	input[type='text'] {
+		max-width: 100% !important;
+	}
+}
+
+/* WP ColorPalette paints swatches with inset box-shadow. Admin Button styles wipe that. */
+.alerts-dlx-shortcode-builder-color-control,
+.alerts-dlx-shortcode-builder-color-popover {
+	.components-circular-option-picker__swatches {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.components-circular-option-picker__option-wrapper {
+		position: relative;
+		display: inline-block;
+		height: 28px;
+		width: 28px;
+		overflow: visible;
+		transform: none;
+		box-sizing: border-box;
+	}
+
+	.components-circular-option-picker__option-wrapper:hover,
+	.components-circular-option-picker__option-wrapper:focus-within {
+		transform: none;
+	}
+
+	.components-circular-option-picker__option-wrapper>div {
+		position: relative;
+		height: 28px;
+		width: 28px;
+	}
+
+	.components-circular-option-picker__option.components-button {
+		position: relative;
+		height: 28px !important;
+		width: 28px !important;
+		min-height: 0 !important;
+		min-width: 0 !important;
+		padding: 0 !important;
+		border: none !important;
+		border-radius: 50% !important;
+		background: transparent !important;
+		overflow: visible;
+		transform: none !important;
+		box-shadow: inset 0 0 0 14px !important;
+	}
+
+	/* Keep the 14px fill on selected/hover so the swatch size never changes. */
+	.components-circular-option-picker__option.components-button:hover,
+	.components-circular-option-picker__option.components-button:focus,
+	.components-circular-option-picker__option.components-button.is-pressed,
+	.components-circular-option-picker__option.components-button[aria-pressed='true'],
+	.components-circular-option-picker__option.components-button[aria-selected='true'] {
+		box-shadow: inset 0 0 0 14px !important;
+	}
+
+	/* 1px edge so white and light swatches stay visible. */
+	.components-circular-option-picker__option.components-button::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 50%;
+		box-shadow: none;
+		box-sizing: border-box;
+		pointer-events: none;
+		transform: none;
+	}
+
+	/* Selected ring sits outside the 28px swatch and stays centered. */
+	.components-circular-option-picker__option.components-button.is-pressed::after,
+	.components-circular-option-picker__option.components-button[aria-pressed='true']::after,
+	.components-circular-option-picker__option.components-button[aria-selected='true']::after {
+		top: -4px;
+		right: -4px;
+		bottom: -4px;
+		left: -4px;
+		width: auto;
+		height: auto;
+		border: 2px solid #1e1e1e;
+		box-shadow: 0 0 0 1px #fff;
+	}
+
+	.components-circular-option-picker__option.components-button:focus::after {
+		top: -4px;
+		right: -4px;
+		bottom: -4px;
+		left: -4px;
+		width: auto;
+		height: auto;
+		border: 2px solid #757575;
+		box-shadow: inset 0 0 0 2px #fff;
+	}
+
+	/* Hide the check SVG; the outer ring is the selected indicator. */
+	.components-circular-option-picker__option.is-pressed+svg,
+	.components-circular-option-picker__option[aria-pressed='true']+svg,
+	.components-circular-option-picker__option[aria-selected='true']+svg {
+		display: none;
+	}
+
+	.components-color-palette__custom-color,
+	.components-color-palette__custom-color-button,
+	.components-circular-option-picker__custom-clear-wrapper {
+		display: none;
+	}
+}
+
+.alerts-dlx-shortcode-builder-color-popover {
+	.components-popover__content {
+		width: 300px;
+		max-width: 320px;
+		padding: 16px;
+		overflow: visible;
+	}
+
+	.components-circular-option-picker {
+		width: 100%;
+		overflow: visible;
+	}
+}
+
+.alerts-dlx-shortcode-builder-icon-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 12px;
+	max-width: 720px;
+}
+
+.alerts-dlx-shortcode-builder-icon-control {
+	.alerts-dlx-icon-wrapper {
+		margin-bottom: 0;
+	}
+
+	.alerts-dlx-icon-wrapper .components-base-control__field {
+		margin-bottom: 0;
+	}
+
+	.alerts-dlx-icon-preview {
+		justify-content: flex-start;
+	}
+
+	button.components-button.alerts-dlx-icon-preview-button,
+	button.components-button.alerts-dlx-icon-preview-button:hover,
+	button.components-button.alerts-dlx-icon-preview-button:focus {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		min-width: 48px;
+		height: 48px;
+		padding: 8px;
+		border: 1px solid #dcdcde;
+		border-radius: 2px;
+		background: #fff;
+		line-height: 0;
+
+		svg {
+			width: 24px;
+			height: 24px;
+			margin: 0;
+		}
+	}
+}
+
+.alerts-dlx-shortcode-builder-icon-svg {
+	flex: 1 1 240px;
+	min-width: 0;
+
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+
+	textarea.components-textarea-control__input {
+		min-height: 96px;
+		font-family: monospace;
+		font-size: 12px;
+		line-height: 1.5;
+	}
+}
+
+.alerts-dlx-shortcode-builder-image-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 12px;
+	max-width: 720px;
+}
+
+.alerts-dlx-shortcode-builder-image-url {
+	flex: 1 1 240px;
+	min-width: 0;
+
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+}
+
+.alerts-dlx-shortcode-builder-image-control {
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+}
+
+.alerts-dlx-icon-popover {
+	z-index: 100000;
+}
+
 .adlx-block-styles-row {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -184,6 +477,19 @@ body.alerts-dlx-body .updated {
 	transform: translate(-4px, -4px) !important;
 }
 
+.adlx-admin-panel {
+	margin-top: 20px;
+	margin-bottom: 20px;
+
+	button {
+		background: #f0f0f0;
+	}
+
+	.adlx-admin-content-body {
+		margin-top: 20px;
+	}
+}
+
 /* Panel content */
 .adlx-admin-content-body {
 	background: #fff;
@@ -251,6 +557,17 @@ body.alerts-dlx-body .updated {
 
 	.components-input-control__container {
 		max-width: 550px !important;
+	}
+
+	.alerts-dlx-shortcode-builder-color-hex .components-input-control__container {
+		max-width: 100% !important;
+	}
+
+	.alerts-dlx-shortcode-builder-color-label {
+		display: inline;
+		font-weight: 600;
+		text-transform: unset;
+		font-size: 14px;
 	}
 
 	.adlx-admin-component-row-button {

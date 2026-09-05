@@ -143,6 +143,57 @@ class Functions {
 	}
 
 	/**
+	 * Sanitize a CSS color without allowing declaration injection.
+	 *
+	 * Accepts hex (3/4/6/8), rgb/hsl functions, named colors, and CSS custom
+	 * properties with an optional one-level fallback so theme palette values
+	 * such as var(--theme-palette-color-2, #587863) survive the shortcode path.
+	 *
+	 * @since 2.4.1
+	 *
+	 * @param mixed $value Untrusted CSS color.
+	 * @return string|false Sanitized color, empty string when blank, or false when invalid.
+	 */
+	public static function sanitize_css_color( $value ) {
+		$color = trim( sanitize_text_field( (string) $value ) );
+		if ( '' === $color ) {
+			return '';
+		}
+		if ( strlen( $color ) > 200 ) {
+			return false;
+		}
+
+		// Hex: #RGB, #RGBA, #RRGGBB, #RRGGBBAA.
+		if ( preg_match( '/^#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i', $color ) ) {
+			return $color;
+		}
+
+		// Functional RGB/HSL colors.
+		if ( preg_match( '/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+\/-]+\)$/i', $color ) ) {
+			return $color;
+		}
+
+		// CSS custom properties, including WordPress preset tokens and one fallback.
+		$custom_property = '--[a-zA-Z0-9_-]+';
+		$hex_fallback    = '#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})';
+		$fn_fallback     = '(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+\/-]+\)';
+		$named_fallback  = '[a-zA-Z]+';
+		$nested_var      = 'var\(\s*' . $custom_property . '\s*\)';
+		$fallback        = '(?:' . $hex_fallback . '|' . $fn_fallback . '|' . $nested_var . '|' . $named_fallback . ')';
+		$var_pattern     = '/^var\(\s*' . $custom_property . '(?:\s*,\s*' . $fallback . ')?\s*\)$/';
+		if ( preg_match( $var_pattern, $color ) ) {
+			return $color;
+		}
+
+		// Named CSS colors and keywords already accepted by the builder.
+		if ( preg_match( '/^[a-zA-Z]+$/', $color ) ) {
+			return $color;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Take a _ separated field and convert to camelcase.
 	 *
 	 * @param string $field Field to convert to camelcase.
@@ -194,12 +245,35 @@ class Functions {
 	}
 
 	/**
-	 * Return the URL to the admin settings screen.
+	 * Get the current admin tab.
+	 *
+	 * @return null|string Current admin tab.
+	 */
+	public static function get_admin_tab() {
+		$tab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'tab', FILTER_DEFAULT ) ) );
+		if ( $tab && is_string( $tab ) ) {
+			return sanitize_key( $tab );
+		}
+		return null;
+	}
+
+	/**
+	 * Return the URL to the admin screen
+	 *
+	 * @param string $tab     Tab path to load.
+	 * @param string $sub_tab Subtab path to load.
 	 *
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
-	public static function get_settings_url() {
-		return admin_url( 'options-general.php?page=alerts-dlx' );
+	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
+		$options_url = admin_url( 'options-general.php?page=alerts-dlx' );
+		if ( ! empty( $tab ) ) {
+			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
+			if ( ! empty( $sub_tab ) ) {
+				$options_url = add_query_arg( array( 'subtab' => sanitize_title( $sub_tab ) ), $options_url );
+			}
+		}
+		return $options_url;
 	}
 
 	/**

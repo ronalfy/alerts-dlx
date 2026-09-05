@@ -21,6 +21,4 @@ const chakraColors = [
 	{ name: 'Error Color Light', color: '#fed7d7' },
 ];
 
-const themeColors = alertsDlxBlock.colorPalette;
-chakraColors.push( ...themeColors );
 export default chakraColors;
