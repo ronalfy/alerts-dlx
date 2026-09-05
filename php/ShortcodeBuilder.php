@@ -283,7 +283,7 @@ final class ShortcodeBuilder {
 			array(
 				'name'      => 'icon',
 				'group'     => 'icon',
-				'control'   => 'textarea',
+				'control'   => 'icon',
 				'label'     => __( 'Icon SVG', 'alerts-dlx' ),
 				'show_when' => array(
 					array(

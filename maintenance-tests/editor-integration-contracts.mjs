@@ -146,6 +146,12 @@ assert.match(
   "Canonical icon choices resolve through the selected design"
 );
 
+assert.match(
+  iconSets,
+  /export function getIconSetForGroup\(alertGroup\)/,
+  "Design-group icon lookup is exported for the shortcode builder"
+);
+
 const iconSelector = fs.readFileSync(
   "src/js/blocks/plugins/icon-image-selector.js",
   "utf8"

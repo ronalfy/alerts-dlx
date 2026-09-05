@@ -8,6 +8,7 @@ const budgets = {
 	'build/index.css': 12288,
 	'build/index-rtl.css': 12288,
 	'dist/alerts-dlx-admin-settings.js': 184320,
+	'dist/alerts-dlx-admin-shortcode-builder.js': 245760,
 };
 
 let totalEditorBytes = 0;

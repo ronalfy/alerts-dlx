@@ -291,6 +291,17 @@ class Admin {
 				true
 			);
 
+			$builder_css = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-shortcode-builder.css' );
+			if ( file_exists( $builder_css ) ) {
+				wp_enqueue_style(
+					'alerts-dlx-shortcode-builder-admin-css',
+					Functions::get_plugin_url( '/dist/alerts-dlx-admin-shortcode-builder.css' ),
+					array( 'alerts-dlx-admin-css' ),
+					Functions::get_plugin_version(),
+					'all'
+				);
+			}
+
 			wp_localize_script(
 				'alerts-dlx-shortcode-builder-admin-js',
 				'alertsDlxAdmin',

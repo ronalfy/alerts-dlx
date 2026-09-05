@@ -18,6 +18,8 @@ import {
 
 import sendCommand from "../Utils/SendCommand";
 import { getAlertColorPalette } from "../../js/blocks/utils/alert-color-palette";
+import { getIconSetForGroup } from "../../js/blocks/utils/icon-sets";
+import IconPicker from "../../js/blocks/components/IconPicker";
 
 const groupLabels = {
 	content: __("Content", "alerts-dlx"),
@@ -350,6 +352,50 @@ const CompactColorField = ({ field, value, colors, onChange }) => {
 };
 
 /**
+ * Compact icon field with a preset picker beside the SVG textarea.
+ *
+ * @param {Object}   props            Component properties.
+ * @param {Object}   props.field      Localized field metadata.
+ * @param {string}   props.value      Current SVG markup.
+ * @param {string}   props.alertGroup Alert design slug.
+ * @param {Function} props.onChange   Value change callback.
+ * @return {Element} Icon field control.
+ */
+const CompactIconField = ({ field, value, alertGroup, onChange }) => {
+	const inputId = `alerts-dlx-${field.name}`;
+	const committedValue = value || "";
+
+	return (
+		<BaseControl
+			id={inputId}
+			label={field.label}
+			className="alerts-dlx-shortcode-builder-icon-control"
+		>
+			<div className="alerts-dlx-shortcode-builder-icon-row">
+				<div className="alerts-dlx-shortcode-builder-icon-svg">
+					<TextareaControl
+						id={inputId}
+						label={field.label}
+						hideLabelFromVision
+						value={committedValue}
+						onChange={(nextValue) => onChange(field.name, nextValue || "")}
+						rows={5}
+					/>
+				</div>
+				<IconPicker
+					defaultSvg={committedValue}
+					onChange={(nextValue) => onChange(field.name, nextValue || "")}
+					icons={getIconSetForGroup(alertGroup)}
+					popoverPlacement="bottom-start"
+					closeOnSelect
+					preventTriggerFocus={false}
+				/>
+			</div>
+		</BaseControl>
+	);
+};
+
+/**
  * Render one schema-driven control.
  *
  * @param {Object}   props          Component properties.
@@ -405,6 +451,17 @@ const BuilderField = ({ field, values, onChange }) => {
 					values.alert_group,
 					alertsDlxAdmin.colorPalette
 				)}
+				onChange={onChange}
+			/>
+		);
+	}
+
+	if ("icon" === field.control) {
+		return (
+			<CompactIconField
+				field={field}
+				value={value || ""}
+				alertGroup={values.alert_group}
 				onChange={onChange}
 			/>
 		);
