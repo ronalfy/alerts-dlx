@@ -314,7 +314,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Author name.
+		 * @param string $plugin_author Plugin Author name.
 		 */
 		$plugin_author = apply_filters( 'alerts_dlx_plugin_author', 'MediaRon LLC' );
 		return $plugin_author;
@@ -331,7 +331,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Author URI.
+		 * @param string $plugin_author_uri Plugin Author URI.
 		 */
 		$plugin_author = apply_filters( 'alerts_dlx_plugin_author_uri', 'https://mediaron.com' );
 		return $plugin_author;
@@ -350,7 +350,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin name.
+		 * @param string $plugin_name Plugin name.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_name', __( 'AlertsDLX', 'alerts-dlx' ) );
 	}
@@ -368,7 +368,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin description.
+		 * @param string $plugin_description Plugin description.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_description', __( 'An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.', 'alerts-dlx' ) );
 	}
@@ -384,7 +384,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin URI.
+		 * @param string $plugin_uri Plugin URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_uri', 'https://github.com/ronalfy/alerts-dlx' );
 	}
@@ -400,7 +400,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Support URI.
+		 * @param string $plugin_support_uri Plugin Support URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_support_uri', 'https://github.com/ronalfy/alerts-dlx/issues' );
 	}
@@ -416,7 +416,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Docs URI.
+		 * @param string $plugin_docs_uri Plugin Docs URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://github.com/MediaRon/alertsdlx-docs' );
 	}
@@ -432,7 +432,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin ratings URI.
+		 * @param string $plugin_ratings_uri Plugin ratings URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://wordpress.org/plugins/alerts-dlx/' );
 	}
@@ -448,7 +448,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Menu Name.
+		 * @param string $plugin_menu_title Plugin Menu Name.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_menu_title', self::get_plugin_name() );
 	}
