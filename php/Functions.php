@@ -485,7 +485,36 @@ class Functions {
 			'opacity' => array(),
 		);
 
-		$allowed_tags['g'] = array();
+		$allowed_tags['g'] = array(
+			'fill'              => array(),
+			'fill-opacity'      => array(),
+			'stroke'            => array(),
+			'stroke-width'      => array(),
+			'stroke-opacity'    => array(),
+			'stroke-dasharray'  => array(),
+			'stroke-dashoffset' => array(),
+			'stroke-linecap'    => array(),
+			'stroke-linejoin'   => array(),
+		);
+
+		$allowed_tags['circle'] = array(
+			'cx'      => array(),
+			'cy'      => array(),
+			'r'       => array(),
+			'fill'    => array(),
+			'opacity' => array(),
+			'stroke'  => array(),
+		);
+
+		$allowed_tags['line'] = array(
+			'x1'      => array(),
+			'x2'      => array(),
+			'y1'      => array(),
+			'y2'      => array(),
+			'fill'    => array(),
+			'opacity' => array(),
+			'stroke'  => array(),
+		);
 
 		$allowed_tags['use'] = array(
 			'xlink:href' => array(),
