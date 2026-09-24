@@ -16,26 +16,7 @@ import { Fill, PanelBody } from "@wordpress/components";
 import { registerPlugin } from "@wordpress/plugins";
 import { __ } from "@wordpress/i18n";
 import { ALERT_BLOCK_NAMES } from "../utils/alert-block-registry";
-import BootstrapColors from "../bootstrap/colors";
-import ChakraColors from "../chakraui/colors";
-import MaterialColors from "../material/colors";
-import ShoelaceColors from "../shoelace/colors";
-
-// Get the colors for the block.
-const getColors = (alertGroup) => {
-  switch (alertGroup) {
-    case "bootstrap":
-      return BootstrapColors;
-    case "chakra":
-      return ChakraColors;
-    case "material":
-      return MaterialColors;
-    case "shoelace":
-      return ShoelaceColors;
-    default:
-      return [];
-  }
-};
+import { getAlertColorPalette } from "../utils/alert-color-palette";
 
 /**
  * Higher-order component that wraps block edit functions to add our custom panel.
@@ -207,7 +188,10 @@ registerPlugin("custom-colors", {
                     },
                   },
                 ]}
-                colors={getColors(attributes.alertGroup)}
+                colors={getAlertColorPalette(
+                  attributes.alertGroup,
+                  globalThis.alertsDlxBlock?.colorPalette
+                )}
               />
             </PanelBody>
           );

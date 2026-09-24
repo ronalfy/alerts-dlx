@@ -143,6 +143,57 @@ class Functions {
 	}
 
 	/**
+	 * Sanitize a CSS color without allowing declaration injection.
+	 *
+	 * Accepts hex (3/4/6/8), rgb/hsl functions, named colors, and CSS custom
+	 * properties with an optional one-level fallback so theme palette values
+	 * such as var(--theme-palette-color-2, #587863) survive the shortcode path.
+	 *
+	 * @since 2.4.1
+	 *
+	 * @param mixed $value Untrusted CSS color.
+	 * @return string|false Sanitized color, empty string when blank, or false when invalid.
+	 */
+	public static function sanitize_css_color( $value ) {
+		$color = trim( sanitize_text_field( (string) $value ) );
+		if ( '' === $color ) {
+			return '';
+		}
+		if ( strlen( $color ) > 200 ) {
+			return false;
+		}
+
+		// Hex: #RGB, #RGBA, #RRGGBB, #RRGGBBAA.
+		if ( preg_match( '/^#(?:[0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i', $color ) ) {
+			return $color;
+		}
+
+		// Functional RGB/HSL colors.
+		if ( preg_match( '/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+\/-]+\)$/i', $color ) ) {
+			return $color;
+		}
+
+		// CSS custom properties, including WordPress preset tokens and one fallback.
+		$custom_property = '--[a-zA-Z0-9_-]+';
+		$hex_fallback    = '#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})';
+		$fn_fallback     = '(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+\/-]+\)';
+		$named_fallback  = '[a-zA-Z]+';
+		$nested_var      = 'var\(\s*' . $custom_property . '\s*\)';
+		$fallback        = '(?:' . $hex_fallback . '|' . $fn_fallback . '|' . $nested_var . '|' . $named_fallback . ')';
+		$var_pattern     = '/^var\(\s*' . $custom_property . '(?:\s*,\s*' . $fallback . ')?\s*\)$/';
+		if ( preg_match( $var_pattern, $color ) ) {
+			return $color;
+		}
+
+		// Named CSS colors and keywords already accepted by the builder.
+		if ( preg_match( '/^[a-zA-Z]+$/', $color ) ) {
+			return $color;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Take a _ separated field and convert to camelcase.
 	 *
 	 * @param string $field Field to convert to camelcase.
@@ -194,12 +245,35 @@ class Functions {
 	}
 
 	/**
-	 * Return the URL to the admin settings screen.
+	 * Get the current admin tab.
+	 *
+	 * @return null|string Current admin tab.
+	 */
+	public static function get_admin_tab() {
+		$tab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'tab', FILTER_DEFAULT ) ) );
+		if ( $tab && is_string( $tab ) ) {
+			return sanitize_key( $tab );
+		}
+		return null;
+	}
+
+	/**
+	 * Return the URL to the admin screen
+	 *
+	 * @param string $tab     Tab path to load.
+	 * @param string $sub_tab Subtab path to load.
 	 *
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
-	public static function get_settings_url() {
-		return admin_url( 'options-general.php?page=alerts-dlx' );
+	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
+		$options_url = admin_url( 'options-general.php?page=alerts-dlx' );
+		if ( ! empty( $tab ) ) {
+			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
+			if ( ! empty( $sub_tab ) ) {
+				$options_url = add_query_arg( array( 'subtab' => sanitize_title( $sub_tab ) ), $options_url );
+			}
+		}
+		return $options_url;
 	}
 
 	/**
@@ -240,7 +314,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Author name.
+		 * @param string $plugin_author Plugin Author name.
 		 */
 		$plugin_author = apply_filters( 'alerts_dlx_plugin_author', 'MediaRon LLC' );
 		return $plugin_author;
@@ -257,7 +331,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Author URI.
+		 * @param string $plugin_author_uri Plugin Author URI.
 		 */
 		$plugin_author = apply_filters( 'alerts_dlx_plugin_author_uri', 'https://mediaron.com' );
 		return $plugin_author;
@@ -276,7 +350,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin name.
+		 * @param string $plugin_name Plugin name.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_name', __( 'AlertsDLX', 'alerts-dlx' ) );
 	}
@@ -294,7 +368,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin description.
+		 * @param string $plugin_description Plugin description.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_description', __( 'An alert and notification block inspired by Bootstrap, Material UI, and Chakra UI.', 'alerts-dlx' ) );
 	}
@@ -310,7 +384,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin URI.
+		 * @param string $plugin_uri Plugin URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_uri', 'https://github.com/ronalfy/alerts-dlx' );
 	}
@@ -326,7 +400,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Support URI.
+		 * @param string $plugin_support_uri Plugin Support URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_support_uri', 'https://github.com/ronalfy/alerts-dlx/issues' );
 	}
@@ -342,7 +416,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Docs URI.
+		 * @param string $plugin_docs_uri Plugin Docs URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://github.com/MediaRon/alertsdlx-docs' );
 	}
@@ -358,7 +432,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin ratings URI.
+		 * @param string $plugin_ratings_uri Plugin ratings URI.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_docs_uri', 'https://wordpress.org/plugins/alerts-dlx/' );
 	}
@@ -374,7 +448,7 @@ class Functions {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string Plugin Menu Name.
+		 * @param string $plugin_menu_title Plugin Menu Name.
 		 */
 		return apply_filters( 'alerts_dlx_plugin_menu_title', self::get_plugin_name() );
 	}
@@ -411,7 +485,36 @@ class Functions {
 			'opacity' => array(),
 		);
 
-		$allowed_tags['g'] = array();
+		$allowed_tags['g'] = array(
+			'fill'              => array(),
+			'fill-opacity'      => array(),
+			'stroke'            => array(),
+			'stroke-width'      => array(),
+			'stroke-opacity'    => array(),
+			'stroke-dasharray'  => array(),
+			'stroke-dashoffset' => array(),
+			'stroke-linecap'    => array(),
+			'stroke-linejoin'   => array(),
+		);
+
+		$allowed_tags['circle'] = array(
+			'cx'      => array(),
+			'cy'      => array(),
+			'r'       => array(),
+			'fill'    => array(),
+			'opacity' => array(),
+			'stroke'  => array(),
+		);
+
+		$allowed_tags['line'] = array(
+			'x1'      => array(),
+			'x2'      => array(),
+			'y1'      => array(),
+			'y2'      => array(),
+			'fill'    => array(),
+			'opacity' => array(),
+			'stroke'  => array(),
+		);
 
 		$allowed_tags['use'] = array(
 			'xlink:href' => array(),

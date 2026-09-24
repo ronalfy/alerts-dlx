@@ -24,6 +24,4 @@ const materialColors = [
 	{ name: 'Error Color Light', color: '#fdeded' },
 ];
 
-const themeColors = alertsDlxBlock.colorPalette;
-materialColors.push( ...themeColors );
 export default materialColors;

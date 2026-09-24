@@ -3,6 +3,7 @@ import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import AlertTypeStyleControl from '../components/AlertTypeStyleControl';
+import CanonicalAlertPresetsPanel from '../components/CanonicalAlertPresetsPanel';
 import BootstrapEdit from '../bootstrap/edit';
 import bootstrapDefinition from '../bootstrap/theme-definition';
 import ChakraEdit from '../chakraui/edit';
@@ -42,6 +43,10 @@ export default function CanonicalAlertEdit( props ) {
 	return (
 		<>
 			<InspectorControls>
+				<CanonicalAlertPresetsPanel
+					attributes={ attributes }
+					setAttributes={ setAttributes }
+				/>
 				<PanelBody title={ __( 'Alert design', 'alerts-dlx' ) } initialOpen={ true }>
 					<SelectControl
 						label={ __( 'Design system', 'alerts-dlx' ) }

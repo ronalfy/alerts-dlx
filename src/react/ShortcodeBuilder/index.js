@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { Slot, SlotFillProvider } from '@wordpress/components';
 import Settings from './settings';
 
-const container = document.getElementById( 'alerts-dlx-settings' );
+const container = document.getElementById( 'alerts-dlx-shortcode-builder' );
 const slotContainer = document.getElementById( 'alerts-dlx-admin-container-slot' );
 
 if ( container ) {
