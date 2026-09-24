@@ -258,6 +258,29 @@ class Functions {
 	}
 
 	/**
+	 * Get the current admin subtab.
+	 *
+	 * @return null|string Current admin subtab.
+	 */
+	public static function get_admin_subtab() {
+		$subtab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'subtab', FILTER_DEFAULT ) ) );
+		if ( $subtab && is_string( $subtab ) ) {
+			return sanitize_key( $subtab );
+		}
+		return null;
+	}
+
+	/**
+	 * Get the library item ID from the admin query string.
+	 *
+	 * @return int
+	 */
+	public static function get_admin_library_item_id() {
+		$style_id = filter_input( INPUT_GET, 'style', FILTER_VALIDATE_INT );
+		return $style_id ? (int) $style_id : 0;
+	}
+
+	/**
 	 * Return the URL to the admin screen
 	 *
 	 * @param string $tab     Tab path to load.

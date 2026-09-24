@@ -65,6 +65,7 @@ class AlertsDLX {
 	public function plugins_loaded() {
 
 		Options::run();
+		AlertLibrary::run();
 		( new Admin() )->run();
 		Blocks::run();
 		Rest::run();

@@ -27,20 +27,15 @@ module.exports = (env) => {
         "alerts-dlx-admin-style": "./src/admin.scss",
         "alerts-dlx-admin-settings": "./src/react/Settings/index.js",
 		"alerts-dlx-admin-shortcode-builder": "./src/react/ShortcodeBuilder/index.js",
-      },
-      resolve: {
-        alias: {
-          react: path.resolve("node_modules/react"),
-          "react-dom": path.resolve("node_modules/react-dom"),
-          "@wordpress/i18n": path.resolve("node_modules/@wordpress/i18n"),
-          "@wordpress/element": path.resolve("node_modules/@wordpress/element"),
-          "@wordpress/components": path.resolve(
-            "node_modules/@wordpress/components"
-          ),
-        },
+		"alerts-dlx-admin-global-styles": "./src/react/GlobalStyles/index.js",
       },
       mode: env.mode,
       devtool: env.mode === "development" ? "source-map" : false,
+      externals: {
+        react: "React",
+        "react-dom": "ReactDOM",
+        "react-dom/server": "ReactDOM",
+      },
       output: {
         filename: "[name].js",
         sourceMapFilename: "[file].map[query]",
@@ -117,18 +112,7 @@ module.exports = (env) => {
       plugins: [
         new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin(),
-        new DependencyExtractionWebpackPlugin({
-          requestToExternal(request) {
-            if ("react-dom/client" === request) {
-              return ["ReactDOM", "client"];
-            }
-          },
-          requestToHandle(request) {
-            if ("react-dom/client" === request) {
-              return "react-dom";
-            }
-          },
-        }),
+        new DependencyExtractionWebpackPlugin(),
       ],
     },
   ];

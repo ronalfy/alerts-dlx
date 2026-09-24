@@ -121,6 +121,99 @@ final class ShortcodeBuilder {
 	}
 
 	/**
+	 * Input names persisted on global style library entries.
+	 *
+	 * @return string[]
+	 */
+	public static function get_global_style_input_names() {
+		return array(
+			'alert_group',
+			'alert_type',
+			'variant',
+			'mode',
+			'maximum_width',
+			'maximum_width_unit',
+			'base_font_size',
+			'icon_source',
+			'icon_appearance',
+			'icon_vertical_alignment',
+			'icon',
+			'image_url',
+			'image_id',
+			'color_primary',
+			'color_border',
+			'color_accent',
+			'color_alt',
+			'color_alt_hover',
+			'color_alt_text',
+			'color_alt_text_hover',
+			'color_bold',
+			'color_light',
+		);
+	}
+
+	/**
+	 * Defaults for a new global style editor session.
+	 *
+	 * @return array
+	 */
+	public static function get_global_style_defaults() {
+		$defaults = self::get_editor_defaults();
+		$names    = self::get_global_style_input_names();
+		$subset   = array_intersect_key( $defaults, array_flip( $names ) );
+		$subset['variant'] = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
+
+		return $subset;
+	}
+
+	/**
+	 * Field metadata for the global style inspector.
+	 *
+	 * @return array
+	 */
+	public static function get_global_style_fields() {
+		$allowed = array_flip( self::get_global_style_input_names() );
+		$fields  = array();
+
+		foreach ( self::get_editor_fields() as $field ) {
+			if ( isset( $allowed[ $field['name'] ] ) ) {
+				$fields[] = $field;
+			}
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Sanitize global style config (appearance allowlist only).
+	 *
+	 * @param array $values Raw config values.
+	 * @return array|\WP_Error
+	 */
+	public static function sanitize_global_style_values( $values ) {
+		if ( ! is_array( $values ) ) {
+			return new \WP_Error( 'alerts_dlx_global_style_values', __( 'Invalid global style values.', 'alerts-dlx' ) );
+		}
+
+		$allowed = array_flip( self::get_global_style_input_names() );
+		$payload = array();
+		foreach ( $values as $key => $value ) {
+			$key = sanitize_key( (string) $key );
+			if ( isset( $allowed[ $key ] ) ) {
+				$payload[ $key ] = $value;
+			}
+		}
+
+		$merged = array_merge( self::get_editor_defaults(), $payload );
+		$sanitized = self::sanitize_values( $merged );
+		if ( is_wp_error( $sanitized ) ) {
+			return $sanitized;
+		}
+
+		return array_intersect_key( $sanitized, $allowed );
+	}
+
+	/**
 	 * Get stable values for the visual editor without preselecting an ID.
 	 *
 	 * Uses builder-only starter content so the first-run preview is not empty.

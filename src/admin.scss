@@ -1,4 +1,5 @@
 @import '../node_modules/@wordpress/components/build-style/style.css';
+@import '../node_modules/@wordpress/dataviews/build-style/style.css';
 @import './breakpoints-mixin.scss';
 @import './js/blocks/components/IconPicker/editor.scss';
 
@@ -568,6 +569,56 @@ body.alerts-dlx-body .updated {
 		font-weight: 600;
 		text-transform: unset;
 		font-size: 14px;
+	}
+
+	.alerts-dlx-library-list__toolbar {
+		margin-bottom: 16px;
+	}
+
+	.alerts-dlx-library-empty {
+		margin-top: 24px;
+		max-width: 640px;
+	}
+
+	.alerts-dlx-library-editor__studio {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 24px;
+		align-items: start;
+		margin-top: 16px;
+
+		@include respond-to('medium') {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.alerts-dlx-library-editor__header {
+		margin-bottom: 16px;
+	}
+
+	.alerts-dlx-library-editor__meta {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 16px;
+		margin-top: 12px;
+		max-width: 900px;
+
+		@include respond-to('medium') {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.alerts-dlx-library-editor__actions {
+		display: flex;
+		gap: 12px;
+		margin-top: 24px;
+		padding-top: 16px;
+		border-top: 1px solid #dcdcde;
+	}
+
+	.alerts-dlx-library-editor__preview {
+		position: sticky;
+		top: 32px;
 	}
 
 	.adlx-admin-component-row-button {

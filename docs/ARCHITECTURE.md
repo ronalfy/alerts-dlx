@@ -19,9 +19,10 @@ flowchart LR
 2. Composer autoload (`lib/autoload.php`) maps `DLXPlugins\AlertsDLX\` → `php/`.
 3. On `plugins_loaded`, `AlertsDLX::plugins_loaded()` starts:
    - `Options::run()` — reserved for migrations; options are read via `Options::get_plugin_options()`.
+   - `AlertLibrary::run()` — Private `alerts_dlx_library` CPT for global styles (and future snapshots).
    - `Admin::run()` — Settings screen and AJAX save/retrieve/reset.
    - `Blocks::run()` — Block registration, editor/frontend assets, shortcode.
-   - `Rest::run()` — REST search for the button URL picker.
+   - `Rest::run()` — REST search for the button URL picker and alert library CRUD.
 4. Fires `do_action( 'alerts_dlx_loaded' )` for extenders.
 
 A custom content pipeline `alerts_dlx_the_content` (embed, autop, shortcodes) processes alert description content without relying solely on `the_content`.
@@ -33,7 +34,9 @@ A custom content pipeline `alerts_dlx_the_content` (embed, autop, shortcodes) pr
 | `Options` | Defaults, allowlists, get/sanitize/save for option key `alerts_dlx` |
 | `Admin` | Settings → AlertsDLX menu, enqueue admin React app, AJAX handlers |
 | `Blocks` | Register blocks from `build/`, render callback, shortcode, asset enqueue |
-| `Rest` | `dlxplugins/alerts-dlx/v1/search/pages` for link search |
+| `AlertLibrary` | CPT `alerts_dlx_library`, meta `_alerts_dlx_kind` + `_alerts_dlx_config`, kind-aware sanitize |
+| `Rest` | `search/pages` and `library-items` REST routes |
+| `ShortcodeBuilder` | Shortcode builder AJAX; global style field allowlists |
 | `Functions` | Paths, URLs, capability helpers, shared utilities |
 
 ### Options storage
@@ -73,8 +76,18 @@ All four blocks share the same PHP render callback: `Blocks::frontend()`. The sh
 ### Admin settings
 
 - Menu: Settings → AlertsDLX (`settings_page_alerts-dlx`).
-- UI: React app in `src/react/Settings/`, built to `dist/alerts-dlx-admin-settings.js`.
-- Persistence: admin-ajax actions `alerts_dlx_retrieve_settings`, `alerts_dlx_save_settings`, `alerts_dlx_reset_settings` (capability `manage_options`, nonces required).
+- Tabs: **Settings**, **Shortcode Builder**, **Global Styles** (`tab=global-styles`).
+- UI: React apps in `src/react/Settings/`, `src/react/ShortcodeBuilder/`, `src/react/GlobalStyles/` → `dist/alerts-dlx-admin-*.js`.
+- Site options persistence: admin-ajax actions `alerts_dlx_retrieve_settings`, `alerts_dlx_save_settings`, `alerts_dlx_reset_settings` (capability `manage_options`, nonces required).
+
+### Alert library (global styles v1)
+
+- Post type: `alerts_dlx_library` (not public; admin-only).
+- Meta: `_alerts_dlx_kind` (`global_style` | `snapshot`), `_alerts_dlx_config` (JSON appearance config).
+- Global styles store an appearance allowlist only (`ShortcodeBuilder::get_global_style_input_names()`); preview uses a fixed Lorem ipsum fixture in the admin UI.
+- Slugs are unique **per kind** (`post_name` scoped by `_alerts_dlx_kind`).
+- REST: `GET/POST dlxplugins/alerts-dlx/v1/library-items`, `GET/PUT/DELETE .../library-items/{id}`, `POST .../duplicate` (`manage_options`).
+- Filter: `alerts_dlx_global_style_config` when reading global style config from a library post.
 
 ## Frontend / editor JS (`src/`)
 

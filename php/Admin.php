@@ -188,6 +188,10 @@ class Admin {
 		if ( 'shortcode-builder' === $current_tab ) {
 			$shortcode_builder_tab_class[] = 'nav-tab-active';
 		}
+		$global_styles_tab_class = array( 'nav-tab' );
+		if ( 'global-styles' === $current_tab ) {
+			$global_styles_tab_class[] = 'nav-tab-active';
+		}
 		?>
 		<div class="alerts-dlx-form-wrapper">
 			<header>
@@ -202,6 +206,7 @@ class Admin {
 					<nav class="nav-tab-wrapper">
 						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'alerts-dlx' ); ?></a>
 						<a class="<?php echo esc_attr( implode( ' ', $shortcode_builder_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'shortcode-builder' ) ); ?>"><?php esc_html_e( 'Shortcode Builder', 'alerts-dlx' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $global_styles_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'global-styles' ) ); ?>"><?php esc_html_e( 'Global Styles', 'alerts-dlx' ); ?></a>
 					</nav>
 					<?php
 					if ( null === $current_tab || 'settings' === $current_tab ) {
@@ -217,6 +222,15 @@ class Admin {
 						?>
 						<div class="alerts-dlx-admin-container-body__content">
 							<div id="alerts-dlx-shortcode-builder">
+								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
+							</div>
+						</div>
+						<?php
+					}
+					if ( 'global-styles' === $current_tab ) {
+						?>
+						<div class="alerts-dlx-admin-container-body__content">
+							<div id="alerts-dlx-global-styles">
 								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
 							</div>
 						</div>
@@ -276,6 +290,69 @@ class Admin {
 				)
 			);
 
+		} elseif ( 'global-styles' === $current_tab ) {
+			$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-global-styles.asset.php' );
+			if ( ! file_exists( $asset_file ) ) {
+				return;
+			}
+
+			wp_enqueue_media();
+
+			$deps         = require $asset_file;
+			$dependencies = $deps['dependencies'];
+			if ( ! in_array( 'media-editor', $dependencies, true ) ) {
+				$dependencies[] = 'media-editor';
+			}
+
+			wp_enqueue_script(
+				'alerts-dlx-global-styles-admin-js',
+				Functions::get_plugin_url( '/dist/alerts-dlx-admin-global-styles.js' ),
+				$dependencies,
+				$deps['version'],
+				true
+			);
+
+			$builder_css = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-shortcode-builder.css' );
+			if ( file_exists( $builder_css ) ) {
+				wp_enqueue_style(
+					'alerts-dlx-shortcode-builder-admin-css',
+					Functions::get_plugin_url( '/dist/alerts-dlx-admin-shortcode-builder.css' ),
+					array( 'alerts-dlx-admin-css' ),
+					Functions::get_plugin_version(),
+					'all'
+				);
+			}
+
+			$theme_labels = array();
+			foreach ( ShortcodeBuilder::get_theme_definitions() as $slug => $definition ) {
+				$theme_labels[ $slug ] = $definition['label'];
+			}
+
+			$subtab  = Functions::get_admin_subtab();
+			$item_id = Functions::get_admin_library_item_id();
+
+			wp_localize_script(
+				'alerts-dlx-global-styles-admin-js',
+				'alertsDlxAdmin',
+				array(
+					'restUrl'                    => esc_url_raw( rest_url() ),
+					'restNonce'                  => wp_create_nonce( 'wp_rest' ),
+					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
+					'globalStyleFields'          => ShortcodeBuilder::get_global_style_fields(),
+					'globalStyleDefaults'        => ShortcodeBuilder::get_global_style_defaults(),
+					'globalStylePreviewFixture'  => AlertLibrary::get_global_style_preview_fixture(),
+					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
+					'colorPalette'               => Functions::get_theme_color_palette(),
+					'themeLabels'                => $theme_labels,
+					'globalStylesBoot'           => array(
+						'view'   => ( 'edit' === $subtab ) ? 'edit' : 'list',
+						'itemId' => $item_id,
+					),
+				)
+			);
+
+			$this->enqueue_alert_preview_assets();
+
 		} elseif ( null === $current_tab || 'shortcode-builder' === $current_tab ) {
 			$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-shortcode-builder.asset.php' );
 			if ( ! file_exists( $asset_file ) ) {
@@ -321,15 +398,22 @@ class Admin {
 				)
 			);
 
-			$blocks = new Blocks();
-			$blocks->register_block_editor_scripts();
-			foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
-				wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
-			}
-
-			// Preview close icons use <use> hrefs into this sprite. Frontend prints it on wp_footer.
-			add_action( 'admin_footer', array( $blocks, 'print_close_button_svgs' ) );
+			$this->enqueue_alert_preview_assets();
 		}
+	}
+
+	/**
+	 * Enqueue theme styles and footer SVG sprite for alert previews.
+	 */
+	private function enqueue_alert_preview_assets() {
+		$blocks = new Blocks();
+		$blocks->register_block_editor_scripts();
+		foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
+			wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
+		}
+
+		// Preview close icons use <use> hrefs into this sprite. Frontend prints it on wp_footer.
+		add_action( 'admin_footer', array( $blocks, 'print_close_button_svgs' ) );
 	}
 
 	/**
