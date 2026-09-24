@@ -33,18 +33,22 @@ const App = ({ libraryKind, view, itemId, onNavigate }) => {
 				</div>
 
 				{isEdit ? (
-					<LibraryEditor
-						libraryKind={libraryKind}
-						itemId={itemId}
-						onBack={() => onNavigate("list", 0)}
-						onSaved={(saved) => onNavigate("edit", saved.id)}
-					/>
+					<div className="adlx-admin-content-body">
+						<LibraryEditor
+							libraryKind={libraryKind}
+							itemId={itemId}
+							onBack={() => onNavigate("list", 0)}
+							onSaved={(saved) => onNavigate("edit", saved.id)}
+						/>
+					</div>
 				) : (
-					<LibraryList
-						libraryKind={libraryKind}
-						onAdd={() => onNavigate("edit", 0)}
-						onEdit={(id) => onNavigate("edit", id)}
-					/>
+					<div className="adlx-admin-content-body">
+						<LibraryList
+							libraryKind={libraryKind}
+							onAdd={() => onNavigate("edit", 0)}
+							onEdit={(id) => onNavigate("edit", id)}
+						/>
+					</div>
 				)}
 			</div>
 		</div>

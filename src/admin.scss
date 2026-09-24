@@ -580,6 +580,42 @@ body.alerts-dlx-body .updated {
 		max-width: 640px;
 	}
 
+	&.alerts-dlx-global-styles {
+		.adlx-admin-content-heading {
+			margin-bottom: 20px;
+
+			h1 {
+				margin-bottom: 0.25em;
+			}
+
+			p.description {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
+
+		.adlx-admin-content-body {
+			margin-bottom: 0;
+		}
+
+		.alerts-dlx-library-list__toolbar {
+			margin-top: 0;
+			margin-bottom: 20px;
+		}
+
+		.alerts-dlx-library-empty {
+			margin-top: 0;
+		}
+
+		.alerts-dlx-library-list .components-notice {
+			margin-bottom: 20px;
+		}
+
+		.alerts-dlx-library-list .dataviews-wrapper > .dataviews__view-actions {
+			padding-top: 0;
+		}
+	}
+
 	.alerts-dlx-library-editor__studio {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
