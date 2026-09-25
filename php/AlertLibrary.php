@@ -218,7 +218,11 @@ final class AlertLibrary {
 			return new \WP_Error( 'alerts_dlx_library_config', __( 'Invalid library configuration.', 'alerts-dlx' ) );
 		}
 
-		if ( in_array( $kind, self::get_allowed_kinds(), true ) ) {
+		if ( self::KIND_SNAPSHOT === $kind ) {
+			return ShortcodeBuilder::sanitize_snapshot_values( $config );
+		}
+
+		if ( self::KIND_GLOBAL_STYLE === $kind ) {
 			return ShortcodeBuilder::sanitize_global_style_values( $config );
 		}
 
@@ -268,6 +272,9 @@ final class AlertLibrary {
 	/**
 	 * Merge style config with preview fixture for server-side render.
 	 *
+	 * Stored appearance keys win. Global styles do not persist title,
+	 * description, alignment, or dismiss controls, so the fixture fills those.
+	 *
 	 * @param array $config Stored global style config.
 	 * @return array
 	 */
@@ -277,6 +284,33 @@ final class AlertLibrary {
 		if ( empty( $merged['unique_id'] ) ) {
 			$merged['unique_id'] = 'alerts-dlx-preview-' . wp_generate_password( 8, false, false );
 		}
+		return $merged;
+	}
+
+	/**
+	 * Merge snapshot config with preview fixture for server-side render.
+	 *
+	 * Stored alignment and dismiss values win over the fixture. Title and
+	 * description text stay preview-only: fixture copy is shown only when
+	 * the corresponding visibility toggle is enabled.
+	 *
+	 * @param array $config Stored snapshot config.
+	 * @return array
+	 */
+	public static function merge_snapshot_preview_values( $config ) {
+		$fixture = self::get_global_style_preview_fixture();
+		$config  = is_array( $config ) ? $config : array();
+		$merged  = array_merge( $fixture, $config );
+
+		$title_enabled               = filter_var( $config['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$description_enabled         = filter_var( $config['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$merged['alert_title']       = $title_enabled ? $fixture['alert_title'] : '';
+		$merged['alert_description'] = $description_enabled ? $fixture['alert_description'] : '';
+
+		if ( empty( $merged['unique_id'] ) ) {
+			$merged['unique_id'] = 'alerts-dlx-preview-' . wp_generate_password( 8, false, false );
+		}
+
 		return $merged;
 	}
 
@@ -298,18 +332,20 @@ final class AlertLibrary {
 	 * @return array
 	 */
 	public static function get_post_config( $post_id ) {
-		$config = ShortcodeBuilder::get_global_style_defaults();
-		$raw    = get_post_meta( $post_id, self::META_CONFIG, true );
+		$kind     = self::get_post_kind( $post_id );
+		$defaults = self::KIND_SNAPSHOT === $kind
+			? ShortcodeBuilder::get_snapshot_defaults()
+			: ShortcodeBuilder::get_global_style_defaults();
+		$config   = $defaults;
+		$raw      = get_post_meta( $post_id, self::META_CONFIG, true );
 		if ( is_string( $raw ) && '' !== $raw ) {
 			$decoded = json_decode( $raw, true );
 			if ( is_array( $decoded ) ) {
-				$config = $decoded;
+				$config = array_merge( $defaults, $decoded );
 			}
 		} elseif ( is_array( $raw ) ) {
-			$config = $raw;
+			$config = array_merge( $defaults, $raw );
 		}
-
-		$kind = self::get_post_kind( $post_id );
 		$post = get_post( $post_id );
 		if ( self::KIND_SNAPSHOT === $kind ) {
 			/**

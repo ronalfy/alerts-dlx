@@ -158,9 +158,9 @@ final class ShortcodeBuilder {
 	 * @return array
 	 */
 	public static function get_global_style_defaults() {
-		$defaults = self::get_editor_defaults();
-		$names    = self::get_global_style_input_names();
-		$subset   = array_intersect_key( $defaults, array_flip( $names ) );
+		$defaults          = self::get_editor_defaults();
+		$names             = self::get_global_style_input_names();
+		$subset            = array_intersect_key( $defaults, array_flip( $names ) );
 		$subset['variant'] = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
 
 		return $subset;
@@ -185,6 +185,121 @@ final class ShortcodeBuilder {
 	}
 
 	/**
+	 * Input names persisted on snapshot library entries.
+	 *
+	 * Snapshots keep the global-style appearance set plus alignment,
+	 * title/description visibility, and dismiss controls.
+	 *
+	 * @return string[]
+	 */
+	public static function get_snapshot_input_names() {
+		return array_values(
+			array_unique(
+				array_merge(
+					self::get_global_style_input_names(),
+					array(
+						'align',
+						'title_enabled',
+						'description_enabled',
+						'close_button_enabled',
+						'close_button_expiration',
+					)
+				)
+			)
+		);
+	}
+
+	/**
+	 * Defaults for a new snapshot editor session.
+	 *
+	 * Title and description stay visibility toggles. Fixture copy is
+	 * preview-only and is not stored on the snapshot.
+	 *
+	 * @return array
+	 */
+	public static function get_snapshot_defaults() {
+		$defaults                      = self::get_editor_defaults();
+		$names                         = self::get_snapshot_input_names();
+		$subset                        = array_intersect_key( $defaults, array_flip( $names ) );
+		$subset['variant']             = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
+		$subset['title_enabled']       = true;
+		$subset['description_enabled'] = true;
+
+		return $subset;
+	}
+
+	/**
+	 * Field metadata for the snapshot inspector.
+	 *
+	 * @return array
+	 */
+	public static function get_snapshot_fields() {
+		$allowed = array_flip( self::get_snapshot_input_names() );
+		$fields  = array(
+			array(
+				'name'    => 'title_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Title', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'description_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Alert Description', 'alerts-dlx' ),
+			),
+		);
+
+		foreach ( self::get_editor_fields() as $field ) {
+			if ( isset( $allowed[ $field['name'] ] ) ) {
+				$fields[] = $field;
+			}
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Sanitize snapshot config (appearance plus snapshot-only keys).
+	 *
+	 * Title and description visibility flags are renderer-derived on the
+	 * shortcode path. Snapshots persist them as inspector visibility toggles.
+	 *
+	 * @param array $values Raw config values.
+	 * @return array|\WP_Error
+	 */
+	public static function sanitize_snapshot_values( $values ) {
+		if ( ! is_array( $values ) ) {
+			return new \WP_Error( 'alerts_dlx_snapshot_values', __( 'Invalid snapshot values.', 'alerts-dlx' ) );
+		}
+
+		$allowed = array_flip( self::get_snapshot_input_names() );
+		$payload = array();
+		foreach ( $values as $key => $value ) {
+			$key = sanitize_key( (string) $key );
+			if ( isset( $allowed[ $key ] ) ) {
+				$payload[ $key ] = $value;
+			}
+		}
+
+		$title_enabled       = filter_var( $payload['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$description_enabled = filter_var( $payload['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		unset( $payload['title_enabled'], $payload['description_enabled'] );
+
+		$merged    = array_merge( self::get_editor_defaults(), $payload );
+		$sanitized = self::sanitize_values( $merged );
+		if ( is_wp_error( $sanitized ) ) {
+			return $sanitized;
+		}
+
+		$result                        = array_intersect_key( $sanitized, $allowed );
+		$result['title_enabled']       = $title_enabled;
+		$result['description_enabled'] = $description_enabled;
+
+		return $result;
+	}
+
+	/**
 	 * Sanitize global style config (appearance allowlist only).
 	 *
 	 * @param array $values Raw config values.
@@ -204,7 +319,7 @@ final class ShortcodeBuilder {
 			}
 		}
 
-		$merged = array_merge( self::get_editor_defaults(), $payload );
+		$merged    = array_merge( self::get_editor_defaults(), $payload );
 		$sanitized = self::sanitize_values( $merged );
 		if ( is_wp_error( $sanitized ) ) {
 			return $sanitized;

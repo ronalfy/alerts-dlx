@@ -21,6 +21,28 @@ import {
 } from "./kind-labels";
 
 /**
+ * Return inspector fields for a library kind.
+ *
+ * @param {string} nextKind Library kind slug.
+ * @return {Array} Field metadata.
+ */
+const getFieldsForKind = (nextKind) =>
+	KIND_SNAPSHOT === nextKind
+		? alertsDlxAdmin.snapshotFields || alertsDlxAdmin.libraryFields || []
+		: alertsDlxAdmin.libraryFields || [];
+
+/**
+ * Return editor defaults for a library kind.
+ *
+ * @param {string} nextKind Library kind slug.
+ * @return {Object} Default config.
+ */
+const getDefaultsForKind = (nextKind) =>
+	KIND_SNAPSHOT === nextKind
+		? { ...(alertsDlxAdmin.snapshotDefaults || alertsDlxAdmin.libraryDefaults || {}) }
+		: { ...(alertsDlxAdmin.libraryDefaults || {}) };
+
+/**
  * Studio editor for one library item.
  *
  * @param {Object}   props              Component props.
@@ -31,18 +53,19 @@ import {
  * @param {Function} props.onKindChange Called when a new item kind changes.
  * @return {Element} Editor screen.
  */
+
 const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) => {
-	const fields = alertsDlxAdmin.libraryFields || [];
-	const defaultConfig = useMemo(
-		() => alertsDlxAdmin.libraryDefaults || {},
-		[]
-	);
 	const previewFixture = useMemo(
 		() => alertsDlxAdmin.libraryPreviewFixture || {},
 		[]
 	);
 
 	const [kind, setKind] = useState(libraryKind || KIND_GLOBAL_STYLE);
+	const fields = getFieldsForKind(kind);
+	const defaultConfig = useMemo(
+		() => getDefaultsForKind(libraryKind || KIND_GLOBAL_STYLE),
+		[libraryKind]
+	);
 	const [title, setTitle] = useState("");
 	const [slug, setSlug] = useState("");
 	const [config, setConfig] = useState(defaultConfig);
@@ -85,7 +108,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 				title: "",
 				slug: "",
 				kind: initialKind,
-				config: { ...defaultConfig },
+				config: getDefaultsForKind(initialKind),
 			};
 			checkpoint.current = initial;
 			setKind(initialKind);
@@ -104,7 +127,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 					title: item.title || "",
 					slug: item.slug || "",
 					kind: item.kind || KIND_GLOBAL_STYLE,
-					config: item.config || { ...defaultConfig },
+					config: item.config || getDefaultsForKind(item.kind || KIND_GLOBAL_STYLE),
 				};
 				checkpoint.current = next;
 				setTitle(next.title);
@@ -119,7 +142,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 				);
 			})
 			.finally(() => setLoading(false));
-	}, [itemId, defaultConfig]);
+	}, [itemId]); // libraryKind is read on first new-item mount only.
 
 	const handleChange = (name, value) => {
 		setConfig((current) =>
@@ -137,6 +160,18 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 
 	const handleKindChange = (nextKind) => {
 		setKind(nextKind);
+		if (!itemId) {
+			const nextDefaults = getDefaultsForKind(nextKind);
+			setConfig((current) => {
+				const preserved = {};
+				Object.keys(nextDefaults).forEach((key) => {
+					if (Object.prototype.hasOwnProperty.call(current, key)) {
+						preserved[key] = current[key];
+					}
+				});
+				return { ...nextDefaults, ...preserved };
+			});
+		}
 		if (onKindChange) {
 			onKindChange(nextKind);
 		}

@@ -174,10 +174,24 @@ export const getSampleIconMarkup = (alertGroup, alertType) => {
  * @return {Object} Merged preview payload.
  */
 export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => {
+	const stored = storedValues && "object" === typeof storedValues ? storedValues : {};
 	const merged = {
 		...fixture,
-		...storedValues,
+		...stored,
 	};
+
+	// Snapshot visibility toggles: fixture title/description stay preview-only.
+	if (Object.prototype.hasOwnProperty.call(stored, "title_enabled")) {
+		merged.alert_title = stored.title_enabled
+			? stored.alert_title || fixture.alert_title || ""
+			: "";
+	}
+	if (Object.prototype.hasOwnProperty.call(stored, "description_enabled")) {
+		merged.alert_description = stored.description_enabled
+			? stored.alert_description || fixture.alert_description || ""
+			: "";
+	}
+
 	if (!merged.unique_id) {
 		merged.unique_id = fixture.unique_id || "alerts-dlx-admin-preview";
 	}

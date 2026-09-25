@@ -340,6 +340,8 @@ class Admin {
 					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
 					'libraryFields'              => ShortcodeBuilder::get_global_style_fields(),
 					'libraryDefaults'            => ShortcodeBuilder::get_global_style_defaults(),
+					'snapshotFields'             => ShortcodeBuilder::get_snapshot_fields(),
+					'snapshotDefaults'           => ShortcodeBuilder::get_snapshot_defaults(),
 					'libraryPreviewFixture'      => AlertLibrary::get_global_style_preview_fixture(),
 					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
 					'colorPalette'               => Functions::get_theme_color_palette(),

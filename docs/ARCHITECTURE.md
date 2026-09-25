@@ -36,7 +36,7 @@ A custom content pipeline `alerts_dlx_the_content` (embed, autop, shortcodes) pr
 | `Blocks` | Register blocks from `build/`, render callback, shortcode, asset enqueue |
 | `AlertLibrary` | CPT `alerts_dlx_library`, meta `_alerts_dlx_kind` + `_alerts_dlx_config`, kind-aware sanitize |
 | `Rest` | `search/pages` and `library-items` REST routes |
-| `ShortcodeBuilder` | Shortcode builder AJAX; global style field allowlists |
+| `ShortcodeBuilder` | Shortcode builder AJAX; global style and snapshot field allowlists |
 | `Functions` | Paths, URLs, capability helpers, shared utilities |
 
 ### Options storage
@@ -83,8 +83,10 @@ All four blocks share the same PHP render callback: `Blocks::frontend()`. The sh
 ### Alert library (global styles and snapshots)
 
 - Post type: `alerts_dlx_library` (not public; admin-only).
-- Meta: `_alerts_dlx_kind` (`global_style` | `snapshot`), `_alerts_dlx_config` (JSON appearance config).
-- Both kinds store the same appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`); preview uses a fixed Lorem ipsum fixture in the admin UI.
+- Meta: `_alerts_dlx_kind` (`global_style` | `snapshot`), `_alerts_dlx_config` (JSON config).
+- Global styles store the appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`). Snapshots store that set plus `align`, `title_enabled`, `description_enabled`, `close_button_enabled`, and `close_button_expiration` (`ShortcodeBuilder::get_snapshot_input_names()`).
+- Title/description on snapshots are visibility toggles (`title_enabled` / `description_enabled`). The shortcode renderer still derives those flags from content; snapshots persist the toggles and preview injects Lorem copy only when a toggle is on.
+- Preview uses a fixed Lorem ipsum fixture in the admin UI. Stored snapshot alignment and dismiss values win over the fixture.
 - Admin: one **Styles & Snapshots** tab (`#alerts-dlx-library`) lists both kinds; kind is chosen when creating an item and is immutable afterward.
 - Slugs are unique **per kind** (`post_name` scoped by `_alerts_dlx_kind`).
 - REST: `GET/POST dlxplugins/alerts-dlx/v1/library-items` (`kind` optional on GET; omit or `all` returns both), `GET/PUT/DELETE .../library-items/{id}`, `POST .../duplicate` with optional target `kind` (`manage_options`).
