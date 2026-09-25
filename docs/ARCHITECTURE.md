@@ -84,8 +84,8 @@ All four blocks share the same PHP render callback: `Blocks::frontend()`. The sh
 
 - Post type: `alerts_dlx_library` (not public; admin-only).
 - Meta: `_alerts_dlx_kind` (`global_style` | `snapshot`), `_alerts_dlx_config` (JSON config).
-- Global styles store the appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`). Snapshots store that set plus `align`, `title_enabled`, `description_enabled`, `close_button_enabled`, and `close_button_expiration` (`ShortcodeBuilder::get_snapshot_input_names()`).
-- Title/description on snapshots are visibility toggles (`title_enabled` / `description_enabled`). The shortcode renderer still derives those flags from content; snapshots persist the toggles and preview injects Lorem copy only when a toggle is on.
+- Global styles store the appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`). Snapshots store that set plus `align`, `title_enabled`, `description_enabled`, `button_enabled`, `close_button_enabled`, and `close_button_expiration` (`ShortcodeBuilder::get_snapshot_input_names()`).
+- Title/description/button on snapshots are visibility toggles (`title_enabled` / `description_enabled` / `button_enabled`). The shortcode renderer still derives those flags from content; snapshots persist the toggles and preview injects Lorem copy only when a toggle is on.
 - Preview uses a fixed Lorem ipsum fixture in the admin UI. Stored snapshot alignment and dismiss values win over the fixture.
 - Admin: one **Styles & Snapshots** tab (`#alerts-dlx-library`) lists both kinds; kind is chosen when creating an item and is immutable afterward.
 - Slugs are unique **per kind** (`post_name` scoped by `_alerts_dlx_kind`).

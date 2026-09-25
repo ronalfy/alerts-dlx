@@ -290,9 +290,9 @@ final class AlertLibrary {
 	/**
 	 * Merge snapshot config with preview fixture for server-side render.
 	 *
-	 * Stored alignment and dismiss values win over the fixture. Title and
-	 * description text stay preview-only: fixture copy is shown only when
-	 * the corresponding visibility toggle is enabled.
+	 * Stored alignment and dismiss values win over the fixture. Title,
+	 * description, and button stay preview-only: fixture copy is shown
+	 * only when the corresponding visibility toggle is enabled.
 	 *
 	 * @param array $config Stored snapshot config.
 	 * @return array
@@ -304,8 +304,11 @@ final class AlertLibrary {
 
 		$title_enabled               = filter_var( $config['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
 		$description_enabled         = filter_var( $config['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$button_enabled              = filter_var( $config['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
 		$merged['alert_title']       = $title_enabled ? $fixture['alert_title'] : '';
 		$merged['alert_description'] = $description_enabled ? $fixture['alert_description'] : '';
+		$merged['button_text']       = $button_enabled ? $fixture['button_text'] : '';
+		$merged['button_url']        = $button_enabled ? $fixture['button_url'] : '';
 
 		if ( empty( $merged['unique_id'] ) ) {
 			$merged['unique_id'] = 'alerts-dlx-preview-' . wp_generate_password( 8, false, false );

@@ -23,6 +23,7 @@ assert.match( shortcodeBuilder, /get_snapshot_defaults/, 'Snapshot defaults are 
 assert.match( shortcodeBuilder, /sanitize_snapshot_values/, 'Snapshot sanitizer is defined' );
 assert.match( shortcodeBuilder, /title_enabled/, 'Snapshots persist title visibility' );
 assert.match( shortcodeBuilder, /description_enabled/, 'Snapshots persist description visibility' );
+assert.match( shortcodeBuilder, /button_enabled/, 'Snapshots persist button visibility' );
 assert.match( alertLibrary, /sanitize_snapshot_values/, 'Library snapshots use the snapshot sanitizer' );
 assert.match( alertLibrary, /merge_snapshot_preview_values/, 'Snapshot preview merge honors stored toggles' );
 assert.match( rest, /\/library-items/, 'Library REST routes are registered' );

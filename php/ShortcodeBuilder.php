@@ -188,7 +188,7 @@ final class ShortcodeBuilder {
 	 * Input names persisted on snapshot library entries.
 	 *
 	 * Snapshots keep the global-style appearance set plus alignment,
-	 * title/description visibility, and dismiss controls.
+	 * title/description/button visibility, and dismiss controls.
 	 *
 	 * @return string[]
 	 */
@@ -201,6 +201,7 @@ final class ShortcodeBuilder {
 						'align',
 						'title_enabled',
 						'description_enabled',
+						'button_enabled',
 						'close_button_enabled',
 						'close_button_expiration',
 					)
@@ -212,8 +213,8 @@ final class ShortcodeBuilder {
 	/**
 	 * Defaults for a new snapshot editor session.
 	 *
-	 * Title and description stay visibility toggles. Fixture copy is
-	 * preview-only and is not stored on the snapshot.
+	 * Title, description, and button stay visibility toggles. Fixture
+	 * copy is preview-only and is not stored on the snapshot.
 	 *
 	 * @return array
 	 */
@@ -224,6 +225,7 @@ final class ShortcodeBuilder {
 		$subset['variant']             = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
 		$subset['title_enabled']       = true;
 		$subset['description_enabled'] = true;
+		$subset['button_enabled']      = true;
 
 		return $subset;
 	}
@@ -248,6 +250,12 @@ final class ShortcodeBuilder {
 				'control' => 'toggle',
 				'label'   => __( 'Enable Alert Description', 'alerts-dlx' ),
 			),
+			array(
+				'name'    => 'button_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Button', 'alerts-dlx' ),
+			),
 		);
 
 		foreach ( self::get_editor_fields() as $field ) {
@@ -262,8 +270,8 @@ final class ShortcodeBuilder {
 	/**
 	 * Sanitize snapshot config (appearance plus snapshot-only keys).
 	 *
-	 * Title and description visibility flags are renderer-derived on the
-	 * shortcode path. Snapshots persist them as inspector visibility toggles.
+	 * Title, description, and button visibility flags are renderer-derived
+	 * on the shortcode path. Snapshots persist them as inspector toggles.
 	 *
 	 * @param array $values Raw config values.
 	 * @return array|\WP_Error
@@ -284,7 +292,8 @@ final class ShortcodeBuilder {
 
 		$title_enabled       = filter_var( $payload['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
 		$description_enabled = filter_var( $payload['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		unset( $payload['title_enabled'], $payload['description_enabled'] );
+		$button_enabled      = filter_var( $payload['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		unset( $payload['title_enabled'], $payload['description_enabled'], $payload['button_enabled'] );
 
 		$merged    = array_merge( self::get_editor_defaults(), $payload );
 		$sanitized = self::sanitize_values( $merged );
@@ -295,6 +304,7 @@ final class ShortcodeBuilder {
 		$result                        = array_intersect_key( $sanitized, $allowed );
 		$result['title_enabled']       = $title_enabled;
 		$result['description_enabled'] = $description_enabled;
+		$result['button_enabled']      = $button_enabled;
 
 		return $result;
 	}

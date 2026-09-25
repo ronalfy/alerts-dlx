@@ -180,7 +180,7 @@ export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => 
 		...stored,
 	};
 
-	// Snapshot visibility toggles: fixture title/description stay preview-only.
+	// Snapshot visibility toggles: fixture title/description/button stay preview-only.
 	if (Object.prototype.hasOwnProperty.call(stored, "title_enabled")) {
 		merged.alert_title = stored.title_enabled
 			? stored.alert_title || fixture.alert_title || ""
@@ -189,6 +189,14 @@ export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => 
 	if (Object.prototype.hasOwnProperty.call(stored, "description_enabled")) {
 		merged.alert_description = stored.description_enabled
 			? stored.alert_description || fixture.alert_description || ""
+			: "";
+	}
+	if (Object.prototype.hasOwnProperty.call(stored, "button_enabled")) {
+		merged.button_text = stored.button_enabled
+			? stored.button_text || fixture.button_text || ""
+			: "";
+		merged.button_url = stored.button_enabled
+			? stored.button_url || fixture.button_url || ""
 			: "";
 	}
 
