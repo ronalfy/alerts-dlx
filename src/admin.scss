@@ -596,6 +596,9 @@ body.alerts-dlx-body .updated {
 	}
 
 	.alerts-dlx-library-list__toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
 		margin-bottom: 16px;
 	}
 
@@ -604,7 +607,7 @@ body.alerts-dlx-body .updated {
 		max-width: 640px;
 	}
 
-	&.alerts-dlx-global-styles {
+	&.alerts-dlx-library {
 		.adlx-admin-content-heading {
 			margin-bottom: 20px;
 
@@ -654,6 +657,11 @@ body.alerts-dlx-body .updated {
 
 	.alerts-dlx-library-editor__header {
 		margin-bottom: 16px;
+	}
+
+	.alerts-dlx-library-editor__kind {
+		margin-top: 16px;
+		max-width: 420px;
 	}
 
 	.alerts-dlx-library-editor__meta {

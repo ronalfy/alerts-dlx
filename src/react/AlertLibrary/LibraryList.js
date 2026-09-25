@@ -8,6 +8,13 @@ import {
 	deleteLibraryItem,
 	fetchLibraryItems,
 } from "./useLibraryItem";
+import {
+	KIND_GLOBAL_STYLE,
+	KIND_SNAPSHOT,
+	getKindLabel,
+	getLibraryLabels,
+	getOppositeKind,
+} from "./kind-labels";
 
 const DEFAULT_VIEW = {
 	type: "table",
@@ -19,20 +26,20 @@ const DEFAULT_VIEW = {
 		direction: "asc",
 	},
 	titleField: "title",
-	fields: ["slug", "alert_group", "alert_type", "variant", "modified"],
+	fields: ["kind", "slug", "alert_group", "alert_type", "variant", "modified"],
+	filters: [],
 	layout: {},
 };
 
 /**
- * List global styles in a DataViews table.
+ * List global styles and snapshots in a DataViews table.
  *
- * @param {Object}   props              Component props.
- * @param {string}   props.libraryKind  Library kind slug.
- * @param {Function} props.onAdd        Add handler.
- * @param {Function} props.onEdit       Edit handler.
+ * @param {Object}   props         Component props.
+ * @param {Function} props.onAdd   Add handler that receives a kind.
+ * @param {Function} props.onEdit  Edit handler.
  * @return {Element} List screen.
  */
-const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
+const LibraryList = ({ onAdd, onEdit }) => {
 	const [items, setItems] = useState([]);
 	const [view, setView] = useState(DEFAULT_VIEW);
 	const [loading, setLoading] = useState(true);
@@ -44,32 +51,32 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 	const loadItems = useCallback(() => {
 		setLoading(true);
 		setError("");
-		fetchLibraryItems(libraryKind)
+		fetchLibraryItems()
 			.then((response) => {
 				setItems(Array.isArray(response) ? response : []);
 			})
 			.catch((requestError) => {
 				setError(
 					requestError.message ||
-						__("Could not load global styles.", "alerts-dlx")
+						__("Could not load library items.", "alerts-dlx")
 				);
 			})
 			.finally(() => setLoading(false));
-	}, [libraryKind]);
+	}, []);
 
 	useEffect(() => {
 		loadItems();
 	}, [loadItems]);
 
 	const handleDuplicate = useCallback(
-		(item) => {
+		(item, targetKind) => {
 			setActionId(item.id);
-			duplicateLibraryItem(item.id)
+			duplicateLibraryItem(item.id, targetKind)
 				.then(() => loadItems())
 				.catch((requestError) => {
 					setError(
 						requestError.message ||
-							__("Could not duplicate this style.", "alerts-dlx")
+							__("Could not duplicate this item.", "alerts-dlx")
 					);
 				})
 				.finally(() => setActionId(0));
@@ -79,8 +86,9 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 
 	const handleDelete = useCallback(
 		(item) => {
+			const labels = getLibraryLabels(item.kind);
 			// eslint-disable-next-line no-alert
-			if (!window.confirm(__("Delete this global style permanently?", "alerts-dlx"))) {
+			if (!window.confirm(labels.deleteConfirm)) {
 				return;
 			}
 			setActionId(item.id);
@@ -89,7 +97,7 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 				.catch((requestError) => {
 					setError(
 						requestError.message ||
-							__("Could not delete this style.", "alerts-dlx")
+							__("Could not delete this item.", "alerts-dlx")
 					);
 				})
 				.finally(() => setActionId(0));
@@ -109,6 +117,27 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 						{item.title}
 					</Button>
 				),
+			},
+			{
+				id: "kind",
+				label: __("Kind", "alerts-dlx"),
+				enableSorting: true,
+				elements: [
+					{
+						value: KIND_GLOBAL_STYLE,
+						label: getKindLabel(KIND_GLOBAL_STYLE),
+					},
+					{
+						value: KIND_SNAPSHOT,
+						label: getKindLabel(KIND_SNAPSHOT),
+					},
+				],
+				filterBy: {
+					operators: ["isAny"],
+					isPrimary: true,
+				},
+				getValue: ({ item }) => item.kind,
+				render: ({ item }) => getKindLabel(item.kind),
 			},
 			{
 				id: "slug",
@@ -169,6 +198,23 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 				},
 			},
 			{
+				id: "duplicate-other-kind",
+				label: (selectedItems) => {
+					const item = selectedItems[0];
+					return item
+						? getLibraryLabels(item.kind).duplicateAs
+						: __("Duplicate as other kind", "alerts-dlx");
+				},
+				callback: (selectedItems) => {
+					if (selectedItems[0]) {
+						handleDuplicate(
+							selectedItems[0],
+							getOppositeKind(selectedItems[0].kind)
+						);
+					}
+				},
+			},
+			{
 				id: "delete",
 				label: __("Delete", "alerts-dlx"),
 				callback: (selectedItems) => {
@@ -186,10 +232,18 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 		const search = (view.search || "").trim().toLowerCase();
 		if (search) {
 			rows = rows.filter((row) => {
-				const haystack = `${row.title} ${row.slug} ${row.alert_group} ${row.alert_type}`.toLowerCase();
+				const haystack = `${row.title} ${row.slug} ${row.alert_group} ${row.alert_type} ${getKindLabel(row.kind)}`.toLowerCase();
 				return haystack.includes(search);
 			});
 		}
+
+		const kindFilter = (view.filters || []).find(
+			(filter) => "kind" === filter.field
+		);
+		if (kindFilter && Array.isArray(kindFilter.value) && kindFilter.value.length) {
+			rows = rows.filter((row) => kindFilter.value.includes(row.kind));
+		}
+
 		if (view.sort?.field) {
 			const { field, direction } = view.sort;
 			rows.sort((left, right) => {
@@ -198,6 +252,10 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 				if ("alert_group" === field) {
 					leftValue = themeLabels[leftValue] || leftValue;
 					rightValue = themeLabels[rightValue] || rightValue;
+				}
+				if ("kind" === field) {
+					leftValue = getKindLabel(left.kind);
+					rightValue = getKindLabel(right.kind);
 				}
 				if ("modified" === field) {
 					leftValue = left.modified ? new Date(left.modified).getTime() : 0;
@@ -213,7 +271,7 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 			});
 		}
 		return rows;
-	}, [items, view.search, view.sort, themeLabels]);
+	}, [items, view.search, view.sort, view.filters, themeLabels]);
 
 	const paginationInfo = useMemo(
 		() => ({
@@ -234,17 +292,26 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 		return (
 			<div className="alerts-dlx-library-loading">
 				<Spinner />
-				<span>{__("Loading global styles…", "alerts-dlx")}</span>
+				<span>{__("Loading library items…", "alerts-dlx")}</span>
 			</div>
 		);
 	}
 
+	const addButtons = (
+		<>
+			<Button variant="primary" onClick={() => onAdd(KIND_GLOBAL_STYLE)}>
+				{getLibraryLabels(KIND_GLOBAL_STYLE).add}
+			</Button>
+			<Button variant="secondary" onClick={() => onAdd(KIND_SNAPSHOT)}>
+				{getLibraryLabels(KIND_SNAPSHOT).add}
+			</Button>
+		</>
+	);
+
 	return (
 		<div className="alerts-dlx-library-list">
 			<div className="alerts-dlx-library-list__toolbar">
-				<Button variant="primary" onClick={onAdd}>
-					{__("Add global style", "alerts-dlx")}
-				</Button>
+				{addButtons}
 			</div>
 
 			{error && (
@@ -257,13 +324,13 @@ const LibraryList = ({ libraryKind, onAdd, onEdit }) => {
 				<div className="alerts-dlx-library-empty">
 					<p>
 						{__(
-							"Create reusable appearance presets for your alerts. Global styles can be referenced from blocks and shortcodes in a future release.",
+							"Reusable appearance presets. Global styles are meant to be referenced. Snapshots are meant to be applied as a copy.",
 							"alerts-dlx"
 						)}
 					</p>
-					<Button variant="primary" onClick={onAdd}>
-						{__("Add global style", "alerts-dlx")}
-					</Button>
+					<div className="alerts-dlx-library-list__toolbar">
+						{addButtons}
+					</div>
 				</div>
 			) : (
 				<DataViews

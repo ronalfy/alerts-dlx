@@ -1,6 +1,6 @@
 <?php
 /**
- * Alert library custom post type (global styles and future snapshots).
+ * Alert library custom post type (global styles and snapshots).
  *
  * @package AlertsDLX
  */
@@ -28,8 +28,11 @@ final class AlertLibrary {
 	/** Global style library kind. */
 	public const KIND_GLOBAL_STYLE = 'global_style';
 
-	/** Snapshot library kind (future admin tab). */
+	/** Snapshot library kind. */
 	public const KIND_SNAPSHOT = 'snapshot';
+
+	/** Query value that returns every library kind. */
+	public const KIND_ALL = 'all';
 
 	/**
 	 * Register hooks.
@@ -215,11 +218,30 @@ final class AlertLibrary {
 			return new \WP_Error( 'alerts_dlx_library_config', __( 'Invalid library configuration.', 'alerts-dlx' ) );
 		}
 
-		if ( self::KIND_GLOBAL_STYLE === $kind ) {
+		if ( in_array( $kind, self::get_allowed_kinds(), true ) ) {
 			return ShortcodeBuilder::sanitize_global_style_values( $config );
 		}
 
 		return new \WP_Error( 'alerts_dlx_library_kind', __( 'Unsupported library kind.', 'alerts-dlx' ) );
+	}
+
+	/**
+	 * Sanitize a list-query kind (allowed kind or all).
+	 *
+	 * @param string $kind Raw kind.
+	 * @return string
+	 */
+	public static function sanitize_list_kind( $kind ) {
+		$kind = sanitize_key( (string) $kind );
+		if ( '' === $kind || self::KIND_ALL === $kind ) {
+			return self::KIND_ALL;
+		}
+
+		if ( in_array( $kind, self::get_allowed_kinds(), true ) ) {
+			return $kind;
+		}
+
+		return self::KIND_ALL;
 	}
 
 	/**
@@ -287,16 +309,28 @@ final class AlertLibrary {
 			$config = $raw;
 		}
 
-		if ( self::KIND_GLOBAL_STYLE === self::get_post_kind( $post_id ) ) {
+		$kind = self::get_post_kind( $post_id );
+		$post = get_post( $post_id );
+		if ( self::KIND_SNAPSHOT === $kind ) {
+			/**
+			 * Filter a snapshot configuration array before it is returned.
+			 *
+			 * @since 2.5.0
+			 *
+			 * @param array    $config Sanitized snapshot config.
+			 * @param \WP_Post $post   Library post object.
+			 */
+			$config = apply_filters( 'alerts_dlx_snapshot_config', $config, $post );
+		} else {
 			/**
 			 * Filter a global style configuration array before it is returned.
 			 *
 			 * @since 2.5.0
 			 *
-			 * @param array    $config  Sanitized global style config.
-			 * @param \WP_Post $post    Library post object.
+			 * @param array    $config Sanitized global style config.
+			 * @param \WP_Post $post   Library post object.
 			 */
-			$config = apply_filters( 'alerts_dlx_global_style_config', $config, get_post( $post_id ) );
+			$config = apply_filters( 'alerts_dlx_global_style_config', $config, $post );
 		}
 
 		return $config;
@@ -364,27 +398,30 @@ final class AlertLibrary {
 	}
 
 	/**
-	 * Query library items for a kind.
+	 * Query library items for a kind, or every kind when `$kind` is all.
 	 *
-	 * @param string $kind   Library kind.
-	 * @param array  $args   Optional query overrides.
+	 * @param string $kind Library kind or `all`.
+	 * @param array  $args Optional query overrides.
 	 * @return array
 	 */
-	public static function query_items( $kind, $args = array() ) {
-		$kind = self::sanitize_kind( $kind );
+	public static function query_items( $kind = self::KIND_ALL, $args = array() ) {
+		$kind     = self::sanitize_list_kind( $kind );
 		$defaults = array(
 			'post_type'      => self::POST_TYPE,
 			'post_status'    => 'publish',
 			'posts_per_page' => 100,
 			'orderby'        => 'modified',
 			'order'          => 'DESC',
-			'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+		);
+
+		if ( in_array( $kind, self::get_allowed_kinds(), true ) ) {
+			$defaults['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				array(
 					'key'   => self::META_KIND,
 					'value' => $kind,
 				),
-			),
-		);
+			);
+		}
 
 		$query_args = wp_parse_args( $args, $defaults );
 		$query      = new \WP_Query( $query_args );

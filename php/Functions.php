@@ -276,8 +276,22 @@ class Functions {
 	 * @return int
 	 */
 	public static function get_admin_library_item_id() {
-		$style_id = filter_input( INPUT_GET, 'style', FILTER_VALIDATE_INT );
-		return $style_id ? (int) $style_id : 0;
+		$item_id = filter_input( INPUT_GET, 'item', FILTER_VALIDATE_INT );
+		return $item_id ? (int) $item_id : 0;
+	}
+
+	/**
+	 * Get the library kind from the admin query string.
+	 *
+	 * @return string
+	 */
+	public static function get_admin_library_kind() {
+		$kind = sanitize_key( (string) wp_unslash( filter_input( INPUT_GET, 'kind', FILTER_DEFAULT ) ) );
+		if ( in_array( $kind, AlertLibrary::get_allowed_kinds(), true ) ) {
+			return $kind;
+		}
+
+		return AlertLibrary::KIND_GLOBAL_STYLE;
 	}
 
 	/**

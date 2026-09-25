@@ -20,6 +20,7 @@ AlertsDLX is a WordPress plugin for styled alert boxes, callouts, and notificati
 | `src/js/blocks/` | Block editor JS (one folder per theme + shared plugins/components/utils) |
 | `src/js/dismiss/` | Frontend dismissible-alert script |
 | `src/react/Settings/` | Admin settings React app |
+| `src/react/AlertLibrary/` | Styles & Snapshots admin app |
 | `src/scss/` | Theme stylesheets and shared SCSS |
 | `build/` | `@wordpress/scripts` block build output (committed for releases) |
 | `dist/` | Webpack output for styles, dismiss script, admin settings |
@@ -64,7 +65,7 @@ Options are stored in the `alerts_dlx` option (see `php/Options.php`).
 | Task | Start here |
 |------|------------|
 | Frontend / shortcode markup | `php/Blocks.php` (`frontend()`, `shortcode()`) |
-| Admin settings UI | `src/react/Settings/`, `php/Admin.php`, `php/Rest.php` |
+| Admin settings UI | `src/react/Settings/`, `src/react/AlertLibrary/`, `php/Admin.php`, `php/Rest.php` |
 | Block editor UX | `src/js/blocks/{theme}/edit.js`, `src/js/blocks/plugins/` |
 | Theme CSS | `src/scss/{theme}/styles.scss`, `styles.md` |
 | Helpers / paths | `php/Functions.php` |

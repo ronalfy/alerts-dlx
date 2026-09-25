@@ -4,15 +4,18 @@ import apiFetch from "@wordpress/api-fetch";
 const namespace = "/dlxplugins/alerts-dlx/v1";
 
 /**
- * Fetch library items for one kind.
+ * Fetch library items, optionally filtered by kind.
  *
- * @param {string} kind Library kind slug.
+ * @param {string} [kind] Library kind slug or all.
  * @return {Promise<Array>} Items.
  */
-export const fetchLibraryItems = (kind) =>
-	apiFetch({
-		path: `${namespace}/library-items?kind=${encodeURIComponent(kind)}`,
+export const fetchLibraryItems = (kind) => {
+	const query =
+		kind && "all" !== kind ? `?kind=${encodeURIComponent(kind)}` : "";
+	return apiFetch({
+		path: `${namespace}/library-items${query}`,
 	});
+};
 
 /**
  * Fetch one library item.
@@ -65,13 +68,15 @@ export const deleteLibraryItem = (id) =>
 	});
 
 /**
- * Duplicate a library item.
+ * Duplicate a library item, optionally into another kind.
  *
- * @param {number} id Post ID.
+ * @param {number} id   Post ID.
+ * @param {string} kind Optional target kind.
  * @return {Promise<Object>} New item.
  */
-export const duplicateLibraryItem = (id) =>
+export const duplicateLibraryItem = (id, kind) =>
 	apiFetch({
 		path: `${namespace}/library-items/${id}/duplicate`,
 		method: "POST",
+		data: kind ? { kind } : {},
 	});

@@ -50,8 +50,8 @@ class Rest {
 					'args'                => array(
 						'kind' => array(
 							'type'              => 'string',
-							'required'          => true,
-							'sanitize_callback' => array( AlertLibrary::class, 'sanitize_kind' ),
+							'required'          => false,
+							'sanitize_callback' => array( AlertLibrary::class, 'sanitize_list_kind' ),
 						),
 					),
 				),
@@ -92,6 +92,13 @@ class Rest {
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'permission_callback' => array( static::class, 'library_permissions_check' ),
 				'callback'            => array( static::class, 'rest_duplicate_library_item' ),
+				'args'                => array(
+					'kind' => array(
+						'type'              => 'string',
+						'required'          => false,
+						'sanitize_callback' => array( AlertLibrary::class, 'sanitize_kind' ),
+					),
+				),
 			)
 		);
 	}
@@ -106,13 +113,13 @@ class Rest {
 	}
 
 	/**
-	 * List library items for one kind.
+	 * List library items for one kind, or every kind when omitted.
 	 *
 	 * @param \WP_REST_Request $request REST request.
 	 * @return \WP_REST_Response
 	 */
 	public static function rest_get_library_items( $request ) {
-		$kind  = AlertLibrary::sanitize_kind( (string) $request->get_param( 'kind' ) );
+		$kind  = AlertLibrary::sanitize_list_kind( (string) $request->get_param( 'kind' ) );
 		$items = AlertLibrary::query_items( $kind );
 		return rest_ensure_response( $items );
 	}
@@ -149,7 +156,7 @@ class Rest {
 			$params = array();
 		}
 
-		$kind = AlertLibrary::sanitize_kind( (string) ( $params['kind'] ?? AlertLibrary::KIND_GLOBAL_STYLE ) );
+		$kind  = AlertLibrary::sanitize_kind( (string) ( $params['kind'] ?? AlertLibrary::KIND_GLOBAL_STYLE ) );
 		$title = sanitize_text_field( (string) ( $params['title'] ?? '' ) );
 		if ( '' === $title ) {
 			return new \WP_Error( 'alerts_dlx_library_title', __( 'A title is required.', 'alerts-dlx' ), array( 'status' => 400 ) );
@@ -287,12 +294,28 @@ class Rest {
 			return new \WP_Error( 'alerts_dlx_library_not_found', __( 'Library item not found.', 'alerts-dlx' ), array( 'status' => 404 ) );
 		}
 
-		$kind   = AlertLibrary::get_post_kind( $post_id );
-		$config = AlertLibrary::get_post_config( $post_id );
+		$source_kind = AlertLibrary::get_post_kind( $post_id );
+		$config      = AlertLibrary::get_post_config( $post_id );
+		$kind        = $source_kind;
+		$raw_kind    = $request->get_param( 'kind' );
+		if ( null !== $raw_kind && '' !== $raw_kind ) {
+			$kind = AlertLibrary::sanitize_kind( (string) $raw_kind );
+		}
 
-		/* translators: %s: original library item title. */
-		$title = sprintf( __( 'Copy of %s', 'alerts-dlx' ), $post->post_title );
-		$slug  = sanitize_title( $title );
+		if ( $kind === $source_kind ) {
+			/* translators: %s: original library item title. */
+			$title = sprintf( __( 'Copy of %s', 'alerts-dlx' ), $post->post_title );
+			$slug  = sanitize_title( $title );
+		} else {
+			$title = $post->post_title;
+			$slug  = $post->post_name;
+			if ( ! AlertLibrary::is_slug_unique_for_kind( $slug, $kind ) ) {
+				/* translators: %s: original library item title. */
+				$title = sprintf( __( 'Copy of %s', 'alerts-dlx' ), $post->post_title );
+				$slug  = sanitize_title( $title );
+			}
+		}
+
 		$base  = $slug;
 		$index = 2;
 		while ( ! AlertLibrary::is_slug_unique_for_kind( $slug, $kind ) ) {
@@ -314,8 +337,14 @@ class Rest {
 			return $new_id;
 		}
 
+		$sanitized = AlertLibrary::sanitize_config( $config, $kind );
+		if ( is_wp_error( $sanitized ) ) {
+			wp_delete_post( $new_id, true );
+			return new \WP_Error( 'alerts_dlx_library_config', $sanitized->get_error_message(), array( 'status' => 400 ) );
+		}
+
 		update_post_meta( $new_id, AlertLibrary::META_KIND, $kind );
-		update_post_meta( $new_id, AlertLibrary::META_CONFIG, wp_json_encode( $config ) );
+		update_post_meta( $new_id, AlertLibrary::META_CONFIG, wp_json_encode( $sanitized ) );
 
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $new_id ) );
 		return rest_ensure_response( $formatted );

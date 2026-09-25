@@ -3,10 +3,10 @@ import LibraryList from "./LibraryList";
 import LibraryEditor from "./LibraryEditor";
 
 /**
- * Alert library admin shell (global styles in v1).
+ * Alert library admin shell for global styles and snapshots.
  *
  * @param {Object}   props              Component props.
- * @param {string}   props.libraryKind  Library kind slug.
+ * @param {string}   props.libraryKind  Library kind slug for new items.
  * @param {string}   props.view         list or edit.
  * @param {number}   props.itemId       Item ID when editing.
  * @param {Function} props.onNavigate   Route change handler.
@@ -16,17 +16,17 @@ const App = ({ libraryKind, view, itemId, onNavigate }) => {
 	const isEdit = "edit" === view;
 
 	return (
-		<div className="adlx-admin-content-wrapper alerts-dlx-global-styles">
+		<div className="adlx-admin-content-wrapper alerts-dlx-library">
 			<div className="adlx-admin-content-panel">
 				<div className="adlx-admin-content-heading">
 					<h1>
 						<span className="adlx-admin-content-heading-text">
-							{__("Global Alert Styles", "alerts-dlx")}
+							{__("Global Styles and Snapshots", "alerts-dlx")}
 						</span>
 					</h1>
 					<p className="description">
 						{__(
-							"Manage reusable appearance presets for AlertsDLX alerts.",
+							"Reusable appearance presets. Global styles are meant to be referenced. Snapshots are meant to be applied as a copy.",
 							"alerts-dlx"
 						)}
 					</p>
@@ -38,14 +38,14 @@ const App = ({ libraryKind, view, itemId, onNavigate }) => {
 							libraryKind={libraryKind}
 							itemId={itemId}
 							onBack={() => onNavigate("list", 0)}
-							onSaved={(saved) => onNavigate("edit", saved.id)}
+							onSaved={(saved) => onNavigate("edit", saved.id, saved.kind)}
+							onKindChange={(nextKind) => onNavigate("edit", itemId, nextKind)}
 						/>
 					</div>
 				) : (
 					<div className="adlx-admin-content-body">
 						<LibraryList
-							libraryKind={libraryKind}
-							onAdd={() => onNavigate("edit", 0)}
+							onAdd={(nextKind) => onNavigate("edit", 0, nextKind)}
 							onEdit={(id) => onNavigate("edit", id)}
 						/>
 					</div>

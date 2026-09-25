@@ -19,7 +19,7 @@ flowchart LR
 2. Composer autoload (`lib/autoload.php`) maps `DLXPlugins\AlertsDLX\` → `php/`.
 3. On `plugins_loaded`, `AlertsDLX::plugins_loaded()` starts:
    - `Options::run()` — reserved for migrations; options are read via `Options::get_plugin_options()`.
-   - `AlertLibrary::run()` — Private `alerts_dlx_library` CPT for global styles (and future snapshots).
+   - `AlertLibrary::run()` — Private `alerts_dlx_library` CPT for global styles and snapshots.
    - `Admin::run()` — Settings screen and AJAX save/retrieve/reset.
    - `Blocks::run()` — Block registration, editor/frontend assets, shortcode.
    - `Rest::run()` — REST search for the button URL picker and alert library CRUD.
@@ -76,18 +76,19 @@ All four blocks share the same PHP render callback: `Blocks::frontend()`. The sh
 ### Admin settings
 
 - Menu: Settings → AlertsDLX (`settings_page_alerts-dlx`).
-- Tabs: **Settings**, **Shortcode Builder**, **Global Styles** (`tab=global-styles`).
-- UI: React apps in `src/react/Settings/`, `src/react/ShortcodeBuilder/`, `src/react/GlobalStyles/` → `dist/alerts-dlx-admin-*.js`.
+- Tabs: **Settings**, **Shortcode Builder**, **Styles & Snapshots** (`tab=styles-snapshots`).
+- UI: React apps in `src/react/Settings/`, `src/react/ShortcodeBuilder/`, `src/react/AlertLibrary/` → `dist/alerts-dlx-admin-*.js`.
 - Site options persistence: admin-ajax actions `alerts_dlx_retrieve_settings`, `alerts_dlx_save_settings`, `alerts_dlx_reset_settings` (capability `manage_options`, nonces required).
 
-### Alert library (global styles v1)
+### Alert library (global styles and snapshots)
 
 - Post type: `alerts_dlx_library` (not public; admin-only).
 - Meta: `_alerts_dlx_kind` (`global_style` | `snapshot`), `_alerts_dlx_config` (JSON appearance config).
-- Global styles store an appearance allowlist only (`ShortcodeBuilder::get_global_style_input_names()`); preview uses a fixed Lorem ipsum fixture in the admin UI.
+- Both kinds store the same appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`); preview uses a fixed Lorem ipsum fixture in the admin UI.
+- Admin: one **Styles & Snapshots** tab (`#alerts-dlx-library`) lists both kinds; kind is chosen when creating an item and is immutable afterward.
 - Slugs are unique **per kind** (`post_name` scoped by `_alerts_dlx_kind`).
-- REST: `GET/POST dlxplugins/alerts-dlx/v1/library-items`, `GET/PUT/DELETE .../library-items/{id}`, `POST .../duplicate` (`manage_options`).
-- Filter: `alerts_dlx_global_style_config` when reading global style config from a library post.
+- REST: `GET/POST dlxplugins/alerts-dlx/v1/library-items` (`kind` optional on GET; omit or `all` returns both), `GET/PUT/DELETE .../library-items/{id}`, `POST .../duplicate` with optional target `kind` (`manage_options`).
+- Filters: `alerts_dlx_global_style_config` and `alerts_dlx_snapshot_config` when reading library config.
 
 ## Frontend / editor JS (`src/`)
 
@@ -101,6 +102,7 @@ src/
     utils/                 # Style helpers, transforms, SVG sanitize
   js/dismiss/              # Cookie/session dismiss behavior on the frontend
   react/Settings/          # Admin settings app
+  react/AlertLibrary/      # Styles & Snapshots admin app
   scss/                    # common + per-theme stylesheets
 ```
 

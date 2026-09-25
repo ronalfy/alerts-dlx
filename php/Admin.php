@@ -188,9 +188,9 @@ class Admin {
 		if ( 'shortcode-builder' === $current_tab ) {
 			$shortcode_builder_tab_class[] = 'nav-tab-active';
 		}
-		$global_styles_tab_class = array( 'nav-tab' );
-		if ( 'global-styles' === $current_tab ) {
-			$global_styles_tab_class[] = 'nav-tab-active';
+		$library_tab_class = array( 'nav-tab' );
+		if ( 'styles-snapshots' === $current_tab ) {
+			$library_tab_class[] = 'nav-tab-active';
 		}
 		?>
 		<div class="alerts-dlx-form-wrapper">
@@ -206,7 +206,7 @@ class Admin {
 					<nav class="nav-tab-wrapper">
 						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'alerts-dlx' ); ?></a>
 						<a class="<?php echo esc_attr( implode( ' ', $shortcode_builder_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'shortcode-builder' ) ); ?>"><?php esc_html_e( 'Shortcode Builder', 'alerts-dlx' ); ?></a>
-						<a class="<?php echo esc_attr( implode( ' ', $global_styles_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'global-styles' ) ); ?>"><?php esc_html_e( 'Global Styles', 'alerts-dlx' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $library_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'styles-snapshots' ) ); ?>"><?php esc_html_e( 'Styles & Snapshots', 'alerts-dlx' ); ?></a>
 					</nav>
 					<?php
 					if ( null === $current_tab || 'settings' === $current_tab ) {
@@ -227,10 +227,10 @@ class Admin {
 						</div>
 						<?php
 					}
-					if ( 'global-styles' === $current_tab ) {
+					if ( 'styles-snapshots' === $current_tab ) {
 						?>
 						<div class="alerts-dlx-admin-container-body__content">
-							<div id="alerts-dlx-global-styles">
+							<div id="alerts-dlx-library">
 								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
 							</div>
 						</div>
@@ -290,8 +290,8 @@ class Admin {
 				)
 			);
 
-		} elseif ( 'global-styles' === $current_tab ) {
-			$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-global-styles.asset.php' );
+		} elseif ( 'styles-snapshots' === $current_tab ) {
+			$asset_file = Functions::get_plugin_dir( 'dist/alerts-dlx-admin-library.asset.php' );
 			if ( ! file_exists( $asset_file ) ) {
 				return;
 			}
@@ -305,8 +305,8 @@ class Admin {
 			}
 
 			wp_enqueue_script(
-				'alerts-dlx-global-styles-admin-js',
-				Functions::get_plugin_url( '/dist/alerts-dlx-admin-global-styles.js' ),
+				'alerts-dlx-library-admin-js',
+				Functions::get_plugin_url( '/dist/alerts-dlx-admin-library.js' ),
 				$dependencies,
 				$deps['version'],
 				true
@@ -332,21 +332,22 @@ class Admin {
 			$item_id = Functions::get_admin_library_item_id();
 
 			wp_localize_script(
-				'alerts-dlx-global-styles-admin-js',
+				'alerts-dlx-library-admin-js',
 				'alertsDlxAdmin',
 				array(
 					'restUrl'                    => esc_url_raw( rest_url() ),
 					'restNonce'                  => wp_create_nonce( 'wp_rest' ),
 					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
-					'globalStyleFields'          => ShortcodeBuilder::get_global_style_fields(),
-					'globalStyleDefaults'        => ShortcodeBuilder::get_global_style_defaults(),
-					'globalStylePreviewFixture'  => AlertLibrary::get_global_style_preview_fixture(),
+					'libraryFields'              => ShortcodeBuilder::get_global_style_fields(),
+					'libraryDefaults'            => ShortcodeBuilder::get_global_style_defaults(),
+					'libraryPreviewFixture'      => AlertLibrary::get_global_style_preview_fixture(),
 					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
 					'colorPalette'               => Functions::get_theme_color_palette(),
 					'themeLabels'                => $theme_labels,
-					'globalStylesBoot'           => array(
+					'libraryBoot'                => array(
 						'view'   => ( 'edit' === $subtab ) ? 'edit' : 'list',
 						'itemId' => $item_id,
+						'kind'   => Functions::get_admin_library_kind(),
 					),
 				)
 			);

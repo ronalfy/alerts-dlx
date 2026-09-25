@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 import { cleanForSlug } from "@wordpress/url";
-import { Button, Notice, TextControl } from "@wordpress/components";
+import { Button, Notice, RadioControl, TextControl } from "@wordpress/components";
 import AlertBuilderInspector from "../Components/AlertBuilder/AlertBuilderInspector";
 import AlertBuilderPreview from "../Components/AlertBuilder/AlertBuilderPreview";
 import Snackbar from "../Components/Snackbar";
@@ -13,28 +13,36 @@ import {
 	fetchLibraryItem,
 	updateLibraryItem,
 } from "./useLibraryItem";
+import {
+	KIND_GLOBAL_STYLE,
+	KIND_SNAPSHOT,
+	getKindLabel,
+	getLibraryLabels,
+} from "./kind-labels";
 
 /**
- * Studio editor for one global style library item.
+ * Studio editor for one library item.
  *
  * @param {Object}   props              Component props.
- * @param {string}   props.libraryKind  Library kind.
+ * @param {string}   props.libraryKind  Initial library kind.
  * @param {number}   props.itemId       Existing item ID or 0 for new.
  * @param {Function} props.onBack       Back navigation handler.
  * @param {Function} props.onSaved      Called after successful save.
+ * @param {Function} props.onKindChange Called when a new item kind changes.
  * @return {Element} Editor screen.
  */
-const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
-	const fields = alertsDlxAdmin.globalStyleFields || [];
+const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) => {
+	const fields = alertsDlxAdmin.libraryFields || [];
 	const defaultConfig = useMemo(
-		() => alertsDlxAdmin.globalStyleDefaults || {},
+		() => alertsDlxAdmin.libraryDefaults || {},
 		[]
 	);
 	const previewFixture = useMemo(
-		() => alertsDlxAdmin.globalStylePreviewFixture || {},
+		() => alertsDlxAdmin.libraryPreviewFixture || {},
 		[]
 	);
 
+	const [kind, setKind] = useState(libraryKind || KIND_GLOBAL_STYLE);
 	const [title, setTitle] = useState("");
 	const [slug, setSlug] = useState("");
 	const [config, setConfig] = useState(defaultConfig);
@@ -44,6 +52,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 	const [previewError, setPreviewError] = useState("");
 	const checkpoint = useRef(null);
 	const [snackbar, setSnackbar] = useState({ isVisible: false, message: "", type: "success" });
+	const labels = getLibraryLabels(kind);
 
 	const isDirty = useMemo(() => {
 		if (!checkpoint.current) {
@@ -52,9 +61,10 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 		return (
 			checkpoint.current.title !== title ||
 			checkpoint.current.slug !== slug ||
+			checkpoint.current.kind !== kind ||
 			JSON.stringify(checkpoint.current.config) !== JSON.stringify(config)
 		);
-	}, [title, slug, config]);
+	}, [title, slug, kind, config]);
 
 	useEffect(() => {
 		const handleBeforeUnload = (event) => {
@@ -70,12 +80,15 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 
 	useEffect(() => {
 		if (!itemId) {
+			const initialKind = libraryKind || KIND_GLOBAL_STYLE;
 			const initial = {
 				title: "",
 				slug: "",
+				kind: initialKind,
 				config: { ...defaultConfig },
 			};
 			checkpoint.current = initial;
+			setKind(initialKind);
 			setTitle("");
 			setSlug("");
 			setConfig(initial.config);
@@ -90,17 +103,19 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 				const next = {
 					title: item.title || "",
 					slug: item.slug || "",
+					kind: item.kind || KIND_GLOBAL_STYLE,
 					config: item.config || { ...defaultConfig },
 				};
 				checkpoint.current = next;
 				setTitle(next.title);
 				setSlug(next.slug);
+				setKind(next.kind);
 				setConfig(next.config);
 			})
 			.catch((requestError) => {
 				setError(
 					requestError.message ||
-					__("Could not load this global style.", "alerts-dlx")
+					getLibraryLabels(libraryKind).loadError
 				);
 			})
 			.finally(() => setLoading(false));
@@ -120,6 +135,13 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 		}));
 	};
 
+	const handleKindChange = (nextKind) => {
+		setKind(nextKind);
+		if (onKindChange) {
+			onKindChange(nextKind);
+		}
+	};
+
 	const showSnackbar = (message, type = "success") => {
 		setSnackbar({ isVisible: true, message, type });
 	};
@@ -133,7 +155,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 		setSaving(true);
 		setError("");
 		const payload = {
-			kind: libraryKind,
+			kind,
 			title: title.trim(),
 			slug: slug.trim() || undefined,
 			config,
@@ -148,19 +170,21 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 				const next = {
 					title: saved.title || title,
 					slug: saved.slug || slug,
+					kind: saved.kind || kind,
 					config: saved.config || config,
 				};
 				checkpoint.current = next;
 				setTitle(next.title);
 				setSlug(next.slug);
+				setKind(next.kind);
 				setConfig(next.config);
-				showSnackbar(__("Global style saved.", "alerts-dlx"));
+				showSnackbar(getLibraryLabels(next.kind).saved);
 				onSaved(saved);
 			})
 			.catch((requestError) => {
 				const message =
 					requestError.message ||
-					__("Could not save this global style.", "alerts-dlx");
+					labels.saveError;
 				setError(message);
 				showSnackbar(message, "error");
 			})
@@ -172,7 +196,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 			return;
 		}
 		// eslint-disable-next-line no-alert
-		if (!window.confirm(__("Delete this global style permanently?", "alerts-dlx"))) {
+		if (!window.confirm(labels.deleteConfirm)) {
 			return;
 		}
 		setSaving(true);
@@ -181,7 +205,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 			.catch((requestError) => {
 				setError(
 					requestError.message ||
-					__("Could not delete this global style.", "alerts-dlx")
+					labels.deleteError
 				);
 			})
 			.finally(() => setSaving(false));
@@ -205,11 +229,34 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 		<div className="alerts-dlx-library-editor">
 			<div className="alerts-dlx-library-editor__header">
 				<Button variant="link" onClick={handleBack}>
-					{__("← Back to all styles", "alerts-dlx")}
+					{__("← Back to library", "alerts-dlx")}
 				</Button>
+				<div className="alerts-dlx-library-editor__kind">
+					{itemId > 0 ? (
+						<p className="description">
+							{__("Kind:", "alerts-dlx")} {getKindLabel(kind)}
+						</p>
+					) : (
+						<RadioControl
+							label={__("Kind", "alerts-dlx")}
+							selected={kind}
+							options={[
+								{
+									label: getKindLabel(KIND_GLOBAL_STYLE),
+									value: KIND_GLOBAL_STYLE,
+								},
+								{
+									label: getKindLabel(KIND_SNAPSHOT),
+									value: KIND_SNAPSHOT,
+								},
+							]}
+							onChange={handleKindChange}
+						/>
+					)}
+				</div>
 				<div className="alerts-dlx-library-editor__meta">
 					<TextControl
-						label={__("Style name", "alerts-dlx")}
+						label={labels.name}
 						value={title}
 						onChange={(nextTitle) => {
 							setTitle( nextTitle || "" )
@@ -226,7 +273,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 						value={slug}
 						onChange={setSlug}
 						help={__(
-							"Used to reference this style from blocks and shortcodes in a future release.",
+							"Used to reference this item from blocks and shortcodes in a future release.",
 							"alerts-dlx"
 						)}
 						__nextHasNoMarginBottom
@@ -255,7 +302,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 					/>
 					<p className="description alerts-dlx-library-editor__icon-help">
 						{__(
-							"Leave icon empty to avoid forcing an icon on alerts that use this style.",
+							"Leave icon empty to avoid forcing an icon on alerts that use this item.",
 							"alerts-dlx"
 						)}
 					</p>
@@ -278,7 +325,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved }) => {
 
 			<div className="alerts-dlx-library-editor__actions">
 				<Button variant="primary" onClick={handleSave} disabled={saving}>
-					{saving ? __("Saving…", "alerts-dlx") : __("Save global style", "alerts-dlx")}
+					{saving ? __("Saving…", "alerts-dlx") : labels.save}
 				</Button>
 				{itemId > 0 && (
 					<Button
