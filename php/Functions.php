@@ -489,6 +489,8 @@ class Functions {
 		);
 		$allowed_tags['a']['class'] = array();
 
+		$allowed_tags['div']['class'] = array();
+
 		if ( ! $svg ) {
 			return $allowed_tags;
 		}

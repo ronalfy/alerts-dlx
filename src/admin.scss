@@ -14,6 +14,16 @@
 	margin: 0;
 }
 
+@keyframes alerts-dlx-spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 body.alerts-dlx-body .notice,
 body.alerts-dlx-body .updated {
 	display: none !important;
@@ -452,13 +462,7 @@ body.alerts-dlx-body .updated {
 }
 
 .adlx-load-static-svg svg {
-	animation: alerts-dlx-spin 1s linear infinite;
-}
-
-@keyframes alerts-dlx-spin {
-	100% {
-		transform: rotate(360deg);
-	}
+	animation: alerts-dlx-spin 2s linear infinite;
 }
 
 .alerts-dlx-snackbar {
@@ -520,6 +524,26 @@ body.alerts-dlx-body .updated {
 	}
 }
 
+@keyframes alerts-dlx-spin {
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.alerts-dlx-load-static-svg {
+	margin-top: 24px;
+	height: 100px;
+	width: 100px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	animation: alerts-dlx-spin 2s linear infinite;
+
+	svg {
+		width: 48px;
+		height: 48px;
+	}
+}
 
 .adlx-admin-content-wrapper {
 	.components-base-control__help {
@@ -611,7 +635,7 @@ body.alerts-dlx-body .updated {
 			margin-bottom: 20px;
 		}
 
-		.alerts-dlx-library-list .dataviews-wrapper > .dataviews__view-actions {
+		.alerts-dlx-library-list .dataviews-wrapper>.dataviews__view-actions {
 			padding-top: 0;
 		}
 	}
