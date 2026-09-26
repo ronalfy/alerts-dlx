@@ -8323,7 +8323,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/compose */ "@wordpress/compose");
 /* harmony import */ var _wordpress_compose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/alert-library-utils */ "./src/js/blocks/utils/alert-library-utils.js");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/alert-library-utils */ "./src/js/blocks/utils/alert-library-utils.js");
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 /**
  * Resolve linked global styles onto the canonical Alert edit tree.
@@ -8335,14 +8337,38 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 
 
 
+
 var CANONICAL_ALERT_BLOCK = 'mediaron/alerts-dlx-alert';
 var withGlobalStyleResolution = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_1__.createHigherOrderComponent)(function (BlockEdit) {
   return function (props) {
     if (props.name !== CANONICAL_ALERT_BLOCK) {
       return /*#__PURE__*/React.createElement(BlockEdit, props);
     }
-    var resolvedAttributes = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_2__.mergeGlobalStyleIntoAttributes)(props.attributes);
-    var guardedSetAttributes = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_2__.createGuardedLibrarySetAttributes)(props.attributes, props.setAttributes);
+    var resolvedAttributes = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__.mergeGlobalStyleIntoAttributes)(props.attributes);
+    var guardedSetAttributes = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__.createGuardedLibrarySetAttributes)(props.attributes, props.setAttributes);
+    var styleId = Number(props.attributes.globalStyleId) || 0;
+    var storedClassName = props.attributes.className || '';
+    var resolvedClassName = resolvedAttributes.className || '';
+    var storedAlertType = props.attributes.alertType || '';
+    var resolvedAlertType = resolvedAttributes.alertType || '';
+
+    // useBlockProps merges the saved is-style-* class with the preview class.
+    // Theme CSS lists warning after info, so both classes leave the warning color in place.
+    (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(function () {
+      if (!styleId) {
+        return;
+      }
+      var updates = {};
+      if (resolvedClassName && resolvedClassName !== storedClassName) {
+        updates.className = resolvedClassName;
+      }
+      if (resolvedAlertType && resolvedAlertType !== storedAlertType) {
+        updates.alertType = resolvedAlertType;
+      }
+      if (Object.keys(updates).length) {
+        props.setAttributes(updates);
+      }
+    }, [styleId, storedClassName, resolvedClassName, storedAlertType, resolvedAlertType, props.setAttributes]);
     return /*#__PURE__*/React.createElement(BlockEdit, _extends({}, props, {
       attributes: resolvedAttributes,
       setAttributes: guardedSetAttributes

@@ -99,6 +99,11 @@ assert.equal(
 );
 assert.match( blocks, /libraryItems/, 'Editor localizes library items' );
 assert.match( blocks, /apply_global_style_to_block_attributes/, 'Frontend render merges global styles' );
+assert.match(
+	fs.readFileSync( 'src/js/blocks/plugins/global-style-resolution.js', 'utf8' ),
+	/updates\.className = resolvedClassName/,
+	'Editor syncs the saved is-style class to the attached global style'
+);
 assert.doesNotMatch( blocks, /CanonicalAlertPresets|canonicalPresets|canonicalDefaults/, 'Preset editor boot payload is removed' );
 assert.match( alertEdit, /AlertLibraryPanel/, 'Canonical edit uses the Library panel' );
 assert.doesNotMatch( alertEdit, /CanonicalAlertPresetsPanel|Presets and Defaults/, 'Preset panel is removed from the canonical edit' );

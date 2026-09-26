@@ -7,6 +7,7 @@
 
 import { addFilter } from '@wordpress/hooks';
 import { createHigherOrderComponent } from '@wordpress/compose';
+import { useEffect } from '@wordpress/element';
 import {
 	createGuardedLibrarySetAttributes,
 	mergeGlobalStyleIntoAttributes,
@@ -25,6 +26,29 @@ const withGlobalStyleResolution = createHigherOrderComponent( ( BlockEdit ) => {
 			props.attributes,
 			props.setAttributes
 		);
+		const styleId = Number( props.attributes.globalStyleId ) || 0;
+		const storedClassName = props.attributes.className || '';
+		const resolvedClassName = resolvedAttributes.className || '';
+		const storedAlertType = props.attributes.alertType || '';
+		const resolvedAlertType = resolvedAttributes.alertType || '';
+
+		// useBlockProps merges the saved is-style-* class with the preview class.
+		// Theme CSS lists warning after info, so both classes leave the warning color in place.
+		useEffect( () => {
+			if ( ! styleId ) {
+				return;
+			}
+			const updates = {};
+			if ( resolvedClassName && resolvedClassName !== storedClassName ) {
+				updates.className = resolvedClassName;
+			}
+			if ( resolvedAlertType && resolvedAlertType !== storedAlertType ) {
+				updates.alertType = resolvedAlertType;
+			}
+			if ( Object.keys( updates ).length ) {
+				props.setAttributes( updates );
+			}
+		}, [ styleId, storedClassName, resolvedClassName, storedAlertType, resolvedAlertType, props.setAttributes ] );
 
 		return (
 			<BlockEdit
