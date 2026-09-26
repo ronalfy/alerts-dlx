@@ -22,9 +22,6 @@ final class AlertLibrary {
 	/** Meta key for library entry kind. */
 	public const META_KIND = '_alerts_dlx_kind';
 
-	/** Meta key for stored alert configuration. */
-	public const META_CONFIG = '_alerts_dlx_config';
-
 	/** Global style library kind. */
 	public const KIND_GLOBAL_STYLE = 'global_style';
 
@@ -65,7 +62,8 @@ final class AlertLibrary {
 				'exclude_from_search' => true,
 				'capability_type'     => 'post',
 				'map_meta_cap'        => true,
-				'supports'            => array( 'title' ),
+				// Title plus editor so post_content is a first-class supported field.
+				'supports'            => array( 'title', 'editor' ),
 				'delete_with_user'    => false,
 			)
 		);
@@ -84,18 +82,6 @@ final class AlertLibrary {
 				'show_in_rest'      => false,
 				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
 				'sanitize_callback' => array( self::class, 'sanitize_kind_meta' ),
-			)
-		);
-
-		register_post_meta(
-			self::POST_TYPE,
-			self::META_CONFIG,
-			array(
-				'type'              => 'string',
-				'single'            => true,
-				'show_in_rest'      => false,
-				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
-				'sanitize_callback' => array( self::class, 'sanitize_config_meta' ),
 			)
 		);
 	}
@@ -120,27 +106,37 @@ final class AlertLibrary {
 	}
 
 	/**
-	 * Sanitize config meta without kind context (defaults to global style).
+	 * Encode a sanitized config array for post_content storage.
 	 *
-	 * @param mixed $value Raw config.
-	 * @return string JSON encoded config.
+	 * WordPress expects slashed data for wp_insert_post / wp_update_post.
+	 * Without wp_slash(), JSON escapes inside SVG attributes are corrupted
+	 * by wp_unslash and the icon value is emptied.
+	 *
+	 * @param array $config Sanitized config.
+	 * @return string Slashed JSON suitable for post_content.
 	 */
-	public static function sanitize_config_meta( $value ) {
-		if ( is_string( $value ) ) {
-			$decoded = json_decode( $value, true );
-			$config  = is_array( $decoded ) ? $decoded : array();
-		} elseif ( is_array( $value ) ) {
-			$config = $value;
-		} else {
-			$config = array();
+	public static function encode_config_for_storage( array $config ) {
+		$json = wp_json_encode( $config );
+		if ( false === $json ) {
+			$json = '{}';
 		}
 
-		$sanitized = self::sanitize_config( $config, self::KIND_GLOBAL_STYLE );
-		if ( is_wp_error( $sanitized ) ) {
-			return wp_json_encode( ShortcodeBuilder::get_global_style_defaults() );
+		return wp_slash( $json );
+	}
+
+	/**
+	 * Decode library config JSON from post_content.
+	 *
+	 * @param string $raw Raw post_content.
+	 * @return array
+	 */
+	public static function decode_config_from_storage( $raw ) {
+		if ( ! is_string( $raw ) || '' === $raw ) {
+			return array();
 		}
 
-		return wp_json_encode( $sanitized );
+		$decoded = json_decode( $raw, true );
+		return is_array( $decoded ) ? $decoded : array();
 	}
 
 	/**
@@ -335,6 +331,9 @@ final class AlertLibrary {
 	/**
 	 * Load decoded config for a library post.
 	 *
+	 * Config JSON is stored in post_content (not post meta) so SVG icons
+	 * and other markup survive WordPress save/load when properly slashed.
+	 *
 	 * @param int $post_id Post ID.
 	 * @return array
 	 */
@@ -343,17 +342,10 @@ final class AlertLibrary {
 		$defaults = self::KIND_SNAPSHOT === $kind
 			? ShortcodeBuilder::get_snapshot_defaults()
 			: ShortcodeBuilder::get_global_style_defaults();
-		$config   = $defaults;
-		$raw      = get_post_meta( $post_id, self::META_CONFIG, true );
-		if ( is_string( $raw ) && '' !== $raw ) {
-			$decoded = json_decode( $raw, true );
-			if ( is_array( $decoded ) ) {
-				$config = array_merge( $defaults, $decoded );
-			}
-		} elseif ( is_array( $raw ) ) {
-			$config = array_merge( $defaults, $raw );
-		}
-		$post = get_post( $post_id );
+		$post     = get_post( $post_id );
+		$raw      = ( $post instanceof \WP_Post ) ? $post->post_content : '';
+		$decoded  = self::decode_config_from_storage( $raw );
+		$config   = ! empty( $decoded ) ? array_merge( $defaults, $decoded ) : $defaults;
 		if ( self::KIND_SNAPSHOT === $kind ) {
 			/**
 			 * Filter a snapshot configuration array before it is returned.
@@ -578,10 +570,32 @@ final class AlertLibrary {
 	}
 
 	/**
+	 * Whether appearance attributes from a global style include a showable icon.
+	 *
+	 * Global styles store the glyph or image, not an icon_enabled flag. A
+	 * non-empty SVG (or an image source with a URL) means the style intends
+	 * to show an icon.
+	 *
+	 * @param array $style_attributes CamelCase appearance from a global style.
+	 * @return bool
+	 */
+	public static function global_style_has_icon( array $style_attributes ) {
+		$icon_source = isset( $style_attributes['iconSource'] ) ? (string) $style_attributes['iconSource'] : 'icon';
+		if ( 'image' === $icon_source ) {
+			return ! empty( $style_attributes['imageUrl'] );
+		}
+
+		$icon = isset( $style_attributes['icon'] ) ? trim( (string) $style_attributes['icon'] ) : '';
+		return '' !== $icon;
+	}
+
+	/**
 	 * Merge a linked global style's appearance over block attributes for render.
 	 *
 	 * Content attributes on the block always win. Snapshot-only fields are not
-	 * taken from the global style.
+	 * taken from the global style. Icon visibility is derived from the style's
+	 * icon fields for this render only so the block's saved iconEnabled is
+	 * restored after detach.
 	 *
 	 * @param array $attributes Block attributes (camelCase).
 	 * @return array
@@ -600,6 +614,9 @@ final class AlertLibrary {
 				(string) $style_attributes['alertType']
 			);
 		}
+
+		// Show the style icon even when the block's own iconEnabled is false.
+		$style_attributes['iconEnabled'] = self::global_style_has_icon( $style_attributes );
 
 		return array_merge( $attributes, $style_attributes );
 	}
@@ -654,10 +671,11 @@ final class AlertLibrary {
 
 		$post_id = wp_insert_post(
 			array(
-				'post_type'   => self::POST_TYPE,
-				'post_title'  => $title,
-				'post_name'   => $slug,
-				'post_status' => 'publish',
+				'post_type'    => self::POST_TYPE,
+				'post_title'   => $title,
+				'post_name'    => $slug,
+				'post_status'  => 'publish',
+				'post_content' => self::encode_config_for_storage( $config ),
 			),
 			true
 		);
@@ -667,7 +685,6 @@ final class AlertLibrary {
 		}
 
 		update_post_meta( $post_id, self::META_KIND, $kind );
-		update_post_meta( $post_id, self::META_CONFIG, wp_json_encode( $config ) );
 
 		return (int) $post_id;
 	}

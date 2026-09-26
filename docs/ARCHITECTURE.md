@@ -34,7 +34,7 @@ A custom content pipeline `alerts_dlx_the_content` (embed, autop, shortcodes) pr
 | `Options` | Defaults, allowlists, get/sanitize/save for option key `alerts_dlx` |
 | `Admin` | Settings → AlertsDLX menu, enqueue admin React app, AJAX handlers |
 | `Blocks` | Register blocks from `build/`, render callback, shortcode, asset enqueue |
-| `AlertLibrary` | CPT `alerts_dlx_library`, meta `_alerts_dlx_kind` + `_alerts_dlx_config`, kind-aware sanitize |
+| `AlertLibrary` | CPT `alerts_dlx_library`, meta `_alerts_dlx_kind`, config JSON in `post_content`, kind-aware sanitize |
 | `Rest` | `search/pages` and `library-items` REST routes |
 | `ShortcodeBuilder` | Shortcode builder AJAX; global style and snapshot field allowlists |
 | `Functions` | Paths, URLs, capability helpers, shared utilities |
@@ -98,8 +98,9 @@ On first `init` when the library has no snapshots yet, two starter snapshots are
 
 ### Alert library (global styles and snapshots)
 
-- Post type: `alerts_dlx_library` (not public; admin-only).
-- Meta: `_alerts_dlx_kind` (`global_style` | `snapshot`), `_alerts_dlx_config` (JSON config).
+- Post type: `alerts_dlx_library` (not public; admin-only; supports `title` and `editor` for `post_content`).
+- Kind meta: `_alerts_dlx_kind` (`global_style` | `snapshot`).
+- Config store: sanitized JSON in `post_content` (written via `AlertLibrary::encode_config_for_storage()`, which `wp_slash`es the JSON so SVG icons survive WordPress unslash). Old `_alerts_dlx_config` meta is not read.
 - Global styles store the appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`). Snapshots store that set plus `align`, `title_enabled`, `description_enabled`, `button_enabled`, `close_button_enabled`, and `close_button_expiration` (`ShortcodeBuilder::get_snapshot_input_names()`).
 - Title/description/button on snapshots are visibility toggles (`title_enabled` / `description_enabled` / `button_enabled`). The shortcode renderer still derives those flags from content; snapshots persist the toggles and preview injects Lorem copy only when a toggle is on.
 - Preview uses a fixed Lorem ipsum fixture in the admin UI. Stored snapshot alignment and dismiss values win over the fixture.

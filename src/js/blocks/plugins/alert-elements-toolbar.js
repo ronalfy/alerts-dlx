@@ -33,6 +33,8 @@ const withAlertElementsToolbar = createHigherOrderComponent((BlockEdit) => {
       return <BlockEdit {...props} />;
     }
 
+    const appearanceLocked = Number(attributes.globalStyleId) > 0;
+
     return (
       <>
         <BlockControls>
@@ -49,6 +51,9 @@ const withAlertElementsToolbar = createHigherOrderComponent((BlockEdit) => {
                     <MenuGroup label={__("Alert elements", "alerts-dlx")}>
                       {ALERT_ELEMENT_TOGGLES.map((toggle) => {
                         const isEnabled = attributes[toggle.attribute];
+                        // Icon visibility follows the attached global style.
+                        const isIconLocked =
+                          appearanceLocked && "iconEnabled" === toggle.attribute;
 
                         return (
                           <MenuItem
@@ -56,7 +61,11 @@ const withAlertElementsToolbar = createHigherOrderComponent((BlockEdit) => {
                             role="menuitemcheckbox"
                             isSelected={isEnabled}
                             icon={isEnabled ? "yes" : null}
+                            disabled={isIconLocked}
                             onClick={() => {
+                              if (isIconLocked) {
+                                return;
+                              }
                               toggleAlertElement(
                                 toggle.attribute,
                                 isEnabled,

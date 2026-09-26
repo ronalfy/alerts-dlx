@@ -186,10 +186,11 @@ class Rest {
 
 		$post_id = wp_insert_post(
 			array(
-				'post_type'   => AlertLibrary::POST_TYPE,
-				'post_title'  => $title,
-				'post_name'   => $slug,
-				'post_status' => 'publish',
+				'post_type'    => AlertLibrary::POST_TYPE,
+				'post_title'   => $title,
+				'post_name'    => $slug,
+				'post_status'  => 'publish',
+				'post_content' => AlertLibrary::encode_config_for_storage( $config ),
 			),
 			true
 		);
@@ -199,7 +200,6 @@ class Rest {
 		}
 
 		update_post_meta( $post_id, AlertLibrary::META_KIND, $kind );
-		update_post_meta( $post_id, AlertLibrary::META_CONFIG, wp_json_encode( $config ) );
 
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $post_id ) );
 		return rest_ensure_response( $formatted );
@@ -248,19 +248,19 @@ class Rest {
 			$update['post_name'] = $slug;
 		}
 
-		if ( count( $update ) > 1 ) {
-			$result = wp_update_post( $update, true );
-			if ( is_wp_error( $result ) ) {
-				return $result;
-			}
-		}
-
 		if ( array_key_exists( 'config', $params ) ) {
 			$config = AlertLibrary::sanitize_config( $params['config'] ?? array(), $kind );
 			if ( is_wp_error( $config ) ) {
 				return new \WP_Error( 'alerts_dlx_library_config', $config->get_error_message(), array( 'status' => 400 ) );
 			}
-			update_post_meta( $post_id, AlertLibrary::META_CONFIG, wp_json_encode( $config ) );
+			$update['post_content'] = AlertLibrary::encode_config_for_storage( $config );
+		}
+
+		if ( count( $update ) > 1 ) {
+			$result = wp_update_post( $update, true );
+			if ( is_wp_error( $result ) ) {
+				return $result;
+			}
 		}
 
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $post_id ) );
@@ -335,12 +335,18 @@ class Rest {
 			++$index;
 		}
 
+		$sanitized = AlertLibrary::sanitize_config( $config, $kind );
+		if ( is_wp_error( $sanitized ) ) {
+			return new \WP_Error( 'alerts_dlx_library_config', $sanitized->get_error_message(), array( 'status' => 400 ) );
+		}
+
 		$new_id = wp_insert_post(
 			array(
-				'post_type'   => AlertLibrary::POST_TYPE,
-				'post_title'  => $title,
-				'post_name'   => $slug,
-				'post_status' => 'publish',
+				'post_type'    => AlertLibrary::POST_TYPE,
+				'post_title'   => $title,
+				'post_name'    => $slug,
+				'post_status'  => 'publish',
+				'post_content' => AlertLibrary::encode_config_for_storage( $sanitized ),
 			),
 			true
 		);
@@ -349,14 +355,7 @@ class Rest {
 			return $new_id;
 		}
 
-		$sanitized = AlertLibrary::sanitize_config( $config, $kind );
-		if ( is_wp_error( $sanitized ) ) {
-			wp_delete_post( $new_id, true );
-			return new \WP_Error( 'alerts_dlx_library_config', $sanitized->get_error_message(), array( 'status' => 400 ) );
-		}
-
 		update_post_meta( $new_id, AlertLibrary::META_KIND, $kind );
-		update_post_meta( $new_id, AlertLibrary::META_CONFIG, wp_json_encode( $sanitized ) );
 
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $new_id ) );
 		return rest_ensure_response( $formatted );

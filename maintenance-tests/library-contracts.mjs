@@ -24,13 +24,21 @@ const libraryUtils = fs.readFileSync(
 
 assert.match( alertLibrary, /POST_TYPE = 'alerts_dlx_library'/, 'Alert library CPT slug is registered' );
 assert.match( alertLibrary, /META_KIND = '_alerts_dlx_kind'/, 'Alert library kind meta is defined' );
-assert.match( alertLibrary, /META_CONFIG = '_alerts_dlx_config'/, 'Alert library config meta is defined' );
+assert.doesNotMatch( alertLibrary, /_alerts_dlx_config/, 'Alert library config is not stored in post meta' );
+assert.match( alertLibrary, /encode_config_for_storage/, 'Alert library encodes config for post_content' );
+assert.match( alertLibrary, /wp_slash/, 'Alert library slashes config JSON before post_content write' );
+assert.match( alertLibrary, /post_content/, 'Alert library reads and writes config via post_content' );
+assert.match( alertLibrary, /'editor'/, 'Alert library CPT supports editor/post_content' );
+assert.match( rest, /encode_config_for_storage/, 'Library REST writes config through the storage encoder' );
+assert.doesNotMatch( rest, /_alerts_dlx_config|META_CONFIG/, 'Library REST does not write config meta' );
 assert.match( alertLibrary, /KIND_SNAPSHOT = 'snapshot'/, 'Snapshot kind is defined' );
 assert.match( alertLibrary, /sanitize_list_kind/, 'List kind sanitizer allows all kinds' );
 assert.match( alertLibrary, /alerts_dlx_snapshot_config/, 'Snapshot config filter is registered' );
 assert.match( alertLibrary, /maybe_seed_starter_snapshots/, 'Starter snapshot seeding is wired' );
 assert.match( alertLibrary, /STARTER_SNAPSHOTS_SEEDED_OPTION/, 'Starter seed option flag is defined' );
 assert.match( alertLibrary, /apply_global_style_to_block_attributes/, 'Global style merge helper exists for render' );
+assert.match( alertLibrary, /global_style_has_icon/, 'Global style icon presence helper exists for render' );
+assert.match( alertLibrary, /iconEnabled.*=.*global_style_has_icon/, 'Frontend merge derives iconEnabled from style icon fields' );
 assert.match( alertLibrary, /get_items_for_editor/, 'Editor localization helper exists' );
 assert.match( shortcodeBuilder, /get_global_style_input_names/, 'Appearance allowlist is defined in ShortcodeBuilder' );
 assert.match( shortcodeBuilder, /sanitize_global_style_values/, 'Appearance sanitizer is defined' );
@@ -99,6 +107,14 @@ assert.match( libraryPanel, /Detach/, 'Library panel exposes detach' );
 assert.match( libraryUtils, /GLOBAL_STYLE_BLOCK_KEYS/, 'Editor maps global-style keys explicitly' );
 assert.match( libraryUtils, /SNAPSHOT_BLOCK_KEYS/, 'Editor maps snapshot keys explicitly' );
 assert.match( libraryUtils, /buildSnapshotApplyAttributes/, 'Snapshot apply clears globalStyleId' );
+assert.match( libraryUtils, /globalStyleHasIcon/, 'Editor derives icon visibility from style icon fields' );
+assert.match( libraryUtils, /iconEnabled.*globalStyleHasIcon|globalStyleHasIcon[\s\S]*iconEnabled/, 'Editor merge sets iconEnabled from style icon presence' );
+assert.match( libraryUtils, /'iconEnabled'/, 'iconEnabled is locked and copied on detach while a style is attached' );
+assert.doesNotMatch(
+	globalNamesMatch[ 1 ],
+	/'icon_enabled'/,
+	'Global styles do not persist icon_enabled; presence is derived from icon fields'
+);
 assert.doesNotMatch(
 	fs.readFileSync( 'src/js/blocks/alert/variations.js', 'utf8' ),
 	/getCanonicalAlertDefaults|canonicalDefaults/,

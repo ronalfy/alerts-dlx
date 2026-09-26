@@ -6,6 +6,9 @@ import { buildAlertStyleClassName } from './alert-style-utils';
 
 /**
  * CamelCase block attribute keys owned by a library global style.
+ *
+ * `iconEnabled` is not persisted on the library config. Resolution derives it
+ * from the style's icon fields for preview, lock, and detach copy.
  */
 export const GLOBAL_STYLE_BLOCK_KEYS = [
 	'alertGroup',
@@ -19,6 +22,7 @@ export const GLOBAL_STYLE_BLOCK_KEYS = [
 	'iconAppearance',
 	'iconVerticalAlignment',
 	'icon',
+	'iconEnabled',
 	'imageUrl',
 	'imageId',
 	'colorPrimary',
@@ -167,6 +171,24 @@ export function findLibraryItem( id, kind ) {
 }
 
 /**
+ * Whether appearance attributes from a global style include a showable icon.
+ *
+ * Global styles store the glyph or image, not an icon_enabled flag. A non-empty
+ * SVG (or an image source with a URL) means the style intends to show an icon.
+ *
+ * @param {Object} styleAttributes CamelCase appearance from a global style.
+ * @return {boolean}
+ */
+export function globalStyleHasIcon( styleAttributes = {} ) {
+	const iconSource = styleAttributes.iconSource || 'icon';
+	if ( 'image' === iconSource ) {
+		return Boolean( styleAttributes.imageUrl );
+	}
+	const icon = typeof styleAttributes.icon === 'string' ? styleAttributes.icon.trim() : '';
+	return '' !== icon;
+}
+
+/**
  * Resolve appearance attributes from an attached global style.
  *
  * @param {number} globalStyleId Stored block reference.
@@ -177,11 +199,17 @@ export function resolveGlobalStyleAttributes( globalStyleId, existingClassName =
 	if ( ! item ) {
 		return {};
 	}
-	return libraryConfigToBlockAttributes(
+	const styleAttributes = libraryConfigToBlockAttributes(
 		item.config,
 		GLOBAL_STYLE_BLOCK_KEYS,
 		existingClassName
 	);
+	if ( ! Object.keys( styleAttributes ).length ) {
+		return {};
+	}
+	// Derive visibility from stored icon fields; do not persist onto the block.
+	styleAttributes.iconEnabled = globalStyleHasIcon( styleAttributes );
+	return styleAttributes;
 }
 
 /**

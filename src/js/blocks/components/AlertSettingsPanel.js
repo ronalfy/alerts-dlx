@@ -33,6 +33,7 @@ export default function AlertSettingsPanel( {
 		iconEnabled,
 		titleEnabled,
 	} = attributes;
+	const appearanceLocked = Number( attributes.globalStyleId ) > 0;
 
 	return (
 		<>
@@ -43,6 +44,15 @@ export default function AlertSettingsPanel( {
 						<ToggleControl
 							label={ __( 'Enable Alert Icon', 'alerts-dlx' ) }
 							checked={ iconEnabled }
+							disabled={ appearanceLocked }
+							help={
+								appearanceLocked
+									? __(
+											'Detach the global style to change the icon.',
+											'alerts-dlx'
+									  )
+									: undefined
+							}
 							onChange={ ( value ) => {
 								setAttributes( { iconEnabled: value } );
 							} }

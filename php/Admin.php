@@ -194,8 +194,8 @@ class Admin {
 				<div class="alerts-dlx-admin-container-body">
 					<nav class="nav-tab-wrapper">
 						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'alerts-dlx' ); ?></a>
-						<a class="<?php echo esc_attr( implode( ' ', $shortcode_builder_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'shortcode-builder' ) ); ?>"><?php esc_html_e( 'Shortcode Builder', 'alerts-dlx' ); ?></a>
 						<a class="<?php echo esc_attr( implode( ' ', $library_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'styles-snapshots' ) ); ?>"><?php esc_html_e( 'Styles & Snapshots', 'alerts-dlx' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $shortcode_builder_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'shortcode-builder' ) ); ?>"><?php esc_html_e( 'Shortcode Builder', 'alerts-dlx' ); ?></a>
 					</nav>
 					<?php
 					if ( null === $current_tab || 'settings' === $current_tab ) {
@@ -207,19 +207,19 @@ class Admin {
 						</div>
 						<?php
 					}
-					if ( 'shortcode-builder' === $current_tab ) {
+					if ( 'styles-snapshots' === $current_tab ) {
 						?>
 						<div class="alerts-dlx-admin-container-body__content">
-							<div id="alerts-dlx-shortcode-builder">
+							<div id="alerts-dlx-library">
 								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
 							</div>
 						</div>
 						<?php
 					}
-					if ( 'styles-snapshots' === $current_tab ) {
+					if ( 'shortcode-builder' === $current_tab ) {
 						?>
 						<div class="alerts-dlx-admin-container-body__content">
-							<div id="alerts-dlx-library">
+							<div id="alerts-dlx-shortcode-builder">
 								<?php echo wp_kses( $this->get_loading_svg(), Functions::get_kses_allowed_html() ); ?>
 							</div>
 						</div>
