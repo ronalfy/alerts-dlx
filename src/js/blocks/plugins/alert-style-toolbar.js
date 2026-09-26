@@ -37,7 +37,8 @@ const withAlertStyleToolbar = createHigherOrderComponent((BlockEdit) => {
       return <BlockEdit {...props} />;
     }
 
-    const { alertType, className, alertGroup } = attributes;
+    const { alertType, className, alertGroup, globalStyleId } = attributes;
+    const appearanceLocked = Number(globalStyleId) > 0;
 
     const { presets, customLabel } = useMemo(
       () => getAlertStyleOptions(name, alertGroup),
@@ -61,7 +62,10 @@ const withAlertStyleToolbar = createHigherOrderComponent((BlockEdit) => {
                   label={__("Alert style", "alerts-dlx")}
                   text={currentStyleLabel}
                   className="alerts-dlx-alert-style-toolbar"
-                  toggleProps={toggleProps}
+                  toggleProps={{
+                    ...toggleProps,
+                    disabled: appearanceLocked,
+                  }}
                 >
                   {({ onClose }) => (
                     <>
@@ -71,6 +75,7 @@ const withAlertStyleToolbar = createHigherOrderComponent((BlockEdit) => {
                             key={style.name}
                             role="menuitemradio"
                             isSelected={alertType === style.name}
+                            disabled={appearanceLocked}
                             onClick={() => {
                               applyAlertStyle({
                                 className,
@@ -87,6 +92,7 @@ const withAlertStyleToolbar = createHigherOrderComponent((BlockEdit) => {
                         <MenuItem
                           role="menuitemradio"
                           isSelected={"custom" === alertType}
+                          disabled={appearanceLocked}
                           onClick={() => {
                             applyAlertStyle({
                               className,

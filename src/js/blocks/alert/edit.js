@@ -3,7 +3,7 @@ import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import AlertTypeStyleControl from '../components/AlertTypeStyleControl';
-import CanonicalAlertPresetsPanel from '../components/CanonicalAlertPresetsPanel';
+import AlertLibraryPanel from '../components/AlertLibraryPanel';
 import BootstrapEdit from '../bootstrap/edit';
 import bootstrapDefinition from '../bootstrap/theme-definition';
 import ChakraEdit from '../chakraui/edit';
@@ -25,8 +25,12 @@ export default function CanonicalAlertEdit( props ) {
 	const { attributes, setAttributes, name, clientId } = props;
 	const design = designs[ attributes.alertGroup ] || designs.bootstrap;
 	const DesignEdit = design.Edit;
+	const appearanceLocked = Number( attributes.globalStyleId ) > 0;
 
 	const selectDesign = ( alertGroup ) => {
+		if ( appearanceLocked ) {
+			return;
+		}
 		const nextDesign = designs[ alertGroup ] || designs.bootstrap;
 		const nextAlertType = nextDesign.definition.supportedAlertTypes.includes( attributes.alertType )
 			? attributes.alertType
@@ -43,7 +47,7 @@ export default function CanonicalAlertEdit( props ) {
 	return (
 		<>
 			<InspectorControls>
-				<CanonicalAlertPresetsPanel
+				<AlertLibraryPanel
 					attributes={ attributes }
 					setAttributes={ setAttributes }
 				/>
@@ -53,6 +57,12 @@ export default function CanonicalAlertEdit( props ) {
 						value={ attributes.alertGroup }
 						options={ Object.entries( designs ).map( ( [ value, item ] ) => ( { value, label: item.label } ) ) }
 						onChange={ selectDesign }
+						disabled={ appearanceLocked }
+						help={
+							appearanceLocked
+								? __( 'Detach the global style to change the design system.', 'alerts-dlx' )
+								: undefined
+						}
 						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
@@ -64,6 +74,7 @@ export default function CanonicalAlertEdit( props ) {
 						attributes={ attributes }
 						setAttributes={ setAttributes }
 						clientId={ clientId }
+						disabled={ appearanceLocked }
 					/>
 				</PanelBody>
 			</InspectorControls>

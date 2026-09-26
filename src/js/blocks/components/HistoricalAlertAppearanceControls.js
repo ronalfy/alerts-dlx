@@ -8,6 +8,10 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+function isAppearanceLocked( attributes ) {
+	return Number( attributes?.globalStyleId ) > 0;
+}
+
 export function MaximumWidthControls( {
 	attributes,
 	setAttributes,
@@ -15,6 +19,7 @@ export function MaximumWidthControls( {
 	UnitChooserComponent,
 } ) {
 	const { maximumWidth, maximumWidthUnit } = attributes;
+	const locked = isAppearanceLocked( attributes );
 	const label = labelTextDomain === 'quotes-dlx'
 		? __( 'Maximum Width', 'quotes-dlx' )
 		: __( 'Maximum Width', 'alerts-dlx' );
@@ -26,12 +31,16 @@ export function MaximumWidthControls( {
 				value={ maximumWidthUnit }
 				units={ [ 'px', '%', 'vw' ] }
 				onClick={ ( value ) => {
+					if ( locked ) {
+						return;
+					}
 					setAttributes( { maximumWidthUnit: value } );
 				} }
 			/>
 			<TextControl
 				type="text"
 				value={ maximumWidth }
+				disabled={ locked }
 				onChange={ ( value ) => {
 					setAttributes( { maximumWidth: value } );
 				} }
@@ -47,6 +56,7 @@ export function AlertModeControl( {
 	className,
 } ) {
 	const { mode } = attributes;
+	const locked = isAppearanceLocked( attributes );
 	const label = labelTextDomain === 'quotes-dlx'
 		? __( 'Set Light or Dark Mode', 'quotes-dlx' )
 		: __( 'Set Light or Dark Mode', 'alerts-dlx' );
@@ -61,12 +71,14 @@ export function AlertModeControl( {
 				<ButtonGroup>
 					<Button
 						variant={ mode === 'light' ? 'primary' : 'secondary' }
+						disabled={ locked }
 						onClick={ () => setAttributes( { mode: 'light' } ) }
 					>
 						{ __( 'Light Mode', 'alerts-dlx' ) }
 					</Button>
 					<Button
 						variant={ mode === 'dark' ? 'primary' : 'secondary' }
+						disabled={ locked }
 						onClick={ () => setAttributes( { mode: 'dark' } ) }
 					>
 						{ __( 'Dark Mode', 'alerts-dlx' ) }
@@ -88,6 +100,7 @@ export function IconVerticalAlignmentControl( {
 	}
 
 	const { iconVerticalAlignment } = attributes;
+	const locked = isAppearanceLocked( attributes );
 	const label = labelTextDomain === 'quotes-dlx'
 		? __( 'Icon Vertical Alignment', 'quotes-dlx' )
 		: __( 'Icon Vertical Alignment', 'alerts-dlx' );
@@ -102,12 +115,14 @@ export function IconVerticalAlignmentControl( {
 				<ButtonGroup>
 					<Button
 						variant={ iconVerticalAlignment === 'top' ? 'primary' : 'secondary' }
+						disabled={ locked }
 						onClick={ () => setAttributes( { iconVerticalAlignment: 'top' } ) }
 					>
 						{ __( 'Top', 'alerts-dlx' ) }
 					</Button>
 					<Button
 						variant={ iconVerticalAlignment === 'centered' ? 'primary' : 'secondary' }
+						disabled={ locked }
 						onClick={ () => setAttributes( { iconVerticalAlignment: 'centered' } ) }
 					>
 						{ __( 'Centered', 'alerts-dlx' ) }
@@ -120,6 +135,7 @@ export function IconVerticalAlignmentControl( {
 
 export function BaseFontSizeControl( { attributes, setAttributes } ) {
 	const { baseFontSize } = attributes;
+	const locked = isAppearanceLocked( attributes );
 
 	return (
 		<PanelRow>
@@ -132,6 +148,7 @@ export function BaseFontSizeControl( { attributes, setAttributes } ) {
 				currentInput={ 16 }
 				initialPosition={ 16 }
 				allowReset={ true }
+				disabled={ locked }
 				onChange={ ( fontSizeValue ) => {
 					setAttributes( { baseFontSize: fontSizeValue } );
 				} }

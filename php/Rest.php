@@ -45,7 +45,7 @@ class Rest {
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'permission_callback' => array( static::class, 'library_permissions_check' ),
+					'permission_callback' => array( static::class, 'library_read_permissions_check' ),
 					'callback'            => array( static::class, 'rest_get_library_items' ),
 					'args'                => array(
 						'kind' => array(
@@ -69,7 +69,7 @@ class Rest {
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'permission_callback' => array( static::class, 'library_permissions_check' ),
+					'permission_callback' => array( static::class, 'library_read_permissions_check' ),
 					'callback'            => array( static::class, 'rest_get_library_item' ),
 				),
 				array(
@@ -104,7 +104,19 @@ class Rest {
 	}
 
 	/**
-	 * Permission callback for alert library routes.
+	 * Permission callback for read-only alert library routes.
+	 *
+	 * Block editors who are not administrators still need to list and resolve
+	 * library items. Create, update, and delete stay on manage_options.
+	 *
+	 * @return bool
+	 */
+	public static function library_read_permissions_check() {
+		return current_user_can( 'edit_posts' );
+	}
+
+	/**
+	 * Permission callback for mutating alert library routes.
 	 *
 	 * @return bool
 	 */

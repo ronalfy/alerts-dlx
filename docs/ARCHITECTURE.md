@@ -58,6 +58,7 @@ Disabling a theme hides it from the inserter only; existing content still render
 
 Block names (stable — do not rename lightly):
 
+- `mediaron/alerts-dlx-alert` (canonical; goal-first inserter variations)
 - `mediaron/alerts-dlx-bootstrap`
 - `mediaron/alerts-dlx-chakra`
 - `mediaron/alerts-dlx-material`
@@ -65,7 +66,22 @@ Block names (stable — do not rename lightly):
 
 Registration uses `build/js/blocks/` + `build/blocks-manifest.php` via `wp_register_block_types_from_metadata_collection` (with fallbacks).
 
-All four blocks share the same PHP render callback: `Blocks::frontend()`. The shortcode `[alertsdlx]` maps attributes into the same markup path via `Blocks::shortcode()`.
+All five blocks share the same PHP render callback: `Blocks::frontend()`. The shortcode `[alertsdlx]` maps attributes into the same markup path via `Blocks::shortcode()`.
+
+### Canonical Alert and the library
+
+The canonical block keeps seven goal-first inserter variations (Info, Success, Warning, Error, Tip, Announcement, Call to Action). Variations use built-in insertion defaults only; there is no site-saved “new alert defaults” store.
+
+The block inspector **Library** panel (canonical only) exposes:
+
+1. **Global style** — select stores `globalStyleId` (integer; `0` = none). Appearance is resolved from that library item at PHP render and in the editor preview. Title, description, button copy, links, unique ID, and InnerBlocks stay on the block. Appearance controls owned by the style are read-only while attached. **None** and **Detach** copy the resolved appearance onto the block, then clear `globalStyleId`, so the alert does not visually jump.
+2. **Snapshot** — select plus **Apply snapshot** copies the snapshot allowlist onto the block (no live link). If a global style is attached, Apply clears it first so the snapshot copy wins. Snapshots do not store title/description/button text.
+
+Snapshots and global styles are **not** registered as block variations. Library CRUD stays under Settings → AlertsDLX → Styles & Snapshots.
+
+Editor boot localizes `libraryItems` (id, title, slug, kind, config) and `canManageLibrary` on `alertsDlxBlock`. REST `GET` for library items allows `edit_posts`; create/update/delete remain `manage_options`.
+
+On first `init` when the library has no snapshots yet, two starter snapshots are inserted once (`Maintenance notice`, `Download CTA`), gated by option `alerts_dlx_starter_snapshots_seeded` so deleted starters are never re-created.
 
 ### Assets
 
@@ -89,8 +105,9 @@ All four blocks share the same PHP render callback: `Blocks::frontend()`. The sh
 - Preview uses a fixed Lorem ipsum fixture in the admin UI. Stored snapshot alignment and dismiss values win over the fixture.
 - Admin: one **Styles & Snapshots** tab (`#alerts-dlx-library`) lists both kinds; kind is chosen when creating an item and is immutable afterward.
 - Slugs are unique **per kind** (`post_name` scoped by `_alerts_dlx_kind`).
-- REST: `GET/POST dlxplugins/alerts-dlx/v1/library-items` (`kind` optional on GET; omit or `all` returns both), `GET/PUT/DELETE .../library-items/{id}`, `POST .../duplicate` with optional target `kind` (`manage_options`).
+- REST: `GET dlxplugins/alerts-dlx/v1/library-items` (`kind` optional; omit or `all` returns both) and `GET .../library-items/{id}` allow `edit_posts`. `POST/PUT/DELETE` and `POST .../duplicate` require `manage_options`.
 - Filters: `alerts_dlx_global_style_config` and `alerts_dlx_snapshot_config` when reading library config.
+- Frontend: when a block has a valid `globalStyleId`, `AlertLibrary::apply_global_style_to_block_attributes()` merges that global style’s appearance over the block before `AlertRenderer` runs. Invalid/missing/wrong-kind IDs are ignored.
 
 ## Frontend / editor JS (`src/`)
 

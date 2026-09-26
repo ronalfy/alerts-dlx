@@ -21,6 +21,9 @@ They intentionally use plain language so a future maintainer can tell what faile
 `settings-contracts.mjs`
 : Protects the `alerts_dlx` option key and existing settings/defaults.
 
+`library-contracts.mjs`
+: Protects the alert library CPT, global-style vs snapshot allowlists, REST read/write capabilities, canonical `globalStyleId`, and removal of the old presets editor path.
+
 `release-package.mjs`
 : Confirms the Grunt packaging configuration still includes the expected plugin payload.
 

@@ -37,6 +37,16 @@ const canonicalMetadata = JSON.parse(
 assert.equal(canonicalMetadata.name, canonicalName, 'Canonical public block name stays stable');
 assert.equal(canonicalMetadata.category, 'alertsdlx', 'Canonical Alert remains in the primary AlertsDLX category');
 assert.equal(
+	canonicalMetadata.attributes?.globalStyleId?.type,
+	'number',
+	'Canonical Alert stores globalStyleId for library global styles'
+);
+assert.equal(
+	canonicalMetadata.attributes?.globalStyleId?.default,
+	0,
+	'globalStyleId defaults to none'
+);
+assert.equal(
 	typeof canonicalMetadata.example?.attributes?.alertDescription,
 	'string',
 	'Preview copy remains available through block example metadata'
@@ -60,9 +70,7 @@ const executableVariations = variationSource
 	.replace(/export default createGoalFirstCanonicalVariations\(\);?\s*$/m, '');
 const loadVariations = new Function(
 	'__',
-	'getCanonicalAlertDefaults',
 	'getCanonicalAlertTypeForPurpose',
-	'snapshotCanonicalAlertAttributes',
 	`${executableVariations}\nreturn { commonAttributes, createGoalFirstCanonicalVariations };`
 );
 const alertTypeForPurpose = (purpose) => ({
@@ -76,12 +84,10 @@ const alertTypeForPurpose = (purpose) => ({
 })[purpose] || 'success';
 const variationRuntime = loadVariations(
 	(value) => value,
-	() => ({}),
-	alertTypeForPurpose,
-	(attributes) => ({ ...attributes })
+	alertTypeForPurpose
 );
 const { commonAttributes } = variationRuntime;
-const variations = variationRuntime.createGoalFirstCanonicalVariations({});
+const variations = variationRuntime.createGoalFirstCanonicalVariations();
 assert.equal(
 	Object.hasOwn(commonAttributes, 'alertDescription'),
 	false,

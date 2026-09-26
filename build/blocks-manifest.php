@@ -208,6 +208,10 @@ return array(
 			'iconAppearance' => array(
 				'type' => 'string',
 				'default' => 'rounded'
+			),
+			'globalStyleId' => array(
+				'type' => 'number',
+				'default' => 0
 			)
 		),
 		'example' => array(

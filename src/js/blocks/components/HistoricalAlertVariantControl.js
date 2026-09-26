@@ -20,6 +20,8 @@ export default function HistoricalAlertVariantControl( {
 	setAttributes,
 	themeAdapter,
 } ) {
+	const locked = Number( attributes?.globalStyleId ) > 0;
+
 	return (
 		<PanelRow>
 			<BaseControl
@@ -32,6 +34,7 @@ export default function HistoricalAlertVariantControl( {
 						<Button
 							key={ option.value }
 							variant={ attributes.variant === option.value ? 'primary' : 'secondary' }
+							disabled={ locked }
 							onClick={ () => setAttributes( { variant: option.value } ) }
 						>
 							{ option.label }

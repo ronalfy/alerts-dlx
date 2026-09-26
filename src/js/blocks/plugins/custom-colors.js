@@ -103,6 +103,7 @@ registerPlugin("custom-colors", {
           if ("custom" !== attributes.alertType) {
             return null;
           }
+          const appearanceLocked = Number(attributes.globalStyleId) > 0;
           const {
             colorPrimary,
             colorBorder,
@@ -114,6 +115,12 @@ registerPlugin("custom-colors", {
             colorBold,
             colorLight,
           } = attributes;
+          const onColorChange = (key) => (value) => {
+            if (appearanceLocked) {
+              return;
+            }
+            setAttributes({ [key]: value });
+          };
           return (
             <PanelBody
               title={__("Custom Alert Colors", "alerts-dlx")}
@@ -123,69 +130,52 @@ registerPlugin("custom-colors", {
               <PanelColorSettings
                 __experimentalIsRenderedInSidebar
                 title={__("Alert Colors", "alerts-dlx")}
+                disableCustomColors={appearanceLocked}
                 colorSettings={[
                   {
                     label: __("Text Color", "alerts-dlx"),
                     value: colorPrimary,
-                    onChange: (value) => {
-                      setAttributes({ colorPrimary: value });
-                    },
+                    onChange: onColorChange("colorPrimary"),
                   },
                   {
                     label: __("Border Color", "alerts-dlx"),
                     value: colorBorder,
-                    onChange: (value) => {
-                      setAttributes({ colorBorder: value });
-                    },
+                    onChange: onColorChange("colorBorder"),
                   },
                   {
                     label: __("Accent Color", "alerts-dlx"),
                     value: colorAccent,
-                    onChange: (value) => {
-                      setAttributes({ colorAccent: value });
-                    },
+                    onChange: onColorChange("colorAccent"),
                   },
                   {
                     label: __("Button Color", "alerts-dlx"),
                     value: colorAlt,
-                    onChange: (value) => {
-                      setAttributes({ colorAlt: value });
-                    },
+                    onChange: onColorChange("colorAlt"),
                   },
                   {
                     label: __("Button Hover Color", "alerts-dlx"),
                     value: colorAltHover,
-                    onChange: (value) => {
-                      setAttributes({ colorAltHover: value });
-                    },
+                    onChange: onColorChange("colorAltHover"),
                   },
                   {
                     label: __("Button Text Color", "alerts-dlx"),
                     value: colorAltText,
-                    onChange: (value) => {
-                      setAttributes({ colorAltText: value });
-                    },
+                    onChange: onColorChange("colorAltText"),
                   },
                   {
                     label: __("Button Text Hover Color", "alerts-dlx"),
                     value: colorAltTextHover,
-                    onChange: (value) => {
-                      setAttributes({ colorAltTextHover: value });
-                    },
+                    onChange: onColorChange("colorAltTextHover"),
                   },
                   {
                     label: __("Icon Color", "alerts-dlx"),
                     value: colorBold,
-                    onChange: (value) => {
-                      setAttributes({ colorBold: value });
-                    },
+                    onChange: onColorChange("colorBold"),
                   },
                   {
                     label: __("Background Color", "alerts-dlx"),
                     value: colorLight,
-                    onChange: (value) => {
-                      setAttributes({ colorLight: value });
-                    },
+                    onChange: onColorChange("colorLight"),
                   },
                 ]}
                 colors={getAlertColorPalette(

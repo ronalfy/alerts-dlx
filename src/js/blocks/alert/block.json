@@ -205,6 +205,10 @@
     "iconAppearance": {
       "type": "string",
       "default": "rounded"
+    },
+    "globalStyleId": {
+      "type": "number",
+      "default": 0
     }
   },
   "example": {

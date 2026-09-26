@@ -23,7 +23,6 @@ class Blocks {
 	 */
 	public static function run() {
 		$self = new self();
-		CanonicalAlertPresets::run();
 		add_action( 'init', array( $self, 'init' ) );
 		return $self;
 	}
@@ -283,6 +282,9 @@ class Blocks {
 	 * @return string
 	 */
 	public function frontend( array $attributes, string $content, $block = null ) {
+		// Merge linked global style appearance when globalStyleId is valid.
+		$attributes = AlertLibrary::apply_global_style_to_block_attributes( $attributes );
+
 		$renderer = new AlertRenderer(
 			array( $this, 'register_block_editor_scripts' ),
 			array( $this, 'print_close_button_svgs' )
@@ -303,8 +305,6 @@ class Blocks {
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
-		$can_manage_presets = current_user_can( 'manage_options' );
-
 		// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
 		wp_register_style(
 			'alerts-dlx-block-editor',
@@ -334,21 +334,18 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'           => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'                  => current_user_can( 'edit_others_posts' ),
-				'isAuthor'                  => current_user_can( 'edit_posts' ),
-				'isAdmin'                   => current_user_can( 'manage_options' ),
-				'colorPalette'              => Functions::get_theme_color_palette(),
-				'defaultImage'              => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'             => Options::get_headline_tag(),
-				'headlineCustomClasses'     => Options::get_headline_custom_classes(),
-				'headlineForceSize'         => Options::is_headline_force_size(),
-				'enabledBlockStyles'        => Options::get_enabled_block_styles(),
-				'canonicalPresets'          => CanonicalAlertPresets::get_presets_for_editor(),
-				'canonicalDefaults'         => CanonicalAlertPresets::get_defaults_for_editor(),
-				'canonicalCanManagePresets' => $can_manage_presets,
-				'canonicalPresetNonce'      => $can_manage_presets ? wp_create_nonce( CanonicalAlertPresets::NONCE_ACTION ) : '',
-				'ajaxUrl'                   => $can_manage_presets ? admin_url( 'admin-ajax.php' ) : '',
+				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'isEditor'              => current_user_can( 'edit_others_posts' ),
+				'isAuthor'              => current_user_can( 'edit_posts' ),
+				'isAdmin'               => current_user_can( 'manage_options' ),
+				'colorPalette'          => Functions::get_theme_color_palette(),
+				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'         => Options::get_headline_tag(),
+				'headlineCustomClasses' => Options::get_headline_custom_classes(),
+				'headlineForceSize'     => Options::is_headline_force_size(),
+				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
+				'libraryItems'          => AlertLibrary::get_items_for_editor(),
+				'canManageLibrary'      => current_user_can( 'manage_options' ),
 			)
 		);
 

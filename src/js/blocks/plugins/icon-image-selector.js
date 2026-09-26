@@ -18,6 +18,7 @@ registerPlugin("custom-slot-fills", {
       <Fill name="alertsDLXSettingsPanelEnd">
         {({ attributes, setAttributes, name }) => {
           const { iconSource, imageUrl, imageId, icon, alertGroup } = attributes;
+          const appearanceLocked = Number(attributes.globalStyleId) > 0;
 
           const { openMediaUploader } = useMediaUploader();
 
@@ -29,6 +30,7 @@ registerPlugin("custom-slot-fills", {
                     <Button
                       variant="secondary"
                       isDestructive={true}
+                      disabled={appearanceLocked}
                       onClick={() => {
                         setAttributes({ imageUrl: "", imageId: 0 });
                       }}
@@ -38,6 +40,7 @@ registerPlugin("custom-slot-fills", {
                   )}
                   <Button
                     variant="secondary"
+                    disabled={appearanceLocked}
                     onClick={() => {
                       openMediaUploader(
                         {
@@ -84,13 +87,19 @@ registerPlugin("custom-slot-fills", {
               <PanelRow>
                 <ToggleGroupControl
                   value={iconSource}
+                  isDisabled={appearanceLocked}
                   onChange={(value) => {
                     setAttributes({ iconSource: value });
                   }}
                   label={__("Icon Source", "alerts-dlx")}
                   className="alerts-dlx-icon-source-toggle-group"
                   help={
-                    "icon" === iconSource
+                    appearanceLocked
+                      ? __(
+                          "Detach the global style to change the icon.",
+                          "alerts-dlx"
+                        )
+                      : "icon" === iconSource
                       ? __(
                           "Select an icon below, or click the icon in the alert.",
                           "alerts-dlx"
@@ -111,7 +120,7 @@ registerPlugin("custom-slot-fills", {
                   />
                 </ToggleGroupControl>
               </PanelRow>
-              {"icon" === iconSource && (
+              {"icon" === iconSource && !appearanceLocked && (
                 <PanelRow>
                   <div className="alerts-dlx-icon-sidebar-wrapper">
                     <IconPicker

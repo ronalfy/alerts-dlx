@@ -26,6 +26,7 @@ export default function AlertTypeStyleControl( {
 	attributes,
 	setAttributes,
 	clientId,
+	disabled = false,
 } ) {
 	const { alertType, className, alertGroup } = attributes;
 
@@ -40,6 +41,9 @@ export default function AlertTypeStyleControl( {
 	 * @param {string} styleName Style slug to apply.
 	 */
 	const selectStyle = ( styleName ) => {
+		if ( disabled ) {
+			return;
+		}
 		applyAlertStyle( {
 			className,
 			styleName,
@@ -55,6 +59,11 @@ export default function AlertTypeStyleControl( {
 		<BaseControl
 			id="alerts-dlx-alert-type-styles"
 			label={ __( 'Alert style', 'alerts-dlx' ) }
+			help={
+				disabled
+					? __( 'Detach the global style to change alert styles.', 'alerts-dlx' )
+					: undefined
+			}
 			__nextHasNoMarginBottom
 		>
 			<div
@@ -68,6 +77,7 @@ export default function AlertTypeStyleControl( {
 						variant={ alertType === style.name ? 'primary' : 'secondary' }
 						onClick={ () => selectStyle( style.name ) }
 						aria-pressed={ alertType === style.name }
+						disabled={ disabled }
 					>
 						{ style.label }
 					</Button>
@@ -76,6 +86,7 @@ export default function AlertTypeStyleControl( {
 					variant={ 'custom' === alertType ? 'primary' : 'secondary' }
 					onClick={ () => selectStyle( 'custom' ) }
 					aria-pressed={ 'custom' === alertType }
+					disabled={ disabled }
 				>
 					{ customLabel }
 				</Button>

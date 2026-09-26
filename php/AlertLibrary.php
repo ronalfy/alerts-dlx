@@ -34,12 +34,16 @@ final class AlertLibrary {
 	/** Query value that returns every library kind. */
 	public const KIND_ALL = 'all';
 
+	/** Option flag so starter snapshots seed at most once. */
+	public const STARTER_SNAPSHOTS_SEEDED_OPTION = 'alerts_dlx_starter_snapshots_seeded';
+
 	/**
 	 * Register hooks.
 	 */
 	public static function run() {
 		add_action( 'init', array( self::class, 'register_post_type' ) );
 		add_action( 'init', array( self::class, 'register_meta' ) );
+		add_action( 'init', array( self::class, 'maybe_seed_starter_snapshots' ), 20 );
 		add_filter( 'map_meta_cap', array( self::class, 'map_meta_cap' ), 10, 4 );
 	}
 
@@ -476,5 +480,281 @@ final class AlertLibrary {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Library items for block editor localization (id, title, slug, kind, config).
+	 *
+	 * @return array
+	 */
+	public static function get_items_for_editor() {
+		$items = self::query_items(
+			self::KIND_ALL,
+			array(
+				'posts_per_page' => 100,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			)
+		);
+
+		$payload = array();
+		foreach ( $items as $item ) {
+			$payload[] = array(
+				'id'     => (int) $item['id'],
+				'title'  => (string) $item['title'],
+				'slug'   => (string) $item['slug'],
+				'kind'   => (string) $item['kind'],
+				'config' => is_array( $item['config'] ) ? $item['config'] : array(),
+			);
+		}
+
+		return $payload;
+	}
+
+	/**
+	 * Map allowlisted library config keys onto camelCase block attributes.
+	 *
+	 * @param array $config Snake_case library config.
+	 * @return array
+	 */
+	public static function library_config_to_block_attributes( array $config ) {
+		$attributes = array();
+		$schema     = AlertAttributes::get_schema();
+
+		foreach ( $schema as $snake => $definition ) {
+			if ( ! array_key_exists( $snake, $config ) ) {
+				continue;
+			}
+			$camel = $definition[0];
+			$type  = $definition[1];
+			$value = $config[ $snake ];
+
+			if ( 'boolean' === $type ) {
+				$attributes[ $camel ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			} elseif ( 'integer' === $type ) {
+				$attributes[ $camel ] = absint( $value );
+			} else {
+				$attributes[ $camel ] = $value;
+			}
+		}
+
+		if ( isset( $config['alert_type'] ) && is_string( $config['alert_type'] ) && '' !== $config['alert_type'] ) {
+			$attributes['className'] = 'is-style-' . sanitize_html_class( $config['alert_type'] );
+		}
+
+		return $attributes;
+	}
+
+	/**
+	 * Resolve a stored globalStyleId and return its appearance as block attributes.
+	 *
+	 * Missing, deleted, or wrong-kind IDs return an empty array (no fatal).
+	 *
+	 * @param int $global_style_id Block globalStyleId attribute.
+	 * @return array CamelCase appearance attributes, or empty when unusable.
+	 */
+	public static function get_global_style_block_attributes( $global_style_id ) {
+		$global_style_id = absint( $global_style_id );
+		if ( ! $global_style_id ) {
+			return array();
+		}
+
+		$post = get_post( $global_style_id );
+		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
+			return array();
+		}
+
+		if ( self::KIND_GLOBAL_STYLE !== self::get_post_kind( $global_style_id ) ) {
+			return array();
+		}
+
+		$config     = self::get_post_config( $global_style_id );
+		$appearance = array_intersect_key(
+			$config,
+			array_flip( ShortcodeBuilder::get_global_style_input_names() )
+		);
+
+		return self::library_config_to_block_attributes( $appearance );
+	}
+
+	/**
+	 * Merge a linked global style's appearance over block attributes for render.
+	 *
+	 * Content attributes on the block always win. Snapshot-only fields are not
+	 * taken from the global style.
+	 *
+	 * @param array $attributes Block attributes (camelCase).
+	 * @return array
+	 */
+	public static function apply_global_style_to_block_attributes( array $attributes ) {
+		$style_attributes = self::get_global_style_block_attributes( $attributes['globalStyleId'] ?? 0 );
+		if ( empty( $style_attributes ) ) {
+			return $attributes;
+		}
+
+		// Rebuild is-style-* from the resolved type while keeping other block classes.
+		if ( isset( $style_attributes['alertType'] ) ) {
+			$existing_class                = isset( $attributes['className'] ) ? (string) $attributes['className'] : '';
+			$style_attributes['className'] = self::build_alert_style_class_name(
+				$existing_class,
+				(string) $style_attributes['alertType']
+			);
+		}
+
+		return array_merge( $attributes, $style_attributes );
+	}
+
+	/**
+	 * Replace any is-style-* class with the resolved alert type class.
+	 *
+	 * @param string $class_name Existing className attribute.
+	 * @param string $alert_type Alert type slug.
+	 * @return string
+	 */
+	public static function build_alert_style_class_name( $class_name, $alert_type ) {
+		$alert_type  = sanitize_html_class( (string) $alert_type );
+		$class_name  = preg_replace( '/\bis-style-[\w-]+\b/', '', (string) $class_name );
+		$class_name  = trim( preg_replace( '/\s+/', ' ', $class_name ) );
+		$style_class = '' !== $alert_type ? 'is-style-' . $alert_type : '';
+
+		if ( '' === $class_name ) {
+			return $style_class;
+		}
+		if ( '' === $style_class ) {
+			return $class_name;
+		}
+
+		return $class_name . ' ' . $style_class;
+	}
+
+	/**
+	 * Insert a published library item with sanitized config.
+	 *
+	 * @param string $title  Post title.
+	 * @param string $slug   Post slug.
+	 * @param string $kind   Library kind.
+	 * @param array  $config Raw config (sanitized before save).
+	 * @return int|\WP_Error Post ID or error.
+	 */
+	public static function insert_item( $title, $slug, $kind, array $config ) {
+		$kind   = self::sanitize_kind( $kind );
+		$title  = sanitize_text_field( (string) $title );
+		$slug   = sanitize_title( (string) $slug );
+		$config = self::sanitize_config( $config, $kind );
+
+		if ( is_wp_error( $config ) ) {
+			return $config;
+		}
+		if ( '' === $title || '' === $slug ) {
+			return new \WP_Error( 'alerts_dlx_library_insert', __( 'A title and slug are required.', 'alerts-dlx' ) );
+		}
+		if ( ! self::is_slug_unique_for_kind( $slug, $kind ) ) {
+			return new \WP_Error( 'alerts_dlx_library_slug', __( 'That slug is already in use for this library type.', 'alerts-dlx' ) );
+		}
+
+		$post_id = wp_insert_post(
+			array(
+				'post_type'   => self::POST_TYPE,
+				'post_title'  => $title,
+				'post_name'   => $slug,
+				'post_status' => 'publish',
+			),
+			true
+		);
+
+		if ( is_wp_error( $post_id ) ) {
+			return $post_id;
+		}
+
+		update_post_meta( $post_id, self::META_KIND, $kind );
+		update_post_meta( $post_id, self::META_CONFIG, wp_json_encode( $config ) );
+
+		return (int) $post_id;
+	}
+
+	/**
+	 * Seed Maintenance notice and Download CTA snapshots once when none exist.
+	 *
+	 * Uses a dedicated option flag so deleted starter snapshots are never
+	 * re-created on later loads.
+	 */
+	public static function maybe_seed_starter_snapshots() {
+		if ( get_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION ) ) {
+			return;
+		}
+
+		if ( ! post_type_exists( self::POST_TYPE ) ) {
+			return;
+		}
+
+		$existing_query = new \WP_Query(
+			array(
+				'post_type'      => self::POST_TYPE,
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => self::META_KIND,
+						'value' => self::KIND_SNAPSHOT,
+					),
+				),
+			)
+		);
+
+		// Mark seeded when the site already has snapshots so we never insert starters later.
+		if ( ! empty( $existing_query->posts ) ) {
+			update_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION, 1, false );
+			return;
+		}
+
+		foreach ( self::get_starter_snapshot_definitions() as $definition ) {
+			self::insert_item(
+				$definition['title'],
+				$definition['slug'],
+				self::KIND_SNAPSHOT,
+				$definition['config']
+			);
+		}
+
+		update_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION, 1, false );
+	}
+
+	/**
+	 * Starter snapshot definitions mapped from the former built-in presets.
+	 *
+	 * @return array
+	 */
+	private static function get_starter_snapshot_definitions() {
+		return array(
+			array(
+				'title'  => __( 'Maintenance notice', 'alerts-dlx' ),
+				'slug'   => 'maintenance-notice',
+				'config' => array(
+					'alert_group'             => 'shoelace',
+					'alert_type'              => 'warning',
+					'variant'                 => 'top-accent',
+					'title_enabled'           => true,
+					'description_enabled'     => true,
+					'button_enabled'          => false,
+					'close_button_enabled'    => true,
+					'close_button_expiration' => 0,
+				),
+			),
+			array(
+				'title'  => __( 'Download CTA', 'alerts-dlx' ),
+				'slug'   => 'download-cta',
+				'config' => array(
+					'alert_group'             => 'bootstrap',
+					'alert_type'              => 'primary',
+					'variant'                 => 'centered',
+					'title_enabled'           => true,
+					'description_enabled'     => true,
+					'button_enabled'          => true,
+					'close_button_enabled'    => false,
+					'close_button_expiration' => 0,
+				),
+			),
+		);
 	}
 }

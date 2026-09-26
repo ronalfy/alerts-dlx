@@ -13,6 +13,7 @@ import "./js/blocks/plugins/alert-style-toolbar";
 import "./js/blocks/plugins/alert-elements-toolbar";
 import "./js/blocks/plugins/alert-close-expiration-toolbar";
 import "./js/blocks/plugins/button-sidebar-panel";
+import "./js/blocks/plugins/global-style-resolution";
 import AlertsLogo from "./js/blocks/components/icons/AlertsLogo";
 
 (function () {

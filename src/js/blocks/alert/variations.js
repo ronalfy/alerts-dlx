@@ -1,10 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-import {
-	getCanonicalAlertDefaults,
-	getCanonicalAlertTypeForPurpose,
-	snapshotCanonicalAlertAttributes,
-} from '../utils/canonical-alert-presets';
+import { getCanonicalAlertTypeForPurpose } from '../utils/canonical-alert-presets';
 
 const commonAttributes = {
 	alertGroup: 'bootstrap',
@@ -61,24 +57,19 @@ const goals = [
 
 /**
  * Build the seven public insertion choices once when the editor script loads.
- * Site defaults are copied into these insertion-time attributes only; no
- * parsed or already-saved block is observed or mutated.
  *
- * @param {Object} siteDefaults Sanitized localized defaults.
+ * Variations use built-in goal mapping only (no site-saved preset defaults).
+ *
  * @return {Array} Goal-first canonical Alert variations.
  */
-export function createGoalFirstCanonicalVariations( siteDefaults = getCanonicalAlertDefaults() ) {
-	const insertionDefaults = snapshotCanonicalAlertAttributes( siteDefaults );
-	const defaultPurpose = goals.some( ( goal ) => goal.name === insertionDefaults.purpose )
-		? insertionDefaults.purpose
-		: 'success';
-	const alertGroup = insertionDefaults.alertGroup || commonAttributes.alertGroup;
+export function createGoalFirstCanonicalVariations() {
+	const defaultPurpose = 'success';
+	const alertGroup = commonAttributes.alertGroup;
 
 	return goals.map( ( goal ) => {
 		const alertType = getCanonicalAlertTypeForPurpose( goal.name, alertGroup );
 		const attributes = {
 			...commonAttributes,
-			...insertionDefaults,
 			purpose: goal.name,
 			alertType,
 			className: `is-style-${ alertType }`,
