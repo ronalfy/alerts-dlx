@@ -75,11 +75,11 @@ The canonical block keeps seven goal-first inserter variations (Info, Success, W
 The block inspector **Library** panel (canonical only) exposes:
 
 1. **Global style** — select stores `globalStyleId` (integer; `0` = none). Appearance is resolved from that library item at PHP render and in the editor preview. Title, description, button copy, links, unique ID, and InnerBlocks stay on the block. Appearance controls owned by the style are read-only while attached. **None** and **Detach** copy the resolved appearance onto the block, then clear `globalStyleId`, so the alert does not visually jump.
-2. **Snapshot** — select plus **Apply snapshot** copies the snapshot allowlist onto the block (no live link). If a global style is attached, Apply clears it first so the snapshot copy wins. Snapshots do not store title/description/button text.
+2. **Snapshot** — select plus **Apply snapshot** copies the snapshot allowlist onto the block (no live link). Those controls are hidden while a global style is attached; detach first. If a global style is attached, Apply clears it first so the snapshot copy wins. Snapshots do not store title/description/button text. The in-canvas icon picker is disabled while a global style is attached.
 
-Snapshots and global styles are **not** registered as block variations. Library CRUD stays under Settings → AlertsDLX → Styles & Snapshots.
+Library items may set post meta `_alerts_dlx_show_in_inserter`. Each flagged item is an extra canonical Alert inserter variation. A global style variation inserts `globalStyleId` only (the block stays linked). A snapshot variation copies attributes and does not stay linked. The seven goal variations remain, and Success stays the variation used when inserting Alert itself. Duplicating a library item does not copy the flag. Library CRUD stays under Settings → AlertsDLX → Styles & Snapshots.
 
-Editor boot localizes `libraryItems` (id, title, slug, kind, config) and `canManageLibrary` on `alertsDlxBlock`. REST `GET` for library items allows `edit_posts`; create/update/delete remain `manage_options`.
+Editor boot localizes `libraryItems` (id, title, slug, kind, config, showInInserter) and `canManageLibrary` on `alertsDlxBlock`. REST `GET` for library items allows `edit_posts`; create/update/delete remain `manage_options`.
 
 On first `init` when the library has no snapshots yet, two starter snapshots are inserted once (`Maintenance notice`, `Download CTA`), gated by option `alerts_dlx_starter_snapshots_seeded` so deleted starters are never re-created.
 
@@ -99,7 +99,7 @@ On first `init` when the library has no snapshots yet, two starter snapshots are
 ### Alert library (global styles and snapshots)
 
 - Post type: `alerts_dlx_library` (not public; admin-only; supports `title` and `editor` for `post_content`).
-- Kind meta: `_alerts_dlx_kind` (`global_style` | `snapshot`).
+- Kind meta: `_alerts_dlx_kind` (`global_style` | `snapshot`). Inserter meta: `_alerts_dlx_show_in_inserter` (per item; saving one item does not clear the flag on others).
 - Config store: sanitized JSON in `post_content` (written via `AlertLibrary::encode_config_for_storage()`, which `wp_slash`es the JSON so SVG icons survive WordPress unslash). Old `_alerts_dlx_config` meta is not read.
 - Global styles store the appearance allowlist (`ShortcodeBuilder::get_global_style_input_names()`). Snapshots store that set plus `align`, `title_enabled`, `description_enabled`, `button_enabled`, `close_button_enabled`, and `close_button_expiration` (`ShortcodeBuilder::get_snapshot_input_names()`).
 - Title/description/button on snapshots are visibility toggles (`title_enabled` / `description_enabled` / `button_enabled`). The shortcode renderer still derives those flags from content; snapshots persist the toggles and preview injects Lorem copy only when a toggle is on.

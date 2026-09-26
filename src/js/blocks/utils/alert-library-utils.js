@@ -7,8 +7,8 @@ import { buildAlertStyleClassName } from './alert-style-utils';
 /**
  * CamelCase block attribute keys owned by a library global style.
  *
- * `iconEnabled` is not persisted on the library config. Resolution derives it
- * from the style's icon fields for preview, lock, and detach copy.
+ * `iconEnabled` stays on the block. A global style supplies the icon artwork,
+ * and the Enable Alert Icon toggle decides whether that icon is shown.
  */
 export const GLOBAL_STYLE_BLOCK_KEYS = [
 	'alertGroup',
@@ -22,7 +22,6 @@ export const GLOBAL_STYLE_BLOCK_KEYS = [
 	'iconAppearance',
 	'iconVerticalAlignment',
 	'icon',
-	'iconEnabled',
 	'imageUrl',
 	'imageId',
 	'colorPrimary',
@@ -207,8 +206,6 @@ export function resolveGlobalStyleAttributes( globalStyleId, existingClassName =
 	if ( ! Object.keys( styleAttributes ).length ) {
 		return {};
 	}
-	// Derive visibility from stored icon fields; do not persist onto the block.
-	styleAttributes.iconEnabled = globalStyleHasIcon( styleAttributes );
 	return styleAttributes;
 }
 

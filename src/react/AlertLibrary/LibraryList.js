@@ -26,7 +26,7 @@ const DEFAULT_VIEW = {
 		direction: "asc",
 	},
 	titleField: "title",
-	fields: ["kind", "slug", "alert_group", "alert_type", "variant", "modified"],
+	fields: ["kind", "slug", "showInInserter", "alert_group", "alert_type", "variant", "modified"],
 	filters: [],
 	layout: {},
 };
@@ -144,6 +144,15 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				label: __("Slug", "alerts-dlx"),
 				enableSorting: true,
 				enableGlobalSearch: true,
+			},
+			{
+				id: "showInInserter",
+				label: __("Inserter", "alerts-dlx"),
+				enableSorting: true,
+				getValue: ({ item }) =>
+					item.showInInserter
+						? __("Shown", "alerts-dlx")
+						: __("Hidden", "alerts-dlx"),
 			},
 			{
 				id: "alert_group",

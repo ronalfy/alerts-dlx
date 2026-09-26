@@ -1,6 +1,13 @@
 import { __ } from '@wordpress/i18n';
 
 import { getCanonicalAlertTypeForPurpose } from '../utils/canonical-alert-presets';
+import {
+	GLOBAL_STYLE_BLOCK_KEYS,
+	buildSnapshotApplyAttributes,
+	getLocalizedLibraryItems,
+	globalStyleHasIcon,
+	libraryConfigToBlockAttributes,
+} from '../utils/alert-library-utils';
 
 const commonAttributes = {
 	alertGroup: 'bootstrap',
@@ -97,4 +104,80 @@ export function createGoalFirstCanonicalVariations() {
 	} );
 }
 
-export default createGoalFirstCanonicalVariations();
+/**
+ * Whether a localized library item is flagged for the inserter.
+ *
+ * @param {Object} item Library item.
+ * @return {boolean}
+ */
+function isShownInInserter( item ) {
+	return Boolean( item ) && [ true, 1, '1' ].includes( item.showInInserter );
+}
+
+/**
+ * Build one inserter variation per library item flagged for the inserter.
+ *
+ * Goal variations stay in place. None of these are isDefault, so inserting
+ * Alert itself still uses the Success variation.
+ *
+ * @param {Array} items Localized library items.
+ * @return {Array} Library inserter variations.
+ */
+export function createLibraryInserterVariations( items = getLocalizedLibraryItems() ) {
+	if ( ! Array.isArray( items ) ) {
+		return [];
+	}
+
+	return items.filter( isShownInInserter ).flatMap( ( item ) => {
+		const id = Number( item.id ) || 0;
+		if ( ! id || ( 'global_style' !== item.kind && 'snapshot' !== item.kind ) ) {
+			return [];
+		}
+
+		const title = typeof item.title === 'string' && item.title.trim()
+			? item.title.trim()
+			: __( 'Library item', 'alerts-dlx' );
+		const config = item.config && typeof item.config === 'object' ? item.config : {};
+
+		if ( 'global_style' === item.kind ) {
+			const exampleAttributes = {
+				...libraryConfigToBlockAttributes( config, GLOBAL_STYLE_BLOCK_KEYS, '' ),
+				globalStyleId: id,
+			};
+			exampleAttributes.iconEnabled = globalStyleHasIcon( exampleAttributes );
+			return [ {
+				name: `library-${ id }`,
+				title,
+				description: __( 'Insert an alert that follows this global style.', 'alerts-dlx' ),
+				icon: 'admin-appearance',
+				scope: [ 'inserter' ],
+				isDefault: false,
+				attributes: {
+					globalStyleId: id,
+				},
+				example: {
+					attributes: exampleAttributes,
+				},
+			} ];
+		}
+
+		const attributes = buildSnapshotApplyAttributes( config, '' );
+		return [ {
+			name: `library-${ id }`,
+			title,
+			description: __( 'Insert a copy of this snapshot.', 'alerts-dlx' ),
+			icon: 'admin-page',
+			scope: [ 'inserter' ],
+			isDefault: false,
+			attributes,
+			example: {
+				attributes,
+			},
+		} ];
+	} );
+}
+
+export default [
+	...createGoalFirstCanonicalVariations(),
+	...createLibraryInserterVariations(),
+];

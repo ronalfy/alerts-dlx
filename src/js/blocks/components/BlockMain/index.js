@@ -55,7 +55,9 @@ const BlockMain = (props) => {
     maximumWidth,
     maximumWidthUnit,
     baseFontSize,
+    globalStyleId,
   } = attributes;
+  const appearanceLocked = Number(globalStyleId) > 0;
 
   // Calculate max width.
   const maxWidthStyle = {
@@ -105,6 +107,7 @@ const BlockMain = (props) => {
               setAttributes={setAttributes}
               alertType={alertType}
               icons={iconSet}
+              disabled={appearanceLocked}
             />
           </div>
         )}

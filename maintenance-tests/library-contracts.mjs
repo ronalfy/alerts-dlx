@@ -38,7 +38,7 @@ assert.match( alertLibrary, /maybe_seed_starter_snapshots/, 'Starter snapshot se
 assert.match( alertLibrary, /STARTER_SNAPSHOTS_SEEDED_OPTION/, 'Starter seed option flag is defined' );
 assert.match( alertLibrary, /apply_global_style_to_block_attributes/, 'Global style merge helper exists for render' );
 assert.match( alertLibrary, /global_style_has_icon/, 'Global style icon presence helper exists for render' );
-assert.match( alertLibrary, /iconEnabled.*=.*global_style_has_icon/, 'Frontend merge derives iconEnabled from style icon fields' );
+assert.doesNotMatch( alertLibrary, /iconEnabled.*=.*global_style_has_icon/, 'Frontend merge leaves iconEnabled on the block' );
 assert.match( alertLibrary, /get_items_for_editor/, 'Editor localization helper exists' );
 assert.match( shortcodeBuilder, /get_global_style_input_names/, 'Appearance allowlist is defined in ShortcodeBuilder' );
 assert.match( shortcodeBuilder, /sanitize_global_style_values/, 'Appearance sanitizer is defined' );
@@ -103,22 +103,53 @@ assert.doesNotMatch( blocks, /CanonicalAlertPresets|canonicalPresets|canonicalDe
 assert.match( alertEdit, /AlertLibraryPanel/, 'Canonical edit uses the Library panel' );
 assert.doesNotMatch( alertEdit, /CanonicalAlertPresetsPanel|Presets and Defaults/, 'Preset panel is removed from the canonical edit' );
 assert.match( libraryPanel, /Apply snapshot/, 'Library panel exposes snapshot apply' );
+assert.match( libraryPanel, /Detach the global style to apply a snapshot/, 'Snapshot apply is hidden while a global style is attached' );
 assert.match( libraryPanel, /Detach/, 'Library panel exposes detach' );
+assert.match(
+	fs.readFileSync( 'src/js/blocks/components/BlockMain/index.js', 'utf8' ),
+	/disabled=\{appearanceLocked\}/,
+	'Canvas icon picker is disabled while a global style is attached'
+);
+assert.match(
+	fs.readFileSync( 'src/js/blocks/components/IconPicker/index.js', 'utf8' ),
+	/disabled = false/,
+	'Icon picker accepts a disabled prop'
+);
 assert.match( libraryUtils, /GLOBAL_STYLE_BLOCK_KEYS/, 'Editor maps global-style keys explicitly' );
 assert.match( libraryUtils, /SNAPSHOT_BLOCK_KEYS/, 'Editor maps snapshot keys explicitly' );
 assert.match( libraryUtils, /buildSnapshotApplyAttributes/, 'Snapshot apply clears globalStyleId' );
-assert.match( libraryUtils, /globalStyleHasIcon/, 'Editor derives icon visibility from style icon fields' );
-assert.match( libraryUtils, /iconEnabled.*globalStyleHasIcon|globalStyleHasIcon[\s\S]*iconEnabled/, 'Editor merge sets iconEnabled from style icon presence' );
-assert.match( libraryUtils, /'iconEnabled'/, 'iconEnabled is locked and copied on detach while a style is attached' );
+assert.match( libraryUtils, /globalStyleHasIcon/, 'Inserter previews can still detect a style icon' );
+assert.doesNotMatch(
+	libraryUtils.match( /export const GLOBAL_STYLE_BLOCK_KEYS = \[([\s\S]*?)\];/ )[ 1 ],
+	/'iconEnabled'/,
+	'Enable Alert Icon stays editable while a global style is attached'
+);
+assert.doesNotMatch(
+	fs.readFileSync( 'src/js/blocks/components/AlertSettingsPanel.js', 'utf8' ),
+	/Enable Alert Icon[\s\S]{0,180}disabled=\{/,
+	'Enable Alert Icon toggle is not disabled in the sidebar'
+);
 assert.doesNotMatch(
 	globalNamesMatch[ 1 ],
 	/'icon_enabled'/,
 	'Global styles do not persist icon_enabled; presence is derived from icon fields'
 );
+const variationsSource = fs.readFileSync( 'src/js/blocks/alert/variations.js', 'utf8' );
 assert.doesNotMatch(
-	fs.readFileSync( 'src/js/blocks/alert/variations.js', 'utf8' ),
+	variationsSource,
 	/getCanonicalAlertDefaults|canonicalDefaults/,
 	'Variations do not depend on site preset defaults'
+);
+assert.match( variationsSource, /isDefault: goal\.name === defaultPurpose/, 'Success remains the insert default' );
+assert.match( variationsSource, /createLibraryInserterVariations/, 'Flagged library items become inserter variations' );
+assert.match( variationsSource, /showInInserter/, 'Library variations read the inserter flag' );
+assert.match( alertLibrary, /META_SHOW_IN_INSERTER = '_alerts_dlx_show_in_inserter'/, 'Inserter flag meta key is defined' );
+assert.match( alertLibrary, /function set_show_in_inserter/, 'Inserter flag is saved per post' );
+assert.match( rest, /set_show_in_inserter/, 'Library REST writes the inserter flag' );
+assert.match(
+	fs.readFileSync( 'src/react/AlertLibrary/LibraryEditor.js', 'utf8' ),
+	/Show in block inserter/,
+	'Library editor exposes the inserter toggle'
 );
 
 assert.equal(

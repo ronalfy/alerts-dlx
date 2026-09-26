@@ -66,8 +66,9 @@ const variationSource = fs.readFileSync('src/js/blocks/alert/variations.js', 'ut
 const executableVariations = variationSource
 	.replace(/^import \{ __ \} from '@wordpress\/i18n';\n/m, '')
 	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/canonical-alert-presets';\n/m, '')
+	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/alert-library-utils';\n/m, '')
 	.replace(/export function createGoalFirstCanonicalVariations/, 'function createGoalFirstCanonicalVariations')
-	.replace(/export default createGoalFirstCanonicalVariations\(\);?\s*$/m, '');
+	.replace(/\n\/\*\*\n \* Whether a localized library item is flagged[\s\S]*$/, '\n');
 const loadVariations = new Function(
 	'__',
 	'getCanonicalAlertTypeForPurpose',

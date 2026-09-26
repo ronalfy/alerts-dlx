@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 import { cleanForSlug } from "@wordpress/url";
-import { Button, Notice, RadioControl, TextControl } from "@wordpress/components";
+import { Button, Notice, RadioControl, TextControl, ToggleControl } from "@wordpress/components";
 import AlertBuilderInspector from "../Components/AlertBuilder/AlertBuilderInspector";
 import AlertBuilderPreview from "../Components/AlertBuilder/AlertBuilderPreview";
 import Snackbar from "../Components/Snackbar";
@@ -68,6 +68,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 	);
 	const [title, setTitle] = useState("");
 	const [slug, setSlug] = useState("");
+	const [showInInserter, setShowInInserter] = useState(false);
 	const [config, setConfig] = useState(defaultConfig);
 	const [loading, setLoading] = useState(Boolean(itemId));
 	const [saving, setSaving] = useState(false);
@@ -84,10 +85,11 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 		return (
 			checkpoint.current.title !== title ||
 			checkpoint.current.slug !== slug ||
+			checkpoint.current.showInInserter !== showInInserter ||
 			checkpoint.current.kind !== kind ||
 			JSON.stringify(checkpoint.current.config) !== JSON.stringify(config)
 		);
-	}, [title, slug, kind, config]);
+	}, [title, slug, showInInserter, kind, config]);
 
 	useEffect(() => {
 		const handleBeforeUnload = (event) => {
@@ -107,6 +109,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 			const initial = {
 				title: "",
 				slug: "",
+				showInInserter: false,
 				kind: initialKind,
 				config: getDefaultsForKind(initialKind),
 			};
@@ -114,6 +117,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 			setKind(initialKind);
 			setTitle("");
 			setSlug("");
+			setShowInInserter(false);
 			setConfig(initial.config);
 			setLoading(false);
 			return;
@@ -126,12 +130,14 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 				const next = {
 					title: item.title || "",
 					slug: item.slug || "",
+					showInInserter: Boolean(item.showInInserter),
 					kind: item.kind || KIND_GLOBAL_STYLE,
 					config: item.config || getDefaultsForKind(item.kind || KIND_GLOBAL_STYLE),
 				};
 				checkpoint.current = next;
 				setTitle(next.title);
 				setSlug(next.slug);
+				setShowInInserter(next.showInInserter);
 				setKind(next.kind);
 				setConfig(next.config);
 			})
@@ -193,6 +199,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 			kind,
 			title: title.trim(),
 			slug: slug.trim() || undefined,
+			showInInserter,
 			config,
 		};
 
@@ -205,12 +212,14 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 				const next = {
 					title: saved.title || title,
 					slug: saved.slug || slug,
+					showInInserter: Boolean(saved.showInInserter),
 					kind: saved.kind || kind,
 					config: saved.config || config,
 				};
 				checkpoint.current = next;
 				setTitle(next.title);
 				setSlug(next.slug);
+				setShowInInserter(next.showInInserter);
 				setKind(next.kind);
 				setConfig(next.config);
 				showSnackbar(getLibraryLabels(next.kind).saved);
@@ -309,6 +318,16 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 						onChange={setSlug}
 						help={__(
 							"Used to reference this item from blocks and shortcodes in a future release.",
+							"alerts-dlx"
+						)}
+						__nextHasNoMarginBottom
+					/>
+					<ToggleControl
+						label={__("Show in block inserter (Advanced)", "alerts-dlx")}
+						checked={showInInserter}
+						onChange={setShowInInserter}
+						help={__(
+							"This item appears as its own choice in the Alert inserter. Any number of items can be shown.",
 							"alerts-dlx"
 						)}
 						__nextHasNoMarginBottom

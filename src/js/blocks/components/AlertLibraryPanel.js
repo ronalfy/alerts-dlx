@@ -124,7 +124,14 @@ export default function AlertLibraryPanel( { attributes, setAttributes } ) {
 				</Button>
 			) }
 
-			{ ! snapshots.length ? (
+			{ globalStyleId > 0 ? (
+				<p>
+					{ __(
+						'Detach the global style to apply a snapshot.',
+						'alerts-dlx'
+					) }
+				</p>
+			) : ! snapshots.length ? (
 				<p>{ __( 'No snapshots yet.', 'alerts-dlx' ) }</p>
 			) : (
 				<>

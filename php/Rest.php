@@ -201,6 +201,10 @@ class Rest {
 
 		update_post_meta( $post_id, AlertLibrary::META_KIND, $kind );
 
+		if ( array_key_exists( 'showInInserter', $params ) ) {
+			AlertLibrary::set_show_in_inserter( $post_id, rest_sanitize_boolean( $params['showInInserter'] ) );
+		}
+
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $post_id ) );
 		return rest_ensure_response( $formatted );
 	}
@@ -261,6 +265,10 @@ class Rest {
 			if ( is_wp_error( $result ) ) {
 				return $result;
 			}
+		}
+
+		if ( array_key_exists( 'showInInserter', $params ) ) {
+			AlertLibrary::set_show_in_inserter( $post_id, rest_sanitize_boolean( $params['showInInserter'] ) );
 		}
 
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $post_id ) );
@@ -357,6 +365,7 @@ class Rest {
 
 		update_post_meta( $new_id, AlertLibrary::META_KIND, $kind );
 
+		// Duplicates start hidden from the inserter. The source flag is not copied.
 		$formatted = AlertLibrary::format_item_for_rest( get_post( $new_id ) );
 		return rest_ensure_response( $formatted );
 	}

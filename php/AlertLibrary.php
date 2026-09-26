@@ -22,6 +22,9 @@ final class AlertLibrary {
 	/** Meta key for library entry kind. */
 	public const META_KIND = '_alerts_dlx_kind';
 
+	/** Meta key for showing this item as a block inserter variation. */
+	public const META_SHOW_IN_INSERTER = '_alerts_dlx_show_in_inserter';
+
 	/** Global style library kind. */
 	public const KIND_GLOBAL_STYLE = 'global_style';
 
@@ -84,6 +87,61 @@ final class AlertLibrary {
 				'sanitize_callback' => array( self::class, 'sanitize_kind_meta' ),
 			)
 		);
+
+		register_post_meta(
+			self::POST_TYPE,
+			self::META_SHOW_IN_INSERTER,
+			array(
+				'type'              => 'boolean',
+				'single'            => true,
+				'show_in_rest'      => false,
+				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
+				'sanitize_callback' => array( self::class, 'sanitize_show_in_inserter_meta' ),
+			)
+		);
+	}
+
+	/**
+	 * Sanitize the inserter flag on direct meta updates.
+	 *
+	 * @param mixed $value Raw flag.
+	 * @return bool
+	 */
+	public static function sanitize_show_in_inserter_meta( $value ) {
+		return (bool) $value;
+	}
+
+	/**
+	 * Whether a library item is flagged for the block inserter.
+	 *
+	 * @param int $post_id Library post ID.
+	 * @return bool
+	 */
+	public static function is_shown_in_inserter( $post_id ) {
+		return (bool) get_post_meta( (int) $post_id, self::META_SHOW_IN_INSERTER, true );
+	}
+
+	/**
+	 * Set or clear the inserter flag for one library post.
+	 *
+	 * Other library posts are left unchanged. Any number of items may be flagged.
+	 *
+	 * @param int  $post_id Library post ID.
+	 * @param bool $show    Whether this item appears in the inserter.
+	 */
+	public static function set_show_in_inserter( $post_id, $show ) {
+		$post_id = absint( $post_id );
+		$post    = get_post( $post_id );
+		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
+			return;
+		}
+
+		if ( $show ) {
+			update_post_meta( $post_id, self::META_SHOW_IN_INSERTER, '1' );
+			return;
+		}
+
+		delete_post_meta( $post_id, self::META_SHOW_IN_INSERTER );
 	}
 
 	/**
@@ -420,15 +478,16 @@ final class AlertLibrary {
 		$kind   = self::get_post_kind( $post->ID );
 
 		return array(
-			'id'          => $post->ID,
-			'title'       => $post->post_title,
-			'slug'        => $post->post_name,
-			'kind'        => $kind,
-			'config'      => $config,
-			'alert_group' => $config['alert_group'] ?? '',
-			'alert_type'  => $config['alert_type'] ?? '',
-			'variant'     => $config['variant'] ?? '',
-			'modified'    => mysql2date( 'c', $post->post_modified_gmt, false ),
+			'id'             => $post->ID,
+			'title'          => $post->post_title,
+			'slug'           => $post->post_name,
+			'kind'           => $kind,
+			'config'         => $config,
+			'showInInserter' => self::is_shown_in_inserter( $post->ID ),
+			'alert_group'    => $config['alert_group'] ?? '',
+			'alert_type'     => $config['alert_type'] ?? '',
+			'variant'        => $config['variant'] ?? '',
+			'modified'       => mysql2date( 'c', $post->post_modified_gmt, false ),
 		);
 	}
 
@@ -492,11 +551,12 @@ final class AlertLibrary {
 		$payload = array();
 		foreach ( $items as $item ) {
 			$payload[] = array(
-				'id'     => (int) $item['id'],
-				'title'  => (string) $item['title'],
-				'slug'   => (string) $item['slug'],
-				'kind'   => (string) $item['kind'],
-				'config' => is_array( $item['config'] ) ? $item['config'] : array(),
+				'id'             => (int) $item['id'],
+				'title'          => (string) $item['title'],
+				'slug'           => (string) $item['slug'],
+				'kind'           => (string) $item['kind'],
+				'config'         => is_array( $item['config'] ) ? $item['config'] : array(),
+				'showInInserter' => ! empty( $item['showInInserter'] ),
 			);
 		}
 
@@ -593,9 +653,8 @@ final class AlertLibrary {
 	 * Merge a linked global style's appearance over block attributes for render.
 	 *
 	 * Content attributes on the block always win. Snapshot-only fields are not
-	 * taken from the global style. Icon visibility is derived from the style's
-	 * icon fields for this render only so the block's saved iconEnabled is
-	 * restored after detach.
+	 * taken from the global style. The block's own iconEnabled decides whether
+	 * the style's icon is shown.
 	 *
 	 * @param array $attributes Block attributes (camelCase).
 	 * @return array
@@ -614,9 +673,6 @@ final class AlertLibrary {
 				(string) $style_attributes['alertType']
 			);
 		}
-
-		// Show the style icon even when the block's own iconEnabled is false.
-		$style_attributes['iconEnabled'] = self::global_style_has_icon( $style_attributes );
 
 		return array_merge( $attributes, $style_attributes );
 	}
