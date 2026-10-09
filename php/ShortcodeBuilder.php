@@ -697,7 +697,7 @@ final class ShortcodeBuilder {
 		if ( strlen( $icon ) > self::MAX_ICON_LENGTH ) {
 			return new \WP_Error( 'alerts_dlx_builder_icon', __( 'The icon markup is too long.', 'alerts-dlx' ) );
 		}
-		$sanitized['icon'] = wp_kses( $icon, Functions::get_kses_allowed_html() );
+		$sanitized['icon'] = Functions::sanitize_icon_svg( $icon );
 
 		foreach ( self::COLOR_FIELDS as $color_field ) {
 			$color = self::sanitize_color_value( $values[ $color_field ] ?? '' );

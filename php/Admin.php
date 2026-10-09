@@ -399,7 +399,7 @@ class Admin {
 	 */
 	private function enqueue_alert_preview_assets() {
 		$blocks = new Blocks();
-		$blocks->register_block_editor_scripts();
+		$blocks->register_frontend_styles();
 		foreach ( array( 'bootstrap', 'chakra', 'material', 'shoelace' ) as $style ) {
 			wp_enqueue_style( 'alerts-dlx-' . $style . '-styles' );
 		}

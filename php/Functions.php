@@ -570,6 +570,18 @@ class Functions {
 	}
 
 	/**
+	 * Sanitize a user-supplied icon to inline presentation SVG.
+	 *
+	 * Close-button sprites are hardcoded and must not pass through this helper.
+	 *
+	 * @param string $svg Raw icon markup.
+	 * @return string Clean SVG, or an empty string when the markup is rejected.
+	 */
+	public static function sanitize_icon_svg( string $svg ): string {
+		return SvgSanitizer::sanitize( $svg );
+	}
+
+	/**
 	 * Array data that must be sanitized.
 	 *
 	 * @param array $data Data to be sanitized.

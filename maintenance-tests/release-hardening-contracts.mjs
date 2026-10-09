@@ -9,6 +9,7 @@ const read = (relative) => fs.readFileSync(path.join(root, relative), 'utf8');
 
 const php = read('php/ShortcodeBuilder.php');
 const functions = read('php/Functions.php');
+const svgSanitizer = read('php/SvgSanitizer.php');
 const blocks = read('php/Blocks.php');
 const admin = read('php/Admin.php');
 const builder = read('src/react/ShortcodeBuilder/ShortcodeBuilder.js');
@@ -37,10 +38,14 @@ contains(blocks, "$allowed_width_units = array( 'px', 'em', 'rem', '%', 'vw' );"
 contains(blocks, "$atts['maximum_width_unit'] = $defaults['maximum_width_unit'];", 'Invalid shortcode width units fall back safely');
 contains(functions, 'public static function sanitize_css_color( $value )', 'Shared CSS color sanitizer is present');
 contains(blocks, "Functions::sanitize_css_color( (string) $atts[ $color_field ] )", 'Shortcode colors are allowlisted');
-contains(blocks, "strlen( (string) $atts['icon'] ) > 12000", 'Shortcode icon bytes are bounded before KSES');
-contains(blocks, "wp_kses( (string) $atts['icon'], Functions::get_kses_allowed_html() )", 'Shortcode icon markup is sanitized');
-contains(blocks, 'xlink:href|href', 'Shortcode icon references are inspected');
-contains(blocks, '(?!#)', 'Only local SVG fragments survive the reference guard');
+contains(functions, 'function sanitize_icon_svg( string $svg )', 'Icon SVG sanitizer wrapper remains on Functions');
+contains(functions, 'return SvgSanitizer::sanitize( $svg );', 'Functions delegates icon SVG sanitizing');
+contains(svgSanitizer, 'private const MAX_BYTES = 12000;', 'Icon SVG sanitizer caps markup length');
+contains(svgSanitizer, 'LIBXML_NONET', 'Icon SVG sanitizer blocks network access while parsing');
+assert.equal(svgSanitizer.includes('LIBXML_NOENT'), false, 'Icon SVG sanitizer does not enable entity substitution');
+assertions += 1;
+contains(blocks, "Functions::sanitize_icon_svg( (string) $atts['icon'] )", 'Shortcode icon markup is sanitized');
+contains(php, 'Functions::sanitize_icon_svg( $icon )', 'Builder stores sanitized icon markup');
 contains(blocks, "min( 5000, max( 1, (int) $atts['maximum_width'] ) )", 'Shortcode width is bounded');
 contains(blocks, "min( 96, max( 8, (int) $atts['base_font_size'] ) )", 'Shortcode font size is bounded');
 contains(blocks, "min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) )", 'Shortcode cookie lifetime is bounded');
@@ -80,7 +85,7 @@ contains(dismiss, 'closeButton.dataset.alertsDlxBound', 'Dismiss controls bind o
 contains(dismiss, '(prefers-reduced-motion: reduce)', 'Reduced-motion dismissal is supported');
 contains(dismiss, 'window.setTimeout( removeAlert, 1000 )', 'Dismissal has an animation fallback');
 
-const combined = [php, functions, blocks, admin, builder, dismiss].join('\n');
+const combined = [php, functions, svgSanitizer, blocks, admin, builder, dismiss].join('\n');
 for (const [label, forbidden] of [
 	['WordPress HTTP API', /\bwp_(?:safe_)?remote_(?:get|post|request|head)\s*\(/i],
 	['direct external fetch', /\bfetch\s*\(\s*['"`]\s*https?:/i],
@@ -99,6 +104,6 @@ console.log(JSON.stringify({
 	status: 'PASS',
 	milestone: 'RELEASE_HARDENING',
 	assertions,
-	files_checked: 6,
+	files_checked: 7,
 	remote_or_tracking_surface_added: false,
 }));

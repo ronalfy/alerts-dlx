@@ -43,7 +43,8 @@ final class AlertLibrary {
 	public static function run() {
 		add_action( 'init', array( self::class, 'register_post_type' ) );
 		add_action( 'init', array( self::class, 'register_meta' ) );
-		add_action( 'init', array( self::class, 'maybe_seed_starter_snapshots' ), 20 );
+		// admin_init runs after the library post type is registered on init.
+		add_action( 'admin_init', array( self::class, 'maybe_seed_starter_snapshots' ) );
 		add_filter( 'map_meta_cap', array( self::class, 'map_meta_cap' ), 10, 4 );
 	}
 
@@ -207,31 +208,13 @@ final class AlertLibrary {
 	 * @return array
 	 */
 	public static function map_meta_cap( $caps, $cap, $user_id, $args ) {
-		$library_caps = array(
-			'edit_post',
-			'read_post',
-			'delete_post',
-			'edit_posts',
-			'publish_posts',
-			'create_posts',
-		);
-
-		if ( ! in_array( $cap, $library_caps, true ) ) {
+		if ( ! in_array( $cap, array( 'edit_post', 'read_post', 'delete_post' ), true ) || empty( $args[0] ) ) {
 			return $caps;
 		}
 
-		if ( in_array( $cap, array( 'edit_post', 'read_post', 'delete_post' ), true ) && ! empty( $args[0] ) ) {
-			$post = get_post( (int) $args[0] );
-			if ( $post && self::POST_TYPE === $post->post_type ) {
-				return array( 'manage_options' );
-			}
-		}
-
-		if ( in_array( $cap, array( 'edit_posts', 'publish_posts', 'create_posts' ), true ) ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Capability mapping only.
-			if ( isset( $_REQUEST['post_type'] ) && self::POST_TYPE === sanitize_key( wp_unslash( $_REQUEST['post_type'] ) ) ) {
-				return array( 'manage_options' );
-			}
+		$post = get_post( (int) $args[0] );
+		if ( $post && self::POST_TYPE === $post->post_type ) {
+			return array( 'manage_options' );
 		}
 
 		return $caps;
@@ -539,6 +522,11 @@ final class AlertLibrary {
 	 * @return array
 	 */
 	public static function get_items_for_editor() {
+		static $payload = null;
+		if ( is_array( $payload ) ) {
+			return $payload;
+		}
+
 		$items = self::query_items(
 			self::KIND_ALL,
 			array(

@@ -256,6 +256,10 @@ final class AlertAttributes {
 			}
 		}
 
+		// Every render path shares one icon result. A second pass still keeps valid icons.
+		$icon               = $normalized['icon'];
+		$normalized['icon'] = is_string( $icon ) ? Functions::sanitize_icon_svg( $icon ) : '';
+
 		return $normalized;
 	}
 }

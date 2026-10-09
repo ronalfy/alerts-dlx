@@ -87,7 +87,9 @@ class Blocks {
 			}
 		}
 
-		// Enqueue block assets.
+		// Register style handles before WordPress enqueues editorStyle at priority 10.
+		add_action( 'enqueue_block_assets', array( $this, 'register_editor_style_handles' ), 1 );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'register_editor_style_handles' ), 1 );
 		add_action( 'enqueue_block_assets', array( $this, 'register_block_editor_scripts_iframe' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_scripts' ) );
 
@@ -159,16 +161,8 @@ class Blocks {
 			$atts[ $color_field ] = false === $color ? $defaults[ $color_field ] : $color;
 		}
 
-		// Keep the legacy public shortcode within the same resource limits as
-		// the visual builder. Oversized icons fail closed before expensive KSES.
-		if ( strlen( (string) $atts['icon'] ) > 12000 ) {
-			$atts['icon'] = '';
-		} else {
-			$atts['icon'] = wp_kses( (string) $atts['icon'], Functions::get_kses_allowed_html() );
-		}
-		if ( preg_match( '/\b(?:xlink:href|href)\s*=\s*([\"\'])(?!#)/i', $atts['icon'] ) ) {
-			$atts['icon'] = '';
-		}
+		// User icons are inline SVG. The sanitizer caps length and drops active content.
+		$atts['icon'] = Functions::sanitize_icon_svg( (string) $atts['icon'] );
 
 		// Numeric shortcode attributes share the builder's documented bounds.
 		// This prevents extreme values from reaching CSS or cookie metadata.
@@ -208,8 +202,8 @@ class Blocks {
 		$atts['title_enabled']       = ! empty( $atts['alert_title'] );
 		$atts['icon_enabled']        = ! empty( $atts['icon'] ) || ! empty( $atts['image_url'] );
 
-		// Register scripts.
-		$this->register_block_editor_scripts();
+		// Register only the theme styles the public shortcode can print.
+		$this->register_frontend_styles();
 
 		$style_handles_to_print = array();
 		if ( ! wp_style_is( 'alerts-dlx-block-editor-styles-lato', 'done' ) ) {
@@ -286,7 +280,7 @@ class Blocks {
 		$attributes = AlertLibrary::apply_global_style_to_block_attributes( $attributes );
 
 		$renderer = new AlertRenderer(
-			array( $this, 'register_block_editor_scripts' ),
+			array( $this, 'register_frontend_styles' ),
 			array( $this, 'print_close_button_svgs' )
 		);
 		return $renderer->render( $attributes, $content, $block );
@@ -302,24 +296,113 @@ class Blocks {
 	}
 
 	/**
+	 * Register theme styles and the optional Lato font for front-end alerts.
+	 *
+	 * Public rendering uses this instead of the editor script so a page of
+	 * alerts does not query the style library. Registration is checked on the
+	 * current style registry so the editor iframe can collect the same handles.
+	 */
+	public function register_frontend_styles() {
+		$version = Functions::get_plugin_version();
+		$styles  = array(
+			'alerts-dlx-bootstrap-styles' => 'dist/alerts-dlx-bootstrap-styles.css',
+			'alerts-dlx-chakra-styles'    => 'dist/alerts-dlx-chakra-styles.css',
+			'alerts-dlx-material-styles'  => 'dist/alerts-dlx-material-styles.css',
+			'alerts-dlx-shoelace-styles'  => 'dist/alerts-dlx-shoelace-styles.css',
+		);
+
+		foreach ( $styles as $handle => $path ) {
+			if ( wp_style_is( $handle, 'registered' ) ) {
+				continue;
+			}
+			wp_register_style(
+				$handle,
+				Functions::get_plugin_url( $path ),
+				array(),
+				$version,
+				'all'
+			);
+		}
+
+		if ( wp_style_is( 'alerts-dlx-block-editor-styles-lato', 'registered' ) ) {
+			return;
+		}
+
+		/**
+		 * Filter whether to load the Lato font stylesheet.
+		 *
+		 * @param bool $load_lato_font Whether to load the Lato font stylesheet.
+		 * @return bool
+		 */
+		if ( apply_filters( 'alerts_dlx_load_fonts', true ) ) {
+			wp_register_style(
+				'alerts-dlx-block-editor-styles-lato',
+				Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				array(),
+				$version,
+				'all'
+			);
+			wp_add_inline_style(
+				'alerts-dlx-block-editor-styles-lato',
+				':root {
+					--alerts-dlx-font-family: "Lato", "Helvetica", "Arial", sans-serif;
+				}'
+			);
+			return;
+		}
+
+		wp_register_style(
+			'alerts-dlx-block-editor-styles-lato',
+			false,
+			array(),
+			$version,
+			'all'
+		);
+		$default_font_family = apply_filters( 'alerts_dlx_default_font_family', '"Helvetica", "Arial", sans-serif' );
+		wp_add_inline_style(
+			'alerts-dlx-block-editor-styles-lato',
+			':root {
+				--alerts-dlx-font-family: ' . wp_strip_all_tags( $default_font_family ) . ';
+			}'
+		);
+	}
+
+	/**
+	 * Register editor and theme style handles without loading the style library.
+	 *
+	 * Block metadata lists these handles in editorStyle. WordPress enqueues
+	 * them while collecting iframe assets, so they must already be registered.
+	 */
+	public function register_editor_style_handles() {
+		$this->register_frontend_styles();
+
+		$version = Functions::get_plugin_version();
+		if ( ! wp_style_is( 'alerts-dlx-block-editor', 'registered' ) ) {
+			// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
+			wp_register_style(
+				'alerts-dlx-block-editor',
+				Functions::get_plugin_url( 'dist/alerts-dlx-block-editor.css' ),
+				array(),
+				$version,
+				'all'
+			);
+		}
+		if ( ! wp_style_is( 'alerts-dlx-block-editor-styles', 'registered' ) ) {
+			wp_register_style(
+				'alerts-dlx-block-editor-styles',
+				Functions::get_plugin_url( 'build/index.css' ),
+				array( 'alerts-dlx-block-editor' ),
+				$version,
+				'all'
+			);
+		}
+	}
+
+	/**
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
-		// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
-		wp_register_style(
-			'alerts-dlx-block-editor',
-			Functions::get_plugin_url( 'dist/alerts-dlx-block-editor.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-block-editor-styles',
-			Functions::get_plugin_url( 'build/index.css' ),
-			array( 'alerts-dlx-block-editor' ),
-			Functions::get_plugin_version(),
-			'all'
-		);
+		$this->register_editor_style_handles();
 
 		$deps = require Functions::get_plugin_dir( 'build/index.asset.php' );
 		wp_register_script(
@@ -348,72 +431,6 @@ class Blocks {
 				'canManageLibrary'      => current_user_can( 'manage_options' ),
 			)
 		);
-
-		wp_register_style(
-			'alerts-dlx-bootstrap-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-bootstrap-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-chakra-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-chakra-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-material-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-material-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-shoelace-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-shoelace-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-
-		/**
-		 * Filter whether to load the Lato font stylesheet.
-		 *
-		 * @param bool $load_lato_font Whether to load the Lato font stylesheet.
-		 * @return bool
-		 */
-		if ( apply_filters( 'alerts_dlx_load_fonts', true ) ) {
-			wp_register_style(
-				'alerts-dlx-block-editor-styles-lato',
-				Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				array(),
-				Functions::get_plugin_version(),
-				'all'
-			);
-			wp_add_inline_style(
-				'alerts-dlx-block-editor-styles-lato',
-				':root {
-					--alerts-dlx-font-family: "Lato", "Helvetica", "Arial", sans-serif;
-				}'
-			);
-		} else {
-			wp_register_style(
-				'alerts-dlx-block-editor-styles-lato',
-				false,
-				array(),
-				Functions::get_plugin_version(),
-				'all'
-			);
-			$default_font_family = apply_filters( 'alerts_dlx_default_font_family', '"Helvetica", "Arial", sans-serif' );
-			wp_add_inline_style(
-				'alerts-dlx-block-editor-styles-lato',
-				':root {
-					--alerts-dlx-font-family: ' . wp_strip_all_tags( $default_font_family ) . ';
-				}'
-			);
-		}
 	}
 
 	/**
