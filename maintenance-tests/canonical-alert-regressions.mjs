@@ -65,6 +65,8 @@ for (const [group, item] of Object.entries(historical)) {
 const variationSource = fs.readFileSync('src/js/blocks/alert/variations.js', 'utf8');
 const executableVariations = variationSource
 	.replace(/^import \{ __ \} from '@wordpress\/i18n';\n/m, '')
+	.replace(/^import \{[^}]*\} from '@wordpress\/icons';\n/m, '')
+	.replace(/^import metadata from '\.\/block\.json';\n/m, '')
 	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/canonical-alert-presets';\n/m, '')
 	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/alert-library-utils';\n/m, '')
 	.replace(/export function createGoalFirstCanonicalVariations/, 'function createGoalFirstCanonicalVariations')

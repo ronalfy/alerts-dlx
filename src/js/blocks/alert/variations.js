@@ -1,5 +1,7 @@
 import { __ } from '@wordpress/i18n';
+import { styles as globalStyleIcon } from '@wordpress/icons';
 
+import metadata from './block.json';
 import { getCanonicalAlertTypeForPurpose } from '../utils/canonical-alert-presets';
 import {
 	GLOBAL_STYLE_BLOCK_KEYS,
@@ -115,6 +117,33 @@ function isShownInInserter( item ) {
 }
 
 /**
+ * Build preview-only attributes for a library inserter variation.
+ *
+ * A variation `example` replaces the block.json example, so library items
+ * reuse the same sample copy the goal variations inherit. The sample copy is
+ * preview-only and never becomes part of the inserted attributes.
+ *
+ * @param {Object} attributes Library appearance or snapshot attributes.
+ * @return {Object} Example attributes with sample content.
+ */
+function buildLibraryExampleAttributes( attributes = {} ) {
+	const sample = metadata.example?.attributes || {};
+	const exampleAttributes = {
+		alertTitle: sample.alertTitle,
+		alertDescription: sample.alertDescription,
+		titleEnabled: true,
+		descriptionEnabled: true,
+		...attributes,
+	};
+
+	if ( exampleAttributes.buttonEnabled ) {
+		exampleAttributes.buttonText = 'Learn More';
+	}
+
+	return exampleAttributes;
+}
+
+/**
  * Build one inserter variation per library item flagged for the inserter.
  *
  * Goal variations stay in place. None of these are isDefault, so inserting
@@ -140,16 +169,16 @@ export function createLibraryInserterVariations( items = getLocalizedLibraryItem
 		const config = item.config && typeof item.config === 'object' ? item.config : {};
 
 		if ( 'global_style' === item.kind ) {
-			const exampleAttributes = {
+			const exampleAttributes = buildLibraryExampleAttributes( {
 				...libraryConfigToBlockAttributes( config, GLOBAL_STYLE_BLOCK_KEYS, '' ),
 				globalStyleId: id,
-			};
+			} );
 			exampleAttributes.iconEnabled = globalStyleHasIcon( exampleAttributes );
 			return [ {
 				name: `library-${ id }`,
 				title,
 				description: __( 'Insert an alert that follows this global style.', 'alerts-dlx' ),
-				icon: 'admin-appearance',
+				icon: globalStyleIcon,
 				scope: [ 'inserter' ],
 				isDefault: false,
 				attributes: {
@@ -166,12 +195,12 @@ export function createLibraryInserterVariations( items = getLocalizedLibraryItem
 			name: `library-${ id }`,
 			title,
 			description: __( 'Insert a copy of this snapshot.', 'alerts-dlx' ),
-			icon: 'admin-page',
+			icon: 'camera',
 			scope: [ 'inserter' ],
 			isDefault: false,
 			attributes,
 			example: {
-				attributes,
+				attributes: buildLibraryExampleAttributes( attributes ),
 			},
 		} ];
 	} );
