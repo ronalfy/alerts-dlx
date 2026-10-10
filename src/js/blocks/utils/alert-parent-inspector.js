@@ -4,6 +4,12 @@
 
 import { dispatch, select } from "@wordpress/data";
 import { store as blockEditorStore } from "@wordpress/block-editor";
+import { __dangerousOptInToUnstableAPIsOnlyForCoreModules } from "@wordpress/private-apis";
+export const { lock, unlock } =
+	__dangerousOptInToUnstableAPIsOnlyForCoreModules(
+		"I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.",
+		"@wordpress/editor"
+	);
 import { ALERT_BLOCK_NAMES } from "./alert-block-registry";
 
 export { ALERT_BLOCK_NAMES } from "./alert-block-registry";
@@ -16,23 +22,23 @@ export { ALERT_BLOCK_NAMES } from "./alert-block-registry";
  * @return {string|null} Alert ancestor client ID or null.
  */
 export function getAlertAncestorClientId(clientId, selectFn) {
-  let currentId = clientId;
+	let currentId = clientId;
 
-  while (currentId) {
-    const parentId = selectFn(blockEditorStore).getBlockRootClientId(currentId);
-    if (!parentId) {
-      return null;
-    }
+	while (currentId) {
+		const parentId = selectFn(blockEditorStore).getBlockRootClientId(currentId);
+		if (!parentId) {
+			return null;
+		}
 
-    const parentBlock = selectFn(blockEditorStore).getBlock(parentId);
-    if (parentBlock && ALERT_BLOCK_NAMES.includes(parentBlock.name)) {
-      return parentId;
-    }
+		const parentBlock = selectFn(blockEditorStore).getBlock(parentId);
+		if (parentBlock && ALERT_BLOCK_NAMES.includes(parentBlock.name)) {
+			return parentId;
+		}
 
-    currentId = parentId;
-  }
+		currentId = parentId;
+	}
 
-  return null;
+	return null;
 }
 
 /**
@@ -42,16 +48,16 @@ export function getAlertAncestorClientId(clientId, selectFn) {
  * WordPress versions.
  */
 function openBlockInspectorSidebar() {
-  const editPostStore = select("core/edit-post");
-  if (editPostStore) {
-    dispatch("core/edit-post").openGeneralSidebar("edit-post/block");
-    return;
-  }
+	const editPostStore = select("core/edit-post");
+	if (editPostStore) {
+		dispatch("core/edit-post").openGeneralSidebar("edit-post/block");
+		return;
+	}
 
-  const editSiteStore = select("core/edit-site");
-  if (editSiteStore) {
-    dispatch("core/edit-site").openGeneralSidebar("edit-site/block-inspector");
-  }
+	const editSiteStore = select("core/edit-site");
+	if (editSiteStore) {
+		dispatch("core/edit-site").openGeneralSidebar("edit-site/block-inspector");
+	}
 }
 
 /**
@@ -68,13 +74,18 @@ function openBlockInspectorSidebar() {
  * @returns {void}
  */
 export function openAlertParentInspectorTab(alertClientId, tab) {
-  if (!alertClientId) {
-    return;
-  }
+	if (!alertClientId) {
+		return;
+	}
 
-  // Keep the parameter meaningful for callers while avoiding a private API.
-  void tab;
+	dispatch(blockEditorStore).selectBlock(alertClientId);
+	openBlockInspectorSidebar();
 
-  dispatch(blockEditorStore).selectBlock(alertClientId);
-  openBlockInspectorSidebar();
+	const blockEditorDispatch = unlock(dispatch(blockEditorStore));
+
+	if (typeof blockEditorDispatch.requestInspectorTab === "function") {
+		blockEditorDispatch.requestInspectorTab(tab, {
+			openPanel: alertClientId,
+		});
+	}
 }
