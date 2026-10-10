@@ -86,6 +86,175 @@ for (const file of integrationPluginFiles) {
   }
 }
 
+const groupToolbar = fs.readFileSync(
+  "src/js/blocks/plugins/alert-group-toolbar.js",
+  "utf8"
+);
+assert.match(
+  groupToolbar,
+  /CANONICAL_ALERT_BLOCK_NAME/,
+  "Alert group toolbar is limited to the canonical Alert block"
+);
+assert.doesNotMatch(
+  groupToolbar,
+  /ALERT_BLOCK_NAMES/,
+  "Alert group toolbar does not appear on historical alert blocks"
+);
+assert.match(
+  groupToolbar,
+  /group as groupIcon/,
+  "Alert group toolbar uses the WordPress group icon"
+);
+assert.match(
+  groupToolbar,
+  /applyCanonicalAlertGroup\(/,
+  "Alert group toolbar switches designs through the shared helper"
+);
+assert.match(
+  groupToolbar,
+  /Detach the global style to change the design system\./,
+  "Locked group toolbar explains that the global style must be detached"
+);
+assert.match(
+  groupToolbar,
+  /accessibleWhenDisabled: appearanceLocked/,
+  "Locked group toolbar stays focusable so the explanation can be read"
+);
+for (const blockName of allAlertBlockNames) {
+  assert.ok(
+    !groupToolbar.includes(`"${blockName}"`) && !groupToolbar.includes(`'${blockName}'`),
+    `Alert group toolbar must not hardcode ${blockName}`
+  );
+}
+
+const editorIndex = fs.readFileSync("src/index.js", "utf8");
+const styleImportAt = editorIndex.indexOf(
+  'import "./js/blocks/plugins/alert-style-toolbar"'
+);
+const groupImportAt = editorIndex.indexOf(
+  'import "./js/blocks/plugins/alert-group-toolbar"'
+);
+const elementsImportAt = editorIndex.indexOf(
+  'import "./js/blocks/plugins/alert-elements-toolbar"'
+);
+assert.ok(styleImportAt !== -1 && groupImportAt !== -1, "Both alert toolbars are registered");
+assert.ok(
+  groupImportAt > styleImportAt && groupImportAt < elementsImportAt,
+  "Alert group toolbar is registered after the style toolbar and before later toolbars so it renders immediately to the style toolbar's left"
+);
+
+const canonicalEdit = fs.readFileSync("src/js/blocks/alert/edit.js", "utf8");
+assert.match(
+  canonicalEdit,
+  /applyCanonicalAlertGroup\(/,
+  "Inspector design select uses the shared group switch helper"
+);
+
+function loadThemeDefinition(file) {
+  const source = fs
+    .readFileSync(file, "utf8")
+    .replace(/^import .*;\n/gm, "")
+    .replace("export default ", "return ");
+  return new Function("__", source)((text) => text);
+}
+
+const helperSource = fs
+  .readFileSync("src/js/blocks/utils/canonical-alert-design.js", "utf8")
+  .replace(/^import .*;\n/gm, "")
+  .replace(/export const /g, "const ")
+  .replace(/export function /g, "function ");
+const loadHelper = new Function(
+  "bootstrapDefinition",
+  "chakraDefinition",
+  "materialDefinition",
+  "shoelaceDefinition",
+  "buildAlertStyleClassName",
+  `${helperSource}\nreturn { CANONICAL_ALERT_DESIGNS, applyCanonicalAlertGroup, getCanonicalAlertGroupAttributes };`
+);
+const buildAlertStyleClassName = (className, styleName) => {
+  const trimmed = (className || "")
+    .replace(/\bis-style-\S+/g, "")
+    .trim()
+    .replace(/\s+/g, " ");
+  return trimmed ? `${trimmed} is-style-${styleName}` : `is-style-${styleName}`;
+};
+const designHelper = loadHelper(
+  loadThemeDefinition("src/js/blocks/bootstrap/theme-definition.js"),
+  loadThemeDefinition("src/js/blocks/chakraui/theme-definition.js"),
+  loadThemeDefinition("src/js/blocks/material/theme-definition.js"),
+  loadThemeDefinition("src/js/blocks/shoelace/theme-definition.js"),
+  buildAlertStyleClassName
+);
+assert.deepEqual(
+  Object.entries(designHelper.CANONICAL_ALERT_DESIGNS).map(([value, item]) => [value, item.label]),
+  [
+    ["bootstrap", "Bootstrap"],
+    ["chakra", "Chakra"],
+    ["material", "Material"],
+    ["shoelace", "Shoelace"],
+  ],
+  "Group toolbar labels match the inspector design-system labels"
+);
+
+const switchedToChakra = designHelper.getCanonicalAlertGroupAttributes({
+  alertGroup: "chakra",
+  alertType: "success",
+  className: "custom-class is-style-success",
+});
+assert.deepEqual(switchedToChakra, {
+  alertGroup: "chakra",
+  variant: "subtle",
+  alertType: "success",
+  className: "custom-class is-style-success",
+});
+
+const unsupportedType = designHelper.getCanonicalAlertGroupAttributes({
+  alertGroup: "bootstrap",
+  alertType: "error",
+  className: "custom-class is-style-error extra",
+});
+assert.deepEqual(unsupportedType, {
+  alertGroup: "bootstrap",
+  variant: "default",
+  alertType: "success",
+  className: "custom-class extra is-style-success",
+});
+
+const switchedToShoelace = designHelper.getCanonicalAlertGroupAttributes({
+  alertGroup: "shoelace",
+  alertType: "primary",
+  className: "",
+});
+assert.equal(switchedToShoelace.variant, "top-accent");
+assert.equal(switchedToShoelace.alertType, "primary");
+assert.equal(switchedToShoelace.className, "is-style-primary");
+
+let lockedWrites = 0;
+designHelper.applyCanonicalAlertGroup({
+  alertGroup: "material",
+  currentAlertGroup: "bootstrap",
+  alertType: "success",
+  className: "is-style-success",
+  appearanceLocked: true,
+  setAttributes() {
+    lockedWrites += 1;
+  },
+});
+assert.equal(lockedWrites, 0, "A locked global style blocks group switching");
+
+let sameGroupWrites = 0;
+designHelper.applyCanonicalAlertGroup({
+  alertGroup: "bootstrap",
+  currentAlertGroup: "bootstrap",
+  alertType: "success",
+  className: "is-style-success",
+  appearanceLocked: false,
+  setAttributes() {
+    sameGroupWrites += 1;
+  },
+});
+assert.equal(sameGroupWrites, 0, "Reselecting the current group does not reset its variant");
+
 const styleToolbar = fs.readFileSync(
   "src/js/blocks/plugins/alert-style-toolbar.js",
   "utf8"

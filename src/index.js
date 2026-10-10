@@ -10,6 +10,8 @@ import "./js/blocks/plugins/icon-image-selector";
 import "./js/blocks/plugins/inner-block-parent-toolbar";
 import "./js/blocks/plugins/alert-group-guard";
 import "./js/blocks/plugins/alert-style-toolbar";
+// Imported after the style toolbar so this control renders immediately to its left.
+import "./js/blocks/plugins/alert-group-toolbar";
 import "./js/blocks/plugins/alert-elements-toolbar";
 import "./js/blocks/plugins/alert-close-expiration-toolbar";
 import "./js/blocks/plugins/button-sidebar-panel";
