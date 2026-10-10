@@ -35,8 +35,8 @@ const MAXIMUM_WIDTH_RANGES = {
  * @param {string} unit Width unit.
  * @return {{min: number, max: number, step: number}} Slider bounds.
  */
-function getMaximumWidthRange( unit ) {
-	return MAXIMUM_WIDTH_RANGES[ unit ] || MAXIMUM_WIDTH_RANGES.px;
+function getMaximumWidthRange(unit) {
+	return MAXIMUM_WIDTH_RANGES[unit] || MAXIMUM_WIDTH_RANGES.px;
 }
 
 /**
@@ -45,9 +45,9 @@ function getMaximumWidthRange( unit ) {
  * @param {string|number} value Stored maximum width.
  * @return {number|undefined} Parsed width, or undefined when it is not numeric.
  */
-function parseMaximumWidth( value ) {
-	const numericWidth = parseFloat( value );
-	return Number.isFinite( numericWidth ) ? numericWidth : undefined;
+function parseMaximumWidth(value) {
+	const numericWidth = parseFloat(value);
+	return Number.isFinite(numericWidth) ? numericWidth : undefined;
 }
 
 /**
@@ -57,110 +57,109 @@ function parseMaximumWidth( value ) {
  * @param {Object} bounds Slider bounds with min and max.
  * @return {number} Clamped width.
  */
-function clampMaximumWidth( value, bounds ) {
-	return Math.min( bounds.max, Math.max( bounds.min, value ) );
+function clampMaximumWidth(value, bounds) {
+	return Math.min(bounds.max, Math.max(bounds.min, value));
 }
 
 function isAppearanceLocked(attributes) {
 	return Number(attributes?.globalStyleId) > 0;
 }
 
-export function MaximumWidthControls( {
+export function MaximumWidthControls({
 	attributes,
 	setAttributes,
 	labelTextDomain = 'alerts-dlx',
 	UnitChooserComponent,
-} ) {
+}) {
 	const { maximumWidth, maximumWidthUnit } = attributes;
-	const locked = isAppearanceLocked( attributes );
+	const locked = isAppearanceLocked(attributes);
 	const label = labelTextDomain === 'quotes-dlx'
-		? __( 'Maximum Width', 'quotes-dlx' )
-		: __( 'Maximum Width', 'alerts-dlx' );
-	const bounds = getMaximumWidthRange( maximumWidthUnit );
-	const numericWidth = parseMaximumWidth( maximumWidth );
+		? __('Maximum Width', 'quotes-dlx')
+		: __('Maximum Width', 'alerts-dlx');
+	const bounds = getMaximumWidthRange(maximumWidthUnit);
+	const numericWidth = parseMaximumWidth(maximumWidth);
 
 	return (
 		<>
 			<UnitChooserComponent
-				label={ label }
-				value={ maximumWidthUnit }
-				units={ [ 'px', '%', 'vw', 'rem' ] }
-				onClick={ ( unit ) => {
-					if ( locked ) {
+				label={label}
+				value={maximumWidthUnit}
+				units={['px', '%', 'vw', 'rem']}
+				onClick={(unit) => {
+					if (locked) {
 						return;
 					}
 
 					const nextAttributes = { maximumWidthUnit: unit };
-					const nextBounds = getMaximumWidthRange( unit );
+					const nextBounds = getMaximumWidthRange(unit);
 
 					// Clamp only after the user switches units.
 					if (
-						Number.isFinite( numericWidth ) &&
-						( numericWidth < nextBounds.min || numericWidth > nextBounds.max )
+						Number.isFinite(numericWidth) &&
+						(numericWidth < nextBounds.min || numericWidth > nextBounds.max)
 					) {
 						nextAttributes.maximumWidth = String(
-							clampMaximumWidth( numericWidth, nextBounds )
+							clampMaximumWidth(numericWidth, nextBounds)
 						);
 					}
 
-					setAttributes( nextAttributes );
-				} }
+					setAttributes(nextAttributes);
+				}}
 			/>
 			<RangeControl
-				label={ label }
+				label={label}
 				hideLabelFromVision
-				value={ numericWidth }
-				min={ bounds.min }
-				max={ bounds.max }
-				step={ bounds.step }
+				value={numericWidth}
+				min={bounds.min}
+				max={bounds.max}
+				step={bounds.step}
 				withInputField
-				disabled={ locked }
-				onChange={ ( nextValue ) => {
+				disabled={locked}
+				onChange={(nextValue) => {
 					// RangeControl emits a number. The block attribute stays a string.
-					if ( 'number' !== typeof nextValue || Number.isNaN( nextValue ) ) {
+					if ('number' !== typeof nextValue || Number.isNaN(nextValue)) {
 						return;
 					}
-					setAttributes( {
-						maximumWidth: String( clampMaximumWidth( Math.round( nextValue ), bounds ) ),
-					} );
-				} }
+					setAttributes({
+						maximumWidth: String(clampMaximumWidth(Math.round(nextValue), bounds)),
+					});
+				}}
 			/>
 		</>
 	);
 }
 
-export function MarginSpacingControls( { attributes, setAttributes } ) {
-	const locked = isAppearanceLocked( attributes );
-	const marginSpacing = normalizeMarginSpacing( attributes?.marginSpacing );
-	const marginSpacingTarget = normalizeMarginSpacingTarget( attributes?.marginSpacingTarget );
+export function MarginSpacingControls({ attributes, setAttributes }) {
+	const locked = isAppearanceLocked(attributes);
+	const marginSpacing = normalizeMarginSpacing(attributes?.marginSpacing);
+	const marginSpacingTarget = normalizeMarginSpacingTarget(attributes?.marginSpacingTarget);
 
 	return (
 		<>
 			<SelectControl
-				label={ __( 'Margin Spacing', 'alerts-dlx' ) }
-				value={ marginSpacing }
-				options={ getMarginSpacingOptions() }
-				disabled={ locked }
-				onChange={ ( value ) => {
-					if ( locked ) {
+				label={__('Margin Spacing', 'alerts-dlx')}
+				value={marginSpacing}
+				options={getMarginSpacingOptions()}
+				disabled={locked}
+				onChange={(value) => {
+					if (locked) {
 						return;
 					}
-					setAttributes( { marginSpacing: normalizeMarginSpacing( value ) } );
-				} }
-				help={ __( 'Spacious matches the original alert margin.', 'alerts-dlx' ) }
+					setAttributes({ marginSpacing: normalizeMarginSpacing(value) });
+				}}
 				__nextHasNoMarginBottom
 			/>
 			<SelectControl
-				label={ __( 'Margin Target', 'alerts-dlx' ) }
-				value={ marginSpacingTarget }
-				options={ getMarginSpacingTargetOptions() }
-				disabled={ locked }
-				onChange={ ( value ) => {
-					if ( locked ) {
+				label={__('Margin Target', 'alerts-dlx')}
+				value={marginSpacingTarget}
+				options={getMarginSpacingTargetOptions()}
+				disabled={locked}
+				onChange={(value) => {
+					if (locked) {
 						return;
 					}
-					setAttributes( { marginSpacingTarget: normalizeMarginSpacingTarget( value ) } );
-				} }
+					setAttributes({ marginSpacingTarget: normalizeMarginSpacingTarget(value) });
+				}}
 				__nextHasNoMarginBottom
 			/>
 		</>
