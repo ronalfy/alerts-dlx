@@ -97,4 +97,22 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
   min-height: 96px;
 }
 
+.alerts-dlx-global-style-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.alerts-dlx-global-style-control > .components-base-control {
+  width: 100%;
+  margin-bottom: 0;
+}
+.alerts-dlx-global-style-control > .components-button {
+  margin-top: 0;
+}
+
+.block-editor-block-inspector .alerts-dlx-global-style-control > .components-base-control {
+  margin-bottom: 0;
+}
+
 /*# sourceMappingURL=alerts-dlx-block-editor.css.map*/

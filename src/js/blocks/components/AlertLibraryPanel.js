@@ -316,6 +316,20 @@ export default function AlertLibraryPanel( {
 	const presetsPanel = usePersistentPanelOpen( clientId, 'presets' );
 
 	const globalStyleId = Number( attributes.globalStyleId ) || 0;
+	const [ pendingGlobalStyleId, setPendingGlobalStyleId ] = useState(
+		String( globalStyleId )
+	);
+
+	/**
+	 * Keep the dropdown aligned when the attached id changes outside this control.
+	 *
+	 * Detach, preset apply, and other attribute updates can change globalStyleId
+	 * without a dropdown event. The pending selection must follow that id.
+	 */
+	useEffect( () => {
+		setPendingGlobalStyleId( String( globalStyleId ) );
+	}, [ globalStyleId ] );
+
 	const attachedStyle = findLibraryItem( globalStyleId, 'global_style' );
 	const showGlobalStyles =
 		globalStyles.length > 0 || ( globalStyleId > 0 && ! attachedStyle );
@@ -329,22 +343,48 @@ export default function AlertLibraryPanel( {
 		} ) ),
 	];
 
+	const pendingId = Number( pendingGlobalStyleId ) || 0;
+	const pendingMatchesAttached = pendingId === globalStyleId;
+
 	/**
-	 * None and Detach both copy resolved appearance onto the block, then clear
-	 * the id, so the alert does not visually jump after the link is removed.
+	 * Copy resolved appearance onto the block, then clear the id.
+	 *
+	 * Apply with None and the Detach button both use this path so the alert
+	 * does not visually jump after the link is removed.
 	 */
 	const detachGlobalStyle = () => {
 		const resolved = mergeGlobalStyleIntoAttributes( attributes );
 		setAttributes( buildDetachGlobalStyleAttributes( resolved ) );
 	};
 
-	const onGlobalStyleChange = ( value ) => {
-		const nextId = Number( value ) || 0;
-		if ( ! nextId ) {
+	/**
+	 * Stage a global style choice. Apply writes it onto the block.
+	 *
+	 * @param {string} value Selected global style id.
+	 */
+	const onPendingGlobalStyleChange = ( value ) => {
+		setPendingGlobalStyleId( String( value ) );
+	};
+
+	/**
+	 * Write the pending global style after Apply.
+	 *
+	 * The dropdown only updates local state. Apply is not rendered when that
+	 * selection already matches the attached id. None uses the same detach path
+	 * as the Detach button. Attribute updates remount the Styles sidebar, and
+	 * the open flag stays in panelOpenState, so this handler must not collapse the panel.
+	 */
+	const applyPendingGlobalStyle = () => {
+		if ( pendingMatchesAttached ) {
+			return;
+		}
+
+		if ( ! pendingId ) {
 			detachGlobalStyle();
 			return;
 		}
-		setAttributes( { globalStyleId: nextId } );
+
+		setAttributes( { globalStyleId: pendingId } );
 	};
 
 	if ( ! showGlobalStyles && ! showPresets ) {
@@ -370,25 +410,30 @@ export default function AlertLibraryPanel( {
 						</Notice>
 					) }
 
-					{ globalStyles.length > 0 && (
-						<SelectControl
-							label={ __( 'Global style', 'alerts-dlx' ) }
-							value={ String( globalStyleId ) }
-							options={ globalStyleOptions }
-							onChange={ onGlobalStyleChange }
-							help={ __(
-								'This alert follows the selected global style. Changes to that style update this alert. Title, description, and button text stay on this block.',
-								'alerts-dlx'
-							) }
-							__nextHasNoMarginBottom
-						/>
-					) }
-
-					{ globalStyleId > 0 && (
-						<Button variant="secondary" onClick={ detachGlobalStyle }>
-							{ __( 'Detach', 'alerts-dlx' ) }
-						</Button>
-					) }
+					<div className="alerts-dlx-global-style-control">
+						{ globalStyles.length > 0 && (
+							<SelectControl
+								label={ __( 'Global style', 'alerts-dlx' ) }
+								value={ pendingGlobalStyleId }
+								options={ globalStyleOptions }
+								onChange={ onPendingGlobalStyleChange }
+								__nextHasNoMarginBottom
+							/>
+						) }
+						{ ! pendingMatchesAttached && globalStyles.length > 0 && (
+							<Button
+								variant="secondary"
+								onClick={ applyPendingGlobalStyle }
+							>
+								{ __( 'Apply', 'alerts-dlx' ) }
+							</Button>
+						) }
+						{ globalStyleId > 0 && (
+							<Button variant="secondary" onClick={ detachGlobalStyle }>
+								{ __( 'Detach', 'alerts-dlx' ) }
+							</Button>
+						) }
+					</div>
 				</PanelBody>
 			) }
 

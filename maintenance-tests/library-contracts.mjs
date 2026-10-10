@@ -108,6 +108,51 @@ assert.doesNotMatch(blocks, /CanonicalAlertPresets|canonicalPresets|canonicalDef
 assert.match(alertEdit, /AlertLibraryPanel/, 'Canonical edit uses the Library panel');
 assert.doesNotMatch(alertEdit, /CanonicalAlertPresetsPanel|Presets and Defaults/, 'Preset panel is removed from the canonical edit');
 assert.match(libraryPanel, /Global Styles/, 'Styles sidebar labels global styles');
+assert.match(
+	libraryPanel,
+	/setPendingGlobalStyleId\( String\( value \) \)/,
+	'Changing the global style dropdown only updates pending selection'
+);
+assert.match(
+	libraryPanel,
+	/setPendingGlobalStyleId\( String\( globalStyleId \) \)/,
+	'Pending global style resets when the attached id changes'
+);
+assert.match(
+	libraryPanel,
+	/__\( 'Apply', 'alerts-dlx' \)/,
+	'Global style selection is confirmed with Apply'
+);
+assert.match(
+	libraryPanel,
+	/! pendingMatchesAttached &&/,
+	'Apply is hidden when the pending style already matches'
+);
+assert.doesNotMatch(
+	libraryPanel,
+	/disabled=\{ pendingMatchesAttached \}/,
+	'Apply is not left visible in a disabled state'
+);
+assert.match(
+	libraryPanel,
+	/if \( ! pendingId \) \{\s*detachGlobalStyle\(\);/,
+	'Apply with None uses the shared detach path'
+);
+assert.doesNotMatch(
+	libraryPanel,
+	/This alert follows the selected global style/,
+	'Global style select has no follow-style help text'
+);
+assert.match(
+	libraryPanel,
+	/Applying a preset copies its settings into this alert\. Later edits to the preset will not change it\./,
+	'Preset help text stays in place'
+);
+assert.match(
+	libraryPanel,
+	/This alert follows %s\./,
+	'Attached global style notice stays in place'
+);
 assert.match(libraryPanel, /__\( 'Presets', 'alerts-dlx' \)/, 'Styles sidebar labels snapshots as Presets');
 assert.match(
 	libraryPanel,

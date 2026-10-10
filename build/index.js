@@ -4053,6 +4053,20 @@ function AlertLibraryPanel(_ref3) {
   var globalStylesPanel = usePersistentPanelOpen(clientId, 'global-styles');
   var presetsPanel = usePersistentPanelOpen(clientId, 'presets');
   var globalStyleId = Number(attributes.globalStyleId) || 0;
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(String(globalStyleId)),
+    _useState0 = _slicedToArray(_useState9, 2),
+    pendingGlobalStyleId = _useState0[0],
+    setPendingGlobalStyleId = _useState0[1];
+
+  /**
+   * Keep the dropdown aligned when the attached id changes outside this control.
+   *
+   * Detach, preset apply, and other attribute updates can change globalStyleId
+   * without a dropdown event. The pending selection must follow that id.
+   */
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+    setPendingGlobalStyleId(String(globalStyleId));
+  }, [globalStyleId]);
   var attachedStyle = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.findLibraryItem)(globalStyleId, 'global_style');
   var showGlobalStyles = globalStyles.length > 0 || globalStyleId > 0 && !attachedStyle;
   var showPresets = snapshots.length > 0;
@@ -4065,23 +4079,47 @@ function AlertLibraryPanel(_ref3) {
       value: String(item.id)
     };
   })));
+  var pendingId = Number(pendingGlobalStyleId) || 0;
+  var pendingMatchesAttached = pendingId === globalStyleId;
 
   /**
-   * None and Detach both copy resolved appearance onto the block, then clear
-   * the id, so the alert does not visually jump after the link is removed.
+   * Copy resolved appearance onto the block, then clear the id.
+   *
+   * Apply with None and the Detach button both use this path so the alert
+   * does not visually jump after the link is removed.
    */
   var detachGlobalStyle = function detachGlobalStyle() {
     var resolved = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.mergeGlobalStyleIntoAttributes)(attributes);
     setAttributes((0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.buildDetachGlobalStyleAttributes)(resolved));
   };
-  var onGlobalStyleChange = function onGlobalStyleChange(value) {
-    var nextId = Number(value) || 0;
-    if (!nextId) {
+
+  /**
+   * Stage a global style choice. Apply writes it onto the block.
+   *
+   * @param {string} value Selected global style id.
+   */
+  var onPendingGlobalStyleChange = function onPendingGlobalStyleChange(value) {
+    setPendingGlobalStyleId(String(value));
+  };
+
+  /**
+   * Write the pending global style after Apply.
+   *
+   * The dropdown only updates local state. Apply is not rendered when that
+   * selection already matches the attached id. None uses the same detach path
+   * as the Detach button. Attribute updates remount the Styles sidebar, and
+   * the open flag stays in panelOpenState, so this handler must not collapse the panel.
+   */
+  var applyPendingGlobalStyle = function applyPendingGlobalStyle() {
+    if (pendingMatchesAttached) {
+      return;
+    }
+    if (!pendingId) {
       detachGlobalStyle();
       return;
     }
     setAttributes({
-      globalStyleId: nextId
+      globalStyleId: pendingId
     });
   };
   if (!showGlobalStyles && !showPresets) {
@@ -4096,17 +4134,21 @@ function AlertLibraryPanel(_ref3) {
     status: "info",
     isDismissible: false
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.sprintf)(/* translators: %s: global style title. */
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This alert follows %s.', 'alerts-dlx'), attachedStyle.title)), globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This alert follows %s.', 'alerts-dlx'), attachedStyle.title)), /*#__PURE__*/React.createElement("div", {
+    className: "alerts-dlx-global-style-control"
+  }, globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Global style', 'alerts-dlx'),
-    value: String(globalStyleId),
+    value: pendingGlobalStyleId,
     options: globalStyleOptions,
-    onChange: onGlobalStyleChange,
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This alert follows the selected global style. Changes to that style update this alert. Title, description, and button text stay on this block.', 'alerts-dlx'),
+    onChange: onPendingGlobalStyleChange,
     __nextHasNoMarginBottom: true
-  }), globalStyleId > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }), !pendingMatchesAttached && globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    variant: "secondary",
+    onClick: applyPendingGlobalStyle
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Apply', 'alerts-dlx')), globalStyleId > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: "secondary",
     onClick: detachGlobalStyle
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Detach', 'alerts-dlx'))), showPresets && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Detach', 'alerts-dlx')))), showPresets && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Presets', 'alerts-dlx'),
     initialOpen: false,
     opened: presetsPanel.opened,
