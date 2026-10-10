@@ -16,7 +16,7 @@ import {
 	MenuGroup,
 	MenuItem,
 } from "@wordpress/components";
-import { filter as filterIcon } from "@wordpress/icons";
+import { brush as brushIcon } from "@wordpress/icons";
 import { __ } from "@wordpress/i18n";
 import { CANONICAL_ALERT_BLOCK_NAME } from "../utils/alert-block-registry";
 import {
@@ -53,7 +53,7 @@ const withAlertGroupToolbar = createHigherOrderComponent((BlockEdit) => {
 						<ToolbarItem>
 							{(toggleProps) => (
 								<DropdownMenu
-									icon={filterIcon}
+									icon={brushIcon}
 									label={groupLabel}
 									text={currentDesign.label}
 									className="alerts-dlx-alert-group-toolbar"
