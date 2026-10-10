@@ -72,10 +72,12 @@ All five blocks share the same PHP render callback: `Blocks::frontend()`. The sh
 
 The canonical block keeps seven goal-first inserter variations (Info, Success, Warning, Error, Tip, Announcement, Call to Action). Variations use built-in insertion defaults only; there is no site-saved “new alert defaults” store.
 
-The block inspector **Library** panel (canonical only) exposes:
+The canonical block Styles sidebar exposes these panels, in order:
 
-1. **Global style** — select stores `globalStyleId` (integer; `0` = none). Appearance is resolved from that library item at PHP render and in the editor preview. Title, description, button copy, links, unique ID, and InnerBlocks stay on the block. Appearance controls owned by the style are read-only while attached. **None** and **Detach** copy the resolved appearance onto the block, then clear `globalStyleId`, so the alert does not visually jump.
-2. **Snapshot** — select plus **Apply snapshot** copies the snapshot allowlist onto the block (no live link). Those controls are hidden while a global style is attached; detach first. If a global style is attached, Apply clears it first so the snapshot copy wins. Snapshots do not store title/description/button text. The in-canvas icon picker is disabled while a global style is attached.
+1. **Global Styles** — collapsed until opened. Hidden when the site has no global styles, unless the block still points at a missing style so **Detach** remains available. Select stores `globalStyleId` (integer; `0` = none). Appearance is resolved from that library item at PHP render and in the editor preview. Title, description, button copy, links, unique ID, and InnerBlocks stay on the block. Appearance controls owned by the style are read-only while attached. **None** and **Detach** copy the resolved appearance onto the block, then clear `globalStyleId`, so the alert does not visually jump. Choosing or detaching a style leaves the panel open.
+2. **Presets** — public label for snapshots. Collapsed until opened, and hidden when the site has no snapshots. Select plus **Apply preset** copies the snapshot allowlist onto the block (no live link). Those controls are replaced with a detach prompt while a global style is attached. Applying a preset clears `globalStyleId` so the copy wins, and the panel stays open. Snapshots do not store title/description/button text. The in-canvas icon picker is disabled while a global style is attached.
+3. **Styles** — alert type control, open by default.
+4. The remaining style panels (custom colors, Appearance) follow.
 
 Library items may set post meta `_alerts_dlx_show_in_inserter`. Each flagged item is an extra canonical Alert inserter variation. A global style variation inserts `globalStyleId` only (the block stays linked). A snapshot variation copies attributes and does not stay linked. The seven goal variations remain, and Success stays the variation used when inserting Alert itself. Duplicating a library item does not copy the flag. Library CRUD stays under Settings → AlertsDLX → Styles & Snapshots.
 

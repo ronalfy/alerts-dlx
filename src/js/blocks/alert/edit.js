@@ -21,46 +21,42 @@ const designs = {
 	shoelace: { label: 'Shoelace', Edit: ShoelaceEdit, definition: shoelaceDefinition },
 };
 
-export default function CanonicalAlertEdit( props ) {
+export default function CanonicalAlertEdit(props) {
 	const { attributes, setAttributes, name, clientId } = props;
-	const design = designs[ attributes.alertGroup ] || designs.bootstrap;
+	const design = designs[attributes.alertGroup] || designs.bootstrap;
 	const DesignEdit = design.Edit;
-	const appearanceLocked = Number( attributes.globalStyleId ) > 0;
+	const appearanceLocked = Number(attributes.globalStyleId) > 0;
 
-	const selectDesign = ( alertGroup ) => {
-		if ( appearanceLocked ) {
+	const selectDesign = (alertGroup) => {
+		if (appearanceLocked) {
 			return;
 		}
-		const nextDesign = designs[ alertGroup ] || designs.bootstrap;
-		const nextAlertType = nextDesign.definition.supportedAlertTypes.includes( attributes.alertType )
+		const nextDesign = designs[alertGroup] || designs.bootstrap;
+		const nextAlertType = nextDesign.definition.supportedAlertTypes.includes(attributes.alertType)
 			? attributes.alertType
 			: nextDesign.definition.defaultAlertType;
 		const nextAttributes = {
 			alertGroup,
 			variant: nextDesign.definition.defaultVariant,
 			alertType: nextAlertType,
-			className: buildAlertStyleClassName( attributes.className, nextAlertType ),
+			className: buildAlertStyleClassName(attributes.className, nextAlertType),
 		};
-		setAttributes( nextAttributes );
+		setAttributes(nextAttributes);
 	};
 
 	return (
 		<>
 			<InspectorControls>
-				<AlertLibraryPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-				<PanelBody title={ __( 'Alert design', 'alerts-dlx' ) } initialOpen={ true }>
+				<PanelBody title={__('Alert design', 'alerts-dlx')} initialOpen={true}>
 					<SelectControl
-						label={ __( 'Design system', 'alerts-dlx' ) }
-						value={ attributes.alertGroup }
-						options={ Object.entries( designs ).map( ( [ value, item ] ) => ( { value, label: item.label } ) ) }
-						onChange={ selectDesign }
-						disabled={ appearanceLocked }
+						label={__('Design system', 'alerts-dlx')}
+						value={attributes.alertGroup}
+						options={Object.entries(designs).map(([value, item]) => ({ value, label: item.label }))}
+						onChange={selectDesign}
+						disabled={appearanceLocked}
 						help={
 							appearanceLocked
-								? __( 'Detach the global style to change the design system.', 'alerts-dlx' )
+								? __('Detach the global style to change the design system.', 'alerts-dlx')
 								: undefined
 						}
 						__nextHasNoMarginBottom
@@ -68,17 +64,22 @@ export default function CanonicalAlertEdit( props ) {
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">
-				<PanelBody title={ __( 'Styles', 'alerts-dlx' ) } initialOpen={ true }>
+				<AlertLibraryPanel
+					attributes={attributes}
+					setAttributes={setAttributes}
+					clientId={clientId}
+				/>
+				<PanelBody title={__('Styles', 'alerts-dlx')} initialOpen={true}>
 					<AlertTypeStyleControl
-						name={ name }
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						clientId={ clientId }
-						disabled={ appearanceLocked }
+						name={name}
+						attributes={attributes}
+						setAttributes={setAttributes}
+						clientId={clientId}
+						disabled={appearanceLocked}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<DesignEdit { ...props } />
+			<DesignEdit {...props} />
 		</>
 	);
 }

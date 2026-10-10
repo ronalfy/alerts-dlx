@@ -2236,10 +2236,7 @@ function CanonicalAlertEdit(props) {
     };
     setAttributes(nextAttributes);
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, /*#__PURE__*/React.createElement(_components_AlertLibraryPanel__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    attributes: attributes,
-    setAttributes: setAttributes
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Alert design', 'alerts-dlx'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SelectControl, {
@@ -2260,7 +2257,11 @@ function CanonicalAlertEdit(props) {
     __nextHasNoMarginBottom: true
   }))), /*#__PURE__*/React.createElement(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
     group: "styles"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+  }, /*#__PURE__*/React.createElement(_components_AlertLibraryPanel__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    attributes: attributes,
+    setAttributes: setAttributes,
+    clientId: clientId
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Styles', 'alerts-dlx'),
     initialOpen: true
   }, /*#__PURE__*/React.createElement(_components_AlertTypeStyleControl__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -3775,7 +3776,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /**
- * Inspector panel for attaching a global style or applying a snapshot.
+ * Inspector panels for attaching a global style or applying a snapshot.
  */
 
 
@@ -3784,16 +3785,59 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 /**
- * Library controls for the canonical Alert block.
+ * Open flags for Global Styles and Presets, keyed by client ID and panel.
+ *
+ * Linking a style or applying a snapshot updates attributes and remounts the
+ * Styles sidebar. PanelBody would then apply its closed default again.
+ */
+var panelOpenState = new Map();
+
+/**
+ * Read and update a panel open flag outside the remounting inspector fill.
+ *
+ * Panels start closed. A later toggle is kept across attribute updates.
+ *
+ * @param {string} clientId  Block client ID.
+ * @param {string} panelName Panel key.
+ * @return {{ opened: boolean, onToggle: Function }} Controlled panel state.
+ */
+function usePersistentPanelOpen(clientId, panelName) {
+  var key = "".concat(clientId, ":").concat(panelName);
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(function () {
+      var _panelOpenState$get;
+      return (_panelOpenState$get = panelOpenState.get(key)) !== null && _panelOpenState$get !== void 0 ? _panelOpenState$get : false;
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    opened = _useState2[0],
+    setOpened = _useState2[1];
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    var _panelOpenState$get2;
+    setOpened((_panelOpenState$get2 = panelOpenState.get(key)) !== null && _panelOpenState$get2 !== void 0 ? _panelOpenState$get2 : false);
+  }, [key]);
+  var onToggle = function onToggle(nextOpened) {
+    var isOpened = Boolean(nextOpened);
+    panelOpenState.set(key, isOpened);
+    setOpened(isOpened);
+  };
+  return {
+    opened: opened,
+    onToggle: onToggle
+  };
+}
+
+/**
+ * Global Styles and Presets controls for the canonical Alert block.
  *
  * @param {Object}   props               Component props.
  * @param {Object}   props.attributes    Current block attributes.
  * @param {Function} props.setAttributes Block attribute updater.
- * @return {import('react').JSX.Element} Library panel.
+ * @param {string}   props.clientId      Block client ID.
+ * @return {import('react').JSX.Element|null} Style library panels.
  */
 function AlertLibraryPanel(_ref) {
   var attributes = _ref.attributes,
-    setAttributes = _ref.setAttributes;
+    setAttributes = _ref.setAttributes,
+    clientId = _ref.clientId;
   var items = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useMemo)(function () {
     return (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__.getLocalizedLibraryItems)();
   }, []);
@@ -3807,13 +3851,16 @@ function AlertLibraryPanel(_ref) {
       return item.kind === 'snapshot';
     });
   }, [items]);
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(snapshots[0] ? String(snapshots[0].id) : ''),
-    _useState2 = _slicedToArray(_useState, 2),
-    selectedSnapshotId = _useState2[0],
-    setSelectedSnapshotId = _useState2[1];
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(snapshots[0] ? String(snapshots[0].id) : ''),
+    _useState4 = _slicedToArray(_useState3, 2),
+    selectedSnapshotId = _useState4[0],
+    setSelectedSnapshotId = _useState4[1];
+  var globalStylesPanel = usePersistentPanelOpen(clientId, 'global-styles');
+  var presetsPanel = usePersistentPanelOpen(clientId, 'presets');
   var globalStyleId = Number(attributes.globalStyleId) || 0;
   var attachedStyle = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__.findLibraryItem)(globalStyleId, 'global_style');
-  var manageLibrary = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__.canManageLibrary)();
+  var showGlobalStyles = globalStyles.length > 0 || globalStyleId > 0 && !attachedStyle;
+  var showPresets = snapshots.length > 0;
   var globalStyleOptions = [{
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('None', 'alerts-dlx'),
     value: '0'
@@ -3823,15 +3870,12 @@ function AlertLibraryPanel(_ref) {
       value: String(item.id)
     };
   })));
-  var snapshotOptions = snapshots.length ? snapshots.map(function (item) {
+  var snapshotOptions = snapshots.map(function (item) {
     return {
       label: item.title,
       value: String(item.id)
     };
-  }) : [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('No snapshots yet.', 'alerts-dlx'),
-    value: ''
-  }];
+  });
 
   /**
    * None and Detach both copy resolved appearance onto the block, then clear
@@ -3859,14 +3903,19 @@ function AlertLibraryPanel(_ref) {
     }
     setAttributes((0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_3__.buildSnapshotApplyAttributes)(item.config, attributes.className || ''));
   };
-  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Library', 'alerts-dlx'),
-    initialOpen: false
+  if (!showGlobalStyles && !showPresets) {
+    return null;
+  }
+  return /*#__PURE__*/React.createElement(React.Fragment, null, showGlobalStyles && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Global Styles', 'alerts-dlx'),
+    initialOpen: false,
+    opened: globalStylesPanel.opened,
+    onToggle: globalStylesPanel.onToggle
   }, attachedStyle && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Notice, {
     status: "info",
     isDismissible: false
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)(/* translators: %s: global style title. */
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This alert follows %s.', 'alerts-dlx'), attachedStyle.title)), !globalStyles.length ? /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('No global styles yet.', 'alerts-dlx')) : /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('This alert follows %s.', 'alerts-dlx'), attachedStyle.title)), globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Global style', 'alerts-dlx'),
     value: String(globalStyleId),
     options: globalStyleOptions,
@@ -3875,22 +3924,24 @@ function AlertLibraryPanel(_ref) {
     __nextHasNoMarginBottom: true
   }), globalStyleId > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "secondary",
-    onClick: detachGlobalStyle,
-    style: {
-      marginBottom: '1rem'
-    }
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Detach', 'alerts-dlx')), globalStyleId > 0 ? /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Detach the global style to apply a snapshot.', 'alerts-dlx')) : !snapshots.length ? /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('No snapshots yet.', 'alerts-dlx')) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Snapshot', 'alerts-dlx'),
+    onClick: detachGlobalStyle
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Detach', 'alerts-dlx'))), showPresets && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Presets', 'alerts-dlx'),
+    initialOpen: false,
+    opened: presetsPanel.opened,
+    onToggle: presetsPanel.onToggle
+  }, globalStyleId > 0 ? /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Detach the global style to apply a preset.', 'alerts-dlx')) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Preset', 'alerts-dlx'),
     value: selectedSnapshotId,
     options: snapshotOptions,
     onChange: setSelectedSnapshotId,
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Applying a snapshot copies its settings into this alert. Later edits to the snapshot will not change it.', 'alerts-dlx'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Applying a preset copies its settings into this alert. Later edits to the preset will not change it.', 'alerts-dlx'),
     __nextHasNoMarginBottom: true
   }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
     variant: "primary",
     onClick: applySnapshot,
     disabled: !selectedSnapshotId
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Apply snapshot', 'alerts-dlx'))), manageLibrary && (!globalStyles.length || !snapshots.length) && /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Create global styles and snapshots under Settings → AlertsDLX → Styles & Snapshots.', 'alerts-dlx')));
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Apply preset', 'alerts-dlx')))));
 }
 
 /***/ }),
