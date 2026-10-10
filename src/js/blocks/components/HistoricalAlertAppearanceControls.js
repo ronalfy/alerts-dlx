@@ -4,46 +4,118 @@ import {
 	ButtonGroup,
 	PanelRow,
 	RangeControl,
-	TextControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Editor ranges for the maximum-width slider.
+ *
+ * The attribute is a string and PHP sanitizes it as an integer, so the step is 1.
+ * These ranges are not stored. An out-of-range saved value is clamped only when
+ * the user changes the unit or the slider.
+ */
+const MAXIMUM_WIDTH_RANGES = {
+	px: { min: 0, max: 1600, step: 1 },
+	'%': { min: 0, max: 100, step: 1 },
+	vw: { min: 0, max: 100, step: 1 },
+	rem: { min: 0, max: 100, step: 1 },
+};
+
+/**
+ * Slider bounds for one maximum-width unit.
+ *
+ * @param {string} unit Width unit.
+ * @return {{min: number, max: number, step: number}} Slider bounds.
+ */
+function getMaximumWidthRange( unit ) {
+	return MAXIMUM_WIDTH_RANGES[ unit ] || MAXIMUM_WIDTH_RANGES.px;
+}
+
+/**
+ * Parse a stored maximum width.
+ *
+ * @param {string|number} value Stored maximum width.
+ * @return {number|undefined} Parsed width, or undefined when it is not numeric.
+ */
+function parseMaximumWidth( value ) {
+	const numericWidth = parseFloat( value );
+	return Number.isFinite( numericWidth ) ? numericWidth : undefined;
+}
+
+/**
+ * Clamp a width into a unit range.
+ *
+ * @param {number} value  Width value.
+ * @param {Object} bounds Slider bounds with min and max.
+ * @return {number} Clamped width.
+ */
+function clampMaximumWidth( value, bounds ) {
+	return Math.min( bounds.max, Math.max( bounds.min, value ) );
+}
 
 function isAppearanceLocked(attributes) {
 	return Number(attributes?.globalStyleId) > 0;
 }
 
-export function MaximumWidthControls({
+export function MaximumWidthControls( {
 	attributes,
 	setAttributes,
 	labelTextDomain = 'alerts-dlx',
 	UnitChooserComponent,
-}) {
+} ) {
 	const { maximumWidth, maximumWidthUnit } = attributes;
-	const locked = isAppearanceLocked(attributes);
+	const locked = isAppearanceLocked( attributes );
 	const label = labelTextDomain === 'quotes-dlx'
-		? __('Maximum Width', 'quotes-dlx')
-		: __('Maximum Width', 'alerts-dlx');
+		? __( 'Maximum Width', 'quotes-dlx' )
+		: __( 'Maximum Width', 'alerts-dlx' );
+	const bounds = getMaximumWidthRange( maximumWidthUnit );
+	const numericWidth = parseMaximumWidth( maximumWidth );
 
 	return (
 		<>
 			<UnitChooserComponent
-				label={label}
-				value={maximumWidthUnit}
-				units={['px', '%', 'vw', 'rem']}
-				onClick={(value) => {
-					if (locked) {
+				label={ label }
+				value={ maximumWidthUnit }
+				units={ [ 'px', '%', 'vw', 'rem' ] }
+				onClick={ ( unit ) => {
+					if ( locked ) {
 						return;
 					}
-					setAttributes({ maximumWidthUnit: value });
-				}}
+
+					const nextAttributes = { maximumWidthUnit: unit };
+					const nextBounds = getMaximumWidthRange( unit );
+
+					// Clamp only after the user switches units.
+					if (
+						Number.isFinite( numericWidth ) &&
+						( numericWidth < nextBounds.min || numericWidth > nextBounds.max )
+					) {
+						nextAttributes.maximumWidth = String(
+							clampMaximumWidth( numericWidth, nextBounds )
+						);
+					}
+
+					setAttributes( nextAttributes );
+				} }
 			/>
-			<TextControl
-				type="text"
-				value={maximumWidth}
-				disabled={locked}
-				onChange={(value) => {
-					setAttributes({ maximumWidth: value });
-				}}
+			<RangeControl
+				label={ label }
+				hideLabelFromVision
+				value={ numericWidth }
+				min={ bounds.min }
+				max={ bounds.max }
+				step={ bounds.step }
+				withInputField
+				disabled={ locked }
+				onChange={ ( nextValue ) => {
+					// RangeControl emits a number. The block attribute stays a string.
+					if ( 'number' !== typeof nextValue || Number.isNaN( nextValue ) ) {
+						return;
+					}
+					setAttributes( {
+						maximumWidth: String( clampMaximumWidth( Math.round( nextValue ), bounds ) ),
+					} );
+				} }
 			/>
 		</>
 	);

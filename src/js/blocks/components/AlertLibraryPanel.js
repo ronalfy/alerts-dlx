@@ -4,6 +4,7 @@
 
 import { BlockPreview, store as blockEditorStore } from '@wordpress/block-editor';
 import { cloneBlock, createBlock } from '@wordpress/blocks';
+import { Icon, link } from '@wordpress/icons';
 import {
 	BaseControl,
 	Button,
@@ -46,18 +47,18 @@ const panelOpenState = new Map();
  * @param {string} panelName Panel key.
  * @return {{ opened: boolean, onToggle: Function }} Controlled panel state.
  */
-function usePersistentPanelOpen( clientId, panelName ) {
-	const key = `${ clientId }:${ panelName }`;
-	const [ opened, setOpened ] = useState( () => panelOpenState.get( key ) ?? false );
+function usePersistentPanelOpen(clientId, panelName) {
+	const key = `${clientId}:${panelName}`;
+	const [opened, setOpened] = useState(() => panelOpenState.get(key) ?? false);
 
-	useEffect( () => {
-		setOpened( panelOpenState.get( key ) ?? false );
-	}, [ key ] );
+	useEffect(() => {
+		setOpened(panelOpenState.get(key) ?? false);
+	}, [key]);
 
-	const onToggle = ( nextOpened ) => {
-		const isOpened = Boolean( nextOpened );
-		panelOpenState.set( key, isOpened );
-		setOpened( isOpened );
+	const onToggle = (nextOpened) => {
+		const isOpened = Boolean(nextOpened);
+		panelOpenState.set(key, isOpened);
+		setOpened(isOpened);
 	};
 
 	return { opened, onToggle };
@@ -77,9 +78,9 @@ function usePersistentPanelOpen( clientId, panelName ) {
  * @param {Object} item       Snapshot library item.
  * @return {Object[]} Preview blocks.
  */
-function getPresetPreviewBlocks( registry, clientId, blockName, attributes, item ) {
+function getPresetPreviewBlocks(registry, clientId, blockName, attributes, item) {
 	const sourceBlock = clientId
-		? registry.select( blockEditorStore ).getBlock( clientId )
+		? registry.select(blockEditorStore).getBlock(clientId)
 		: null;
 	const sourceAttributes = sourceBlock?.attributes ?? attributes ?? {};
 	const previewAttributes = {
@@ -90,15 +91,15 @@ function getPresetPreviewBlocks( registry, clientId, blockName, attributes, item
 		),
 		globalStyleId: 0,
 		// Keep this id off the canvas block so the theme edit effect does not rewrite it.
-		uniqueId: `alerts-dlx-preset-preview-${ item?.id || 'preset' }`,
+		uniqueId: `alerts-dlx-preset-preview-${item?.id || 'preset'}`,
 	};
 	const fallbackInnerBlocks = () => [
-		createBlock( 'core/paragraph', {
-			content: __( 'This is an alert preview.', 'alerts-dlx' ),
-		} ),
+		createBlock('core/paragraph', {
+			content: __('This is an alert preview.', 'alerts-dlx'),
+		}),
 	];
 
-	if ( sourceBlock ) {
+	if (sourceBlock) {
 		return [
 			cloneBlock(
 				sourceBlock,
@@ -108,7 +109,7 @@ function getPresetPreviewBlocks( registry, clientId, blockName, attributes, item
 		];
 	}
 
-	if ( ! blockName ) {
+	if (!blockName) {
 		return EMPTY_PREVIEW_BLOCKS;
 	}
 
@@ -135,30 +136,30 @@ function getPresetPreviewBlocks( registry, clientId, blockName, attributes, item
  * @param {string}   props.name          Block name.
  * @return {JSX.Element} Preset button group.
  */
-function PresetButtonGroup( {
+function PresetButtonGroup({
 	snapshots,
 	attributes,
 	setAttributes,
 	clientId,
 	name,
-} ) {
+}) {
 	const registry = useRegistry();
-	const [ showPopover, setShowPopover ] = useState( false );
-	const [ popoverAnchor, setPopoverAnchor ] = useState();
-	const [ hoveredPresetId, setHoveredPresetId ] = useState( null );
-	const closePreviewTimer = useRef( null );
+	const [showPopover, setShowPopover] = useState(false);
+	const [popoverAnchor, setPopoverAnchor] = useState();
+	const [hoveredPresetId, setHoveredPresetId] = useState(null);
+	const closePreviewTimer = useRef(null);
 
-	useEffect( () => {
+	useEffect(() => {
 		return () => {
-			if ( closePreviewTimer.current ) {
-				clearTimeout( closePreviewTimer.current );
+			if (closePreviewTimer.current) {
+				clearTimeout(closePreviewTimer.current);
 			}
 		};
-	}, [] );
+	}, []);
 
 	const cancelClosePresetPreview = () => {
-		if ( closePreviewTimer.current ) {
-			clearTimeout( closePreviewTimer.current );
+		if (closePreviewTimer.current) {
+			clearTimeout(closePreviewTimer.current);
 			closePreviewTimer.current = null;
 		}
 	};
@@ -169,15 +170,15 @@ function PresetButtonGroup( {
 	 * @param {number}      presetId Snapshot id to preview.
 	 * @param {HTMLElement} anchor   Button the popover should attach to.
 	 */
-	const openPresetPreview = ( presetId, anchor ) => {
-		if ( ! anchor ) {
+	const openPresetPreview = (presetId, anchor) => {
+		if (!anchor) {
 			return;
 		}
 
 		cancelClosePresetPreview();
-		setPopoverAnchor( anchor );
-		setHoveredPresetId( presetId );
-		setShowPopover( true );
+		setPopoverAnchor(anchor);
+		setHoveredPresetId(presetId);
+		setShowPopover(true);
 	};
 
 	/**
@@ -185,18 +186,18 @@ function PresetButtonGroup( {
 	 */
 	const closePresetPreview = () => {
 		cancelClosePresetPreview();
-		closePreviewTimer.current = setTimeout( () => {
-			setShowPopover( false );
-			setHoveredPresetId( null );
-		}, 150 );
+		closePreviewTimer.current = setTimeout(() => {
+			setShowPopover(false);
+			setHoveredPresetId(null);
+		}, 150);
 	};
 
 	const hoveredItem =
-		snapshots.find( ( item ) => Number( item.id ) === Number( hoveredPresetId ) ) ||
+		snapshots.find((item) => Number(item.id) === Number(hoveredPresetId)) ||
 		null;
 
-	const previewBlocks = useMemo( () => {
-		if ( ! hoveredItem ) {
+	const previewBlocks = useMemo(() => {
+		if (!hoveredItem) {
 			return EMPTY_PREVIEW_BLOCKS;
 		}
 
@@ -207,7 +208,7 @@ function PresetButtonGroup( {
 			attributes,
 			hoveredItem
 		);
-	}, [ registry, clientId, name, attributes, hoveredItem ] );
+	}, [registry, clientId, name, attributes, hoveredItem]);
 
 	/**
 	 * Copy a snapshot onto the block without toggling the panel.
@@ -217,13 +218,13 @@ function PresetButtonGroup( {
 	 *
 	 * @param {number} snapshotId Snapshot post id.
 	 */
-	const applySnapshot = ( snapshotId ) => {
-		const item = findLibraryItem( snapshotId, 'snapshot' );
-		if ( ! item ) {
+	const applySnapshot = (snapshotId) => {
+		const item = findLibraryItem(snapshotId, 'snapshot');
+		if (!item) {
 			return;
 		}
 		setAttributes(
-			buildSnapshotApplyAttributes( item.config, attributes.className || '' )
+			buildSnapshotApplyAttributes(item.config, attributes.className || '')
 		);
 	};
 
@@ -231,57 +232,57 @@ function PresetButtonGroup( {
 		<>
 			<BaseControl
 				id="alerts-dlx-presets"
-				label={ __( 'Preset', 'alerts-dlx' ) }
-				help={ __(
+				label={__('Preset', 'alerts-dlx')}
+				help={__(
 					'Applying a preset copies its settings into this alert. Later edits to the preset will not change it.',
 					'alerts-dlx'
-				) }
+				)}
 				__nextHasNoMarginBottom
 			>
 				<div
 					className="alerts-dlx-preset-buttons"
 					role="group"
-					aria-label={ __( 'Presets', 'alerts-dlx' ) }
+					aria-label={__('Presets', 'alerts-dlx')}
 				>
-					{ snapshots.map( ( item ) => (
+					{snapshots.map((item) => (
 						<Button
-							key={ item.id }
+							key={item.id}
 							variant="secondary"
-							onClick={ () => applySnapshot( item.id ) }
-							onMouseEnter={ ( event ) =>
-								openPresetPreview( item.id, event.currentTarget )
+							onClick={() => applySnapshot(item.id)}
+							onMouseEnter={(event) =>
+								openPresetPreview(item.id, event.currentTarget)
 							}
-							onMouseLeave={ closePresetPreview }
+							onMouseLeave={closePresetPreview}
 						>
-							{ item.title }
+							{item.title}
 						</Button>
-					) ) }
+					))}
 				</div>
 			</BaseControl>
-			{ showPopover && popoverAnchor && previewBlocks.length > 0 && (
+			{showPopover && popoverAnchor && previewBlocks.length > 0 && (
 				<Popover
 					className="alerts-dlx-preset-popover"
 					placement="left"
-					onMouseEnter={ cancelClosePresetPreview }
-					onMouseLeave={ closePresetPreview }
-					noArrow={ false }
-					offset={ 30 }
-					anchor={ popoverAnchor }
-					expandOnMobile={ true }
-					focusOnMount={ false }
+					onMouseEnter={cancelClosePresetPreview}
+					onMouseLeave={closePresetPreview}
+					noArrow={false}
+					offset={30}
+					anchor={popoverAnchor}
+					expandOnMobile={true}
+					focusOnMount={false}
 				>
 					<div
 						className="alerts-dlx-preset-popover__preview"
-						style={ { width: '100%', minWidth: '296px' } }
+						style={{ width: '100%', minWidth: '296px' }}
 					>
 						<BlockPreview
-							blocks={ previewBlocks }
-							viewportWidth={ PREVIEW_VIEWPORT_WIDTH }
-							minHeight={ 96 }
+							blocks={previewBlocks}
+							viewportWidth={PREVIEW_VIEWPORT_WIDTH}
+							minHeight={96}
 						/>
 					</div>
 				</Popover>
-			) }
+			)}
 		</>
 	);
 }
@@ -296,28 +297,28 @@ function PresetButtonGroup( {
  * @param {string}   props.name          Block name.
  * @return {JSX.Element|null} Style library panels.
  */
-export default function AlertLibraryPanel( {
+export default function AlertLibraryPanel({
 	attributes,
 	setAttributes,
 	clientId,
 	name = '',
-} ) {
-	const items = useMemo( () => getLocalizedLibraryItems(), [] );
+}) {
+	const items = useMemo(() => getLocalizedLibraryItems(), []);
 	const globalStyles = useMemo(
-		() => items.filter( ( item ) => item.kind === 'global_style' ),
-		[ items ]
+		() => items.filter((item) => item.kind === 'global_style'),
+		[items]
 	);
 	const snapshots = useMemo(
-		() => items.filter( ( item ) => item.kind === 'snapshot' ),
-		[ items ]
+		() => items.filter((item) => item.kind === 'snapshot'),
+		[items]
 	);
 
-	const globalStylesPanel = usePersistentPanelOpen( clientId, 'global-styles' );
-	const presetsPanel = usePersistentPanelOpen( clientId, 'presets' );
+	const globalStylesPanel = usePersistentPanelOpen(clientId, 'global-styles');
+	const presetsPanel = usePersistentPanelOpen(clientId, 'presets');
 
-	const globalStyleId = Number( attributes.globalStyleId ) || 0;
-	const [ pendingGlobalStyleId, setPendingGlobalStyleId ] = useState(
-		String( globalStyleId )
+	const globalStyleId = Number(attributes.globalStyleId) || 0;
+	const [pendingGlobalStyleId, setPendingGlobalStyleId] = useState(
+		String(globalStyleId)
 	);
 
 	/**
@@ -326,24 +327,24 @@ export default function AlertLibraryPanel( {
 	 * Detach, preset apply, and other attribute updates can change globalStyleId
 	 * without a dropdown event. The pending selection must follow that id.
 	 */
-	useEffect( () => {
-		setPendingGlobalStyleId( String( globalStyleId ) );
-	}, [ globalStyleId ] );
+	useEffect(() => {
+		setPendingGlobalStyleId(String(globalStyleId));
+	}, [globalStyleId]);
 
-	const attachedStyle = findLibraryItem( globalStyleId, 'global_style' );
+	const attachedStyle = findLibraryItem(globalStyleId, 'global_style');
 	const showGlobalStyles =
-		globalStyles.length > 0 || ( globalStyleId > 0 && ! attachedStyle );
+		globalStyles.length > 0 || (globalStyleId > 0 && !attachedStyle);
 	const showPresets = snapshots.length > 0;
 
 	const globalStyleOptions = [
-		{ label: __( 'None', 'alerts-dlx' ), value: '0' },
-		...globalStyles.map( ( item ) => ( {
+		{ label: __('None', 'alerts-dlx'), value: '0' },
+		...globalStyles.map((item) => ({
 			label: item.title,
-			value: String( item.id ),
-		} ) ),
+			value: String(item.id),
+		})),
 	];
 
-	const pendingId = Number( pendingGlobalStyleId ) || 0;
+	const pendingId = Number(pendingGlobalStyleId) || 0;
 	const pendingMatchesAttached = pendingId === globalStyleId;
 
 	/**
@@ -353,8 +354,8 @@ export default function AlertLibraryPanel( {
 	 * does not visually jump after the link is removed.
 	 */
 	const detachGlobalStyle = () => {
-		const resolved = mergeGlobalStyleIntoAttributes( attributes );
-		setAttributes( buildDetachGlobalStyleAttributes( resolved ) );
+		const resolved = mergeGlobalStyleIntoAttributes(attributes);
+		setAttributes(buildDetachGlobalStyleAttributes(resolved));
 	};
 
 	/**
@@ -362,8 +363,8 @@ export default function AlertLibraryPanel( {
 	 *
 	 * @param {string} value Selected global style id.
 	 */
-	const onPendingGlobalStyleChange = ( value ) => {
-		setPendingGlobalStyleId( String( value ) );
+	const onPendingGlobalStyleChange = (value) => {
+		setPendingGlobalStyleId(String(value));
 	};
 
 	/**
@@ -375,93 +376,100 @@ export default function AlertLibraryPanel( {
 	 * the open flag stays in panelOpenState, so this handler must not collapse the panel.
 	 */
 	const applyPendingGlobalStyle = () => {
-		if ( pendingMatchesAttached ) {
+		if (pendingMatchesAttached) {
 			return;
 		}
 
-		if ( ! pendingId ) {
+		if (!pendingId) {
 			detachGlobalStyle();
 			return;
 		}
 
-		setAttributes( { globalStyleId: pendingId } );
+		setAttributes({ globalStyleId: pendingId });
 	};
 
-	if ( ! showGlobalStyles && ! showPresets ) {
+	if (!showGlobalStyles && !showPresets) {
 		return null;
 	}
 
 	return (
 		<>
-			{ showGlobalStyles && (
+			{showGlobalStyles && (
 				<PanelBody
-					title={ __( 'Global Styles', 'alerts-dlx' ) }
-					initialOpen={ false }
-					opened={ globalStylesPanel.opened }
-					onToggle={ globalStylesPanel.onToggle }
+					title={__('Global Styles', 'alerts-dlx')}
+					initialOpen={false}
+					opened={globalStylesPanel.opened}
+					onToggle={globalStylesPanel.onToggle}
 				>
-					{ attachedStyle && (
-						<Notice status="info" isDismissible={ false }>
-							{ sprintf(
-								/* translators: %s: global style title. */
-								__( 'This alert follows %s.', 'alerts-dlx' ),
-								attachedStyle.title
-							) }
-						</Notice>
-					) }
-
 					<div className="alerts-dlx-global-style-control">
-						{ globalStyles.length > 0 && (
+						{globalStyles.length > 0 && (
 							<SelectControl
-								label={ __( 'Global style', 'alerts-dlx' ) }
-								value={ pendingGlobalStyleId }
-								options={ globalStyleOptions }
-								onChange={ onPendingGlobalStyleChange }
+								label={__('Global style', 'alerts-dlx')}
+								value={pendingGlobalStyleId}
+								options={globalStyleOptions}
+								onChange={onPendingGlobalStyleChange}
 								__nextHasNoMarginBottom
 							/>
-						) }
-						{ ! pendingMatchesAttached && globalStyles.length > 0 && (
+						)}
+						{attachedStyle && (
+							<div className="alerts-dlx-global-style-link">
+								<Icon icon={link} />
+								<span>{sprintf(
+									/* translators: %s: global style title. */
+									__('Linked to %s.', 'alerts-dlx'),
+									attachedStyle.title
+								)}</span>
+							</div>
+						)}
+						{!pendingMatchesAttached && globalStyles.length > 0 && (
 							<Button
 								variant="secondary"
-								onClick={ applyPendingGlobalStyle }
+								onClick={applyPendingGlobalStyle}
 							>
-								{ __( 'Apply', 'alerts-dlx' ) }
+								{__('Apply', 'alerts-dlx')}
 							</Button>
-						) }
-						{ globalStyleId > 0 && (
-							<Button variant="secondary" onClick={ detachGlobalStyle }>
-								{ __( 'Detach', 'alerts-dlx' ) }
+						)}
+						{globalStyleId > 0 && (
+							<Button variant="secondary" onClick={detachGlobalStyle}>
+								{__('Detach', 'alerts-dlx')}
 							</Button>
-						) }
+						)}
+						{attachedStyle && (
+							<>
+								<p className="description">
+									{__('Detach this global style to modify the alert individually.')}
+								</p>
+							</>
+						)}
 					</div>
 				</PanelBody>
-			) }
+			)}
 
-			{ showPresets && (
+			{showPresets && (
 				<PanelBody
-					title={ __( 'Presets', 'alerts-dlx' ) }
-					initialOpen={ false }
-					opened={ presetsPanel.opened }
-					onToggle={ presetsPanel.onToggle }
+					title={__('Presets', 'alerts-dlx')}
+					initialOpen={false}
+					opened={presetsPanel.opened}
+					onToggle={presetsPanel.onToggle}
 				>
-					{ globalStyleId > 0 ? (
+					{globalStyleId > 0 ? (
 						<p>
-							{ __(
+							{__(
 								'Detach the global style to apply a preset.',
 								'alerts-dlx'
-							) }
+							)}
 						</p>
 					) : (
 						<PresetButtonGroup
-							snapshots={ snapshots }
-							attributes={ attributes }
-							setAttributes={ setAttributes }
-							clientId={ clientId }
-							name={ name }
+							snapshots={snapshots}
+							attributes={attributes}
+							setAttributes={setAttributes}
+							clientId={clientId}
+							name={name}
 						/>
-					) }
+					)}
 				</PanelBody>
-			) }
+			)}
 		</>
 	);
 }

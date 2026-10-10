@@ -106,16 +106,31 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 	align-items: flex-start;
 	gap: 12px;
 
-	> .components-base-control {
+	>.components-base-control {
 		width: 100%;
 		margin-bottom: 0;
 	}
 
-	> .components-button {
+	>.components-button {
 		margin-top: 0;
 	}
 }
 
-.block-editor-block-inspector .alerts-dlx-global-style-control > .components-base-control {
+.block-editor-block-inspector .alerts-dlx-global-style-control>.components-base-control {
 	margin-bottom: 0;
+}
+
+.alerts-dlx-global-style-link {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 12px;
+	color: green;
+	text-decoration: none;
+
+	svg {
+		fill: green;
+		width: 16px;
+		height: 16px;
+	}
 }

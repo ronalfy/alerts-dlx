@@ -1,6 +1,53 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@wordpress/icons/build-module/icon/index.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@wordpress/icons/build-module/icon/index.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * WordPress dependencies
+ */
+
+/** @typedef {{icon: JSX.Element, size?: number} & import('@wordpress/primitives').SVGProps} IconProps */
+
+/**
+ * Return an SVG icon.
+ *
+ * @param {IconProps} props icon is the SVG component to render
+ *                          size is a number specifiying the icon size in pixels
+ *                          Other props will be passed to wrapped SVG component
+ *
+ * @return {JSX.Element}  Icon component
+ */
+
+function Icon(_ref) {
+  let {
+    icon,
+    size = 24,
+    ...props
+  } = _ref;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.cloneElement)(icon, {
+    width: size,
+    height: size,
+    ...props
+  });
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Icon);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@wordpress/icons/build-module/library/close-small.js":
 /*!***************************************************************************!*\
   !*** ./node_modules/@wordpress/icons/build-module/library/close-small.js ***!
@@ -3763,15 +3810,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/alert-library-utils */ "./src/js/blocks/utils/alert-library-utils.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/icon/index.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/link.js");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/alert-library-utils */ "./src/js/blocks/utils/alert-library-utils.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3791,6 +3840,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /**
  * Inspector panels for attaching a global style or applying a snapshot.
  */
+
 
 
 
@@ -3821,14 +3871,14 @@ var panelOpenState = new Map();
  */
 function usePersistentPanelOpen(clientId, panelName) {
   var key = "".concat(clientId, ":").concat(panelName);
-  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(function () {
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(function () {
       var _panelOpenState$get;
       return (_panelOpenState$get = panelOpenState.get(key)) !== null && _panelOpenState$get !== void 0 ? _panelOpenState$get : false;
     }),
     _useState2 = _slicedToArray(_useState, 2),
     opened = _useState2[0],
     setOpened = _useState2[1];
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(function () {
     var _panelOpenState$get2;
     setOpened((_panelOpenState$get2 = panelOpenState.get(key)) !== null && _panelOpenState$get2 !== void 0 ? _panelOpenState$get2 : false);
   }, [key]);
@@ -3861,14 +3911,14 @@ function getPresetPreviewBlocks(registry, clientId, blockName, attributes, item)
   var _ref, _sourceBlock$attribut;
   var sourceBlock = clientId ? registry.select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.store).getBlock(clientId) : null;
   var sourceAttributes = (_ref = (_sourceBlock$attribut = sourceBlock === null || sourceBlock === void 0 ? void 0 : sourceBlock.attributes) !== null && _sourceBlock$attribut !== void 0 ? _sourceBlock$attribut : attributes) !== null && _ref !== void 0 ? _ref : {};
-  var previewAttributes = _objectSpread(_objectSpread({}, (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.libraryConfigToBlockAttributes)((item === null || item === void 0 ? void 0 : item.config) || {}, _utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.SNAPSHOT_BLOCK_KEYS, sourceAttributes.className || '')), {}, {
+  var previewAttributes = _objectSpread(_objectSpread({}, (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.libraryConfigToBlockAttributes)((item === null || item === void 0 ? void 0 : item.config) || {}, _utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.SNAPSHOT_BLOCK_KEYS, sourceAttributes.className || '')), {}, {
     globalStyleId: 0,
     // Keep this id off the canvas block so the theme edit effect does not rewrite it.
     uniqueId: "alerts-dlx-preset-preview-".concat((item === null || item === void 0 ? void 0 : item.id) || 'preset')
   });
   var fallbackInnerBlocks = function fallbackInnerBlocks() {
     return [(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.createBlock)('core/paragraph', {
-      content: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This is an alert preview.', 'alerts-dlx')
+      content: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('This is an alert preview.', 'alerts-dlx')
     })];
   };
   if (sourceBlock) {
@@ -3898,21 +3948,21 @@ function PresetButtonGroup(_ref2) {
     setAttributes = _ref2.setAttributes,
     clientId = _ref2.clientId,
     name = _ref2.name;
-  var registry = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useRegistry)();
-  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(false),
+  var registry = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_5__.useRegistry)();
+  var _useState3 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     showPopover = _useState4[0],
     setShowPopover = _useState4[1];
-  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(),
+  var _useState5 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(),
     _useState6 = _slicedToArray(_useState5, 2),
     popoverAnchor = _useState6[0],
     setPopoverAnchor = _useState6[1];
-  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(null),
+  var _useState7 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
     hoveredPresetId = _useState8[0],
     setHoveredPresetId = _useState8[1];
-  var closePreviewTimer = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useRef)(null);
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+  var closePreviewTimer = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useRef)(null);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(function () {
     return function () {
       if (closePreviewTimer.current) {
         clearTimeout(closePreviewTimer.current);
@@ -3955,7 +4005,7 @@ function PresetButtonGroup(_ref2) {
   var hoveredItem = snapshots.find(function (item) {
     return Number(item.id) === Number(hoveredPresetId);
   }) || null;
-  var previewBlocks = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(function () {
+  var previewBlocks = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useMemo)(function () {
     if (!hoveredItem) {
       return EMPTY_PREVIEW_BLOCKS;
     }
@@ -3971,23 +4021,23 @@ function PresetButtonGroup(_ref2) {
    * @param {number} snapshotId Snapshot post id.
    */
   var applySnapshot = function applySnapshot(snapshotId) {
-    var item = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.findLibraryItem)(snapshotId, 'snapshot');
+    var item = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.findLibraryItem)(snapshotId, 'snapshot');
     if (!item) {
       return;
     }
-    setAttributes((0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.buildSnapshotApplyAttributes)(item.config, attributes.className || ''));
+    setAttributes((0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.buildSnapshotApplyAttributes)(item.config, attributes.className || ''));
   };
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.BaseControl, {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.BaseControl, {
     id: "alerts-dlx-presets",
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Preset', 'alerts-dlx'),
-    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Applying a preset copies its settings into this alert. Later edits to the preset will not change it.', 'alerts-dlx'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Preset', 'alerts-dlx'),
+    help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Applying a preset copies its settings into this alert. Later edits to the preset will not change it.', 'alerts-dlx'),
     __nextHasNoMarginBottom: true
   }, /*#__PURE__*/React.createElement("div", {
     className: "alerts-dlx-preset-buttons",
     role: "group",
-    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Presets', 'alerts-dlx')
+    "aria-label": (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Presets', 'alerts-dlx')
   }, snapshots.map(function (item) {
-    return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
       key: item.id,
       variant: "secondary",
       onClick: function onClick() {
@@ -3998,7 +4048,7 @@ function PresetButtonGroup(_ref2) {
       },
       onMouseLeave: closePresetPreview
     }, item.title);
-  }))), showPopover && popoverAnchor && previewBlocks.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Popover, {
+  }))), showPopover && popoverAnchor && previewBlocks.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Popover, {
     className: "alerts-dlx-preset-popover",
     placement: "left",
     onMouseEnter: cancelClosePresetPreview,
@@ -4037,15 +4087,15 @@ function AlertLibraryPanel(_ref3) {
     clientId = _ref3.clientId,
     _ref3$name = _ref3.name,
     name = _ref3$name === void 0 ? '' : _ref3$name;
-  var items = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(function () {
-    return (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.getLocalizedLibraryItems)();
+  var items = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useMemo)(function () {
+    return (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.getLocalizedLibraryItems)();
   }, []);
-  var globalStyles = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(function () {
+  var globalStyles = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useMemo)(function () {
     return items.filter(function (item) {
       return item.kind === 'global_style';
     });
   }, [items]);
-  var snapshots = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(function () {
+  var snapshots = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useMemo)(function () {
     return items.filter(function (item) {
       return item.kind === 'snapshot';
     });
@@ -4053,7 +4103,7 @@ function AlertLibraryPanel(_ref3) {
   var globalStylesPanel = usePersistentPanelOpen(clientId, 'global-styles');
   var presetsPanel = usePersistentPanelOpen(clientId, 'presets');
   var globalStyleId = Number(attributes.globalStyleId) || 0;
-  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)(String(globalStyleId)),
+  var _useState9 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useState)(String(globalStyleId)),
     _useState0 = _slicedToArray(_useState9, 2),
     pendingGlobalStyleId = _useState0[0],
     setPendingGlobalStyleId = _useState0[1];
@@ -4064,14 +4114,14 @@ function AlertLibraryPanel(_ref3) {
    * Detach, preset apply, and other attribute updates can change globalStyleId
    * without a dropdown event. The pending selection must follow that id.
    */
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(function () {
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_6__.useEffect)(function () {
     setPendingGlobalStyleId(String(globalStyleId));
   }, [globalStyleId]);
-  var attachedStyle = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.findLibraryItem)(globalStyleId, 'global_style');
+  var attachedStyle = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.findLibraryItem)(globalStyleId, 'global_style');
   var showGlobalStyles = globalStyles.length > 0 || globalStyleId > 0 && !attachedStyle;
   var showPresets = snapshots.length > 0;
   var globalStyleOptions = [{
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('None', 'alerts-dlx'),
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('None', 'alerts-dlx'),
     value: '0'
   }].concat(_toConsumableArray(globalStyles.map(function (item) {
     return {
@@ -4089,8 +4139,8 @@ function AlertLibraryPanel(_ref3) {
    * does not visually jump after the link is removed.
    */
   var detachGlobalStyle = function detachGlobalStyle() {
-    var resolved = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.mergeGlobalStyleIntoAttributes)(attributes);
-    setAttributes((0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_6__.buildDetachGlobalStyleAttributes)(resolved));
+    var resolved = (0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.mergeGlobalStyleIntoAttributes)(attributes);
+    setAttributes((0,_utils_alert_library_utils__WEBPACK_IMPORTED_MODULE_8__.buildDetachGlobalStyleAttributes)(resolved));
   };
 
   /**
@@ -4125,35 +4175,38 @@ function AlertLibraryPanel(_ref3) {
   if (!showGlobalStyles && !showPresets) {
     return null;
   }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, showGlobalStyles && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Global Styles', 'alerts-dlx'),
+  return /*#__PURE__*/React.createElement(React.Fragment, null, showGlobalStyles && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Global Styles', 'alerts-dlx'),
     initialOpen: false,
     opened: globalStylesPanel.opened,
     onToggle: globalStylesPanel.onToggle
-  }, attachedStyle && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
-    status: "info",
-    isDismissible: false
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.sprintf)(/* translators: %s: global style title. */
-  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('This alert follows %s.', 'alerts-dlx'), attachedStyle.title)), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "alerts-dlx-global-style-control"
-  }, globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.SelectControl, {
-    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Global style', 'alerts-dlx'),
+  }, globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.SelectControl, {
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Global style', 'alerts-dlx'),
     value: pendingGlobalStyleId,
     options: globalStyleOptions,
     onChange: onPendingGlobalStyleChange,
     __nextHasNoMarginBottom: true
-  }), !pendingMatchesAttached && globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }), attachedStyle && /*#__PURE__*/React.createElement("div", {
+    className: "alerts-dlx-global-style-link"
+  }, /*#__PURE__*/React.createElement(_wordpress_icons__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), /*#__PURE__*/React.createElement("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.sprintf)(/* translators: %s: global style title. */
+  (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Linked to %s.', 'alerts-dlx'), attachedStyle.title))), !pendingMatchesAttached && globalStyles.length > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
     variant: "secondary",
     onClick: applyPendingGlobalStyle
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Apply', 'alerts-dlx')), globalStyleId > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Apply', 'alerts-dlx')), globalStyleId > 0 && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.Button, {
     variant: "secondary",
     onClick: detachGlobalStyle
-  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Detach', 'alerts-dlx')))), showPresets && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Presets', 'alerts-dlx'),
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Detach', 'alerts-dlx')), attachedStyle && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
+    className: "description"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Detach this global style to modify the alert individually.'))))), showPresets && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Presets', 'alerts-dlx'),
     initialOpen: false,
     opened: presetsPanel.opened,
     onToggle: presetsPanel.onToggle
-  }, globalStyleId > 0 ? /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Detach the global style to apply a preset.', 'alerts-dlx')) : /*#__PURE__*/React.createElement(PresetButtonGroup, {
+  }, globalStyleId > 0 ? /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__.__)('Detach the global style to apply a preset.', 'alerts-dlx')) : /*#__PURE__*/React.createElement(PresetButtonGroup, {
     snapshots: snapshots,
     attributes: attributes,
     setAttributes: setAttributes,
@@ -4745,6 +4798,68 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 
 
+
+/**
+ * Editor ranges for the maximum-width slider.
+ *
+ * The attribute is a string and PHP sanitizes it as an integer, so the step is 1.
+ * These ranges are not stored. An out-of-range saved value is clamped only when
+ * the user changes the unit or the slider.
+ */
+var MAXIMUM_WIDTH_RANGES = {
+  px: {
+    min: 0,
+    max: 1600,
+    step: 1
+  },
+  '%': {
+    min: 0,
+    max: 100,
+    step: 1
+  },
+  vw: {
+    min: 0,
+    max: 100,
+    step: 1
+  },
+  rem: {
+    min: 0,
+    max: 100,
+    step: 1
+  }
+};
+
+/**
+ * Slider bounds for one maximum-width unit.
+ *
+ * @param {string} unit Width unit.
+ * @return {{min: number, max: number, step: number}} Slider bounds.
+ */
+function getMaximumWidthRange(unit) {
+  return MAXIMUM_WIDTH_RANGES[unit] || MAXIMUM_WIDTH_RANGES.px;
+}
+
+/**
+ * Parse a stored maximum width.
+ *
+ * @param {string|number} value Stored maximum width.
+ * @return {number|undefined} Parsed width, or undefined when it is not numeric.
+ */
+function parseMaximumWidth(value) {
+  var numericWidth = parseFloat(value);
+  return Number.isFinite(numericWidth) ? numericWidth : undefined;
+}
+
+/**
+ * Clamp a width into a unit range.
+ *
+ * @param {number} value  Width value.
+ * @param {Object} bounds Slider bounds with min and max.
+ * @return {number} Clamped width.
+ */
+function clampMaximumWidth(value, bounds) {
+  return Math.min(bounds.max, Math.max(bounds.min, value));
+}
 function isAppearanceLocked(attributes) {
   return Number(attributes === null || attributes === void 0 ? void 0 : attributes.globalStyleId) > 0;
 }
@@ -4758,25 +4873,43 @@ function MaximumWidthControls(_ref) {
     maximumWidthUnit = attributes.maximumWidthUnit;
   var locked = isAppearanceLocked(attributes);
   var label = labelTextDomain === 'quotes-dlx' ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Maximum Width', 'quotes-dlx') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Maximum Width', 'alerts-dlx');
+  var bounds = getMaximumWidthRange(maximumWidthUnit);
+  var numericWidth = parseMaximumWidth(maximumWidth);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(UnitChooserComponent, {
     label: label,
     value: maximumWidthUnit,
     units: ['px', '%', 'vw', 'rem'],
-    onClick: function onClick(value) {
+    onClick: function onClick(unit) {
       if (locked) {
         return;
       }
-      setAttributes({
-        maximumWidthUnit: value
-      });
+      var nextAttributes = {
+        maximumWidthUnit: unit
+      };
+      var nextBounds = getMaximumWidthRange(unit);
+
+      // Clamp only after the user switches units.
+      if (Number.isFinite(numericWidth) && (numericWidth < nextBounds.min || numericWidth > nextBounds.max)) {
+        nextAttributes.maximumWidth = String(clampMaximumWidth(numericWidth, nextBounds));
+      }
+      setAttributes(nextAttributes);
     }
-  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-    type: "text",
-    value: maximumWidth,
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.RangeControl, {
+    label: label,
+    hideLabelFromVision: true,
+    value: numericWidth,
+    min: bounds.min,
+    max: bounds.max,
+    step: bounds.step,
+    withInputField: true,
     disabled: locked,
-    onChange: function onChange(value) {
+    onChange: function onChange(nextValue) {
+      // RangeControl emits a number. The block attribute stays a string.
+      if ('number' !== typeof nextValue || Number.isNaN(nextValue)) {
+        return;
+      }
       setAttributes({
-        maximumWidth: value
+        maximumWidth: String(clampMaximumWidth(Math.round(nextValue), bounds))
       });
     }
   }));
