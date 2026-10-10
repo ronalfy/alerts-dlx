@@ -238,7 +238,8 @@
       "wide",
       "full"
     ],
-    "className": true
+    "className": true,
+    "inserter": false
   },
   "editorScript": "alerts-dlx-block",
   "editorStyle": [

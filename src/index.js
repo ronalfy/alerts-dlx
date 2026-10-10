@@ -15,10 +15,11 @@ import "./js/blocks/plugins/alert-close-expiration-toolbar";
 import "./js/blocks/plugins/button-sidebar-panel";
 import "./js/blocks/plugins/global-style-resolution";
 import AlertsLogo from "./js/blocks/components/icons/AlertsLogo";
+import GreenAlertsLogo from "./js/blocks/components/icons/GreenAlertsLogo";
 
 (function () {
   wp.blocks.updateCategory("alertsdlx", {
-    icon: <AlertsLogo width={16} height={16} />,
+    icon: <GreenAlertsLogo width={16} height={16} />,
   });
   wp.blocks.updateCategory("alertsdlx-legacy", {
     icon: <AlertsLogo width={16} height={16} />,
