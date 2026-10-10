@@ -7682,7 +7682,7 @@ var withAlertCloseExpirationToolbar = (0,_wordpress_compose__WEBPACK_IMPORTED_MO
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Close button and expiration visibility duration", "alerts-dlx"),
         className: "alerts-dlx-close-expiration-toolbar",
         toggleProps: _objectSpread(_objectSpread({}, toggleProps), {}, {
-          children: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)("Expiration", "alerts-dlx")))
+          children: /*#__PURE__*/React.createElement(React.Fragment, null)
         })
       }, function (_ref) {
         var onClose = _ref.onClose;
@@ -9607,20 +9607,29 @@ function createGuardedLibrarySetAttributes(attributes, setAttributes) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ALERT_BLOCK_NAMES: () => (/* reexport safe */ _alert_block_registry__WEBPACK_IMPORTED_MODULE_2__.ALERT_BLOCK_NAMES),
+/* harmony export */   ALERT_BLOCK_NAMES: () => (/* reexport safe */ _alert_block_registry__WEBPACK_IMPORTED_MODULE_3__.ALERT_BLOCK_NAMES),
 /* harmony export */   getAlertAncestorClientId: () => (/* binding */ getAlertAncestorClientId),
-/* harmony export */   openAlertParentInspectorTab: () => (/* binding */ openAlertParentInspectorTab)
+/* harmony export */   lock: () => (/* binding */ lock),
+/* harmony export */   openAlertParentInspectorTab: () => (/* binding */ openAlertParentInspectorTab),
+/* harmony export */   unlock: () => (/* binding */ unlock)
 /* harmony export */ });
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _alert_block_registry__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert-block-registry */ "./src/js/blocks/utils/alert-block-registry.js");
+/* harmony import */ var _wordpress_private_apis__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/private-apis */ "@wordpress/private-apis");
+/* harmony import */ var _wordpress_private_apis__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_private_apis__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _alert_block_registry__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert-block-registry */ "./src/js/blocks/utils/alert-block-registry.js");
 /**
  * Navigate from an inner block to its AlertsDLX alert ancestor inspector.
  */
 
 
+
+
+var _dangerousOptInToUns = (0,_wordpress_private_apis__WEBPACK_IMPORTED_MODULE_2__.__dangerousOptInToUnstableAPIsOnlyForCoreModules)("I acknowledge private features are not for use in themes or plugins and doing so will break in the next version of WordPress.", "@wordpress/editor"),
+  lock = _dangerousOptInToUns.lock,
+  unlock = _dangerousOptInToUns.unlock;
 
 
 
@@ -9640,7 +9649,7 @@ function getAlertAncestorClientId(clientId, selectFn) {
       return null;
     }
     var parentBlock = selectFn(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.store).getBlock(parentId);
-    if (parentBlock && _alert_block_registry__WEBPACK_IMPORTED_MODULE_2__.ALERT_BLOCK_NAMES.includes(parentBlock.name)) {
+    if (parentBlock && _alert_block_registry__WEBPACK_IMPORTED_MODULE_3__.ALERT_BLOCK_NAMES.includes(parentBlock.name)) {
       return parentId;
     }
     currentId = parentId;
@@ -9683,11 +9692,14 @@ function openAlertParentInspectorTab(alertClientId, tab) {
   if (!alertClientId) {
     return;
   }
-
-  // Keep the parameter meaningful for callers while avoiding a private API.
-  void tab;
   (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.store).selectBlock(alertClientId);
   openBlockInspectorSidebar();
+  var blockEditorDispatch = unlock((0,_wordpress_data__WEBPACK_IMPORTED_MODULE_0__.dispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.store));
+  if (typeof blockEditorDispatch.requestInspectorTab === "function") {
+    blockEditorDispatch.requestInspectorTab(tab, {
+      openPanel: alertClientId
+    });
+  }
 }
 
 /***/ }),
@@ -10805,6 +10817,17 @@ module.exports = window["wp"]["plugins"];
 
 "use strict";
 module.exports = window["wp"]["primitives"];
+
+/***/ }),
+
+/***/ "@wordpress/private-apis":
+/*!*************************************!*\
+  !*** external ["wp","privateApis"] ***!
+  \*************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = window["wp"]["privateApis"];
 
 /***/ }),
 
