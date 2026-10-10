@@ -73,3 +73,14 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 		align-items: center;
 	}
 }
+
+.alerts-dlx-preset-popover .components-popover__content {
+	width: 320px;
+	padding: 12px;
+	overflow: hidden;
+}
+
+.alerts-dlx-preset-popover__preview {
+	width: 100%;
+	min-height: 96px;
+}
