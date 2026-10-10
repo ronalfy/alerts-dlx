@@ -133,6 +133,8 @@ final class ShortcodeBuilder {
 			'mode',
 			'maximum_width',
 			'maximum_width_unit',
+			'margin_spacing',
+			'margin_spacing_target',
 			'base_font_size',
 			'icon_source',
 			'icon_appearance',
@@ -436,6 +438,54 @@ final class ShortcodeBuilder {
 				'options' => self::options_from_values( array( 'px', 'em', 'rem', '%', 'vw' ), uppercase:true ),
 			),
 			array(
+				'name'    => 'margin_spacing',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Margin spacing', 'alerts-dlx' ),
+				'options' => array(
+					array(
+						'value' => 'none',
+						'label' => __( 'None', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'compact',
+						'label' => __( 'Compact', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'comfortable',
+						'label' => __( 'Comfortable', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'spacious',
+						'label' => __( 'Spacious', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'extreme',
+						'label' => __( 'Extreme', 'alerts-dlx' ),
+					),
+				),
+			),
+			array(
+				'name'    => 'margin_spacing_target',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Margin target', 'alerts-dlx' ),
+				'options' => array(
+					array(
+						'value' => 'both',
+						'label' => __( 'Both', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'top',
+						'label' => __( 'Top', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'bottom',
+						'label' => __( 'Bottom', 'alerts-dlx' ),
+					),
+				),
+			),
+			array(
 				'name'    => 'base_font_size',
 				'group'   => 'appearance',
 				'control' => 'number',
@@ -672,6 +722,8 @@ final class ShortcodeBuilder {
 		$sanitized['align']                   = self::sanitize_choice( $values['align'] ?? $defaults['align'], array( 'left', 'center', 'right', 'wide', 'full' ), $defaults['align'] );
 		$sanitized['mode']                    = self::sanitize_choice( $values['mode'] ?? $defaults['mode'], array( 'light', 'dark' ), $defaults['mode'] );
 		$sanitized['maximum_width_unit']      = self::sanitize_choice( $values['maximum_width_unit'] ?? $defaults['maximum_width_unit'], array( 'px', 'em', 'rem', '%', 'vw' ), $defaults['maximum_width_unit'] );
+		$sanitized['margin_spacing']          = self::sanitize_choice( $values['margin_spacing'] ?? $defaults['margin_spacing'], AlertAttributes::get_margin_spacing_amounts(), $defaults['margin_spacing'] );
+		$sanitized['margin_spacing_target']   = self::sanitize_choice( $values['margin_spacing_target'] ?? $defaults['margin_spacing_target'], AlertAttributes::get_margin_spacing_targets(), $defaults['margin_spacing_target'] );
 		$sanitized['icon_vertical_alignment'] = self::sanitize_choice( $values['icon_vertical_alignment'] ?? $defaults['icon_vertical_alignment'], array( 'top', 'centered' ), $defaults['icon_vertical_alignment'] );
 		$sanitized['icon_appearance']         = self::sanitize_choice( $values['icon_appearance'] ?? $defaults['icon_appearance'], array( 'default', 'rounded' ), $defaults['icon_appearance'] );
 		$sanitized['icon_source']             = self::sanitize_choice( $values['icon_source'] ?? $defaults['icon_source'], array( 'icon', 'image' ), $defaults['icon_source'] );

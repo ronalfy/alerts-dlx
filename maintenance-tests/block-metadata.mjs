@@ -27,6 +27,8 @@ const sharedAttributes = [
 	'buttonRelSponsored',
 	'maximumWidthUnit',
 	'maximumWidth',
+	'marginSpacing',
+	'marginSpacingTarget',
 	'baseFontSize',
 	'icon',
 	'enableCustomFonts',
@@ -63,7 +65,14 @@ for ( const [ directory, expectedName, expectedGroup ] of blocks ) {
 		assert.ok( metadata.attributes?.[ attribute ], `${ expectedName } keeps stored attribute ${ attribute }` );
 	}
 
+	assert.equal( metadata.attributes.marginSpacing.default, 'spacious', `${ expectedName } defaults margin spacing to spacious` );
+	assert.equal( metadata.attributes.marginSpacingTarget.default, 'both', `${ expectedName } defaults margin target to both` );
+
 	checked += 1;
 }
+
+const canonical = JSON.parse( fs.readFileSync( 'src/js/blocks/alert/block.json', 'utf8' ) );
+assert.equal( canonical.attributes.marginSpacing.default, 'spacious', 'Canonical Alert defaults margin spacing to spacious' );
+assert.equal( canonical.attributes.marginSpacingTarget.default, 'both', 'Canonical Alert defaults margin target to both' );
 
 console.log( `Block metadata compatibility checks passed for ${ checked } alert blocks.` );

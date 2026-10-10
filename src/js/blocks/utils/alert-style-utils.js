@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { getBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 import { openAlertParentInspectorTab } from './alert-parent-inspector';
+import { getMarginSpacingClassMap } from './margin-spacing';
 import {
 	HISTORICAL_ALERT_BLOCK_GROUPS,
 	getRegisteredAlertGroupForBlockName,
@@ -104,7 +105,9 @@ export function buildAlertStyleClassName( className, styleName ) {
  * @param {string} params.className     Block className attribute.
  * @param {string} params.alertType     Current alert type slug.
  * @param {string} params.templateSlug  Template slug (bootstrap, chakra, etc.).
- * @param {Object} params.blockClasses  Additional block classes.
+ * @param {Object} params.blockClasses          Additional block classes.
+ * @param {string} params.marginSpacing         Spacing amount.
+ * @param {string} params.marginSpacingTarget   Spacing target.
  * @return {string}
  */
 export function getAlertWrapperClassName( {
@@ -112,6 +115,8 @@ export function getAlertWrapperClassName( {
 	alertType,
 	templateSlug,
 	blockClasses = {},
+	marginSpacing,
+	marginSpacingTarget,
 } ) {
 	const styleSlug = alertType || 'success';
 	const normalizedClassName = buildAlertStyleClassName( className, styleSlug );
@@ -122,7 +127,8 @@ export function getAlertWrapperClassName( {
 		{
 			'is-headline-size-forced': alertsDlxBlock?.headlineForceSize,
 		},
-		blockClasses
+		blockClasses,
+		getMarginSpacingClassMap( marginSpacing, marginSpacingTarget )
 	);
 }
 

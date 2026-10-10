@@ -42,6 +42,8 @@ class Options {
 			'headline_force_size'     => false,
 			'enabled_block_styles'    => array( 'bootstrap', 'chakra', 'material', 'shoelace' ),
 			'debug_mode'              => false,
+			'margin_spacing'          => 'spacious',
+			'margin_spacing_target'   => 'both',
 			'options_version'         => '1.0.0',
 		);
 	}
@@ -181,6 +183,44 @@ class Options {
 		}
 
 		return implode( ' ', array_unique( array_filter( $classes ) ) );
+	}
+
+	/**
+	 * Get the site default margin amount for new alerts.
+	 *
+	 * Omitted shortcode attributes stay spacious via AlertAttributes.
+	 * This value is the starting point for new blocks and new admin sessions.
+	 *
+	 * @return string Allowlisted amount.
+	 */
+	public static function get_margin_spacing() {
+		$options = self::get_plugin_options();
+		return AlertAttributes::sanitize_margin_spacing( $options['margin_spacing'] ?? 'spacious' );
+	}
+
+	/**
+	 * Get the site default margin target for new alerts.
+	 *
+	 * @return string Allowlisted target.
+	 */
+	public static function get_margin_spacing_target() {
+		$options = self::get_plugin_options();
+		return AlertAttributes::sanitize_margin_spacing_target( $options['margin_spacing_target'] ?? 'both' );
+	}
+
+	/**
+	 * Overlay the site margin default onto a fresh admin session.
+	 *
+	 * Does not change omit-attribute fallbacks. Callers that parse saved
+	 * shortcodes or stored library items should keep their own defaults.
+	 *
+	 * @param array $values Default values keyed in snake_case.
+	 * @return array
+	 */
+	public static function overlay_margin_spacing_defaults( array $values ) {
+		$values['margin_spacing']        = self::get_margin_spacing();
+		$values['margin_spacing_target'] = self::get_margin_spacing_target();
+		return $values;
 	}
 
 	/**

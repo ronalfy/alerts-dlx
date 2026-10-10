@@ -137,6 +137,14 @@ return array(
 				'type' => 'string',
 				'default' => '650'
 			),
+			'marginSpacing' => array(
+				'type' => 'string',
+				'default' => 'spacious'
+			),
+			'marginSpacingTarget' => array(
+				'type' => 'string',
+				'default' => 'both'
+			),
 			'baseFontSize' => array(
 				'type' => 'number',
 				'default' => 18
@@ -377,6 +385,14 @@ return array(
 				'type' => 'string',
 				'default' => '650'
 			),
+			'marginSpacing' => array(
+				'type' => 'string',
+				'default' => 'spacious'
+			),
+			'marginSpacingTarget' => array(
+				'type' => 'string',
+				'default' => 'both'
+			),
 			'baseFontSize' => array(
 				'type' => 'number',
 				'default' => 18
@@ -598,6 +614,14 @@ return array(
 			'maximumWidth' => array(
 				'type' => 'string',
 				'default' => '650'
+			),
+			'marginSpacing' => array(
+				'type' => 'string',
+				'default' => 'spacious'
+			),
+			'marginSpacingTarget' => array(
+				'type' => 'string',
+				'default' => 'both'
 			),
 			'baseFontSize' => array(
 				'type' => 'number',
@@ -841,6 +865,14 @@ return array(
 				'type' => 'string',
 				'default' => '650'
 			),
+			'marginSpacing' => array(
+				'type' => 'string',
+				'default' => 'spacious'
+			),
+			'marginSpacingTarget' => array(
+				'type' => 'string',
+				'default' => 'both'
+			),
 			'baseFontSize' => array(
 				'type' => 'number',
 				'default' => 18
@@ -1082,6 +1114,14 @@ return array(
 			'maximumWidth' => array(
 				'type' => 'string',
 				'default' => '650'
+			),
+			'marginSpacing' => array(
+				'type' => 'string',
+				'default' => 'spacious'
+			),
+			'marginSpacingTarget' => array(
+				'type' => 'string',
+				'default' => 'both'
 			),
 			'baseFontSize' => array(
 				'type' => 'number',

@@ -4,8 +4,16 @@ import {
 	ButtonGroup,
 	PanelRow,
 	RangeControl,
+	SelectControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+import {
+	getMarginSpacingOptions,
+	getMarginSpacingTargetOptions,
+	normalizeMarginSpacing,
+	normalizeMarginSpacingTarget,
+} from '../utils/margin-spacing';
 
 /**
  * Editor ranges for the maximum-width slider.
@@ -116,6 +124,44 @@ export function MaximumWidthControls( {
 						maximumWidth: String( clampMaximumWidth( Math.round( nextValue ), bounds ) ),
 					} );
 				} }
+			/>
+		</>
+	);
+}
+
+export function MarginSpacingControls( { attributes, setAttributes } ) {
+	const locked = isAppearanceLocked( attributes );
+	const marginSpacing = normalizeMarginSpacing( attributes?.marginSpacing );
+	const marginSpacingTarget = normalizeMarginSpacingTarget( attributes?.marginSpacingTarget );
+
+	return (
+		<>
+			<SelectControl
+				label={ __( 'Margin Spacing', 'alerts-dlx' ) }
+				value={ marginSpacing }
+				options={ getMarginSpacingOptions() }
+				disabled={ locked }
+				onChange={ ( value ) => {
+					if ( locked ) {
+						return;
+					}
+					setAttributes( { marginSpacing: normalizeMarginSpacing( value ) } );
+				} }
+				help={ __( 'Spacious matches the original alert margin.', 'alerts-dlx' ) }
+				__nextHasNoMarginBottom
+			/>
+			<SelectControl
+				label={ __( 'Margin Target', 'alerts-dlx' ) }
+				value={ marginSpacingTarget }
+				options={ getMarginSpacingTargetOptions() }
+				disabled={ locked }
+				onChange={ ( value ) => {
+					if ( locked ) {
+						return;
+					}
+					setAttributes( { marginSpacingTarget: normalizeMarginSpacingTarget( value ) } );
+				} }
+				__nextHasNoMarginBottom
 			/>
 		</>
 	);

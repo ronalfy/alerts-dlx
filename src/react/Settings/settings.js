@@ -6,6 +6,7 @@ import {
   RadioControl,
   ToggleControl,
   TextControl,
+  SelectControl,
   Fill,
   Notice,
 } from "@wordpress/components";
@@ -62,6 +63,20 @@ const formatHeadlineCustomClassesForDisplay = (value) => {
   return value.split(" ").filter(Boolean).join(", ");
 };
 
+const marginSpacingOptions = [
+  { value: "none", label: __("None", "alerts-dlx") },
+  { value: "compact", label: __("Compact", "alerts-dlx") },
+  { value: "comfortable", label: __("Comfortable", "alerts-dlx") },
+  { value: "spacious", label: __("Spacious", "alerts-dlx") },
+  { value: "extreme", label: __("Extreme", "alerts-dlx") },
+];
+
+const marginSpacingTargetOptions = [
+  { value: "both", label: __("Both", "alerts-dlx") },
+  { value: "top", label: __("Top", "alerts-dlx") },
+  { value: "bottom", label: __("Bottom", "alerts-dlx") },
+];
+
 const retrieveDefaults = () => {
   return sendCommand("alerts_dlx_retrieve_settings", {
     nonce: alertsDlxAdmin.retrieveNonce,
@@ -114,6 +129,8 @@ const Interface = ({ defaults }) => {
     headlineForceSize: data.values.headlineForceSize || false,
     enabledBlockStyles: data.values.enabledBlockStyles || [],
     debugMode: data.values.debugMode || false,
+    marginSpacing: data.values.marginSpacing || "spacious",
+    marginSpacingTarget: data.values.marginSpacingTarget || "both",
   });
 
   const { control, reset, getValues } = useForm({
@@ -179,6 +196,8 @@ const Interface = ({ defaults }) => {
           headlineForceSize: savedValues.headlineForceSize,
           enabledBlockStyles: savedValues.enabledBlockStyles,
           debugMode: savedValues.debugMode,
+          marginSpacing: savedValues.marginSpacing || "spacious",
+          marginSpacingTarget: savedValues.marginSpacingTarget || "both",
         });
         checkpointData = savedValues;
         showSnackbar(__("Settings saved successfully.", "alerts-dlx"));
@@ -215,6 +234,8 @@ const Interface = ({ defaults }) => {
           headlineForceSize: savedValues.headlineForceSize,
           enabledBlockStyles: savedValues.enabledBlockStyles,
           debugMode: savedValues.debugMode,
+          marginSpacing: savedValues.marginSpacing || "spacious",
+          marginSpacingTarget: savedValues.marginSpacingTarget || "both",
         });
         checkpointData = savedValues;
         showSnackbar(__("Settings reset to defaults.", "alerts-dlx"));
@@ -237,6 +258,8 @@ const Interface = ({ defaults }) => {
         headlineForceSize: checkpointData.headlineForceSize,
         enabledBlockStyles: checkpointData.enabledBlockStyles,
         debugMode: checkpointData.debugMode,
+        marginSpacing: checkpointData.marginSpacing || "spacious",
+        marginSpacingTarget: checkpointData.marginSpacingTarget || "both",
       });
     }
     setAjaxError(null);
@@ -326,6 +349,51 @@ const Interface = ({ defaults }) => {
                         "Adds CSS important rules to the headline styles so the plugin title font size/styles win over theme CSS.",
                         "alerts-dlx"
                       )}
+                    />
+                  )}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="adlx-admin-content-body">
+            <div className="adlx-admin-component-wrapper">
+              <h3 className="adlx-admin-content-subheading">
+                {__("Margin Spacing", "alerts-dlx")}
+              </h3>
+              <div className="adlx-admin-component-row">
+                <p className="description">
+                  {__(
+                    "Default spacing for newly inserted alerts, new styles, and a fresh shortcode builder session. Spacious matches the original alert margin. Existing alerts and shortcodes that omit these options keep that margin.",
+                    "alerts-dlx"
+                  )}
+                </p>
+              </div>
+              <div className="adlx-admin-component-row">
+                <Controller
+                  name="marginSpacing"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <SelectControl
+                      label={__("Margin spacing", "alerts-dlx")}
+                      value={value || "spacious"}
+                      options={marginSpacingOptions}
+                      onChange={onChange}
+                      __nextHasNoMarginBottom
+                    />
+                  )}
+                />
+              </div>
+              <div className="adlx-admin-component-row">
+                <Controller
+                  name="marginSpacingTarget"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <SelectControl
+                      label={__("Margin target", "alerts-dlx")}
+                      value={value || "both"}
+                      options={marginSpacingTargetOptions}
+                      onChange={onChange}
+                      __nextHasNoMarginBottom
                     />
                   )}
                 />

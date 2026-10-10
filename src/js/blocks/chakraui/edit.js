@@ -29,6 +29,7 @@ import {
 	BaseFontSizeControl,
 	IconVerticalAlignmentControl,
 	MaximumWidthControls,
+	MarginSpacingControls,
 } from '../components/HistoricalAlertAppearanceControls';
 import {
   getAlertWrapperClassName,
@@ -128,6 +129,7 @@ const ChakraAlerts = (props) => {
       <Slot name="alertsDLXStylePanelStart" fillProps={props} />
       <PanelBody initialOpen={true} title={__("Appearance", "quotes-dlx")}>
         <MaximumWidthControls attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="quotes-dlx" UnitChooserComponent={ UnitChooser } />
+        <MarginSpacingControls attributes={ attributes } setAttributes={ setAttributes } />
         <HistoricalAlertVariantControl attributes={ attributes } setAttributes={ setAttributes } themeAdapter={ themeAdapter } />
         <AlertModeControl attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="quotes-dlx" className="alerts-dlx-chakra-mode" />
         <IconVerticalAlignmentControl attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="quotes-dlx" isVisible={ isHistoricalIconAlignmentVisible( themeAdapter, iconEnabled, variant ) } />
@@ -177,6 +179,8 @@ const ChakraAlerts = (props) => {
       alertType,
       templateSlug: themeAdapter.templateSlug,
       blockClasses,
+      marginSpacing: attributes.marginSpacing,
+      marginSpacingTarget: attributes.marginSpacingTarget,
     }),
   });
 

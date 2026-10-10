@@ -134,6 +134,14 @@
       "type": "string",
       "default": "650"
     },
+    "marginSpacing": {
+      "type": "string",
+      "default": "spacious"
+    },
+    "marginSpacingTarget": {
+      "type": "string",
+      "default": "both"
+    },
     "baseFontSize": {
       "type": "number",
       "default": 18

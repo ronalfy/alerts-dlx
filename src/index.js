@@ -16,6 +16,7 @@ import "./js/blocks/plugins/alert-elements-toolbar";
 import "./js/blocks/plugins/alert-close-expiration-toolbar";
 import "./js/blocks/plugins/button-sidebar-panel";
 import "./js/blocks/plugins/global-style-resolution";
+import "./js/blocks/plugins/margin-spacing-defaults";
 import AlertsLogo from "./js/blocks/components/icons/AlertsLogo";
 import GreenAlertsLogo from "./js/blocks/components/icons/GreenAlertsLogo";
 

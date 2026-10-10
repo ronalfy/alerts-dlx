@@ -144,6 +144,8 @@ class Blocks {
 		if ( ! in_array( $atts['maximum_width_unit'], $allowed_width_units, true ) ) {
 			$atts['maximum_width_unit'] = $defaults['maximum_width_unit'];
 		}
+		$atts['margin_spacing']        = AlertAttributes::sanitize_margin_spacing( $atts['margin_spacing'] ?? '' );
+		$atts['margin_spacing_target'] = AlertAttributes::sanitize_margin_spacing_target( $atts['margin_spacing_target'] ?? '' );
 
 		$color_fields = array(
 			'color_primary',
@@ -417,18 +419,20 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'              => current_user_can( 'edit_others_posts' ),
-				'isAuthor'              => current_user_can( 'edit_posts' ),
-				'isAdmin'               => current_user_can( 'manage_options' ),
-				'colorPalette'          => Functions::get_theme_color_palette(),
-				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'         => Options::get_headline_tag(),
-				'headlineCustomClasses' => Options::get_headline_custom_classes(),
-				'headlineForceSize'     => Options::is_headline_force_size(),
-				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
-				'libraryItems'          => AlertLibrary::get_items_for_editor(),
-				'canManageLibrary'      => current_user_can( 'manage_options' ),
+				'font_stylesheet'            => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'isEditor'                   => current_user_can( 'edit_others_posts' ),
+				'isAuthor'                   => current_user_can( 'edit_posts' ),
+				'isAdmin'                    => current_user_can( 'manage_options' ),
+				'colorPalette'               => Functions::get_theme_color_palette(),
+				'defaultImage'               => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'              => Options::get_headline_tag(),
+				'headlineCustomClasses'      => Options::get_headline_custom_classes(),
+				'headlineForceSize'          => Options::is_headline_force_size(),
+				'enabledBlockStyles'         => Options::get_enabled_block_styles(),
+				'marginSpacingDefault'       => Options::get_margin_spacing(),
+				'marginSpacingTargetDefault' => Options::get_margin_spacing_target(),
+				'libraryItems'               => AlertLibrary::get_items_for_editor(),
+				'canManageLibrary'           => current_user_can( 'manage_options' ),
 			)
 		);
 	}

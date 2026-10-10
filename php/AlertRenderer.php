@@ -75,6 +75,8 @@ final class AlertRenderer {
 		$button_enabled          = $normalized['button_enabled'];
 		$maximum_width_unit      = $normalized['maximum_width_unit'];
 		$maximum_width           = $normalized['maximum_width'];
+		$margin_spacing          = $normalized['margin_spacing'];
+		$margin_spacing_target   = $normalized['margin_spacing_target'];
 		$icon                    = $normalized['icon'];
 		$description_enabled     = $normalized['description_enabled'];
 		$title_enabled           = $normalized['title_enabled'];
@@ -274,6 +276,10 @@ final class AlertRenderer {
 		if ( Options::is_headline_force_size() ) {
 			$container_classes[] = 'is-headline-size-forced';
 		}
+		$container_classes = array_merge(
+			$container_classes,
+			AlertAttributes::get_margin_spacing_classes( $margin_spacing, $margin_spacing_target )
+		);
 		?>
 		<!-- begin AlertsDLX output -->
 		<style>

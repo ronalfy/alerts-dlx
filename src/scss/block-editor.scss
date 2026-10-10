@@ -7,8 +7,8 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 .template-material,
 .template-chakra,
 .template-bootstrap {
-	margin-top: 1.5rem !important;
-	margin-bottom: 1.5rem !important;
+	margin-top: var(--alerts-dlx-margin-block-start, 1.5rem) !important;
+	margin-bottom: var(--alerts-dlx-margin-block-end, 1.5rem) !important;
 }
 
 .dlx-admin-only-block-expires .components-number-control {

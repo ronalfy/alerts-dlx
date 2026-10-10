@@ -116,12 +116,17 @@ class Admin {
 
 		$headline_force_size = filter_var( $form_data['headline_force_size'] ?? false, FILTER_VALIDATE_BOOLEAN );
 
+		$margin_spacing        = AlertAttributes::sanitize_margin_spacing( $form_data['margin_spacing'] ?? 'spacious' );
+		$margin_spacing_target = AlertAttributes::sanitize_margin_spacing_target( $form_data['margin_spacing_target'] ?? 'both' );
+
 		$settings = array(
 			'headline_style'          => $headline_style,
 			'headline_custom_classes' => $headline_custom_classes_result['value'],
 			'headline_force_size'     => $headline_force_size,
 			'enabled_block_styles'    => $enabled_block_styles,
 			'debug_mode'              => $debug_mode,
+			'margin_spacing'          => $margin_spacing,
+			'margin_spacing_target'   => $margin_spacing_target,
 			'options_version'         => Options::get_defaults()['options_version'],
 		);
 
@@ -328,9 +333,9 @@ class Admin {
 					'restNonce'                  => wp_create_nonce( 'wp_rest' ),
 					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
 					'libraryFields'              => ShortcodeBuilder::get_global_style_fields(),
-					'libraryDefaults'            => ShortcodeBuilder::get_global_style_defaults(),
+					'libraryDefaults'            => Options::overlay_margin_spacing_defaults( ShortcodeBuilder::get_global_style_defaults() ),
 					'snapshotFields'             => ShortcodeBuilder::get_snapshot_fields(),
-					'snapshotDefaults'           => ShortcodeBuilder::get_snapshot_defaults(),
+					'snapshotDefaults'           => Options::overlay_margin_spacing_defaults( ShortcodeBuilder::get_snapshot_defaults() ),
 					'libraryPreviewFixture'      => AlertLibrary::get_global_style_preview_fixture(),
 					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
 					'colorPalette'               => Functions::get_theme_color_palette(),
@@ -383,7 +388,7 @@ class Admin {
 				'alertsDlxAdmin',
 				array(
 					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
-					'shortcodeBuilderDefaults'   => ShortcodeBuilder::get_editor_defaults(),
+					'shortcodeBuilderDefaults'   => Options::overlay_margin_spacing_defaults( ShortcodeBuilder::get_editor_defaults() ),
 					'shortcodeBuilderFields'     => ShortcodeBuilder::get_editor_fields(),
 					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
 					'colorPalette'               => Functions::get_theme_color_palette(),
