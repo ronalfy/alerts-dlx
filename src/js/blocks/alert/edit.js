@@ -68,6 +68,7 @@ export default function CanonicalAlertEdit(props) {
 					attributes={attributes}
 					setAttributes={setAttributes}
 					clientId={clientId}
+					name={name}
 				/>
 				<PanelBody title={__('Styles', 'alerts-dlx')} initialOpen={true}>
 					<AlertTypeStyleControl

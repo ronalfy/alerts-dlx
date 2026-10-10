@@ -227,6 +227,15 @@ final class AlertAttributes {
 	}
 
 	/**
+	 * Get the available units for the maximum width attribute.
+	 *
+	 * @return array
+	 */
+	public static function get_maximum_width_units() {
+		return array( 'px', '%', 'vw', 'rem' );
+	}
+
+	/**
 	 * Normalize attributes without adding defaults or changing stored values.
 	 *
 	 * @param array          $attributes Block or shortcode attributes.
@@ -259,6 +268,8 @@ final class AlertAttributes {
 		// Every render path shares one icon result. A second pass still keeps valid icons.
 		$icon               = $normalized['icon'];
 		$normalized['icon'] = is_string( $icon ) ? Functions::sanitize_icon_svg( $icon ) : '';
+
+		$normalized['maximum_width_unit'] = in_array( $normalized['maximum_width_unit'], self::get_maximum_width_units(), true ) ? $normalized['maximum_width_unit'] : 'px';
 
 		return $normalized;
 	}

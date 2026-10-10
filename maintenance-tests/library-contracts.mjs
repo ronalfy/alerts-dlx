@@ -109,8 +109,47 @@ assert.match(alertEdit, /AlertLibraryPanel/, 'Canonical edit uses the Library pa
 assert.doesNotMatch(alertEdit, /CanonicalAlertPresetsPanel|Presets and Defaults/, 'Preset panel is removed from the canonical edit');
 assert.match(libraryPanel, /Global Styles/, 'Styles sidebar labels global styles');
 assert.match(libraryPanel, /__\( 'Presets', 'alerts-dlx' \)/, 'Styles sidebar labels snapshots as Presets');
-assert.match(libraryPanel, /Apply preset/, 'Presets panel exposes preset apply');
-assert.match(libraryPanel, /Detach the global style to apply a preset/, 'Preset apply is hidden while a global style is attached');
+assert.match(
+	libraryPanel,
+	/onClick=\{ \(\) => applySnapshot\( item\.id \) \}/,
+	'Clicking a preset button applies it immediately'
+);
+assert.match(
+	libraryPanel,
+	/alerts-dlx-preset-buttons/,
+	'Presets render as buttons'
+);
+assert.match(
+	libraryPanel,
+	/alerts-dlx-preset-popover/,
+	'Hovering a preset shows a popover preview'
+);
+assert.match(
+	libraryPanel,
+	/libraryConfigToBlockAttributes/,
+	'Preset preview maps snapshot config through the library helper'
+);
+assert.match(
+	libraryPanel,
+	/SNAPSHOT_BLOCK_KEYS/,
+	'Preset preview uses the snapshot attribute allowlist'
+);
+assert.match(
+	libraryPanel,
+	/findLibraryItem\( snapshotId, 'snapshot' \)/,
+	'Preset apply still loads the snapshot library item'
+);
+assert.match(
+	libraryPanel,
+	/buildSnapshotApplyAttributes/,
+	'Preset apply still writes snapshot attributes'
+);
+assert.doesNotMatch(
+	libraryPanel,
+	/Apply preset/,
+	'Presets panel has no separate Apply preset button'
+);
+assert.match(libraryPanel, /Detach the global style to apply a preset/, 'Preset buttons are hidden while a global style is attached');
 assert.match(libraryPanel, /panelOpenState/, 'Panel open state survives inspector remounts');
 assert.doesNotMatch(libraryPanel, /No global styles yet/, 'Empty global styles panel is hidden');
 assert.doesNotMatch(libraryPanel, /No snapshots yet/, 'Empty presets panel is hidden');

@@ -61,7 +61,8 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 	max-width: 160px;
 }
 
-.alerts-dlx-alert-type-styles {
+.alerts-dlx-alert-type-styles,
+.alerts-dlx-preset-buttons {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	gap: 12px;
@@ -72,6 +73,17 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 		justify-content: center;
 		align-items: center;
 	}
+}
+
+.alerts-dlx-preset-buttons button.components-button {
+	// Match the alert style buttons. Min-height keeps a single-line label at the
+	// default control height, and wrapped preset titles can still grow.
+	min-height: 36px;
+	height: auto;
+	padding: 4px 12px;
+	white-space: normal;
+	text-align: center;
+	line-height: normal;
 }
 
 .alerts-dlx-preset-popover .components-popover__content {
