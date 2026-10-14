@@ -280,7 +280,7 @@ final class ShortcodeBuilder {
 	 */
 	public static function sanitize_snapshot_values( $values ) {
 		if ( ! is_array( $values ) ) {
-			return new \WP_Error( 'alerts_dlx_snapshot_values', __( 'Invalid snapshot values.', 'alerts-dlx' ) );
+			return new \WP_Error( 'alerts_dlx_snapshot_values', __( 'Invalid preset values.', 'alerts-dlx' ) );
 		}
 
 		$allowed = array_flip( self::get_snapshot_input_names() );

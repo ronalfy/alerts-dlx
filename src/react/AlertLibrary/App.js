@@ -21,12 +21,12 @@ const App = ({ libraryKind, view, itemId, onNavigate }) => {
 				<div className="adlx-admin-content-heading">
 					<h1>
 						<span className="adlx-admin-content-heading-text">
-							{__("Global Styles and Snapshots", "alerts-dlx")}
+							{__("Global Styles and Presets", "alerts-dlx")}
 						</span>
 					</h1>
 					<p className="description">
 						{__(
-							"Reusable appearance presets. Global styles are meant to be referenced. Snapshots are meant to be applied as a copy.",
+							"Reusable appearance presets. Global styles are meant to be referenced. Presets are meant to be applied as a copy.",
 							"alerts-dlx"
 						)}
 					</p>

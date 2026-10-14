@@ -199,7 +199,7 @@ class Admin {
 				<div class="alerts-dlx-admin-container-body">
 					<nav class="nav-tab-wrapper">
 						<a class="<?php echo esc_attr( implode( ' ', $settings_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'settings' ) ); ?>"><?php esc_html_e( 'Settings', 'alerts-dlx' ); ?></a>
-						<a class="<?php echo esc_attr( implode( ' ', $library_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'styles-snapshots' ) ); ?>"><?php esc_html_e( 'Styles & Snapshots', 'alerts-dlx' ); ?></a>
+						<a class="<?php echo esc_attr( implode( ' ', $library_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'styles-snapshots' ) ); ?>"><?php esc_html_e( 'Styles & Presets', 'alerts-dlx' ); ?></a>
 						<a class="<?php echo esc_attr( implode( ' ', $shortcode_builder_tab_class ) ); ?>" href="<?php echo esc_url( Functions::get_settings_url( 'shortcode-builder' ) ); ?>"><?php esc_html_e( 'Shortcode Builder', 'alerts-dlx' ); ?></a>
 					</nav>
 					<?php

@@ -333,7 +333,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				<div className="alerts-dlx-library-empty">
 					<p>
 						{__(
-							"Reusable appearance presets. Global styles are meant to be referenced. Snapshots are meant to be applied as a copy.",
+							"Reusable appearance presets. Global styles are meant to be referenced. Presets are meant to be applied as a copy.",
 							"alerts-dlx"
 						)}
 					</p>

@@ -99,7 +99,7 @@ export function getLocalizedLibraryItems() {
 }
 
 /**
- * Whether the current user can manage the Styles & Snapshots admin UI.
+ * Whether the current user can manage the Styles & Presets admin UI.
  *
  * @return {boolean}
  */

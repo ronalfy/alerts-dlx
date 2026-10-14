@@ -151,7 +151,7 @@ export function createLibraryInserterVariations( items = getLocalizedLibraryItem
 		return [ {
 			name: `library-${ id }`,
 			title,
-			description: __( 'Insert a copy of this snapshot.', 'alerts-dlx' ),
+			description: __( 'Insert a copy of this preset.', 'alerts-dlx' ),
 			icon: 'camera',
 			scope: [ 'inserter' ],
 			isDefault: false,
