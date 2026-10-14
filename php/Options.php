@@ -44,6 +44,8 @@ class Options {
 			'debug_mode'              => false,
 			'margin_spacing'          => 'spacious',
 			'margin_spacing_target'   => 'both',
+			'override_fonts'          => false,
+			'font_family_override'    => '',
 			'options_version'         => '1.0.0',
 		);
 	}
@@ -241,6 +243,83 @@ class Options {
 	}
 
 	/**
+	 * Check whether a manual font family override is enabled.
+	 *
+	 * @return bool
+	 */
+	public static function is_font_override_enabled() {
+		$options = self::get_plugin_options();
+		return (bool) ( $options['override_fonts'] ?? false );
+	}
+
+	/**
+	 * Get the stored font family override.
+	 *
+	 * This is the saved stack only. Callers that print CSS must also check
+	 * is_font_override_enabled() before using it.
+	 *
+	 * @return string
+	 */
+	public static function get_font_family_override() {
+		$options = self::get_plugin_options();
+		$family  = $options['font_family_override'] ?? '';
+
+		if ( ! is_string( $family ) ) {
+			return '';
+		}
+
+		$sanitized = self::sanitize_font_family_override( $family );
+		if ( is_wp_error( $sanitized ) ) {
+			return '';
+		}
+
+		return $sanitized;
+	}
+
+	/**
+	 * Get the font stack used when the Lato stylesheet is not loaded.
+	 *
+	 * The manual override is used only when Override fonts is enabled and a stack is saved.
+	 * An empty override keeps the Helvetica fallback.
+	 *
+	 * @return string CSS font-family value.
+	 */
+	public static function get_fallback_font_family() {
+		$fallback = '"Helvetica", "Arial", sans-serif';
+		if ( ! self::is_font_override_enabled() ) {
+			return $fallback;
+		}
+
+		$override = self::get_font_family_override();
+		if ( '' === $override ) {
+			return $fallback;
+		}
+
+		return $override;
+	}
+
+	/**
+	 * Whether the bundled Lato font stylesheet should load.
+	 *
+	 * A saved font override turns this off. The alerts_dlx_load_fonts filter can still change the result.
+	 *
+	 * @return bool
+	 */
+	public static function should_load_fonts() {
+		$load_fonts = ! self::is_font_override_enabled();
+
+		/**
+		 * Filter whether to load the Lato font stylesheet.
+		 *
+		 * The default is false when Override fonts is enabled in the settings.
+		 *
+		 * @param bool $load_fonts Whether to load the Lato font stylesheet.
+		 * @return bool
+		 */
+		return (bool) apply_filters( 'alerts_dlx_load_fonts', $load_fonts );
+	}
+
+	/**
 	 * Parse and validate a comma-separated list of CSS class names.
 	 *
 	 * @param string $input Comma-separated class names.
@@ -303,6 +382,37 @@ class Options {
 		return array(
 			'value' => implode( ' ', array_unique( $valid_classes ) ),
 		);
+	}
+
+	/**
+	 * Sanitize a CSS font-family stack typed in the settings screen.
+	 *
+	 * Allows letters, numbers, spaces, commas, quotes, hyphens, and underscores.
+	 * Empty is valid and means no manual stack is stored.
+	 *
+	 * @param mixed $input Font family or stack.
+	 * @return string|\WP_Error Sanitized stack, or an error when the value is not a safe font stack.
+	 */
+	public static function sanitize_font_family_override( $input ) {
+		if ( ! is_string( $input ) ) {
+			$input = '';
+		}
+
+		$input = trim( sanitize_text_field( $input ) );
+		if ( '' === $input ) {
+			return '';
+		}
+
+		$is_safe_stack = (bool) preg_match( '/^[a-zA-Z0-9\s,\'"_-]+$/', $input );
+		$has_letter    = (bool) preg_match( '/[a-zA-Z]/', $input );
+		if ( strlen( $input ) > 200 || ! $is_safe_stack || ! $has_letter ) {
+			return new \WP_Error(
+				'alerts_dlx_invalid_font_family',
+				__( 'Enter a font family using letters, numbers, spaces, commas, quotes, hyphens, and underscores.', 'alerts-dlx' )
+			);
+		}
+
+		return $input;
 	}
 
 	/**

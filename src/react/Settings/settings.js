@@ -1,6 +1,6 @@
 import { useState, Suspense, useEffect } from "react";
 import { __ } from "@wordpress/i18n";
-import { useForm, Controller, useFormState } from "react-hook-form";
+import { useForm, Controller, useFormState, useWatch } from "react-hook-form";
 import { useAsyncResource } from "use-async-resource";
 import {
 	RadioControl,
@@ -77,6 +77,27 @@ const marginSpacingTargetOptions = [
 	{ value: "bottom", label: __("Bottom", "alerts-dlx") },
 ];
 
+const FONT_FAMILY_MAX_LENGTH = 200;
+
+/**
+ * Validate a CSS font-family stack. Empty is allowed.
+ *
+ * @param {string} input Font family or stack.
+ * @return {boolean} True when the stack is empty or safe to store.
+ */
+const validateFontFamilyOverride = (input) => {
+	if (!input || !String(input).trim()) {
+		return true;
+	}
+
+	const value = String(input).trim();
+	return (
+		value.length <= FONT_FAMILY_MAX_LENGTH &&
+		/[a-zA-Z]/.test(value) &&
+		/^[a-zA-Z0-9\s,'"_-]+$/.test(value)
+	);
+};
+
 const retrieveDefaults = () => {
 	return sendCommand("alerts_dlx_retrieve_settings", {
 		nonce: alertsDlxAdmin.retrieveNonce,
@@ -131,6 +152,8 @@ const Interface = ({ defaults }) => {
 		debugMode: data.values.debugMode || false,
 		marginSpacing: data.values.marginSpacing || "spacious",
 		marginSpacingTarget: data.values.marginSpacingTarget || "both",
+		overrideFonts: data.values.overrideFonts || false,
+		fontFamilyOverride: data.values.fontFamilyOverride || "",
 	});
 
 	const { control, reset, getValues } = useForm({
@@ -138,6 +161,10 @@ const Interface = ({ defaults }) => {
 	});
 
 	const { isDirty } = useFormState({ control });
+	const overrideFonts = useWatch({
+		control,
+		name: "overrideFonts",
+	});
 
 	useEffect(() => {
 		checkpointData = getDefaultValues();
@@ -172,6 +199,16 @@ const Interface = ({ defaults }) => {
 			return;
 		}
 
+		if (!validateFontFamilyOverride(formValues.fontFamilyOverride || "")) {
+			setAjaxError(
+				__(
+					"Enter a font family using letters, numbers, spaces, commas, quotes, hyphens, and underscores.",
+					"alerts-dlx"
+				)
+			);
+			return;
+		}
+
 		setSaving(true);
 		setAjaxError(null);
 
@@ -198,6 +235,8 @@ const Interface = ({ defaults }) => {
 					debugMode: savedValues.debugMode,
 					marginSpacing: savedValues.marginSpacing || "spacious",
 					marginSpacingTarget: savedValues.marginSpacingTarget || "both",
+					overrideFonts: savedValues.overrideFonts || false,
+					fontFamilyOverride: savedValues.fontFamilyOverride || "",
 				});
 				checkpointData = savedValues;
 				showSnackbar(__("Settings saved successfully.", "alerts-dlx"));
@@ -236,6 +275,8 @@ const Interface = ({ defaults }) => {
 					debugMode: savedValues.debugMode,
 					marginSpacing: savedValues.marginSpacing || "spacious",
 					marginSpacingTarget: savedValues.marginSpacingTarget || "both",
+					overrideFonts: savedValues.overrideFonts || false,
+					fontFamilyOverride: savedValues.fontFamilyOverride || "",
 				});
 				checkpointData = savedValues;
 				showSnackbar(__("Settings reset to defaults.", "alerts-dlx"));
@@ -260,6 +301,8 @@ const Interface = ({ defaults }) => {
 				debugMode: checkpointData.debugMode,
 				marginSpacing: checkpointData.marginSpacing || "spacious",
 				marginSpacingTarget: checkpointData.marginSpacingTarget || "both",
+				overrideFonts: checkpointData.overrideFonts || false,
+				fontFamilyOverride: checkpointData.fontFamilyOverride || "",
 			});
 		}
 		setAjaxError(null);
@@ -353,6 +396,57 @@ const Interface = ({ defaults }) => {
 									)}
 								/>
 							</div>
+						</div>
+					</div>
+					<div className="adlx-admin-content-body">
+						<div className="adlx-admin-component-wrapper">
+							<h3 className="adlx-admin-content-subheading">
+								{__("Fonts", "alerts-dlx")}
+							</h3>
+							<div className="adlx-admin-component-row">
+								<p className="description">
+									{__(
+										"Alerts use the bundled Lato font. Turn on an override to type your own font family.",
+										"alerts-dlx"
+									)}
+								</p>
+							</div>
+							<div className="adlx-admin-component-row">
+								<Controller
+									name="overrideFonts"
+									control={control}
+									render={({ field: { onChange, value } }) => (
+										<ToggleControl
+											label={__("Override fonts", "alerts-dlx")}
+											checked={value}
+											onChange={onChange}
+											help={__(
+												"Use a custom font family instead of the bundled Lato font.",
+												"alerts-dlx"
+											)}
+										/>
+									)}
+								/>
+							</div>
+							{overrideFonts && (
+								<div className="adlx-admin-component-row">
+									<Controller
+										name="fontFamilyOverride"
+										control={control}
+										render={({ field: { onChange, value } }) => (
+											<TextControl
+												label={__("Font family", "alerts-dlx")}
+												value={value}
+												onChange={onChange}
+												help={__(
+													"CSS font stack, such as Georgia, \"Times New Roman\", serif. Leave blank to use Helvetica, Arial, sans-serif.",
+													"alerts-dlx"
+												)}
+											/>
+										)}
+									/>
+								</div>
+							)}
 						</div>
 					</div>
 					<div className="adlx-admin-content-body">

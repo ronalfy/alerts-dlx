@@ -119,6 +119,12 @@ class Admin {
 		$margin_spacing        = AlertAttributes::sanitize_margin_spacing( $form_data['margin_spacing'] ?? 'spacious' );
 		$margin_spacing_target = AlertAttributes::sanitize_margin_spacing_target( $form_data['margin_spacing_target'] ?? 'both' );
 
+		$override_fonts       = filter_var( $form_data['override_fonts'] ?? false, FILTER_VALIDATE_BOOLEAN );
+		$font_family_override = Options::sanitize_font_family_override( $form_data['font_family_override'] ?? '' );
+		if ( is_wp_error( $font_family_override ) ) {
+			wp_send_json_error( array( 'message' => $font_family_override->get_error_message() ) );
+		}
+
 		$settings = array(
 			'headline_style'          => $headline_style,
 			'headline_custom_classes' => $headline_custom_classes_result['value'],
@@ -127,6 +133,8 @@ class Admin {
 			'debug_mode'              => $debug_mode,
 			'margin_spacing'          => $margin_spacing,
 			'margin_spacing_target'   => $margin_spacing_target,
+			'override_fonts'          => $override_fonts,
+			'font_family_override'    => $font_family_override,
 			'options_version'         => Options::get_defaults()['options_version'],
 		);
 

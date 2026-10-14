@@ -15,6 +15,8 @@ assert.match(
 	'All four historical alert styles remain enabled by default'
 );
 assert.match( options, /'debug_mode'\s*=>\s*false/, 'Debug mode remains disabled by default' );
+assert.match( options, /'override_fonts'\s*=>\s*false/, 'Font override remains disabled by default' );
+assert.match( options, /'font_family_override'\s*=>\s*''/, 'Font family override defaults to an empty stack' );
 assert.match( options, /'options_version'\s*=>\s*'1\.0\.0'/, 'Stored settings schema version remains 1.0.0' );
 
 console.log( 'Stored settings compatibility checks passed.' );

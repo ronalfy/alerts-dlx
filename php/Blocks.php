@@ -330,13 +330,8 @@ class Blocks {
 			return;
 		}
 
-		/**
-		 * Filter whether to load the Lato font stylesheet.
-		 *
-		 * @param bool $load_lato_font Whether to load the Lato font stylesheet.
-		 * @return bool
-		 */
-		if ( apply_filters( 'alerts_dlx_load_fonts', true ) ) {
+		// Bundled Lato stays on unless Override fonts is enabled or alerts_dlx_load_fonts returns false.
+		if ( Options::should_load_fonts() ) {
 			wp_register_style(
 				'alerts-dlx-block-editor-styles-lato',
 				Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
@@ -360,7 +355,7 @@ class Blocks {
 			$version,
 			'all'
 		);
-		$default_font_family = apply_filters( 'alerts_dlx_default_font_family', '"Helvetica", "Arial", sans-serif' );
+		$default_font_family = apply_filters( 'alerts_dlx_default_font_family', Options::get_fallback_font_family() );
 		wp_add_inline_style(
 			'alerts-dlx-block-editor-styles-lato',
 			':root {
@@ -420,6 +415,7 @@ class Blocks {
 			'alertsDlxBlock',
 			array(
 				'font_stylesheet'            => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'loadFonts'                  => Options::should_load_fonts(),
 				'isEditor'                   => current_user_can( 'edit_others_posts' ),
 				'isAuthor'                   => current_user_can( 'edit_posts' ),
 				'isAdmin'                    => current_user_can( 'manage_options' ),

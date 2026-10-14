@@ -89,7 +89,11 @@ const BlockMain = (props) => {
         </InspectorAdvancedControls>
       )}
       <style>{baseFontSizeStyles}</style>
-      <link rel="stylesheet" href={`${alertsDlxBlock.font_stylesheet}`} />
+      {/* wp_localize_script casts false to an empty string. A missing flag keeps the bundled font. */}
+      {("undefined" === typeof alertsDlxBlock.loadFonts ||
+        !!alertsDlxBlock.loadFonts) && (
+        <link rel="stylesheet" href={`${alertsDlxBlock.font_stylesheet}`} />
+      )}
       <figure
         role="alert"
         className={classnames(`alerts-dlx-alert alerts-dlx-${alertGroup}`, {
