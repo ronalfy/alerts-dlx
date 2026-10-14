@@ -141,20 +141,9 @@ assert.match(
 assert.doesNotMatch(sidebar, /\buseEffect\b/, 'Styles sidebar must not mutate saved attributes merely by rendering');
 
 const blocksPhp = fs.readFileSync('php/Blocks.php', 'utf8');
-for (const [group, item] of Object.entries(historical)) {
+for (const item of Object.values(historical)) {
 	assert.ok(blocksPhp.includes(`'${item.name}'`), `Runtime keeps ${item.name} registered`);
-	assert.ok(blocksPhp.includes(`=> '${group}'`), `Disabled-style map keeps ${group}`);
 }
-assert.match(
-	blocksPhp,
-	/Options::is_block_style_enabled\(/,
-	'Disabled historical designs still use the established settings gate'
-);
-assert.match(
-	blocksPhp,
-	/\$args\['supports'\]\['inserter'\]\s*=\s*false/,
-	'Disabled historical designs are hidden from insertion without unregistering saved content'
-);
 assert.doesNotMatch(blocksPhp, /unregister_block_type\s*\(/, 'Saved historical content is never orphaned by unregistering its type');
 
 for (const indexPath of [

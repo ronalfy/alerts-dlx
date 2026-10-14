@@ -418,16 +418,6 @@ body.alerts-dlx-body .updated {
 	z-index: 100000;
 }
 
-.adlx-block-styles-row {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-	gap: 8px;
-}
-
-.adlx-block-styles-notice {
-	color: #b32d2e;
-}
-
 .adlx-admin-save-bar {
 	padding: 16px 24px;
 	background: #f6f7f7;

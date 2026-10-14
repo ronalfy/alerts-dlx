@@ -27,7 +27,6 @@ class Options {
 	 * Main class runner.
 	 */
 	public static function run() {
-		// Reserved for future migrations.
 	}
 
 	/**
@@ -40,7 +39,6 @@ class Options {
 			'headline_style'          => 'h2',
 			'headline_custom_classes' => '',
 			'headline_force_size'     => false,
-			'enabled_block_styles'    => array( 'bootstrap', 'chakra', 'material', 'shoelace' ),
 			'debug_mode'              => false,
 			'margin_spacing'          => 'spacious',
 			'margin_spacing_target'   => 'both',
@@ -83,29 +81,6 @@ class Options {
 		$key = strtolower( trim( $tag ) );
 
 		return $map[ $key ] ?? 'h2';
-	}
-
-	/**
-	 * Get allowed alert theme slugs.
-	 *
-	 * @return array
-	 */
-	public static function get_allowed_block_styles() {
-		return array( 'bootstrap', 'chakra', 'material', 'shoelace' );
-	}
-
-	/**
-	 * Get alert theme definitions for admin UI.
-	 *
-	 * @return array
-	 */
-	public static function get_block_style_definitions() {
-		return array(
-			'bootstrap' => __( 'Bootstrap', 'alerts-dlx' ),
-			'chakra'    => __( 'Chakra UI', 'alerts-dlx' ),
-			'material'  => __( 'Material', 'alerts-dlx' ),
-			'shoelace'  => __( 'Shoelace', 'alerts-dlx' ),
-		);
 	}
 
 	/**
@@ -416,49 +391,6 @@ class Options {
 	}
 
 	/**
-	 * Get enabled alert theme slugs.
-	 *
-	 * @return array
-	 */
-	public static function get_enabled_block_styles() {
-		$options = self::get_plugin_options();
-		$styles  = isset( $options['enabled_block_styles'] ) ? $options['enabled_block_styles'] : self::get_allowed_block_styles();
-
-		if ( ! is_array( $styles ) ) {
-			$styles = self::get_allowed_block_styles();
-		}
-
-		$styles = array_values(
-			array_intersect(
-				array_map( 'sanitize_key', $styles ),
-				self::get_allowed_block_styles()
-			)
-		);
-
-		if ( empty( $styles ) ) {
-			$styles = self::get_allowed_block_styles();
-		}
-
-		/**
-		 * Filter the enabled alert themes.
-		 *
-		 * @param array $styles Array of enabled alert theme slugs.
-		 */
-		return apply_filters( 'alerts_dlx_enabled_block_styles', $styles );
-	}
-
-	/**
-	 * Check if an alert theme is enabled.
-	 *
-	 * @param string $style Alert theme slug.
-	 *
-	 * @return bool
-	 */
-	public static function is_block_style_enabled( $style ) {
-		return in_array( sanitize_key( $style ), self::get_enabled_block_styles(), true );
-	}
-
-	/**
 	 * Check if debug mode is enabled.
 	 *
 	 * @return bool
@@ -466,25 +398,5 @@ class Options {
 	public static function is_debug_mode() {
 		$options = self::get_plugin_options();
 		return (bool) ( $options['debug_mode'] ?? false );
-	}
-
-	/**
-	 * Sanitize enabled alert themes from form input.
-	 *
-	 * @param array $styles Alert theme slugs from form.
-	 *
-	 * @return array
-	 */
-	public static function sanitize_enabled_block_styles( $styles ) {
-		if ( ! is_array( $styles ) ) {
-			return array();
-		}
-
-		return array_values(
-			array_intersect(
-				array_map( 'sanitize_key', $styles ),
-				self::get_allowed_block_styles()
-			)
-		);
 	}
 }

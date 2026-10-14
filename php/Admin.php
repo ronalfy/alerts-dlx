@@ -75,7 +75,6 @@ class Admin {
 		wp_send_json_success(
 			array(
 				'values'               => $this->map_defaults_to_js( stripslashes_deep( $options ) ),
-				'blockStyleOptions'    => $this->get_block_style_options_for_js(),
 				'headlineStyleOptions' => $this->get_headline_style_options_for_js(),
 			)
 		);
@@ -102,11 +101,6 @@ class Admin {
 			$headline_style = 'h2';
 		}
 
-		$enabled_block_styles = Options::sanitize_enabled_block_styles( $form_data['enabled_block_styles'] ?? array() );
-		if ( empty( $enabled_block_styles ) ) {
-			wp_send_json_error( array( 'message' => __( 'At least one alert theme must remain enabled.', 'alerts-dlx' ) ) );
-		}
-
 		$debug_mode = filter_var( $form_data['debug_mode'] ?? false, FILTER_VALIDATE_BOOLEAN );
 
 		$headline_custom_classes_result = Options::sanitize_headline_custom_classes( $form_data['headline_custom_classes'] ?? '' );
@@ -129,7 +123,6 @@ class Admin {
 			'headline_style'          => $headline_style,
 			'headline_custom_classes' => $headline_custom_classes_result['value'],
 			'headline_force_size'     => $headline_force_size,
-			'enabled_block_styles'    => $enabled_block_styles,
 			'debug_mode'              => $debug_mode,
 			'margin_spacing'          => $margin_spacing,
 			'margin_spacing_target'   => $margin_spacing_target,
@@ -446,25 +439,6 @@ class Admin {
 			$js_option_names[ Functions::to_camelcase( $option_name ) ] = $option_value;
 		}
 		return $js_option_names;
-	}
-
-	/**
-	 * Get alert theme options for the admin UI.
-	 *
-	 * @return array
-	 */
-	private function get_block_style_options_for_js() {
-		$definitions = Options::get_block_style_definitions();
-		$options     = array();
-
-		foreach ( $definitions as $value => $label ) {
-			$options[] = array(
-				'label' => $label,
-				'value' => $value,
-			);
-		}
-
-		return $options;
 	}
 
 	/**

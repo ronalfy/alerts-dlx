@@ -12,7 +12,6 @@ import {
 import SaveBar from "../Components/SaveBar";
 import Snackbar from "../Components/Snackbar";
 import Loader from "../Components/Loader";
-import BlockStylesControl from "../Components/BlockStylesControl";
 import sendCommand from "../Utils/SendCommand";
 import ShortcodeBuilder from "./ShortcodeBuilder";
 

@@ -13,7 +13,6 @@ import {
 import SaveBar from "../Components/SaveBar";
 import Snackbar from "../Components/Snackbar";
 import Loader from "../Components/Loader";
-import BlockStylesControl from "../Components/BlockStylesControl";
 import sendCommand from "../Utils/SendCommand";
 
 let checkpointData = null;
@@ -148,7 +147,6 @@ const Interface = ({ defaults }) => {
 			data.values.headlineCustomClasses || ""
 		),
 		headlineForceSize: data.values.headlineForceSize || false,
-		enabledBlockStyles: data.values.enabledBlockStyles || [],
 		debugMode: data.values.debugMode || false,
 		marginSpacing: data.values.marginSpacing || "spacious",
 		marginSpacingTarget: data.values.marginSpacingTarget || "both",
@@ -180,13 +178,6 @@ const Interface = ({ defaults }) => {
 
 	const handleSave = () => {
 		const formValues = getValues();
-
-		if (!formValues.enabledBlockStyles?.length) {
-			setAjaxError(
-				__("At least one alert theme must remain enabled.", "alerts-dlx")
-			);
-			return;
-		}
 
 		const classValidation = validateHeadlineCustomClasses(
 			formValues.headlineCustomClasses || ""
@@ -231,7 +222,6 @@ const Interface = ({ defaults }) => {
 						savedValues.headlineCustomClasses || ""
 					),
 					headlineForceSize: savedValues.headlineForceSize,
-					enabledBlockStyles: savedValues.enabledBlockStyles,
 					debugMode: savedValues.debugMode,
 					marginSpacing: savedValues.marginSpacing || "spacious",
 					marginSpacingTarget: savedValues.marginSpacingTarget || "both",
@@ -271,7 +261,6 @@ const Interface = ({ defaults }) => {
 						savedValues.headlineCustomClasses || ""
 					),
 					headlineForceSize: savedValues.headlineForceSize,
-					enabledBlockStyles: savedValues.enabledBlockStyles,
 					debugMode: savedValues.debugMode,
 					marginSpacing: savedValues.marginSpacing || "spacious",
 					marginSpacingTarget: savedValues.marginSpacingTarget || "both",
@@ -297,7 +286,6 @@ const Interface = ({ defaults }) => {
 					checkpointData.headlineCustomClasses || ""
 				),
 				headlineForceSize: checkpointData.headlineForceSize,
-				enabledBlockStyles: checkpointData.enabledBlockStyles,
 				debugMode: checkpointData.debugMode,
 				marginSpacing: checkpointData.marginSpacing || "spacious",
 				marginSpacingTarget: checkpointData.marginSpacingTarget || "both",
@@ -307,9 +295,6 @@ const Interface = ({ defaults }) => {
 		}
 		setAjaxError(null);
 	};
-
-	const enabledBlockStyles = getValues("enabledBlockStyles");
-	const hasErrors = !enabledBlockStyles?.length;
 
 	return (
 		<>
@@ -497,34 +482,6 @@ const Interface = ({ defaults }) => {
 					<div className="adlx-admin-content-body">
 						<div className="adlx-admin-component-wrapper">
 							<h3 className="adlx-admin-content-subheading">
-								{__("Alert Themes", "alerts-dlx")}
-							</h3>
-							<div className="adlx-admin-component-row">
-								<p className="description">
-									{__(
-										"Select which alert themes are available in the block inserter. This will not affect existing alerts on your site.",
-										"alerts-dlx"
-									)}
-								</p>
-							</div>
-							<div className="adlx-admin-component-row">
-								<Controller
-									name="enabledBlockStyles"
-									control={control}
-									render={({ field: { onChange, value } }) => (
-										<BlockStylesControl
-											options={data.blockStyleOptions || []}
-											value={value}
-											onChange={onChange}
-										/>
-									)}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="adlx-admin-content-body">
-						<div className="adlx-admin-component-wrapper">
-							<h3 className="adlx-admin-content-subheading">
 								{__("Debug Mode", "alerts-dlx")}
 							</h3>
 							<div className="adlx-admin-component-row">
@@ -569,7 +526,6 @@ const Interface = ({ defaults }) => {
 					isSaving={saving}
 					isResetting={resetting}
 					isDirtyFields={isDirty}
-					hasErrors={hasErrors}
 				/>
 			</Fill>
 		</>

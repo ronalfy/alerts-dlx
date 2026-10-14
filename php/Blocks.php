@@ -52,29 +52,6 @@ class Blocks {
 			2
 		);
 
-		add_filter(
-			'register_block_type_args',
-			function ( $args, $block_name ) {
-				$style_map = array(
-					'mediaron/alerts-dlx-bootstrap' => 'bootstrap',
-					'mediaron/alerts-dlx-chakra'    => 'chakra',
-					'mediaron/alerts-dlx-material'  => 'material',
-					'mediaron/alerts-dlx-shoelace'  => 'shoelace',
-				);
-
-				if ( isset( $style_map[ $block_name ] ) && ! Options::is_block_style_enabled( $style_map[ $block_name ] ) ) {
-					if ( ! isset( $args['supports'] ) || ! is_array( $args['supports'] ) ) {
-						$args['supports'] = array();
-					}
-					$args['supports']['inserter'] = false;
-				}
-
-				return $args;
-			},
-			10,
-			2
-		);
-
 		if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
 			wp_register_block_types_from_metadata_collection( Functions::get_plugin_dir( 'build/js/blocks/' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
 		} else {
@@ -424,7 +401,6 @@ class Blocks {
 				'headlineStyle'              => Options::get_headline_tag(),
 				'headlineCustomClasses'      => Options::get_headline_custom_classes(),
 				'headlineForceSize'          => Options::is_headline_force_size(),
-				'enabledBlockStyles'         => Options::get_enabled_block_styles(),
 				'marginSpacingDefault'       => Options::get_margin_spacing(),
 				'marginSpacingTargetDefault' => Options::get_margin_spacing_target(),
 				'libraryItems'               => AlertLibrary::get_items_for_editor(),

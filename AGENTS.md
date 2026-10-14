@@ -56,7 +56,7 @@ PHP coding standards use WordPress PHPCS (`phpcs.xml.dist`). After PHP edits, ru
 
 - Action: `alerts_dlx_loaded` (after plugin bootstrap).
 - Content filter: `alerts_dlx_the_content` (shortcode/description processing).
-- Filters for fonts, headlines, enabled themes, and branding — documented in the docs repo under `developers/filters-and-hooks.md`.
+- Filters for fonts, headlines, and branding — documented in the docs repo under `developers/filters-and-hooks.md`.
 
 Options are stored in the `alerts_dlx` option (see `php/Options.php`).
 

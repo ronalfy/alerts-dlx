@@ -48,11 +48,8 @@ Defaults (see `Options::get_defaults()`):
 - `headline_style` — `h1`–`h6` or `div` (allowlisted)
 - `headline_custom_classes` — extra classes on titles
 - `headline_force_size` — boolean
-- `enabled_block_styles` — which of `bootstrap`, `chakra`, `material`, `shoelace` appear in the inserter
 - `debug_mode` — boolean
 - `options_version` — string for future migrations
-
-Disabling a theme hides it from the inserter only; existing content still renders.
 
 ### Blocks and shortcode
 
