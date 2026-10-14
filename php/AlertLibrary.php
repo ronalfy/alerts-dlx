@@ -46,6 +46,7 @@ final class AlertLibrary {
 		// admin_init runs after the library post type is registered on init.
 		add_action( 'admin_init', array( self::class, 'maybe_seed_starter_snapshots' ) );
 		add_filter( 'map_meta_cap', array( self::class, 'map_meta_cap' ), 10, 4 );
+		add_filter( 'update_post_metadata', array( self::class, 'block_global_style_inserter_flag' ), 10, 3 );
 	}
 
 	/**
@@ -105,6 +106,9 @@ final class AlertLibrary {
 	/**
 	 * Sanitize the inserter flag on direct meta updates.
 	 *
+	 * Kind is enforced in block_global_style_inserter_flag(), which runs on
+	 * update and refuses to store the flag for global styles.
+	 *
 	 * @param mixed $value Raw flag.
 	 * @return bool
 	 */
@@ -113,19 +117,66 @@ final class AlertLibrary {
 	}
 
 	/**
+	 * Whether a library item may appear in the block inserter.
+	 *
+	 * Only snapshots may be flagged. Global styles stay linked from the
+	 * Styles sidebar, so a stored flag on a global style is ignored.
+	 *
+	 * @param int $post_id Library post ID.
+	 * @return bool
+	 */
+	private static function can_show_in_inserter( $post_id ) {
+		return self::KIND_SNAPSHOT === self::get_post_kind( $post_id );
+	}
+
+	/**
+	 * Keep global styles out of the block inserter.
+	 *
+	 * Fires on `update_post_metadata` before the inserter flag is written.
+	 * A write for a global style is discarded and any stored flag is removed.
+	 *
+	 * @param mixed  $check     Whether to short-circuit the meta update.
+	 * @param int    $object_id Post ID.
+	 * @param string $meta_key  Meta key being updated.
+	 * @return mixed True when the write is blocked. Otherwise the incoming check.
+	 */
+	public static function block_global_style_inserter_flag( $check, $object_id, $meta_key ) {
+		if ( null !== $check || self::META_SHOW_IN_INSERTER !== $meta_key ) {
+			return $check;
+		}
+
+		$object_id = absint( $object_id );
+		if ( self::can_show_in_inserter( $object_id ) ) {
+			return $check;
+		}
+
+		delete_post_meta( $object_id, self::META_SHOW_IN_INSERTER );
+		return true;
+	}
+
+	/**
 	 * Whether a library item is flagged for the block inserter.
+	 *
+	 * Global styles always return false, including when an older flag is
+	 * still stored, so they leave the inserter without waiting for a resave.
 	 *
 	 * @param int $post_id Library post ID.
 	 * @return bool
 	 */
 	public static function is_shown_in_inserter( $post_id ) {
-		return (bool) get_post_meta( (int) $post_id, self::META_SHOW_IN_INSERTER, true );
+		$post_id = absint( $post_id );
+		if ( ! self::can_show_in_inserter( $post_id ) ) {
+			return false;
+		}
+
+		return (bool) get_post_meta( $post_id, self::META_SHOW_IN_INSERTER, true );
 	}
 
 	/**
 	 * Set or clear the inserter flag for one library post.
 	 *
-	 * Other library posts are left unchanged. Any number of items may be flagged.
+	 * Other library posts are left unchanged. Any number of snapshots may be
+	 * flagged. Global styles never keep the flag.
 	 *
 	 * @param int  $post_id Library post ID.
 	 * @param bool $show    Whether this item appears in the inserter.
@@ -134,6 +185,11 @@ final class AlertLibrary {
 		$post_id = absint( $post_id );
 		$post    = get_post( $post_id );
 		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
+			return;
+		}
+
+		if ( ! self::can_show_in_inserter( $post_id ) ) {
+			delete_post_meta( $post_id, self::META_SHOW_IN_INSERTER );
 			return;
 		}
 

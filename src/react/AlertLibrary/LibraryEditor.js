@@ -43,6 +43,18 @@ const getDefaultsForKind = (nextKind) =>
 		: { ...(alertsDlxAdmin.libraryDefaults || {}) };
 
 /**
+ * Whether the inserter flag applies to this library kind.
+ *
+ * Snapshots may appear in the inserter. Global styles may not.
+ *
+ * @param {string}  itemKind Library kind.
+ * @param {boolean} flagged  Stored flag.
+ * @return {boolean} Whether the editor should treat the flag as on.
+ */
+const isSnapshotShownInInserter = (itemKind, flagged) =>
+	KIND_SNAPSHOT === itemKind && Boolean(flagged);
+
+/**
  * Studio editor for one library item.
  *
  * @param {Object}   props              Component props.
@@ -125,14 +137,15 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 
 		setLoading(true);
 		setError("");
-		fetchLibraryItem(itemId)
+			fetchLibraryItem(itemId)
 			.then((item) => {
+				const nextKind = item.kind || KIND_GLOBAL_STYLE;
 				const next = {
 					title: item.title || "",
 					slug: item.slug || "",
-					showInInserter: Boolean(item.showInInserter),
-					kind: item.kind || KIND_GLOBAL_STYLE,
-					config: item.config || getDefaultsForKind(item.kind || KIND_GLOBAL_STYLE),
+					showInInserter: isSnapshotShownInInserter(nextKind, item.showInInserter),
+					kind: nextKind,
+					config: item.config || getDefaultsForKind(nextKind),
 				};
 				checkpoint.current = next;
 				setTitle(next.title);
@@ -166,6 +179,9 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 
 	const handleKindChange = (nextKind) => {
 		setKind(nextKind);
+		if (KIND_SNAPSHOT !== nextKind) {
+			setShowInInserter(false);
+		}
 		if (!itemId) {
 			const nextDefaults = getDefaultsForKind(nextKind);
 			setConfig((current) => {
@@ -199,7 +215,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 			kind,
 			title: title.trim(),
 			slug: slug.trim() || undefined,
-			showInInserter,
+			showInInserter: isSnapshotShownInInserter(kind, showInInserter),
 			config,
 		};
 
@@ -209,11 +225,12 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 
 		request
 			.then((saved) => {
+				const nextKind = saved.kind || kind;
 				const next = {
 					title: saved.title || title,
 					slug: saved.slug || slug,
-					showInInserter: Boolean(saved.showInInserter),
-					kind: saved.kind || kind,
+					showInInserter: isSnapshotShownInInserter(nextKind, saved.showInInserter),
+					kind: nextKind,
 					config: saved.config || config,
 				};
 				checkpoint.current = next;
@@ -322,16 +339,18 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 						)}
 						__nextHasNoMarginBottom
 					/>
-					<ToggleControl
-						label={__("Show in block inserter (Advanced)", "alerts-dlx")}
-						checked={showInInserter}
-						onChange={setShowInInserter}
-						help={__(
-							"This item appears as its own choice in the Alert inserter. Any number of items can be shown.",
-							"alerts-dlx"
-						)}
-						__nextHasNoMarginBottom
-					/>
+					{KIND_SNAPSHOT === kind && (
+						<ToggleControl
+							label={__("Show in block inserter (Advanced)", "alerts-dlx")}
+							checked={showInInserter}
+							onChange={setShowInInserter}
+							help={__(
+								"This preset appears as its own choice in the Alert inserter. Any number of presets can be shown.",
+								"alerts-dlx"
+							)}
+							__nextHasNoMarginBottom
+						/>
+					)}
 				</div>
 			</div>
 

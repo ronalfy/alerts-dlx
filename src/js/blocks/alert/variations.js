@@ -1,14 +1,10 @@
 import { __ } from '@wordpress/i18n';
-import { styles as globalStyleIcon } from '@wordpress/icons';
 
 import metadata from './block.json';
 import { getCanonicalAlertTypeForPurpose } from '../utils/canonical-alert-presets';
 import {
-	GLOBAL_STYLE_BLOCK_KEYS,
 	buildSnapshotApplyAttributes,
 	getLocalizedLibraryItems,
-	globalStyleHasIcon,
-	libraryConfigToBlockAttributes,
 } from '../utils/alert-library-utils';
 
 const commonAttributes = {
@@ -101,13 +97,15 @@ function buildLibraryExampleAttributes( attributes = {} ) {
 }
 
 /**
- * Build one inserter variation per library item flagged for the inserter.
+ * Build one inserter variation per snapshot flagged for the inserter.
  *
- * Goal variations stay in place. None of these are isDefault, so inserting
- * Alert itself still uses the Success variation.
+ * Global styles are omitted, including items that already have the inserter
+ * flag. They stay linked from the Styles sidebar. Goal variations stay in
+ * place. None of these are isDefault, so inserting Alert itself still uses
+ * the Success variation.
  *
  * @param {Array} items Localized library items.
- * @return {Array} Library inserter variations.
+ * @return {Array} Snapshot inserter variations.
  */
 export function createLibraryInserterVariations( items = getLocalizedLibraryItems() ) {
 	if ( ! Array.isArray( items ) ) {
@@ -116,7 +114,8 @@ export function createLibraryInserterVariations( items = getLocalizedLibraryItem
 
 	return items.filter( isShownInInserter ).flatMap( ( item ) => {
 		const id = Number( item.id ) || 0;
-		if ( ! id || ( 'global_style' !== item.kind && 'snapshot' !== item.kind ) ) {
+		// Global styles are not inserter choices, even when the flag is still stored.
+		if ( ! id || 'snapshot' !== item.kind ) {
 			return [];
 		}
 
@@ -124,30 +123,8 @@ export function createLibraryInserterVariations( items = getLocalizedLibraryItem
 			? item.title.trim()
 			: __( 'Library item', 'alerts-dlx' );
 		const config = item.config && typeof item.config === 'object' ? item.config : {};
-
-		if ( 'global_style' === item.kind ) {
-			const exampleAttributes = buildLibraryExampleAttributes( {
-				...libraryConfigToBlockAttributes( config, GLOBAL_STYLE_BLOCK_KEYS, '' ),
-				globalStyleId: id,
-			} );
-			exampleAttributes.iconEnabled = globalStyleHasIcon( exampleAttributes );
-			return [ {
-				name: `library-${ id }`,
-				title,
-				description: __( 'Insert an alert that follows this global style.', 'alerts-dlx' ),
-				icon: globalStyleIcon,
-				scope: [ 'inserter' ],
-				isDefault: false,
-				attributes: {
-					globalStyleId: id,
-				},
-				example: {
-					attributes: exampleAttributes,
-				},
-			} ];
-		}
-
 		const attributes = buildSnapshotApplyAttributes( config, '' );
+
 		return [ {
 			name: `library-${ id }`,
 			title,

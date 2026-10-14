@@ -201,7 +201,9 @@ class Rest {
 
 		update_post_meta( $post_id, AlertLibrary::META_KIND, $kind );
 
-		if ( array_key_exists( 'showInInserter', $params ) ) {
+		if ( AlertLibrary::KIND_GLOBAL_STYLE === $kind ) {
+			AlertLibrary::set_show_in_inserter( $post_id, false );
+		} elseif ( array_key_exists( 'showInInserter', $params ) ) {
 			AlertLibrary::set_show_in_inserter( $post_id, rest_sanitize_boolean( $params['showInInserter'] ) );
 		}
 
@@ -267,7 +269,9 @@ class Rest {
 			}
 		}
 
-		if ( array_key_exists( 'showInInserter', $params ) ) {
+		if ( AlertLibrary::KIND_GLOBAL_STYLE === $kind ) {
+			AlertLibrary::set_show_in_inserter( $post_id, false );
+		} elseif ( array_key_exists( 'showInInserter', $params ) ) {
 			AlertLibrary::set_show_in_inserter( $post_id, rest_sanitize_boolean( $params['showInInserter'] ) );
 		}
 

@@ -212,7 +212,7 @@ assert.match(
 assert.match(libraryUtils, /GLOBAL_STYLE_BLOCK_KEYS/, 'Editor maps global-style keys explicitly');
 assert.match(libraryUtils, /SNAPSHOT_BLOCK_KEYS/, 'Editor maps snapshot keys explicitly');
 assert.match(libraryUtils, /buildSnapshotApplyAttributes/, 'Snapshot apply clears globalStyleId');
-assert.match(libraryUtils, /globalStyleHasIcon/, 'Inserter previews can still detect a style icon');
+assert.match(libraryUtils, /globalStyleHasIcon/, 'Editor can still detect whether a global style includes an icon');
 assert.doesNotMatch(
 	libraryUtils.match(/export const GLOBAL_STYLE_BLOCK_KEYS = \[([\s\S]*?)\];/)[1],
 	/'iconEnabled'/,
@@ -235,8 +235,10 @@ assert.doesNotMatch(
 	'Variations do not depend on site preset defaults'
 );
 assert.match(variationsSource, /isDefault: goal\.name === defaultPurpose/, 'Success remains the insert default');
-assert.match(variationsSource, /createLibraryInserterVariations/, 'Flagged library items become inserter variations');
+assert.match(variationsSource, /createLibraryInserterVariations/, 'Flagged snapshots become inserter variations');
 assert.match(variationsSource, /showInInserter/, 'Library variations read the inserter flag');
+assert.match(variationsSource, /'snapshot' !== item\.kind/, 'Global styles are skipped even when the inserter flag is set');
+assert.doesNotMatch(variationsSource, /follows this global style/, 'Global styles do not get inserter variation copy');
 assert.doesNotMatch(variationsSource, /'admin-page'/, 'Library variations do not use the generic page icon');
 
 const alertMetadata = JSON.parse(fs.readFileSync('src/js/blocks/alert/block.json', 'utf8'));
@@ -244,49 +246,33 @@ const executableLibraryVariations = variationsSource
 	.replace(/^import[\s\S]*?from '[^']+';\n/gm, '')
 	.replace(/export function/g, 'function')
 	.replace(/export default \[[\s\S]*?\];\s*$/, '');
-const globalStyleIconStub = { stub: 'styles' };
 const libraryVariations = new Function(
 	'__',
 	'getCanonicalAlertTypeForPurpose',
-	'GLOBAL_STYLE_BLOCK_KEYS',
 	'buildSnapshotApplyAttributes',
 	'getLocalizedLibraryItems',
-	'globalStyleHasIcon',
-	'libraryConfigToBlockAttributes',
-	'globalStyleIcon',
 	'metadata',
 	`${executableLibraryVariations}\nreturn createLibraryInserterVariations;`
 )(
 	(value) => value,
 	() => 'success',
-	[],
 	(config) => ({ ...config, globalStyleId: 0 }),
 	() => [],
-	() => true,
-	(config) => ({ ...config }),
-	globalStyleIconStub,
 	alertMetadata
 )([
 	{ id: 11, kind: 'global_style', title: 'Brand', showInInserter: true, config: { alertType: 'info' } },
 	{ id: 12, kind: 'snapshot', title: 'Promo', showInInserter: '1', config: { alertType: 'warning', titleEnabled: false, buttonEnabled: true } },
 	{ id: 13, kind: 'snapshot', title: 'Hidden', showInInserter: false, config: {} },
 ]);
-assert.equal(libraryVariations.length, 2, 'Only flagged library items become inserter variations');
-const [globalStyleVariation, snapshotVariation] = libraryVariations;
-assert.equal(globalStyleVariation.icon, globalStyleIconStub, 'Global style variations use the styles icon');
+assert.equal(libraryVariations.length, 1, 'Only flagged snapshots become inserter variations');
+assert.equal(
+	libraryVariations.some((variation) => variation.name === 'library-11'),
+	false,
+	'A flagged global style does not become an inserter variation'
+);
+const [snapshotVariation] = libraryVariations;
+assert.equal(snapshotVariation.name, 'library-12', 'The flagged snapshot is the inserter variation');
 assert.equal(snapshotVariation.icon, 'camera', 'Snapshot variations use the camera dashicon');
-assert.equal(
-	globalStyleVariation.example.attributes.alertTitle,
-	alertMetadata.example.attributes.alertTitle,
-	'Global style previews reuse the block example title'
-);
-assert.equal(
-	globalStyleVariation.example.attributes.alertDescription,
-	alertMetadata.example.attributes.alertDescription,
-	'Global style previews reuse the block example description'
-);
-assert.equal(globalStyleVariation.example.attributes.globalStyleId, 11, 'Global style previews resolve the linked style');
-assert.deepEqual(globalStyleVariation.attributes, { globalStyleId: 11 }, 'Global style insertion stores only the reference');
 assert.equal(
 	snapshotVariation.example.attributes.alertDescription,
 	alertMetadata.example.attributes.alertDescription,
@@ -305,11 +291,30 @@ for (const variation of libraryVariations) {
 }
 assert.match(alertLibrary, /META_SHOW_IN_INSERTER = '_alerts_dlx_show_in_inserter'/, 'Inserter flag meta key is defined');
 assert.match(alertLibrary, /function set_show_in_inserter/, 'Inserter flag is saved per post');
+assert.match(alertLibrary, /function can_show_in_inserter/, 'Inserter flag is limited to snapshots');
+assert.match(alertLibrary, /KIND_SNAPSHOT === self::get_post_kind/, 'Global styles cannot stay flagged for the inserter');
 assert.match(rest, /set_show_in_inserter/, 'Library REST writes the inserter flag');
 assert.match(
-	fs.readFileSync('src/react/AlertLibrary/LibraryEditor.js', 'utf8'),
+	rest,
+	/if \( AlertLibrary::KIND_GLOBAL_STYLE === \$kind \) \{\s+AlertLibrary::set_show_in_inserter\( \$post_id, false \);/,
+	'Saving a global style clears the inserter flag'
+);
+assert.match(rest, /The source flag is not copied/, 'Duplicating a library item does not copy the inserter flag');
+const libraryEditor = fs.readFileSync('src/react/AlertLibrary/LibraryEditor.js', 'utf8');
+assert.match(
+	libraryEditor,
 	/Show in block inserter/,
 	'Library editor exposes the inserter toggle'
+);
+assert.match(
+	libraryEditor,
+	/KIND_SNAPSHOT === kind &&/,
+	'Inserter toggle is offered only for snapshots'
+);
+assert.match(
+	fs.readFileSync('src/react/AlertLibrary/LibraryList.js', 'utf8'),
+	/KIND_SNAPSHOT !== item\.kind/,
+	'Library list does not treat global styles as inserter choices'
 );
 
 assert.equal(
