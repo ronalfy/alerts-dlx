@@ -13,6 +13,7 @@ import {
 	fetchLibraryItem,
 	updateLibraryItem,
 } from "./useLibraryItem";
+import DeleteLibraryItemModal from "./DeleteLibraryItemModal";
 import {
 	KIND_GLOBAL_STYLE,
 	KIND_SNAPSHOT,
@@ -84,6 +85,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 	const [config, setConfig] = useState(defaultConfig);
 	const [loading, setLoading] = useState(Boolean(itemId));
 	const [saving, setSaving] = useState(false);
+	const [pendingDelete, setPendingDelete] = useState(false);
 	const [error, setError] = useState("");
 	const [previewError, setPreviewError] = useState("");
 	const checkpoint = useRef(null);
@@ -137,7 +139,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 
 		setLoading(true);
 		setError("");
-			fetchLibraryItem(itemId)
+		fetchLibraryItem(itemId)
 			.then((item) => {
 				const nextKind = item.kind || KIND_GLOBAL_STYLE;
 				const next = {
@@ -256,10 +258,10 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 		if (!itemId) {
 			return;
 		}
-		// eslint-disable-next-line no-alert
-		if (!window.confirm(labels.deleteConfirm)) {
-			return;
-		}
+		setPendingDelete(true);
+	};
+
+	const confirmDelete = () => {
 		setSaving(true);
 		deleteLibraryItem(itemId)
 			.then(() => onBack())
@@ -269,7 +271,10 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 					labels.deleteError
 				);
 			})
-			.finally(() => setSaving(false));
+			.finally(() => {
+				setSaving(false);
+				setPendingDelete(false);
+			});
 	};
 
 	const handleBack = () => {
@@ -320,10 +325,10 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 						label={labels.name}
 						value={title}
 						onChange={(nextTitle) => {
-							setTitle( nextTitle || "" )
+							setTitle(nextTitle || "")
 						}}
 						onBlur={() => {
-							if ( !slug ) {
+							if (!slug) {
 								setSlug(cleanForSlug(title.trim()))
 							}
 						}}
@@ -411,6 +416,17 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 					</Button>
 				)}
 			</div>
+
+			<DeleteLibraryItemModal
+				item={
+					pendingDelete
+						? { id: itemId, title, kind }
+						: null
+				}
+				isDeleting={saving && pendingDelete}
+				onCancel={() => setPendingDelete(false)}
+				onConfirm={confirmDelete}
+			/>
 
 			<Snackbar
 				isVisible={snackbar.isVisible}

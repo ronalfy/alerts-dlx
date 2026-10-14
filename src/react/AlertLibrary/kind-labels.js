@@ -45,6 +45,10 @@ export const getLibraryLabels = (kind) => {
 		saveError: __("Could not save this global style.", "alerts-dlx"),
 		deleteError: __("Could not delete this global style.", "alerts-dlx"),
 		deleteConfirm: __("Delete this global style permanently?", "alerts-dlx"),
+		deleteWarning: __(
+			"Any blocks using this style may not display, or may lose their styles.",
+			"alerts-dlx"
+		),
 		name: __("Style name", "alerts-dlx"),
 		duplicateAs: __("Duplicate as preset", "alerts-dlx"),
 	};

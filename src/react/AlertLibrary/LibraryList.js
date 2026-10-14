@@ -8,6 +8,7 @@ import {
 	deleteLibraryItem,
 	fetchLibraryItems,
 } from "./useLibraryItem";
+import DeleteLibraryItemModal from "./DeleteLibraryItemModal";
 import {
 	KIND_GLOBAL_STYLE,
 	KIND_SNAPSHOT,
@@ -45,6 +46,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 	const [actionId, setActionId] = useState(0);
+	const [pendingDelete, setPendingDelete] = useState(null);
 
 	const themeLabels = alertsDlxAdmin.themeLabels || {};
 
@@ -84,26 +86,29 @@ const LibraryList = ({ onAdd, onEdit }) => {
 		[loadItems]
 	);
 
-	const handleDelete = useCallback(
-		(item) => {
-			const labels = getLibraryLabels(item.kind);
-			// eslint-disable-next-line no-alert
-			if (!window.confirm(labels.deleteConfirm)) {
-				return;
-			}
-			setActionId(item.id);
-			deleteLibraryItem(item.id)
-				.then(() => loadItems())
-				.catch((requestError) => {
-					setError(
-						requestError.message ||
-							__("Could not delete this item.", "alerts-dlx")
-					);
-				})
-				.finally(() => setActionId(0));
-		},
-		[loadItems]
-	);
+	const handleDelete = useCallback((item) => {
+		setPendingDelete(item);
+	}, []);
+
+	const confirmDelete = useCallback(() => {
+		if (!pendingDelete) {
+			return;
+		}
+		const item = pendingDelete;
+		setActionId(item.id);
+		deleteLibraryItem(item.id)
+			.then(() => loadItems())
+			.catch((requestError) => {
+				setError(
+					requestError.message ||
+						__("Could not delete this item.", "alerts-dlx")
+				);
+			})
+			.finally(() => {
+				setActionId(0);
+				setPendingDelete(null);
+			});
+	}, [loadItems, pendingDelete]);
 
 	const fields = useMemo(
 		() => [
@@ -332,6 +337,13 @@ const LibraryList = ({ onAdd, onEdit }) => {
 					{error}
 				</Notice>
 			)}
+
+			<DeleteLibraryItemModal
+				item={pendingDelete}
+				isDeleting={actionId > 0 && pendingDelete?.id === actionId}
+				onCancel={() => setPendingDelete(null)}
+				onConfirm={confirmDelete}
+			/>
 
 			{!items.length ? (
 				<div className="alerts-dlx-library-empty">
