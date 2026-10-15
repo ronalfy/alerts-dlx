@@ -52,7 +52,7 @@ Icons included are from:
 
 ## Use cases
 
-AlertsDLX is more than just a beautiful alert block in post content. Here are some more popular ways to use it:
+Singular Alerts is more than just a beautiful alert block in post content. Here are some more popular ways to use it:
 
 * **Documentation and Knowledge Base alert callouts** — Tips, notes, warnings, prerequisites, and step summaries in tutorials and knowledge base articles.
 * **Editorial workflow** — Mark blocks as Editorial Only so author notes and review reminders stay in the block editor and never publish to the frontend. For example, your editor wants to add a note above a paragraph indicating it shouldn't be edited for legal reasons.
