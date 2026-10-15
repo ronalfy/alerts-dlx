@@ -725,6 +725,28 @@ body.alerts-dlx-body .updated {
 	}
 }
 
+.alerts-dlx-library-preview-modal {
+	.components-modal__content {
+		padding-bottom: 24px;
+	}
+
+	.alerts-dlx-library-preview-modal__description {
+		margin-top: 0;
+		margin-bottom: 16px;
+		color: #646970;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.alerts-dlx-shortcode-builder-preview {
+		width: 100%;
+	}
+
+	.alerts-dlx-library-preview-modal__footer {
+		margin-top: 24px;
+	}
+}
+
 svg.components-checkbox-control__checked,
 svg.components-checkbox-control__indeterminate {
 	left: 50% !important;

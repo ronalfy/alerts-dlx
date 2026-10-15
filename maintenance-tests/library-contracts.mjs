@@ -311,10 +311,16 @@ assert.match(
 	/KIND_SNAPSHOT === kind &&/,
 	'Inserter toggle is offered only for snapshots'
 );
+const libraryList = fs.readFileSync('src/react/AlertLibrary/LibraryList.js', 'utf8');
 assert.match(
-	fs.readFileSync('src/react/AlertLibrary/LibraryList.js', 'utf8'),
+	libraryList,
 	/KIND_SNAPSHOT !== item\.kind/,
 	'Library list does not treat global styles as inserter choices'
+);
+assert.match(
+	libraryList,
+	/id: "preview"/,
+	'Library list includes a preview action'
 );
 
 assert.equal(

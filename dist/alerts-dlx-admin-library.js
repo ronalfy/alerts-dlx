@@ -133739,7 +133739,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_dataviews_wp__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/dataviews/wp */ "./node_modules/@wordpress/dataviews/build-wp/index.js");
 /* harmony import */ var _useLibraryItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./useLibraryItem */ "./src/react/AlertLibrary/useLibraryItem.js");
 /* harmony import */ var _DeleteLibraryItemModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DeleteLibraryItemModal */ "./src/react/AlertLibrary/DeleteLibraryItemModal.js");
-/* harmony import */ var _kind_labels__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./kind-labels */ "./src/react/AlertLibrary/kind-labels.js");
+/* harmony import */ var _PreviewLibraryItemModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PreviewLibraryItemModal */ "./src/react/AlertLibrary/PreviewLibraryItemModal.js");
+/* harmony import */ var _kind_labels__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./kind-labels */ "./src/react/AlertLibrary/kind-labels.js");
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
@@ -133751,6 +133752,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /* eslint-disable no-undef */
+
 
 
 
@@ -133808,6 +133810,10 @@ var LibraryList = function LibraryList(_ref) {
     _useState10 = _slicedToArray(_useState1, 2),
     pendingDelete = _useState10[0],
     setPendingDelete = _useState10[1];
+  var _useState11 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState12 = _slicedToArray(_useState11, 2),
+    previewItem = _useState12[0],
+    setPreviewItem = _useState12[1];
   var themeLabels = alertsDlxAdmin.themeLabels || {};
   var loadItems = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     setLoading(true);
@@ -133835,6 +133841,9 @@ var LibraryList = function LibraryList(_ref) {
   }, [loadItems]);
   var handleDelete = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (item) {
     setPendingDelete(item);
+  }, []);
+  var handlePreview = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function (item) {
+    setPreviewItem(item);
   }, []);
   var confirmDelete = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     if (!pendingDelete) {
@@ -133871,11 +133880,11 @@ var LibraryList = function LibraryList(_ref) {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Kind", "alerts-dlx"),
       enableSorting: true,
       elements: [{
-        value: _kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_GLOBAL_STYLE,
-        label: (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getKindLabel)(_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_GLOBAL_STYLE)
+        value: _kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_GLOBAL_STYLE,
+        label: (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getKindLabel)(_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_GLOBAL_STYLE)
       }, {
-        value: _kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_SNAPSHOT,
-        label: (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getKindLabel)(_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_SNAPSHOT)
+        value: _kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_SNAPSHOT,
+        label: (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getKindLabel)(_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_SNAPSHOT)
       }],
       filterBy: {
         operators: ["isAny"],
@@ -133887,7 +133896,7 @@ var LibraryList = function LibraryList(_ref) {
       },
       render: function render(_ref4) {
         var item = _ref4.item;
-        return (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getKindLabel)(item.kind);
+        return (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getKindLabel)(item.kind);
       }
     }, {
       id: "slug",
@@ -133900,7 +133909,7 @@ var LibraryList = function LibraryList(_ref) {
       enableSorting: true,
       getValue: function getValue(_ref5) {
         var item = _ref5.item;
-        if (_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_SNAPSHOT !== item.kind) {
+        if (_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_SNAPSHOT !== item.kind) {
           return "—";
         }
         return item.showInInserter ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Shown", "alerts-dlx") : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Hidden", "alerts-dlx");
@@ -133936,6 +133945,15 @@ var LibraryList = function LibraryList(_ref) {
   }, [onEdit, themeLabels]);
   var actions = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     return [{
+      id: "preview",
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Preview", "alerts-dlx"),
+      isPrimary: true,
+      callback: function callback(selectedItems) {
+        if (selectedItems[0]) {
+          handlePreview(selectedItems[0]);
+        }
+      }
+    }, {
       id: "edit",
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "alerts-dlx"),
       isPrimary: true,
@@ -133956,11 +133974,11 @@ var LibraryList = function LibraryList(_ref) {
       id: "duplicate-other-kind",
       label: function label(selectedItems) {
         var item = selectedItems[0];
-        return item ? (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getLibraryLabels)(item.kind).duplicateAs : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Duplicate as other kind", "alerts-dlx");
+        return item ? (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getLibraryLabels)(item.kind).duplicateAs : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Duplicate as other kind", "alerts-dlx");
       },
       callback: function callback(selectedItems) {
         if (selectedItems[0]) {
-          handleDuplicate(selectedItems[0], (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getOppositeKind)(selectedItems[0].kind));
+          handleDuplicate(selectedItems[0], (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getOppositeKind)(selectedItems[0].kind));
         }
       }
     }, {
@@ -133972,14 +133990,14 @@ var LibraryList = function LibraryList(_ref) {
         }
       }
     }];
-  }, [onEdit, handleDuplicate, handleDelete]);
+  }, [onEdit, handleDuplicate, handleDelete, handlePreview]);
   var filteredItems = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
     var _view$sort;
     var rows = _toConsumableArray(items);
     var search = (view.search || "").trim().toLowerCase();
     if (search) {
       rows = rows.filter(function (row) {
-        var haystack = "".concat(row.title, " ").concat(row.slug, " ").concat(row.alert_group, " ").concat(row.alert_type, " ").concat((0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getKindLabel)(row.kind)).toLowerCase();
+        var haystack = "".concat(row.title, " ").concat(row.slug, " ").concat(row.alert_group, " ").concat(row.alert_type, " ").concat((0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getKindLabel)(row.kind)).toLowerCase();
         return haystack.includes(search);
       });
     }
@@ -134004,8 +134022,8 @@ var LibraryList = function LibraryList(_ref) {
           rightValue = themeLabels[rightValue] || rightValue;
         }
         if ("kind" === field) {
-          leftValue = (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getKindLabel)(left.kind);
-          rightValue = (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getKindLabel)(right.kind);
+          leftValue = (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getKindLabel)(left.kind);
+          rightValue = (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getKindLabel)(right.kind);
         }
         if ("modified" === field) {
           leftValue = left.modified ? new Date(left.modified).getTime() : 0;
@@ -134042,14 +134060,14 @@ var LibraryList = function LibraryList(_ref) {
   var addButtons = /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: "primary",
     onClick: function onClick() {
-      return onAdd(_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_GLOBAL_STYLE);
+      return onAdd(_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_GLOBAL_STYLE);
     }
-  }, (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getLibraryLabels)(_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_GLOBAL_STYLE).add), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+  }, (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getLibraryLabels)(_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_GLOBAL_STYLE).add), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
     variant: "secondary",
     onClick: function onClick() {
-      return onAdd(_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_SNAPSHOT);
+      return onAdd(_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_SNAPSHOT);
     }
-  }, (0,_kind_labels__WEBPACK_IMPORTED_MODULE_6__.getLibraryLabels)(_kind_labels__WEBPACK_IMPORTED_MODULE_6__.KIND_SNAPSHOT).add));
+  }, (0,_kind_labels__WEBPACK_IMPORTED_MODULE_7__.getLibraryLabels)(_kind_labels__WEBPACK_IMPORTED_MODULE_7__.KIND_SNAPSHOT).add));
   return /*#__PURE__*/React.createElement("div", {
     className: "alerts-dlx-library-list"
   }, /*#__PURE__*/React.createElement("div", {
@@ -134064,6 +134082,12 @@ var LibraryList = function LibraryList(_ref) {
       return setPendingDelete(null);
     },
     onConfirm: confirmDelete
+  }), /*#__PURE__*/React.createElement(_PreviewLibraryItemModal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    item: previewItem,
+    onClose: function onClose() {
+      return setPreviewItem(null);
+    },
+    onEdit: onEdit
   }), !items.length ? /*#__PURE__*/React.createElement("div", {
     className: "alerts-dlx-library-empty"
   }, /*#__PURE__*/React.createElement("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Reusable appearance presets. Global styles are meant to be referenced. Presets are meant to be applied as a copy.", "alerts-dlx")), /*#__PURE__*/React.createElement("div", {
@@ -134085,6 +134109,98 @@ var LibraryList = function LibraryList(_ref) {
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LibraryList);
+
+/***/ }),
+
+/***/ "./src/react/AlertLibrary/PreviewLibraryItemModal.js":
+/*!***********************************************************!*\
+  !*** ./src/react/AlertLibrary/PreviewLibraryItemModal.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Components_AlertBuilder_AlertBuilderPreview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/AlertBuilder/AlertBuilderPreview */ "./src/react/Components/AlertBuilder/AlertBuilderPreview.js");
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+/* eslint-disable no-undef */
+
+
+
+
+
+/**
+ * Preview a saved global style or preset.
+ *
+ * @param {Object}      props         Component props.
+ * @param {Object|null} props.item    Library item to preview.
+ * @param {Function}    props.onClose Close the modal.
+ * @param {Function}    props.onEdit  Open the item in the editor.
+ * @return {Element|null} Preview modal.
+ */
+var PreviewLibraryItemModal = function PreviewLibraryItemModal(_ref) {
+  var item = _ref.item,
+    onClose = _ref.onClose,
+    onEdit = _ref.onEdit;
+  var previewFixture = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
+    return alertsDlxAdmin.libraryPreviewFixture || {};
+  }, []);
+  var _useState = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState2 = _slicedToArray(_useState, 2),
+    previewError = _useState2[0],
+    setPreviewError = _useState2[1];
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    setPreviewError("");
+  }, [item === null || item === void 0 ? void 0 : item.id]);
+  if (!item) {
+    return null;
+  }
+  var itemTitle = typeof item.title === "string" ? item.title.trim() : "";
+  var handleEdit = function handleEdit() {
+    onClose();
+    onEdit(item.id);
+  };
+  return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
+    title: itemTitle || (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Preview", "alerts-dlx"),
+    className: "alerts-dlx-library-preview-modal",
+    size: "large",
+    onRequestClose: onClose
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "description alerts-dlx-library-preview-modal__description"
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Sample title, description, button, and icon (when unset) are shown for preview only.", "alerts-dlx")), previewError && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Notice, {
+    status: "error",
+    isDismissible: false
+  }, previewError), /*#__PURE__*/React.createElement(_Components_AlertBuilder_AlertBuilderPreview__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    values: item.config || {},
+    fixture: previewFixture,
+    iconFallback: true,
+    hideHeading: true,
+    onPreviewError: setPreviewError
+  }), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Flex, {
+    className: "alerts-dlx-library-preview-modal__footer",
+    justify: "flex-end"
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    variant: "secondary",
+    onClick: onClose
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Close", "alerts-dlx")), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    variant: "primary",
+    onClick: handleEdit
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Edit", "alerts-dlx"))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PreviewLibraryItemModal);
 
 /***/ }),
 
@@ -134408,6 +134524,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
  * @param {Object}   props.values           Values to preview.
  * @param {Object}   [props.fixture]        Preview-only overlay.
  * @param {boolean}  [props.iconFallback]   Whether to inject a sample icon.
+ * @param {boolean}  [props.hideHeading]    Whether to omit the panel heading.
  * @param {Function} [props.onPreviewError]  Error callback.
  * @param {Function} [props.onPreviewSuccess] Success callback with render payload.
  * @param {Function} [props.onPreviewLoading] Loading state callback.
@@ -134419,6 +134536,8 @@ var AlertBuilderPreview = function AlertBuilderPreview(_ref) {
     fixture = _ref$fixture === void 0 ? null : _ref$fixture,
     _ref$iconFallback = _ref.iconFallback,
     iconFallback = _ref$iconFallback === void 0 ? false : _ref$iconFallback,
+    _ref$hideHeading = _ref.hideHeading,
+    hideHeading = _ref$hideHeading === void 0 ? false : _ref$hideHeading,
     onPreviewError = _ref.onPreviewError,
     onPreviewSuccess = _ref.onPreviewSuccess,
     onPreviewLoading = _ref.onPreviewLoading;
@@ -134499,7 +134618,7 @@ var AlertBuilderPreview = function AlertBuilderPreview(_ref) {
   }, [previewPayloadKey]);
   return /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-component-wrapper"
-  }, /*#__PURE__*/React.createElement("h3", {
+  }, !hideHeading && /*#__PURE__*/React.createElement("h3", {
     className: "adlx-admin-content-subheading"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Production preview", "alerts-dlx")), loading && /*#__PURE__*/React.createElement("span", {
     role: "status",

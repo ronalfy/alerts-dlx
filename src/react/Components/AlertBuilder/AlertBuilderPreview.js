@@ -12,6 +12,7 @@ import { mergePreviewValues } from "./builder-utils";
  * @param {Object}   props.values           Values to preview.
  * @param {Object}   [props.fixture]        Preview-only overlay.
  * @param {boolean}  [props.iconFallback]   Whether to inject a sample icon.
+ * @param {boolean}  [props.hideHeading]    Whether to omit the panel heading.
  * @param {Function} [props.onPreviewError]  Error callback.
  * @param {Function} [props.onPreviewSuccess] Success callback with render payload.
  * @param {Function} [props.onPreviewLoading] Loading state callback.
@@ -21,6 +22,7 @@ const AlertBuilderPreview = ({
 	values,
 	fixture = null,
 	iconFallback = false,
+	hideHeading = false,
 	onPreviewError,
 	onPreviewSuccess,
 	onPreviewLoading,
@@ -75,7 +77,7 @@ const AlertBuilderPreview = ({
 					if (!response.data.success) {
 						throw new Error(
 							response.data.data?.message ||
-								__("Could not render the shortcode preview.", "alerts-dlx")
+							__("Could not render the shortcode preview.", "alerts-dlx")
 						);
 					}
 					setPreviewHtml(response.data.data.preview_html);
@@ -90,8 +92,8 @@ const AlertBuilderPreview = ({
 					if (requestId === requestSequence.current && onPreviewErrorRef.current) {
 						onPreviewErrorRef.current(
 							requestError.response?.data?.data?.message ||
-								requestError.message ||
-								__("Could not render the shortcode preview.", "alerts-dlx")
+							requestError.message ||
+							__("Could not render the shortcode preview.", "alerts-dlx")
 						);
 					}
 				})
@@ -110,9 +112,11 @@ const AlertBuilderPreview = ({
 
 	return (
 		<div className="adlx-admin-component-wrapper">
-			<h3 className="adlx-admin-content-subheading">
-				{__("Production preview", "alerts-dlx")}
-			</h3>
+			{!hideHeading && (
+				<h3 className="adlx-admin-content-subheading">
+					{__("Production preview", "alerts-dlx")}
+				</h3>
+			)}
 			{loading && (
 				<span role="status" aria-live="polite">
 					<Spinner />

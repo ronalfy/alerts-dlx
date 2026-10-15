@@ -12555,6 +12555,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
  * @param {Object}   props.values           Values to preview.
  * @param {Object}   [props.fixture]        Preview-only overlay.
  * @param {boolean}  [props.iconFallback]   Whether to inject a sample icon.
+ * @param {boolean}  [props.hideHeading]    Whether to omit the panel heading.
  * @param {Function} [props.onPreviewError]  Error callback.
  * @param {Function} [props.onPreviewSuccess] Success callback with render payload.
  * @param {Function} [props.onPreviewLoading] Loading state callback.
@@ -12566,6 +12567,8 @@ var AlertBuilderPreview = function AlertBuilderPreview(_ref) {
     fixture = _ref$fixture === void 0 ? null : _ref$fixture,
     _ref$iconFallback = _ref.iconFallback,
     iconFallback = _ref$iconFallback === void 0 ? false : _ref$iconFallback,
+    _ref$hideHeading = _ref.hideHeading,
+    hideHeading = _ref$hideHeading === void 0 ? false : _ref$hideHeading,
     onPreviewError = _ref.onPreviewError,
     onPreviewSuccess = _ref.onPreviewSuccess,
     onPreviewLoading = _ref.onPreviewLoading;
@@ -12646,7 +12649,7 @@ var AlertBuilderPreview = function AlertBuilderPreview(_ref) {
   }, [previewPayloadKey]);
   return /*#__PURE__*/React.createElement("div", {
     className: "adlx-admin-component-wrapper"
-  }, /*#__PURE__*/React.createElement("h3", {
+  }, !hideHeading && /*#__PURE__*/React.createElement("h3", {
     className: "adlx-admin-content-subheading"
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Production preview", "alerts-dlx")), loading && /*#__PURE__*/React.createElement("span", {
     role: "status",

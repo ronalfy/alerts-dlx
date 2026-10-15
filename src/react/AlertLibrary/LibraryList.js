@@ -9,6 +9,7 @@ import {
 	fetchLibraryItems,
 } from "./useLibraryItem";
 import DeleteLibraryItemModal from "./DeleteLibraryItemModal";
+import PreviewLibraryItemModal from "./PreviewLibraryItemModal";
 import {
 	KIND_GLOBAL_STYLE,
 	KIND_SNAPSHOT,
@@ -47,6 +48,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 	const [error, setError] = useState("");
 	const [actionId, setActionId] = useState(0);
 	const [pendingDelete, setPendingDelete] = useState(null);
+	const [previewItem, setPreviewItem] = useState(null);
 
 	const themeLabels = alertsDlxAdmin.themeLabels || {};
 
@@ -88,6 +90,10 @@ const LibraryList = ({ onAdd, onEdit }) => {
 
 	const handleDelete = useCallback((item) => {
 		setPendingDelete(item);
+	}, []);
+
+	const handlePreview = useCallback((item) => {
+		setPreviewItem(item);
 	}, []);
 
 	const confirmDelete = useCallback(() => {
@@ -197,6 +203,16 @@ const LibraryList = ({ onAdd, onEdit }) => {
 	const actions = useMemo(
 		() => [
 			{
+				id: "preview",
+				label: __("Preview", "alerts-dlx"),
+				isPrimary: true,
+				callback: (selectedItems) => {
+					if (selectedItems[0]) {
+						handlePreview(selectedItems[0]);
+					}
+				},
+			},
+			{
 				id: "edit",
 				label: __("Edit", "alerts-dlx"),
 				isPrimary: true,
@@ -242,7 +258,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				},
 			},
 		],
-		[onEdit, handleDuplicate, handleDelete]
+		[onEdit, handleDuplicate, handleDelete, handlePreview]
 	);
 
 	const filteredItems = useMemo(() => {
@@ -343,6 +359,12 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				isDeleting={actionId > 0 && pendingDelete?.id === actionId}
 				onCancel={() => setPendingDelete(null)}
 				onConfirm={confirmDelete}
+			/>
+
+			<PreviewLibraryItemModal
+				item={previewItem}
+				onClose={() => setPreviewItem(null)}
+				onEdit={onEdit}
 			/>
 
 			{!items.length ? (
