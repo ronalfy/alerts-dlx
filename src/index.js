@@ -21,10 +21,10 @@ import AlertsLogo from "./js/blocks/components/icons/AlertsLogo";
 import GreenAlertsLogo from "./js/blocks/components/icons/GreenAlertsLogo";
 
 (function () {
-  wp.blocks.updateCategory("alertsdlx", {
-    icon: <GreenAlertsLogo width={16} height={16} />,
-  });
-  wp.blocks.updateCategory("alertsdlx-legacy", {
-    icon: <AlertsLogo width={16} height={16} />,
-  });
+	wp.blocks.updateCategory("singular-alerts", {
+		icon: <GreenAlertsLogo width={16} height={16} />,
+	});
+	wp.blocks.updateCategory("alertsdlx-legacy", {
+		icon: <AlertsLogo width={16} height={16} />,
+	});
 })();

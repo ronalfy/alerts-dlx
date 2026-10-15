@@ -78,7 +78,7 @@ class Blocks {
 					$categories,
 					array(
 						array(
-							'slug'  => 'singularalerts',
+							'slug'  => 'singular-alerts',
 							'title' => __( 'Singular Alerts', 'alerts-dlx' ),
 						),
 						array(
