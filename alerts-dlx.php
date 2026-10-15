@@ -4,7 +4,7 @@
  * Plugin URI:        https://singularalerts.com
  * Description:       Create beautiful and impactful alerts and notifications in your content, inspired by Bootstrap, Material, Chakra UI, and Shoelace.
  * Version:           3.0.0
- * Requires at least: 6.8
+ * Requires at least: 6.9
  * Requires PHP:      8.0
  * Author:            Ronald Huereca
  * Author URI:        https://singularalerts.com

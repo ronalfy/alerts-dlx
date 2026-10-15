@@ -43,8 +43,6 @@ final class AlertLibrary {
 	public static function run() {
 		add_action( 'init', array( self::class, 'register_post_type' ) );
 		add_action( 'init', array( self::class, 'register_meta' ) );
-		// admin_init runs after the library post type is registered on init.
-		add_action( 'admin_init', array( self::class, 'maybe_seed_starter_snapshots' ) );
 		add_filter( 'map_meta_cap', array( self::class, 'map_meta_cap' ), 10, 4 );
 		add_filter( 'update_post_metadata', array( self::class, 'block_global_style_inserter_flag' ), 10, 3 );
 	}
