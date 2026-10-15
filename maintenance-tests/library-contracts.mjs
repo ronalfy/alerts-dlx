@@ -322,6 +322,16 @@ assert.match(
 	/id: "preview"/,
 	'Library list includes a preview action'
 );
+assert.match(
+	libraryList,
+	/onReset=\{viewIsDefault \? false : handleResetView\}/,
+	'Library list resets the DataViews view'
+);
+assert.match(
+	fs.readFileSync('src/react/AlertLibrary/library-view-storage.js', 'utf8'),
+	/alerts-dlx-library-view/,
+	'Library view preferences use a localStorage key'
+);
 
 assert.equal(
 	fs.existsSync('php/CanonicalAlertPresets.php'),

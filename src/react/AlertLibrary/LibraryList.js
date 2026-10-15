@@ -17,21 +17,12 @@ import {
 	getLibraryLabels,
 	getOppositeKind,
 } from "./kind-labels";
-
-const DEFAULT_VIEW = {
-	type: "table",
-	search: "",
-	page: 1,
-	perPage: 20,
-	sort: {
-		field: "title",
-		direction: "asc",
-	},
-	titleField: "title",
-	fields: ["kind", "alert_group", "alert_type", "variant"],
-	filters: [],
-	layout: {},
-};
+import {
+	clearLibraryView,
+	isDefaultLibraryView,
+	loadLibraryView,
+	saveLibraryView,
+} from "./library-view-storage";
 
 /**
  * List global styles and snapshots in a DataViews table.
@@ -43,7 +34,7 @@ const DEFAULT_VIEW = {
  */
 const LibraryList = ({ onAdd, onEdit }) => {
 	const [items, setItems] = useState([]);
-	const [view, setView] = useState(DEFAULT_VIEW);
+	const [view, setView] = useState(() => loadLibraryView());
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState("");
 	const [actionId, setActionId] = useState(0);
@@ -94,6 +85,15 @@ const LibraryList = ({ onAdd, onEdit }) => {
 
 	const handlePreview = useCallback((item) => {
 		setPreviewItem(item);
+	}, []);
+
+	const handleChangeView = useCallback((nextView) => {
+		setView(saveLibraryView(nextView));
+	}, []);
+
+	const handleResetView = useCallback(() => {
+		clearLibraryView();
+		setView(loadLibraryView());
 	}, []);
 
 	const confirmDelete = useCallback(() => {
@@ -323,6 +323,22 @@ const LibraryList = ({ onAdd, onEdit }) => {
 		return filteredItems.slice(start, start + perPage);
 	}, [filteredItems, view.page, view.perPage]);
 
+	const viewIsDefault = useMemo(() => isDefaultLibraryView(view), [view]);
+
+	useEffect(() => {
+		// A stored page can sit past the last page of the current result set.
+		if (loading) {
+			return;
+		}
+		if ((view.page || 1) <= paginationInfo.totalPages) {
+			return;
+		}
+		handleChangeView({
+			...view,
+			page: paginationInfo.totalPages,
+		});
+	}, [loading, paginationInfo.totalPages, view, handleChangeView]);
+
 	if (loading && !items.length) {
 		return (
 			<div className="alerts-dlx-library-loading">
@@ -385,7 +401,8 @@ const LibraryList = ({ onAdd, onEdit }) => {
 					data={pagedItems}
 					fields={fields}
 					view={view}
-					onChangeView={setView}
+					onChangeView={handleChangeView}
+					onReset={viewIsDefault ? false : handleResetView}
 					actions={actions}
 					isLoading={loading || actionId > 0}
 					paginationInfo={paginationInfo}
