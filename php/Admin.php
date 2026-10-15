@@ -162,10 +162,10 @@ class Admin {
 	 */
 	public function add_admin_menu() {
 		add_options_page(
-			_x( 'AlertsDLX', 'Plugin Name - Settings Page Title', 'alerts-dlx' ),
-			_x( 'AlertsDLX', 'Plugin Name - Menu Item', 'alerts-dlx' ),
+			_x( 'Singular Alerts', 'Plugin Name - Settings Page Title', 'alerts-dlx' ),
+			_x( 'Singular Alerts', 'Plugin Name - Menu Item', 'alerts-dlx' ),
 			'manage_options',
-			'alerts-dlx',
+			'singular-alerts',
 			array( $this, 'options_page' )
 		);
 	}
@@ -193,6 +193,10 @@ class Admin {
 				<div class="alerts-dlx-admin-container-wrap">
 					<div class="alerts-dlx-logo-wrapper">
 						<h1 id="alerts-dlx-logo"><?php echo esc_html( Functions::get_plugin_name() ); ?></h1>
+					</div>
+					<div class="alerts-dlx-header__btn-wrap">
+						<a class="alerts-dlx__btn-primary" href="https://singularalerts.com" target="_blank"><?php esc_html_e( 'Documentation', 'singular-alerts' ); ?></a>
+						<a class="alerts-dlx__btn-primary" href="https://wordpress.org/support/plugin/alerts-dlx/" target="_blank"><?php esc_html_e( 'Support', 'singular-alerts' ); ?></a>
 					</div>
 				</div>
 			</header>
@@ -245,7 +249,7 @@ class Admin {
 	 * @param string $hook Current admin page hook.
 	 */
 	public function enqueue_admin_scripts( $hook ) {
-		if ( 'settings_page_alerts-dlx' !== $hook ) {
+		if ( 'settings_page_singular-alerts' !== $hook ) {
 			return;
 		}
 

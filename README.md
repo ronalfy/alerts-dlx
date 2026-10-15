@@ -1,4 +1,4 @@
-# AlertsDLX
+# Singular Alerts
 
 Create styled alerts, tips, warnings, and callout boxes for the WordPress block editor, Full Site Editing templates, and anywhere shortcodes are supported. Four themes are included: Bootstrap, Chakra, Material, and Shoelace.
 
@@ -10,7 +10,7 @@ Create styled alerts, tips, warnings, and callout boxes for the WordPress block 
 | Resource | URL |
 |----------|-----|
 | WordPress.org | [wordpress.org/plugins/alerts-dlx](https://wordpress.org/plugins/alerts-dlx/) |
-| Docs source | [github.com/ronalfy/alerts-dlx-docs](https://github.com/MediaRon/alertsdlx-docs) |
+| Docs source | [github.com/ronalfy/alerts-dlx-docs](https://singularalerts.com) |
 | Support | [wordpress.org/plugins/alerts-dlx](https://wordpress.org/plugins/alerts-dlx/) |
 | Demo video | [YouTube](https://www.youtube.com/watch?v=7dKpw5uBi5o) |
 

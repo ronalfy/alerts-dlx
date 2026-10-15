@@ -110,7 +110,7 @@ const Settings = () => {
 		<Suspense
 			fallback={
 				<Loader
-					title={__("AlertsDLX Settings", "alerts-dlx")}
+					title={__("Singular Alerts Settings", "alerts-dlx")}
 					label={__("Loading…", "alerts-dlx")}
 				/>
 			}
@@ -303,12 +303,12 @@ const Interface = ({ defaults }) => {
 					<div className="adlx-admin-content-heading">
 						<h1>
 							<span className="adlx-admin-content-heading-text">
-								{__("AlertsDLX Settings", "alerts-dlx")}
+								{__("Singular Alerts Settings", "alerts-dlx")}
 							</span>
 						</h1>
 						<p className="description">
 							{__(
-								"Configure global AlertsDLX options for your site.",
+								"Configure global Singular Alerts options for your site.",
 								"alerts-dlx"
 							)}
 						</p>
