@@ -162,8 +162,8 @@ class Admin {
 	 */
 	public function add_admin_menu() {
 		add_options_page(
-			_x( 'AlertsDLX', 'Plugin Name - Settings Page Title', 'alerts-dlx' ),
-			_x( 'AlertsDLX', 'Plugin Name - Menu Item', 'alerts-dlx' ),
+			_x( 'Singular Alerts', 'Plugin Name - Settings Page Title', 'alerts-dlx' ),
+			_x( 'Singular Alerts', 'Plugin Name - Menu Item', 'alerts-dlx' ),
 			'manage_options',
 			'alerts-dlx',
 			array( $this, 'options_page' )

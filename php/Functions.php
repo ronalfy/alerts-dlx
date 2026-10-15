@@ -389,7 +389,7 @@ class Functions {
 		 *
 		 * @param string $plugin_name Plugin name.
 		 */
-		return apply_filters( 'alerts_dlx_plugin_name', __( 'AlertsDLX', 'alerts-dlx' ) );
+		return apply_filters( 'alerts_dlx_plugin_name', __( 'Singular Alerts', 'alerts-dlx' ) );
 	}
 
 	/**

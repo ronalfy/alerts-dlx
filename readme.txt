@@ -1,9 +1,9 @@
-=== Alerts DLX - Alert Block, Alert Box, Callout Box, and Notifications ===
+=== Singular Alerts - Alert Block, Alert Box, Callout Box, and Notifications ===
 Contributors: ronalfy
-Tags: alert box, adopt-me, alerts, dismissible, callouts
-Requires at least: 6.8
+Tags: alert box, notifications, alerts, dismissible, callouts
+Requires at least: 6.9
 Tested up to: 7.1
-Stable tag: 2.4.1
+Stable tag: 3.0.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,12 +13,11 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 
 == Description ==
 
-> **Plugin Up for Adoption**
-> <a href="https://mediaron.com/contact/adopt-a-plugin/">Adoption Form</a> | <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://github.com/MediaRon/alertsdlx-docs">Docs</a> (GitHub)
+> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/alertsdlx/">Docs</a>
 
-Elevate your WordPress site's content and user engagement with AlertsDLX, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, AlertsDLX features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
+Elevate your WordPress site's content and user engagement with Singular Alerts, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, Singular Alerts features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 
-AlertsDLX is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert notifications out of blocks, and is flexible enough to quickly match most theme designs. Stop digging for that alert in a block suite, and install a dedicated notifications solution that works almost anywhere.
+Singular Alerts is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert notifications out of blocks, and is flexible enough to quickly match most theme designs. Stop digging for that alert in a block suite, and install a dedicated notifications solution that works almost anywhere.
 
 Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagination can really go wild. For example, you can create an "Empty Cart" callout for WooCommerce or Easy Digital Downloads when a cart is empty. For site-wide notifications, most themes and builders (including FSE) allow for site-wide template parts. Just add the notification to it, make it dismissible, and you now have a site-wide callout or notification that can be hidden when dismissed.
 
@@ -69,31 +68,31 @@ AlertsDLX is more than just a beautiful alert block in post content. Here are so
 
 Development happens on GitHub. Please <a href="https://github.com/ronalfy/alerts-dlx">check out the GitHub code repository for AlertsDLX</a>.
 
-❤️ Please help spread the word about this plugin <a href="https://wordpress.org/support/plugin/alerts-dlx/reviews/#new-post">through your kind review</a>.
+❤️ Please help spread the word about this plugin <a href="https://wordpress.org/support/plugin/alerts-dlx/reviews/#new-post">through your kind review or support request</a>.
 
 == Installation ==
 
-To get started, simply search for 'AlertsDLX' on the WordPress Add Plugins screen, install, and activate the plugin.
+To get started, simply search for 'Singular Alerts' on the WordPress Add Plugins screen, install, and activate the plugin.
 
 If you have any issues with headlines being misstyled, please visit the admin options, and change the headline tag to something that conflicts less with your theme. If you need to, there is a force styles option that can be enabled to resolve most style conflicts.
 
 == Frequently Asked Questions ==
 
-= Does AlertsDLX work with the Classic Editor and Page Builders? =
+= Does Singular Alerts work with the Classic Editor and Page Builders? =
 
-Yes. AlertsDLX works with the Classic Editor via its shortcode support</a>.
+Yes. Singular Alerts works with the Classic Editor via its shortcode support</a>.
 
-= Does AlertsDLX work with Elementor or Divi? =
+= Does Singular Alerts work with Elementor or Divi? =
 
 Yes, via the built-in shortcode, you can output in just about any page builder, including Elementor and Divi.
 
-= Does AlertsDLX work with shortcodes? =
+= Does Singular Alerts work with shortcodes? =
 
 Yes, via the built-in shortcode.
 
 = Does this work with the Block Editor (aka, Gutenberg)? =
 
-Yes, AlertsDLX comes with four blocks, one for each style of alert (Bootstrap, Chakra, Material, and Shoelace). The blocks are fully featured, and are native to the block editor.
+Yes, Singular Alerts comes with four blocks, one for each style of alert (Bootstrap, Chakra, Material, and Shoelace). The blocks are fully featured, and are native to the block editor.
 
 = What alert styles does the plugin support? =
 
@@ -108,9 +107,9 @@ Yes, each alert can be dismissed, and can be set to expire after a certain amoun
 
 = Where are the admin settings? =
 
-Go to **Settings → AlertsDLX** in your WordPress admin. From there you can choose the headline HTML element, add custom headline CSS classes, force headline sizing over aggressive theme styles, and toggle debug mode.
+Go to **Settings → Singular Alerts** in your WordPress admin. From there you can choose the headline HTML element, add custom headline CSS classes, force headline sizing over aggressive theme styles, and toggle debug mode.
 
-= Does AlertsDLX work on Multisite? =
+= Does Singular Alerts work on Multisite? =
 
 Yes. Admin settings are stored per site in the network.
 
@@ -130,21 +129,21 @@ Yes. It's recommended to use a square image, and there is a built-in cropper ava
 
 By default, the alert description is a single paragraph styled to match the alert. When you enable **Flexible InnerBlocks (Advanced)** in the block settings, you can insert any block inside the alert body (lists, images, columns, code, and more).
 
-AlertsDLX fully styles the alert shell — icon, title, colors, button, and default paragraph text. Other inner blocks may inherit styles from your theme or from the blocks themselves. For simple alert messages, leave Flexible InnerBlocks off.
+Singular Alerts fully styles the alert shell — icon, title, colors, button, and default paragraph text. Other inner blocks may inherit styles from your theme or from the blocks themselves. For simple alert messages, leave Flexible InnerBlocks off.
 
 Users have used Flexible InnerBlocks to write a simple alert description followed by a code block, to show off code recipes. Others have used it to create checklists from list blocks, expandable disclaimers via accordion blocks, and even as a video container.
 
 = Can I show alert callouts on specific posts or pages? =
 
-AlertsDLX can be used in conjunction with free plugin <a href="https://blockvisibilitywp.com/">Block Visibility</a> to display a notification under certain conditions. While AlertsDLX in itself is not a site-wide notification tool, it can be used as one if put in a global template such as with FSE.
+Singular Alerts can be used in conjunction with free plugin <a href="https://blockvisibilitywp.com/">Block Visibility</a> to display a notification under certain conditions. While Singular Alerts in itself is not a site-wide notification tool, it can be used as one if put in a global template such as with FSE.
 
 = Does the plugin support countdowns? =
 
-AlertsDLX does not support countdowns or auto-expiration. If you need an alert to auto-expire, I suggest using it with <a href="https://blockvisibilitywp.com/">Block Visibility</a> and setting a date-based visibility setting.
+Singular Alerts does not support countdowns or auto-expiration. If you need an alert to auto-expire, I suggest using it with <a href="https://blockvisibilitywp.com/">Block Visibility</a> and setting a date-based visibility setting.
 
 If you have a favorite countdown block, you can enable Flexible InnerBlocks (advanced) and add it as part of the alert description.
 
-= Can I add star ratings to AlertsDLX, turning it into a testimonial or review box? =
+= Can I add star ratings to Singular Alerts, turning it into a testimonial or review box? =
 
 Yes. If you have a favorite star rating plugin, you can disable the alert title and icon, and use Flexible Innerblocks (advanced) to add the star rating into the alert description.
 
@@ -152,7 +151,7 @@ From there, add any additional blocks you need for the review, enable the alert 
 
 = Can I disable the custom font used (Lato)? =
 
-Yes, you can improve performance further by disabling the custom font supplied with AlertsDLX and supplying your own.
+Yes, you can improve performance further by disabling the custom font supplied with Singular Alerts and supplying your own.
 
 = How can I get support or leave a feature request? =
 
@@ -178,7 +177,7 @@ Please leave a detailed support request here on .org.
 
 = 2.4.0 =
 * Released 2026-07-03
-* New: Added an admin settings panel under Settings → AlertsDLX.
+* New: Added an admin settings panel under Settings → Singular Alerts.
 * New: Choose the headline HTML element (h1–h6 or div) used for alert titles site-wide. This allows the alerts headline to match your site's SEO structure, and can help reduce style conflicts with your theme.
 * New: Add custom alert title headline CSS classes for third-party integrations/exclusions (such as table of contents plugins).
 * New: Option to force intended headline font size over aggressive theme styles.
