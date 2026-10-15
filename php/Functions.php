@@ -303,7 +303,7 @@ class Functions {
 	 * @return string URL to admin screen. Output is not escaped.
 	 */
 	public static function get_settings_url( $tab = '', $sub_tab = '' ) {
-		$options_url = admin_url( 'options-general.php?page=alerts-dlx' );
+		$options_url = admin_url( 'options-general.php?page=singular-alerts' );
 		if ( ! empty( $tab ) ) {
 			$options_url = add_query_arg( array( 'tab' => sanitize_title( $tab ) ), $options_url );
 			if ( ! empty( $sub_tab ) ) {
