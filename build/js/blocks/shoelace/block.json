@@ -84,6 +84,14 @@
       "type": "string",
       "default": "650"
     },
+    "marginSpacing": {
+      "type": "string",
+      "default": "spacious"
+    },
+    "marginSpacingTarget": {
+      "type": "string",
+      "default": "both"
+    },
     "baseFontSize": {
       "type": "number",
       "default": 18
@@ -238,7 +246,8 @@
       "wide",
       "full"
     ],
-    "className": true
+    "className": true,
+    "inserter": false
   },
   "editorScript": "alerts-dlx-block",
   "editorStyle": [

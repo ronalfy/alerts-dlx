@@ -52,29 +52,6 @@ class Blocks {
 			2
 		);
 
-		add_filter(
-			'register_block_type_args',
-			function ( $args, $block_name ) {
-				$style_map = array(
-					'mediaron/alerts-dlx-bootstrap' => 'bootstrap',
-					'mediaron/alerts-dlx-chakra'    => 'chakra',
-					'mediaron/alerts-dlx-material'  => 'material',
-					'mediaron/alerts-dlx-shoelace'  => 'shoelace',
-				);
-
-				if ( isset( $style_map[ $block_name ] ) && ! Options::is_block_style_enabled( $style_map[ $block_name ] ) ) {
-					if ( ! isset( $args['supports'] ) || ! is_array( $args['supports'] ) ) {
-						$args['supports'] = array();
-					}
-					$args['supports']['inserter'] = false;
-				}
-
-				return $args;
-			},
-			10,
-			2
-		);
-
 		if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
 			wp_register_block_types_from_metadata_collection( Functions::get_plugin_dir( 'build/js/blocks/' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
 		} else {
@@ -87,7 +64,9 @@ class Blocks {
 			}
 		}
 
-		// Enqueue block assets.
+		// Register style handles before WordPress enqueues editorStyle at priority 10.
+		add_action( 'enqueue_block_assets', array( $this, 'register_editor_style_handles' ), 1 );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'register_editor_style_handles' ), 1 );
 		add_action( 'enqueue_block_assets', array( $this, 'register_block_editor_scripts_iframe' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'register_block_editor_scripts' ) );
 
@@ -99,8 +78,8 @@ class Blocks {
 					$categories,
 					array(
 						array(
-							'slug'  => 'alertsdlx',
-							'title' => __( 'AlertsDLX', 'alerts-dlx' ),
+							'slug'  => 'singular-alerts',
+							'title' => __( 'Singular Alerts', 'alerts-dlx' ),
 						),
 						array(
 							'slug'  => 'alertsdlx-legacy',
@@ -123,48 +102,60 @@ class Blocks {
 	 * @return string
 	 */
 	public function shortcode( $atts = array(), $content = '' ) {
-		$defaults = array(
-			'unique_id'               => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
-			'alert_group'             => 'chakra',
-			'alert_type'              => 'success',
-			'align'                   => 'center',
-			'alert_title'             => '',
-			'alert_description'       => '',
-			'maximum_width_unit'      => 'px',
-			'maximum_width'           => 650,
-			'icon'                    => '',
-			'base_font_size'          => 16,
-			'icon_vertical_alignment' => 'top',
-			'variant'                 => '',
-			'mode'                    => 'light', /* can be dark */
-			'button_text'             => '',
-			'button_url'              => '',
-			'button_target'           => false,
-			'button_rel_no_follow'    => false,
-			'button_rel_sponsored'    => false,
-			'icon_appearance'         => 'default', /* can be rounded */
-			'color_primary'           => '',
-			'color_border'            => '',
-			'color_accent'            => '',
-			'color_alt'               => '',
-			'color_alt_hover'         => '',
-			'color_alt_text'          => '',
-			'color_alt_text_hover'    => '',
-			'color_bold'              => '',
-			'color_light'             => '',
-			'close_button_enabled'    => false,
-			'close_button_expiration' => 0,
-			'is_block_editorial_only' => false,
-			'icon_source'             => 'icon',
-			'image_url'               => '',
-			'image_id'                => 0,
-		);
+		$defaults = AlertAttributes::get_shortcode_defaults();
 		$atts     = shortcode_atts( $defaults, $atts, 'alertsdlx' );
+
+		// Sanitize values used before the shared renderer. Inline CSS is emitted
+		// below, so waiting for renderer normalization would be too late.
+		$sanitized_id      = sanitize_html_class( (string) $atts['unique_id'] );
+		$atts['unique_id'] = '' !== $sanitized_id ? $sanitized_id : $defaults['unique_id'];
+
+		// Values embedded into CSS syntax need strict allowlists; HTML escaping
+		// alone does not neutralize braces or declaration separators. Preserve
+		// every unit exposed by the existing builder and fall back to defaults.
+		$allowed_alert_groups = array( 'bootstrap', 'chakra', 'material', 'shoelace' );
+		if ( ! in_array( $atts['alert_group'], $allowed_alert_groups, true ) ) {
+			$atts['alert_group'] = $defaults['alert_group'];
+		}
+		$allowed_width_units = array( 'px', 'em', 'rem', '%', 'vw' );
+		if ( ! in_array( $atts['maximum_width_unit'], $allowed_width_units, true ) ) {
+			$atts['maximum_width_unit'] = $defaults['maximum_width_unit'];
+		}
+		$atts['margin_spacing']        = AlertAttributes::sanitize_margin_spacing( $atts['margin_spacing'] ?? '' );
+		$atts['margin_spacing_target'] = AlertAttributes::sanitize_margin_spacing_target( $atts['margin_spacing_target'] ?? '' );
+
+		$color_fields = array(
+			'color_primary',
+			'color_border',
+			'color_accent',
+			'color_alt',
+			'color_alt_hover',
+			'color_alt_text',
+			'color_alt_text_hover',
+			'color_bold',
+			'color_light',
+		);
+		foreach ( $color_fields as $color_field ) {
+			$color                = Functions::sanitize_css_color( (string) $atts[ $color_field ] );
+			$atts[ $color_field ] = false === $color ? $defaults[ $color_field ] : $color;
+		}
+
+		// User icons are inline SVG. The sanitizer caps length and drops active content.
+		$atts['icon'] = Functions::sanitize_icon_svg( (string) $atts['icon'] );
+
+		// Numeric shortcode attributes share the builder's documented bounds.
+		// This prevents extreme values from reaching CSS or cookie metadata.
+		$atts['maximum_width']           = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
+		$atts['base_font_size']          = min( 96, max( 8, (int) $atts['base_font_size'] ) );
+		$atts['close_button_expiration'] = min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) );
 
 		// If alert description is empty, use content.
 		if ( empty( $atts['alert_description'] ) && ! empty( $content ) ) {
+			// Bound content before filters and their result after filtering.
+			$content                   = substr( (string) $content, 0, 20000 );
 			$atts['alert_description'] = apply_filters( 'alerts_dlx_the_content', $content );
 		}
+		$atts['alert_description'] = substr( (string) $atts['alert_description'], 0, 20000 );
 
 		// Set the default variant.
 		if ( '' === $atts['variant'] ) {
@@ -190,8 +181,8 @@ class Blocks {
 		$atts['title_enabled']       = ! empty( $atts['alert_title'] );
 		$atts['icon_enabled']        = ! empty( $atts['icon'] ) || ! empty( $atts['image_url'] );
 
-		// Register scripts.
-		$this->register_block_editor_scripts();
+		// Register only the theme styles the public shortcode can print.
+		$this->register_frontend_styles();
 
 		$style_handles_to_print = array();
 		if ( ! wp_style_is( 'alerts-dlx-block-editor-styles-lato', 'done' ) ) {
@@ -264,8 +255,11 @@ class Blocks {
 	 * @return string
 	 */
 	public function frontend( array $attributes, string $content, $block = null ) {
+		// Merge linked global style appearance when globalStyleId is valid.
+		$attributes = AlertLibrary::apply_global_style_to_block_attributes( $attributes );
+
 		$renderer = new AlertRenderer(
-			array( $this, 'register_block_editor_scripts' ),
+			array( $this, 'register_frontend_styles' ),
 			array( $this, 'print_close_button_svgs' )
 		);
 		return $renderer->render( $attributes, $content, $block );
@@ -281,25 +275,108 @@ class Blocks {
 	}
 
 	/**
+	 * Register theme styles and the optional Lato font for front-end alerts.
+	 *
+	 * Public rendering uses this instead of the editor script so a page of
+	 * alerts does not query the style library. Registration is checked on the
+	 * current style registry so the editor iframe can collect the same handles.
+	 */
+	public function register_frontend_styles() {
+		$version = Functions::get_plugin_version();
+		$styles  = array(
+			'alerts-dlx-bootstrap-styles' => 'dist/alerts-dlx-bootstrap-styles.css',
+			'alerts-dlx-chakra-styles'    => 'dist/alerts-dlx-chakra-styles.css',
+			'alerts-dlx-material-styles'  => 'dist/alerts-dlx-material-styles.css',
+			'alerts-dlx-shoelace-styles'  => 'dist/alerts-dlx-shoelace-styles.css',
+		);
+
+		foreach ( $styles as $handle => $path ) {
+			if ( wp_style_is( $handle, 'registered' ) ) {
+				continue;
+			}
+			wp_register_style(
+				$handle,
+				Functions::get_plugin_url( $path ),
+				array(),
+				$version,
+				'all'
+			);
+		}
+
+		if ( wp_style_is( 'alerts-dlx-block-editor-styles-lato', 'registered' ) ) {
+			return;
+		}
+
+		// Bundled Lato stays on unless Override fonts is enabled or alerts_dlx_load_fonts returns false.
+		if ( Options::should_load_fonts() ) {
+			wp_register_style(
+				'alerts-dlx-block-editor-styles-lato',
+				Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				array(),
+				$version,
+				'all'
+			);
+			wp_add_inline_style(
+				'alerts-dlx-block-editor-styles-lato',
+				':root {
+					--alerts-dlx-font-family: "Lato", "Helvetica", "Arial", sans-serif;
+				}'
+			);
+			return;
+		}
+
+		wp_register_style(
+			'alerts-dlx-block-editor-styles-lato',
+			false,
+			array(),
+			$version,
+			'all'
+		);
+		$default_font_family = apply_filters( 'alerts_dlx_default_font_family', Options::get_fallback_font_family() );
+		wp_add_inline_style(
+			'alerts-dlx-block-editor-styles-lato',
+			':root {
+				--alerts-dlx-font-family: ' . wp_strip_all_tags( $default_font_family ) . ';
+			}'
+		);
+	}
+
+	/**
+	 * Register editor and theme style handles without loading the style library.
+	 *
+	 * Block metadata lists these handles in editorStyle. WordPress enqueues
+	 * them while collecting iframe assets, so they must already be registered.
+	 */
+	public function register_editor_style_handles() {
+		$this->register_frontend_styles();
+
+		$version = Functions::get_plugin_version();
+		if ( ! wp_style_is( 'alerts-dlx-block-editor', 'registered' ) ) {
+			// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
+			wp_register_style(
+				'alerts-dlx-block-editor',
+				Functions::get_plugin_url( 'dist/alerts-dlx-block-editor.css' ),
+				array(),
+				$version,
+				'all'
+			);
+		}
+		if ( ! wp_style_is( 'alerts-dlx-block-editor-styles', 'registered' ) ) {
+			wp_register_style(
+				'alerts-dlx-block-editor-styles',
+				Functions::get_plugin_url( 'build/index.css' ),
+				array( 'alerts-dlx-block-editor' ),
+				$version,
+				'all'
+			);
+		}
+	}
+
+	/**
 	 * Register the block editor script with localized vars.
 	 */
 	public function register_block_editor_scripts() {
-
-		// Register styles here because array in block.json fails when using array of styles (enqueues wrong script).
-		wp_register_style(
-			'alerts-dlx-block-editor',
-			Functions::get_plugin_url( 'dist/alerts-dlx-block-editor.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-block-editor-styles',
-			Functions::get_plugin_url( 'build/index.css' ),
-			array( 'alerts-dlx-block-editor' ),
-			Functions::get_plugin_version(),
-			'all'
-		);
+		$this->register_editor_style_handles();
 
 		$deps = require Functions::get_plugin_dir( 'build/index.asset.php' );
 		wp_register_script(
@@ -314,84 +391,22 @@ class Blocks {
 			'alerts-dlx-block',
 			'alertsDlxBlock',
 			array(
-				'font_stylesheet'       => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				'isEditor'              => current_user_can( 'edit_others_posts' ),
-				'isAuthor'              => current_user_can( 'edit_posts' ),
-				'isAdmin'               => current_user_can( 'manage_options' ),
-				'colorPalette'          => Functions::get_theme_color_palette(),
-				'defaultImage'          => Functions::get_plugin_url( 'assets/bell.png' ),
-				'headlineStyle'         => Options::get_headline_tag(),
-				'headlineCustomClasses' => Options::get_headline_custom_classes(),
-				'headlineForceSize'     => Options::is_headline_force_size(),
-				'enabledBlockStyles'    => Options::get_enabled_block_styles(),
+				'font_stylesheet'            => Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
+				'loadFonts'                  => Options::should_load_fonts(),
+				'isEditor'                   => current_user_can( 'edit_others_posts' ),
+				'isAuthor'                   => current_user_can( 'edit_posts' ),
+				'isAdmin'                    => current_user_can( 'manage_options' ),
+				'colorPalette'               => Functions::get_theme_color_palette(),
+				'defaultImage'               => Functions::get_plugin_url( 'assets/bell.png' ),
+				'headlineStyle'              => Options::get_headline_tag(),
+				'headlineCustomClasses'      => Options::get_headline_custom_classes(),
+				'headlineForceSize'          => Options::is_headline_force_size(),
+				'marginSpacingDefault'       => Options::get_margin_spacing(),
+				'marginSpacingTargetDefault' => Options::get_margin_spacing_target(),
+				'libraryItems'               => AlertLibrary::get_items_for_editor(),
+				'canManageLibrary'           => current_user_can( 'manage_options' ),
 			)
 		);
-
-		wp_register_style(
-			'alerts-dlx-bootstrap-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-bootstrap-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-chakra-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-chakra-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-material-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-material-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-		wp_register_style(
-			'alerts-dlx-shoelace-styles',
-			Functions::get_plugin_url( 'dist/alerts-dlx-shoelace-styles.css' ),
-			array(),
-			Functions::get_plugin_version(),
-			'all'
-		);
-
-		/**
-		 * Filter whether to load the Lato font stylesheet.
-		 *
-		 * @param bool $load_lato_font Whether to load the Lato font stylesheet.
-		 * @return bool
-		 */
-		if ( apply_filters( 'alerts_dlx_load_fonts', true ) ) {
-			wp_register_style(
-				'alerts-dlx-block-editor-styles-lato',
-				Functions::get_plugin_url( 'dist/alerts-dlx-gfont-lato.css' ),
-				array(),
-				Functions::get_plugin_version(),
-				'all'
-			);
-			wp_add_inline_style(
-				'alerts-dlx-block-editor-styles-lato',
-				':root {
-					--alerts-dlx-font-family: "Lato", "Helvetica", "Arial", sans-serif;
-				}'
-			);
-		} else {
-			wp_register_style(
-				'alerts-dlx-block-editor-styles-lato',
-				false,
-				array(),
-				Functions::get_plugin_version(),
-				'all'
-			);
-			$default_font_family = apply_filters( 'alerts_dlx_default_font_family', '"Helvetica", "Arial", sans-serif' );
-			wp_add_inline_style(
-				'alerts-dlx-block-editor-styles-lato',
-				':root {
-					--alerts-dlx-font-family: ' . wp_strip_all_tags( $default_font_family ) . ';
-				}'
-			);
-		}
 	}
 
 	/**
@@ -412,7 +427,6 @@ class Blocks {
 			<symbol id="alerts-dlx-material-close-button" viewBox="0 0 24 24" width="16" height="16">
 				<path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
 			</symbol>
-	</svg>
 		</svg>
 		<?php
 	}

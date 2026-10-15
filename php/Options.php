@@ -27,7 +27,6 @@ class Options {
 	 * Main class runner.
 	 */
 	public static function run() {
-		// Reserved for future migrations.
 	}
 
 	/**
@@ -40,8 +39,11 @@ class Options {
 			'headline_style'          => 'h2',
 			'headline_custom_classes' => '',
 			'headline_force_size'     => false,
-			'enabled_block_styles'    => array( 'bootstrap', 'chakra', 'material', 'shoelace' ),
 			'debug_mode'              => false,
+			'margin_spacing'          => 'spacious',
+			'margin_spacing_target'   => 'both',
+			'override_fonts'          => false,
+			'font_family_override'    => '',
 			'options_version'         => '1.0.0',
 		);
 	}
@@ -79,29 +81,6 @@ class Options {
 		$key = strtolower( trim( $tag ) );
 
 		return $map[ $key ] ?? 'h2';
-	}
-
-	/**
-	 * Get allowed alert theme slugs.
-	 *
-	 * @return array
-	 */
-	public static function get_allowed_block_styles() {
-		return array( 'bootstrap', 'chakra', 'material', 'shoelace' );
-	}
-
-	/**
-	 * Get alert theme definitions for admin UI.
-	 *
-	 * @return array
-	 */
-	public static function get_block_style_definitions() {
-		return array(
-			'bootstrap' => __( 'Bootstrap', 'alerts-dlx' ),
-			'chakra'    => __( 'Chakra UI', 'alerts-dlx' ),
-			'material'  => __( 'Material', 'alerts-dlx' ),
-			'shoelace'  => __( 'Shoelace', 'alerts-dlx' ),
-		);
 	}
 
 	/**
@@ -184,6 +163,44 @@ class Options {
 	}
 
 	/**
+	 * Get the site default margin amount for new alerts.
+	 *
+	 * Omitted shortcode attributes stay spacious via AlertAttributes.
+	 * This value is the starting point for new blocks and new admin sessions.
+	 *
+	 * @return string Allowlisted amount.
+	 */
+	public static function get_margin_spacing() {
+		$options = self::get_plugin_options();
+		return AlertAttributes::sanitize_margin_spacing( $options['margin_spacing'] ?? 'spacious' );
+	}
+
+	/**
+	 * Get the site default margin target for new alerts.
+	 *
+	 * @return string Allowlisted target.
+	 */
+	public static function get_margin_spacing_target() {
+		$options = self::get_plugin_options();
+		return AlertAttributes::sanitize_margin_spacing_target( $options['margin_spacing_target'] ?? 'both' );
+	}
+
+	/**
+	 * Overlay the site margin default onto a fresh admin session.
+	 *
+	 * Does not change omit-attribute fallbacks. Callers that parse saved
+	 * shortcodes or stored library items should keep their own defaults.
+	 *
+	 * @param array $values Default values keyed in snake_case.
+	 * @return array
+	 */
+	public static function overlay_margin_spacing_defaults( array $values ) {
+		$values['margin_spacing']        = self::get_margin_spacing();
+		$values['margin_spacing_target'] = self::get_margin_spacing_target();
+		return $values;
+	}
+
+	/**
 	 * Check if headline font size should be forced via wrapper class.
 	 *
 	 * @return bool
@@ -198,6 +215,83 @@ class Options {
 		 * @param bool $forced Whether to force headline size.
 		 */
 		return (bool) apply_filters( 'alerts_dlx_headline_force_size', $forced );
+	}
+
+	/**
+	 * Check whether a manual font family override is enabled.
+	 *
+	 * @return bool
+	 */
+	public static function is_font_override_enabled() {
+		$options = self::get_plugin_options();
+		return (bool) ( $options['override_fonts'] ?? false );
+	}
+
+	/**
+	 * Get the stored font family override.
+	 *
+	 * This is the saved stack only. Callers that print CSS must also check
+	 * is_font_override_enabled() before using it.
+	 *
+	 * @return string
+	 */
+	public static function get_font_family_override() {
+		$options = self::get_plugin_options();
+		$family  = $options['font_family_override'] ?? '';
+
+		if ( ! is_string( $family ) ) {
+			return '';
+		}
+
+		$sanitized = self::sanitize_font_family_override( $family );
+		if ( is_wp_error( $sanitized ) ) {
+			return '';
+		}
+
+		return $sanitized;
+	}
+
+	/**
+	 * Get the font stack used when the Lato stylesheet is not loaded.
+	 *
+	 * The manual override is used only when Override fonts is enabled and a stack is saved.
+	 * An empty override keeps the Helvetica fallback.
+	 *
+	 * @return string CSS font-family value.
+	 */
+	public static function get_fallback_font_family() {
+		$fallback = '"Helvetica", "Arial", sans-serif';
+		if ( ! self::is_font_override_enabled() ) {
+			return $fallback;
+		}
+
+		$override = self::get_font_family_override();
+		if ( '' === $override ) {
+			return $fallback;
+		}
+
+		return $override;
+	}
+
+	/**
+	 * Whether the bundled Lato font stylesheet should load.
+	 *
+	 * A saved font override turns this off. The alerts_dlx_load_fonts filter can still change the result.
+	 *
+	 * @return bool
+	 */
+	public static function should_load_fonts() {
+		$load_fonts = ! self::is_font_override_enabled();
+
+		/**
+		 * Filter whether to load the Lato font stylesheet.
+		 *
+		 * The default is false when Override fonts is enabled in the settings.
+		 *
+		 * @param bool $load_fonts Whether to load the Lato font stylesheet.
+		 * @return bool
+		 */
+		return (bool) apply_filters( 'alerts_dlx_load_fonts', $load_fonts );
 	}
 
 	/**
@@ -266,46 +360,34 @@ class Options {
 	}
 
 	/**
-	 * Get enabled alert theme slugs.
+	 * Sanitize a CSS font-family stack typed in the settings screen.
 	 *
-	 * @return array
+	 * Allows letters, numbers, spaces, commas, quotes, hyphens, and underscores.
+	 * Empty is valid and means no manual stack is stored.
+	 *
+	 * @param mixed $input Font family or stack.
+	 * @return string|\WP_Error Sanitized stack, or an error when the value is not a safe font stack.
 	 */
-	public static function get_enabled_block_styles() {
-		$options = self::get_plugin_options();
-		$styles  = isset( $options['enabled_block_styles'] ) ? $options['enabled_block_styles'] : self::get_allowed_block_styles();
-
-		if ( ! is_array( $styles ) ) {
-			$styles = self::get_allowed_block_styles();
+	public static function sanitize_font_family_override( $input ) {
+		if ( ! is_string( $input ) ) {
+			$input = '';
 		}
 
-		$styles = array_values(
-			array_intersect(
-				array_map( 'sanitize_key', $styles ),
-				self::get_allowed_block_styles()
-			)
-		);
-
-		if ( empty( $styles ) ) {
-			$styles = self::get_allowed_block_styles();
+		$input = trim( sanitize_text_field( $input ) );
+		if ( '' === $input ) {
+			return '';
 		}
 
-		/**
-		 * Filter the enabled alert themes.
-		 *
-		 * @param array $styles Array of enabled alert theme slugs.
-		 */
-		return apply_filters( 'alerts_dlx_enabled_block_styles', $styles );
-	}
+		$is_safe_stack = (bool) preg_match( '/^[a-zA-Z0-9\s,\'"_-]+$/', $input );
+		$has_letter    = (bool) preg_match( '/[a-zA-Z]/', $input );
+		if ( strlen( $input ) > 200 || ! $is_safe_stack || ! $has_letter ) {
+			return new \WP_Error(
+				'alerts_dlx_invalid_font_family',
+				__( 'Enter a font family using letters, numbers, spaces, commas, quotes, hyphens, and underscores.', 'alerts-dlx' )
+			);
+		}
 
-	/**
-	 * Check if an alert theme is enabled.
-	 *
-	 * @param string $style Alert theme slug.
-	 *
-	 * @return bool
-	 */
-	public static function is_block_style_enabled( $style ) {
-		return in_array( sanitize_key( $style ), self::get_enabled_block_styles(), true );
+		return $input;
 	}
 
 	/**
@@ -316,25 +398,5 @@ class Options {
 	public static function is_debug_mode() {
 		$options = self::get_plugin_options();
 		return (bool) ( $options['debug_mode'] ?? false );
-	}
-
-	/**
-	 * Sanitize enabled alert themes from form input.
-	 *
-	 * @param array $styles Alert theme slugs from form.
-	 *
-	 * @return array
-	 */
-	public static function sanitize_enabled_block_styles( $styles ) {
-		if ( ! is_array( $styles ) ) {
-			return array();
-		}
-
-		return array_values(
-			array_intersect(
-				array_map( 'sanitize_key', $styles ),
-				self::get_allowed_block_styles()
-			)
-		);
 	}
 }

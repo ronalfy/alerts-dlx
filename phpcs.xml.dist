@@ -1,19 +1,25 @@
 <?xml version="1.0"?>
-<ruleset name="Info Cards Pro Standards">
-	<arg name="extensions" value="php" />
-	<arg name="colors" />
-	<arg value="s" /><!-- Show sniff codes in all reports -->
+<ruleset name="AlertsDLX">
+	<description>PHP_CodeSniffer ruleset for AlertsDLX.</description>
 
-	<rule ref="WordPress-Core">
-		<exclude name="WordPress.Files.FileName" />
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+	<file>alerts-dlx.php</file>
+	<file>includes</file>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="parallel" value="8"/>
+	<arg value="ps"/>
+
+	<config name="text_domain" value="alerts-dlx"/>
+	<config name="minimum_supported_wp_version" value="6.0"/>
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.InvalidTemplateTagFileName"/>
 	</rule>
-
-	<rule ref="WordPress-Docs"></rule>
-
-	<config name="testVersion" value="5.6-" />
-	<file>.</file>
-
-	<exclude-pattern>/node_modules/</exclude-pattern>
-	<exclude-pattern>/vendor/</exclude-pattern>
+	<rule ref="WordPress.Files.FileName">
+		<severity>0</severity>
+	</rule>
 </ruleset>

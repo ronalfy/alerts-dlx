@@ -16,15 +16,39 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 final class AlertRenderer {
 
-	/** @var callable */
+	/**
+	 * Callback that registers front-end or editor assets.
+	 *
+	 * @var callable
+	 */
 	private $register_scripts_callback;
 
-	/** @var callable */
+	/**
+	 * Callback that prints the hardcoded close-button sprite.
+	 *
+	 * @var callable
+	 */
 	private $print_close_button_svgs_callback;
 
 	/**
-	 * @param callable $register_scripts_callback            Existing asset registration callback.
-	 * @param callable $print_close_button_svgs_callback     Existing close-icon callback.
+	 * Theme groups whose footer style callback is already scheduled.
+	 *
+	 * @var array<string, bool>
+	 */
+	private static $footer_style_groups = array();
+
+	/**
+	 * Whether the close-button sprite callback is already scheduled.
+	 *
+	 * @var bool
+	 */
+	private static $close_button_svgs_scheduled = false;
+
+	/**
+	 * Store the asset and close-button callbacks.
+	 *
+	 * @param callable $register_scripts_callback        Asset registration callback.
+	 * @param callable $print_close_button_svgs_callback Close-icon callback.
 	 */
 	public function __construct( $register_scripts_callback, $print_close_button_svgs_callback ) {
 		$this->register_scripts_callback        = $register_scripts_callback;
@@ -42,44 +66,46 @@ final class AlertRenderer {
 	public function render( array $attributes, string $content, $block = null ) {
 		$normalized = AlertAttributes::normalize( $attributes, $block );
 
-		$unique_id = $normalized['unique_id'];
-		$alert_group = $normalized['alert_group'];
-		$alert_type = $normalized['alert_type'];
-		$align = $normalized['align'];
-		$alert_title = $normalized['alert_title'];
-		$alert_description = $normalized['alert_description'];
-		$button_enabled = $normalized['button_enabled'];
-		$maximum_width_unit = $normalized['maximum_width_unit'];
-		$maximum_width = $normalized['maximum_width'];
-		$icon = $normalized['icon'];
-		$description_enabled = $normalized['description_enabled'];
-		$title_enabled = $normalized['title_enabled'];
-		$icon_enabled = $normalized['icon_enabled'];
-		$base_font_size = $normalized['base_font_size'];
+		$unique_id               = $normalized['unique_id'];
+		$alert_group             = $normalized['alert_group'];
+		$alert_type              = $normalized['alert_type'];
+		$align                   = $normalized['align'];
+		$alert_title             = $normalized['alert_title'];
+		$alert_description       = $normalized['alert_description'];
+		$button_enabled          = $normalized['button_enabled'];
+		$maximum_width_unit      = $normalized['maximum_width_unit'];
+		$maximum_width           = $normalized['maximum_width'];
+		$margin_spacing          = $normalized['margin_spacing'];
+		$margin_spacing_target   = $normalized['margin_spacing_target'];
+		$icon                    = $normalized['icon'];
+		$description_enabled     = $normalized['description_enabled'];
+		$title_enabled           = $normalized['title_enabled'];
+		$icon_enabled            = $normalized['icon_enabled'];
+		$base_font_size          = $normalized['base_font_size'];
 		$icon_vertical_alignment = $normalized['icon_vertical_alignment'];
-		$variant = $normalized['variant'];
-		$mode = $normalized['mode'];
-		$button_text = $normalized['button_text'];
-		$button_url = $normalized['button_url'];
-		$button_target = $normalized['button_target'];
-		$button_rel_no_follow = $normalized['button_rel_no_follow'];
-		$button_rel_sponsored = $normalized['button_rel_sponsored'];
-		$icon_appearance = $normalized['icon_appearance'];
-		$color_primary = $normalized['color_primary'];
-		$color_border = $normalized['color_border'];
-		$color_accent = $normalized['color_accent'];
-		$color_alt = $normalized['color_alt'];
-		$color_alt_hover = $normalized['color_alt_hover'];
-		$color_alt_text = $normalized['color_alt_text'];
-		$color_alt_text_hover = $normalized['color_alt_text_hover'];
-		$color_bold = $normalized['color_bold'];
-		$color_light = $normalized['color_light'];
-		$close_button_enabled = $normalized['close_button_enabled'];
+		$variant                 = $normalized['variant'];
+		$mode                    = $normalized['mode'];
+		$button_text             = $normalized['button_text'];
+		$button_url              = $normalized['button_url'];
+		$button_target           = $normalized['button_target'];
+		$button_rel_no_follow    = $normalized['button_rel_no_follow'];
+		$button_rel_sponsored    = $normalized['button_rel_sponsored'];
+		$icon_appearance         = $normalized['icon_appearance'];
+		$color_primary           = $normalized['color_primary'];
+		$color_border            = $normalized['color_border'];
+		$color_accent            = $normalized['color_accent'];
+		$color_alt               = $normalized['color_alt'];
+		$color_alt_hover         = $normalized['color_alt_hover'];
+		$color_alt_text          = $normalized['color_alt_text'];
+		$color_alt_text_hover    = $normalized['color_alt_text_hover'];
+		$color_bold              = $normalized['color_bold'];
+		$color_light             = $normalized['color_light'];
+		$close_button_enabled    = $normalized['close_button_enabled'];
 		$close_button_expiration = $normalized['close_button_expiration'];
 		$is_block_editorial_only = $normalized['is_block_editorial_only'];
-		$icon_source = $normalized['icon_source'];
-		$image_url = $normalized['image_url'];
-		$image_id = $normalized['image_id'];
+		$icon_source             = $normalized['icon_source'];
+		$image_url               = $normalized['image_url'];
+		$image_id                = $normalized['image_id'];
 
 		// If block is editorial only, return early.
 		if ( $is_block_editorial_only ) {
@@ -114,66 +140,72 @@ final class AlertRenderer {
 		// Register scripts.
 		call_user_func( $this->register_scripts_callback );
 
-		// Print block styles.
-		switch ( $alert_group ) {
-			case 'bootstrap':
-				add_action(
-					'wp_footer',
-					function () {
-						wp_print_styles(
-							array(
-								'alerts-dlx-bootstrap-styles',
-								'alerts-dlx-block-editor-styles-lato',
-							)
-						);
-					}
-				);
-				break;
-			case 'chakra':
-				add_action(
-					'wp_footer',
-					function () {
-						wp_print_styles(
-							array(
-								'alerts-dlx-chakra-styles',
-								'alerts-dlx-block-editor-styles-lato',
-							)
-						);
-					}
-				);
-				break;
-			case 'material':
-				add_action(
-					'wp_footer',
-					function () {
-						wp_print_styles(
-							array(
-								'alerts-dlx-material-styles',
-								'alerts-dlx-block-editor-styles-lato',
-							)
-						);
-					}
-				);
-				break;
-			case 'shoelace':
-				add_action(
-					'wp_footer',
-					function () {
-						wp_print_styles(
-							array(
-								'alerts-dlx-shoelace-styles',
-								'alerts-dlx-block-editor-styles-lato',
-							)
-						);
-					}
-				);
-				break;
+		// Print each theme's styles once per request.
+		if ( ! isset( self::$footer_style_groups[ $alert_group ] ) ) {
+			self::$footer_style_groups[ $alert_group ] = true;
+			switch ( $alert_group ) {
+				case 'bootstrap':
+					add_action(
+						'wp_footer',
+						function () {
+							wp_print_styles(
+								array(
+									'alerts-dlx-bootstrap-styles',
+									'alerts-dlx-block-editor-styles-lato',
+								)
+							);
+						}
+					);
+					break;
+				case 'chakra':
+					add_action(
+						'wp_footer',
+						function () {
+							wp_print_styles(
+								array(
+									'alerts-dlx-chakra-styles',
+									'alerts-dlx-block-editor-styles-lato',
+								)
+							);
+						}
+					);
+					break;
+				case 'material':
+					add_action(
+						'wp_footer',
+						function () {
+							wp_print_styles(
+								array(
+									'alerts-dlx-material-styles',
+									'alerts-dlx-block-editor-styles-lato',
+								)
+							);
+						}
+					);
+					break;
+				case 'shoelace':
+					add_action(
+						'wp_footer',
+						function () {
+							wp_print_styles(
+								array(
+									'alerts-dlx-shoelace-styles',
+									'alerts-dlx-block-editor-styles-lato',
+								)
+							);
+						}
+					);
+					break;
+			}
 		}
 
 		// Close button footer and scripts.
 		if ( $close_button_enabled ) {
-			// Add footer SVGs for close button.
-			add_action( 'wp_footer', $this->print_close_button_svgs_callback );
+			// Add footer SVGs for close button once, even with several dismissible alerts.
+			if ( ! self::$close_button_svgs_scheduled ) {
+				self::$close_button_svgs_scheduled = true;
+				add_action( 'wp_footer', $this->print_close_button_svgs_callback );
+			}
 
 			// Add close button script.
 			wp_enqueue_script(
@@ -244,6 +276,10 @@ final class AlertRenderer {
 		if ( Options::is_headline_force_size() ) {
 			$container_classes[] = 'is-headline-size-forced';
 		}
+		$container_classes = array_merge(
+			$container_classes,
+			AlertAttributes::get_margin_spacing_classes( $margin_spacing, $margin_spacing_target )
+		);
 		?>
 		<!-- begin AlertsDLX output -->
 		<style>
@@ -271,7 +307,7 @@ final class AlertRenderer {
 					?>
 					<div class="alerts-dlx-icon alerts-dlx-icon-frontend" aria-hidden="true">
 						<div class="alerts-dlx-icon-preview">
-							<?php echo wp_kses( $icon, Functions::get_kses_allowed_html() ); ?>
+							<?php echo Functions::sanitize_icon_svg( (string) $icon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_icon_svg() is the SVG escaping boundary. ?>
 						</div>
 					</div>
 					<?php

@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name:       AlertsDLX
- * Plugin URI:        https://wordpress.org/plugins/alerts-dlx/
+ * Plugin Name:       Singular Alerts
+ * Plugin URI:        https://singularalerts.com
  * Description:       Create beautiful and impactful alerts and notifications in your content, inspired by Bootstrap, Material, Chakra UI, and Shoelace.
- * Version:           2.4.1
+ * Version:           3.0.0
  * Requires at least: 6.8
  * Requires PHP:      8.0
  * Author:            Ronald Huereca
- * Author URI:        https://wordpress.org/plugins/alerts-dlx/
+ * Author URI:        https://singularalerts.com
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       alerts-dlx
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-define( 'ALERTS_DLX_VERSION', '2.4.1' );
+define( 'ALERTS_DLX_VERSION', '3.0.0' );
 define( 'ALERTS_DLX_FILE', __FILE__ );
 
 // Support for site-level autoloading.
@@ -65,6 +65,7 @@ class AlertsDLX {
 	public function plugins_loaded() {
 
 		Options::run();
+		AlertLibrary::run();
 		( new Admin() )->run();
 		Blocks::run();
 		Rest::run();

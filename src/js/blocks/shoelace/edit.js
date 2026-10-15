@@ -29,6 +29,7 @@ import {
 	BaseFontSizeControl,
 	IconVerticalAlignmentControl,
 	MaximumWidthControls,
+	MarginSpacingControls,
 } from '../components/HistoricalAlertAppearanceControls';
 import {
 	getAlertWrapperClassName,
@@ -127,6 +128,7 @@ const ShoelaceAlerts = ( props ) => {
 			<Slot name="alertsDLXStylePanelStart" fillProps={ props } />
 			<PanelBody initialOpen={ true } title={ __( 'Appearance', 'alerts-dlx' ) }>
 				<MaximumWidthControls attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="alerts-dlx" UnitChooserComponent={ UnitChooser } />
+				<MarginSpacingControls attributes={ attributes } setAttributes={ setAttributes } />
 				<HistoricalAlertVariantControl attributes={ attributes } setAttributes={ setAttributes } themeAdapter={ themeAdapter } />
 				<AlertModeControl attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="alerts-dlx" className="alerts-dlx-shoelace-mode" />
 				<IconVerticalAlignmentControl attributes={ attributes } setAttributes={ setAttributes } labelTextDomain="alerts-dlx" isVisible={ isHistoricalIconAlignmentVisible( themeAdapter, iconEnabled, variant ) } />
@@ -176,6 +178,8 @@ const ShoelaceAlerts = ( props ) => {
 			alertType,
 			templateSlug: themeAdapter.templateSlug,
 			blockClasses,
+			marginSpacing: attributes.marginSpacing,
+			marginSpacingTarget: attributes.marginSpacingTarget,
 		} ),
 	} );
 

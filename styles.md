@@ -136,6 +136,31 @@ SCSS targets combinations such as:
 
 ---
 
+## Margin spacing
+
+Block attributes `marginSpacing` and `marginSpacingTarget` add classes on the same wrapper as `template-{group}`:
+
+| Attribute | Values | Default | Class |
+|-----------|--------|---------|--------|
+| `marginSpacing` | `none`, `compact`, `comfortable`, `spacious`, `extreme` | `spacious` | `alerts-dlx-margin-spacing-{amount}` |
+| `marginSpacingTarget` | `both`, `top`, `bottom` | `both` | `alerts-dlx-margin-spacing-target-top` or `alerts-dlx-margin-spacing-target-bottom` (`both` adds no target class) |
+
+Those classes set `--alerts-dlx-margin-block-start` and `--alerts-dlx-margin-block-end`. The template rule reads those variables for `margin-top`, `margin-bottom`, `margin-block-start`, and `margin-block-end`.
+
+`spacious` is `1.5rem` on both edges, which is the margin `.template-{group}` used before these classes existed. Saved alerts that omit the attributes still get that `1.5rem` from the template variables. The other steps keep the same 0, 1, 2, 3, 4 ratio:
+
+| Amount | Block margin |
+|--------|----------------|
+| `none` | `0` |
+| `compact` | `0.5rem` |
+| `comfortable` | `1rem` |
+| `spacious` | `1.5rem` |
+| `extreme` | `2rem` |
+
+Shortcode attributes are `margin_spacing` and `margin_spacing_target`. Omitting them is `spacious` / `both`.
+
+---
+
 ## Light / dark mode
 
 `mode` attribute: `light` | `dark`.

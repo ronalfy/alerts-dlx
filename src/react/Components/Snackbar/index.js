@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from '@wordpress/element';
 import { Snackbar as WPSnackbar } from '@wordpress/components';
 import classnames from 'classnames';
 

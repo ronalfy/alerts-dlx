@@ -57,11 +57,7 @@ const withAlertCloseExpirationToolbar = createHigherOrderComponent(
                     className="alerts-dlx-close-expiration-toolbar"
                     toggleProps={{
                       ...toggleProps,
-                      children: (
-                        <>
-                          <span>{__("Expiration", "alerts-dlx")}</span>
-                        </>
-                      ),
+                      children: <></>,
                     }}
                   >
                     {({ onClose }) => (

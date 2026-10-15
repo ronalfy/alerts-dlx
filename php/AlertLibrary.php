@@ -1,0 +1,877 @@
+<?php
+/**
+ * Alert library custom post type (global styles and snapshots).
+ *
+ * @package AlertsDLX
+ */
+
+namespace DLXPlugins\AlertsDLX;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Registers the shared library CPT and config sanitization by kind.
+ */
+final class AlertLibrary {
+
+	/** Post type slug. */
+	public const POST_TYPE = 'alerts_dlx_library';
+
+	/** Meta key for library entry kind. */
+	public const META_KIND = '_alerts_dlx_kind';
+
+	/** Meta key for showing this item as a block inserter variation. */
+	public const META_SHOW_IN_INSERTER = '_alerts_dlx_show_in_inserter';
+
+	/** Global style library kind. */
+	public const KIND_GLOBAL_STYLE = 'global_style';
+
+	/** Snapshot library kind. */
+	public const KIND_SNAPSHOT = 'snapshot';
+
+	/** Query value that returns every library kind. */
+	public const KIND_ALL = 'all';
+
+	/** Option flag so starter snapshots seed at most once. */
+	public const STARTER_SNAPSHOTS_SEEDED_OPTION = 'alerts_dlx_starter_snapshots_seeded';
+
+	/**
+	 * Register hooks.
+	 */
+	public static function run() {
+		add_action( 'init', array( self::class, 'register_post_type' ) );
+		add_action( 'init', array( self::class, 'register_meta' ) );
+		// admin_init runs after the library post type is registered on init.
+		add_action( 'admin_init', array( self::class, 'maybe_seed_starter_snapshots' ) );
+		add_filter( 'map_meta_cap', array( self::class, 'map_meta_cap' ), 10, 4 );
+		add_filter( 'update_post_metadata', array( self::class, 'block_global_style_inserter_flag' ), 10, 3 );
+	}
+
+	/**
+	 * Register the private library post type.
+	 */
+	public static function register_post_type() {
+		register_post_type(
+			self::POST_TYPE,
+			array(
+				'labels'              => array(
+					'name'          => _x( 'Alert library', 'post type general name', 'alerts-dlx' ),
+					'singular_name' => _x( 'Alert library item', 'post type singular name', 'alerts-dlx' ),
+				),
+				'public'              => false,
+				'show_ui'             => false,
+				'show_in_menu'        => false,
+				'show_in_rest'        => false,
+				'exclude_from_search' => true,
+				'capability_type'     => 'post',
+				'map_meta_cap'        => true,
+				// Title plus editor so post_content is a first-class supported field.
+				'supports'            => array( 'title', 'editor' ),
+				'delete_with_user'    => false,
+			)
+		);
+	}
+
+	/**
+	 * Register post meta for REST and internal use.
+	 */
+	public static function register_meta() {
+		register_post_meta(
+			self::POST_TYPE,
+			self::META_KIND,
+			array(
+				'type'              => 'string',
+				'single'            => true,
+				'show_in_rest'      => false,
+				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
+				'sanitize_callback' => array( self::class, 'sanitize_kind_meta' ),
+			)
+		);
+
+		register_post_meta(
+			self::POST_TYPE,
+			self::META_SHOW_IN_INSERTER,
+			array(
+				'type'              => 'boolean',
+				'single'            => true,
+				'show_in_rest'      => false,
+				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
+				'sanitize_callback' => array( self::class, 'sanitize_show_in_inserter_meta' ),
+			)
+		);
+	}
+
+	/**
+	 * Sanitize the inserter flag on direct meta updates.
+	 *
+	 * Kind is enforced in block_global_style_inserter_flag(), which runs on
+	 * update and refuses to store the flag for global styles.
+	 *
+	 * @param mixed $value Raw flag.
+	 * @return bool
+	 */
+	public static function sanitize_show_in_inserter_meta( $value ) {
+		return (bool) $value;
+	}
+
+	/**
+	 * Whether a library item may appear in the block inserter.
+	 *
+	 * Only snapshots may be flagged. Global styles stay linked from the
+	 * Styles sidebar, so a stored flag on a global style is ignored.
+	 *
+	 * @param int $post_id Library post ID.
+	 * @return bool
+	 */
+	private static function can_show_in_inserter( $post_id ) {
+		return self::KIND_SNAPSHOT === self::get_post_kind( $post_id );
+	}
+
+	/**
+	 * Keep global styles out of the block inserter.
+	 *
+	 * Fires on `update_post_metadata` before the inserter flag is written.
+	 * A write for a global style is discarded and any stored flag is removed.
+	 *
+	 * @param mixed  $check     Whether to short-circuit the meta update.
+	 * @param int    $object_id Post ID.
+	 * @param string $meta_key  Meta key being updated.
+	 * @return mixed True when the write is blocked. Otherwise the incoming check.
+	 */
+	public static function block_global_style_inserter_flag( $check, $object_id, $meta_key ) {
+		if ( null !== $check || self::META_SHOW_IN_INSERTER !== $meta_key ) {
+			return $check;
+		}
+
+		$object_id = absint( $object_id );
+		if ( self::can_show_in_inserter( $object_id ) ) {
+			return $check;
+		}
+
+		delete_post_meta( $object_id, self::META_SHOW_IN_INSERTER );
+		return true;
+	}
+
+	/**
+	 * Whether a library item is flagged for the block inserter.
+	 *
+	 * Global styles always return false, including when an older flag is
+	 * still stored, so they leave the inserter without waiting for a resave.
+	 *
+	 * @param int $post_id Library post ID.
+	 * @return bool
+	 */
+	public static function is_shown_in_inserter( $post_id ) {
+		$post_id = absint( $post_id );
+		if ( ! self::can_show_in_inserter( $post_id ) ) {
+			return false;
+		}
+
+		return (bool) get_post_meta( $post_id, self::META_SHOW_IN_INSERTER, true );
+	}
+
+	/**
+	 * Set or clear the inserter flag for one library post.
+	 *
+	 * Other library posts are left unchanged. Any number of snapshots may be
+	 * flagged. Global styles never keep the flag.
+	 *
+	 * @param int  $post_id Library post ID.
+	 * @param bool $show    Whether this item appears in the inserter.
+	 */
+	public static function set_show_in_inserter( $post_id, $show ) {
+		$post_id = absint( $post_id );
+		$post    = get_post( $post_id );
+		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
+			return;
+		}
+
+		if ( ! self::can_show_in_inserter( $post_id ) ) {
+			delete_post_meta( $post_id, self::META_SHOW_IN_INSERTER );
+			return;
+		}
+
+		if ( $show ) {
+			update_post_meta( $post_id, self::META_SHOW_IN_INSERTER, '1' );
+			return;
+		}
+
+		delete_post_meta( $post_id, self::META_SHOW_IN_INSERTER );
+	}
+
+	/**
+	 * Restrict library meta to administrators.
+	 *
+	 * @return bool
+	 */
+	public static function meta_auth_callback() {
+		return current_user_can( 'manage_options' );
+	}
+
+	/**
+	 * Sanitize kind meta on direct meta updates.
+	 *
+	 * @param mixed $value Raw kind.
+	 * @return string
+	 */
+	public static function sanitize_kind_meta( $value ) {
+		return self::sanitize_kind( (string) $value );
+	}
+
+	/**
+	 * Encode a sanitized config array for post_content storage.
+	 *
+	 * WordPress expects slashed data for wp_insert_post / wp_update_post.
+	 * Without wp_slash(), JSON escapes inside SVG attributes are corrupted
+	 * by wp_unslash and the icon value is emptied.
+	 *
+	 * @param array $config Sanitized config.
+	 * @return string Slashed JSON suitable for post_content.
+	 */
+	public static function encode_config_for_storage( array $config ) {
+		$json = wp_json_encode( $config );
+		if ( false === $json ) {
+			$json = '{}';
+		}
+
+		return wp_slash( $json );
+	}
+
+	/**
+	 * Decode library config JSON from post_content.
+	 *
+	 * @param string $raw Raw post_content.
+	 * @return array
+	 */
+	public static function decode_config_from_storage( $raw ) {
+		if ( ! is_string( $raw ) || '' === $raw ) {
+			return array();
+		}
+
+		$decoded = json_decode( $raw, true );
+		return is_array( $decoded ) ? $decoded : array();
+	}
+
+	/**
+	 * Map library post capabilities to manage_options.
+	 *
+	 * @param array  $caps    Required capabilities.
+	 * @param string $cap     Capability name.
+	 * @param int    $user_id User ID.
+	 * @param array  $args    Extra arguments.
+	 * @return array
+	 */
+	public static function map_meta_cap( $caps, $cap, $user_id, $args ) {
+		if ( ! in_array( $cap, array( 'edit_post', 'read_post', 'delete_post' ), true ) || empty( $args[0] ) ) {
+			return $caps;
+		}
+
+		$post = get_post( (int) $args[0] );
+		if ( $post && self::POST_TYPE === $post->post_type ) {
+			return array( 'manage_options' );
+		}
+
+		return $caps;
+	}
+
+	/**
+	 * Return allowed kind slugs.
+	 *
+	 * @return string[]
+	 */
+	public static function get_allowed_kinds() {
+		return array(
+			self::KIND_GLOBAL_STYLE,
+			self::KIND_SNAPSHOT,
+		);
+	}
+
+	/**
+	 * Sanitize a library kind value.
+	 *
+	 * @param string $kind Raw kind.
+	 * @return string
+	 */
+	public static function sanitize_kind( $kind ) {
+		$kind = sanitize_key( $kind );
+		if ( ! in_array( $kind, self::get_allowed_kinds(), true ) ) {
+			return self::KIND_GLOBAL_STYLE;
+		}
+		return $kind;
+	}
+
+	/**
+	 * Sanitize config for a library kind.
+	 *
+	 * @param array  $config Raw config.
+	 * @param string $kind   Library kind.
+	 * @return array|\WP_Error
+	 */
+	public static function sanitize_config( $config, $kind ) {
+		$kind = self::sanitize_kind( $kind );
+		if ( ! is_array( $config ) ) {
+			return new \WP_Error( 'alerts_dlx_library_config', __( 'Invalid library configuration.', 'alerts-dlx' ) );
+		}
+
+		if ( self::KIND_SNAPSHOT === $kind ) {
+			return ShortcodeBuilder::sanitize_snapshot_values( $config );
+		}
+
+		if ( self::KIND_GLOBAL_STYLE === $kind ) {
+			return ShortcodeBuilder::sanitize_global_style_values( $config );
+		}
+
+		return new \WP_Error( 'alerts_dlx_library_kind', __( 'Unsupported library kind.', 'alerts-dlx' ) );
+	}
+
+	/**
+	 * Sanitize a list-query kind (allowed kind or all).
+	 *
+	 * @param string $kind Raw kind.
+	 * @return string
+	 */
+	public static function sanitize_list_kind( $kind ) {
+		$kind = sanitize_key( (string) $kind );
+		if ( '' === $kind || self::KIND_ALL === $kind ) {
+			return self::KIND_ALL;
+		}
+
+		if ( in_array( $kind, self::get_allowed_kinds(), true ) ) {
+			return $kind;
+		}
+
+		return self::KIND_ALL;
+	}
+
+	/**
+	 * Fixed preview overlay for global style admin (never persisted).
+	 *
+	 * @return array
+	 */
+	public static function get_global_style_preview_fixture() {
+		return array(
+			'alert_title'             => __( 'Lorem ipsum dolor sit amet', 'alerts-dlx' ),
+			'alert_description'       => __( 'Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'alerts-dlx' ),
+			'button_text'             => __( 'Lorem ipsum', 'alerts-dlx' ),
+			'button_url'              => '#',
+			'button_target'           => false,
+			'button_rel_no_follow'    => false,
+			'button_rel_sponsored'    => false,
+			'close_button_enabled'    => false,
+			'close_button_expiration' => 0,
+			'align'                   => 'center',
+			'is_block_editorial_only' => false,
+		);
+	}
+
+	/**
+	 * Merge style config with preview fixture for server-side render.
+	 *
+	 * Stored appearance keys win. Global styles do not persist title,
+	 * description, alignment, or dismiss controls, so the fixture fills those.
+	 *
+	 * @param array $config Stored global style config.
+	 * @return array
+	 */
+	public static function merge_global_style_preview_values( $config ) {
+		$fixture = self::get_global_style_preview_fixture();
+		$merged  = array_merge( $fixture, is_array( $config ) ? $config : array() );
+		if ( empty( $merged['unique_id'] ) ) {
+			$merged['unique_id'] = 'alerts-dlx-preview-' . wp_generate_password( 8, false, false );
+		}
+		return $merged;
+	}
+
+	/**
+	 * Merge snapshot config with preview fixture for server-side render.
+	 *
+	 * Stored alignment and dismiss values win over the fixture. Title,
+	 * description, and button stay preview-only: fixture copy is shown
+	 * only when the corresponding visibility toggle is enabled.
+	 *
+	 * @param array $config Stored snapshot config.
+	 * @return array
+	 */
+	public static function merge_snapshot_preview_values( $config ) {
+		$fixture = self::get_global_style_preview_fixture();
+		$config  = is_array( $config ) ? $config : array();
+		$merged  = array_merge( $fixture, $config );
+
+		$title_enabled               = filter_var( $config['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$description_enabled         = filter_var( $config['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$button_enabled              = filter_var( $config['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$merged['alert_title']       = $title_enabled ? $fixture['alert_title'] : '';
+		$merged['alert_description'] = $description_enabled ? $fixture['alert_description'] : '';
+		$merged['button_text']       = $button_enabled ? $fixture['button_text'] : '';
+		$merged['button_url']        = $button_enabled ? $fixture['button_url'] : '';
+
+		if ( empty( $merged['unique_id'] ) ) {
+			$merged['unique_id'] = 'alerts-dlx-preview-' . wp_generate_password( 8, false, false );
+		}
+
+		return $merged;
+	}
+
+	/**
+	 * Load kind meta for a library post.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return string
+	 */
+	public static function get_post_kind( $post_id ) {
+		$kind = get_post_meta( $post_id, self::META_KIND, true );
+		return self::sanitize_kind( (string) $kind );
+	}
+
+	/**
+	 * Load decoded config for a library post.
+	 *
+	 * Config JSON is stored in post_content (not post meta) so SVG icons
+	 * and other markup survive WordPress save/load when properly slashed.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return array
+	 */
+	public static function get_post_config( $post_id ) {
+		$kind     = self::get_post_kind( $post_id );
+		$defaults = self::KIND_SNAPSHOT === $kind
+			? ShortcodeBuilder::get_snapshot_defaults()
+			: ShortcodeBuilder::get_global_style_defaults();
+		$post     = get_post( $post_id );
+		$raw      = ( $post instanceof \WP_Post ) ? $post->post_content : '';
+		$decoded  = self::decode_config_from_storage( $raw );
+		$config   = ! empty( $decoded ) ? array_merge( $defaults, $decoded ) : $defaults;
+		if ( self::KIND_SNAPSHOT === $kind ) {
+			/**
+			 * Filter a snapshot configuration array before it is returned.
+			 *
+			 * @since 2.5.0
+			 *
+			 * @param array    $config Sanitized snapshot config.
+			 * @param \WP_Post $post   Library post object.
+			 */
+			$config = apply_filters( 'alerts_dlx_snapshot_config', $config, $post );
+		} else {
+			/**
+			 * Filter a global style configuration array before it is returned.
+			 *
+			 * @since 2.5.0
+			 *
+			 * @param array    $config Sanitized global style config.
+			 * @param \WP_Post $post   Library post object.
+			 */
+			$config = apply_filters( 'alerts_dlx_global_style_config', $config, $post );
+		}
+
+		return $config;
+	}
+
+	/**
+	 * Return true when slug is unique for a kind.
+	 *
+	 * @param string $slug      Post slug.
+	 * @param string $kind      Library kind.
+	 * @param int    $exclude_id Post ID to exclude.
+	 * @return bool
+	 */
+	public static function is_slug_unique_for_kind( $slug, $kind, $exclude_id = 0 ) {
+		$slug = sanitize_title( $slug );
+		if ( '' === $slug ) {
+			return false;
+		}
+
+		$query = new \WP_Query(
+			array(
+				'post_type'      => self::POST_TYPE,
+				'post_status'    => array( 'publish', 'draft', 'private' ),
+				'name'           => $slug,
+				'posts_per_page' => 1,
+				'post__not_in'   => $exclude_id ? array( (int) $exclude_id ) : array(),
+				'fields'         => 'ids',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => self::META_KIND,
+						'value' => self::sanitize_kind( $kind ),
+					),
+				),
+			)
+		);
+
+		return empty( $query->posts );
+	}
+
+	/**
+	 * Format a library post for REST.
+	 *
+	 * @param \WP_Post $post Post object.
+	 * @return array|\WP_Error
+	 */
+	public static function format_item_for_rest( $post ) {
+		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
+			return new \WP_Error( 'alerts_dlx_library_not_found', __( 'Library item not found.', 'alerts-dlx' ), array( 'status' => 404 ) );
+		}
+
+		$config = self::get_post_config( $post->ID );
+		$kind   = self::get_post_kind( $post->ID );
+
+		return array(
+			'id'             => $post->ID,
+			'title'          => $post->post_title,
+			'slug'           => $post->post_name,
+			'kind'           => $kind,
+			'config'         => $config,
+			'showInInserter' => self::is_shown_in_inserter( $post->ID ),
+			'alert_group'    => $config['alert_group'] ?? '',
+			'alert_type'     => $config['alert_type'] ?? '',
+			'variant'        => $config['variant'] ?? '',
+			'modified'       => mysql2date( 'c', $post->post_modified_gmt, false ),
+		);
+	}
+
+	/**
+	 * Query library items for a kind, or every kind when `$kind` is all.
+	 *
+	 * @param string $kind Library kind or `all`.
+	 * @param array  $args Optional query overrides.
+	 * @return array
+	 */
+	public static function query_items( $kind = self::KIND_ALL, $args = array() ) {
+		$kind     = self::sanitize_list_kind( $kind );
+		$defaults = array(
+			'post_type'      => self::POST_TYPE,
+			'post_status'    => 'publish',
+			'posts_per_page' => 100,
+			'orderby'        => 'modified',
+			'order'          => 'DESC',
+		);
+
+		if ( in_array( $kind, self::get_allowed_kinds(), true ) ) {
+			$defaults['meta_query'] = array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+				array(
+					'key'   => self::META_KIND,
+					'value' => $kind,
+				),
+			);
+		}
+
+		$query_args = wp_parse_args( $args, $defaults );
+		$query      = new \WP_Query( $query_args );
+		$items      = array();
+
+		foreach ( $query->posts as $post ) {
+			if ( $post instanceof \WP_Post ) {
+				$formatted = self::format_item_for_rest( $post );
+				if ( ! is_wp_error( $formatted ) ) {
+					$items[] = $formatted;
+				}
+			}
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Library items for block editor localization (id, title, slug, kind, config).
+	 *
+	 * @return array
+	 */
+	public static function get_items_for_editor() {
+		static $payload = null;
+		if ( is_array( $payload ) ) {
+			return $payload;
+		}
+
+		$items = self::query_items(
+			self::KIND_ALL,
+			array(
+				'posts_per_page' => 100,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			)
+		);
+
+		$payload = array();
+		foreach ( $items as $item ) {
+			$payload[] = array(
+				'id'             => (int) $item['id'],
+				'title'          => (string) $item['title'],
+				'slug'           => (string) $item['slug'],
+				'kind'           => (string) $item['kind'],
+				'config'         => is_array( $item['config'] ) ? $item['config'] : array(),
+				'showInInserter' => ! empty( $item['showInInserter'] ),
+			);
+		}
+
+		return $payload;
+	}
+
+	/**
+	 * Map allowlisted library config keys onto camelCase block attributes.
+	 *
+	 * @param array $config Snake_case library config.
+	 * @return array
+	 */
+	public static function library_config_to_block_attributes( array $config ) {
+		$attributes = array();
+		$schema     = AlertAttributes::get_schema();
+
+		foreach ( $schema as $snake => $definition ) {
+			if ( ! array_key_exists( $snake, $config ) ) {
+				continue;
+			}
+			$camel = $definition[0];
+			$type  = $definition[1];
+			$value = $config[ $snake ];
+
+			if ( 'boolean' === $type ) {
+				$attributes[ $camel ] = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			} elseif ( 'integer' === $type ) {
+				$attributes[ $camel ] = absint( $value );
+			} else {
+				$attributes[ $camel ] = $value;
+			}
+		}
+
+		if ( isset( $config['alert_type'] ) && is_string( $config['alert_type'] ) && '' !== $config['alert_type'] ) {
+			$attributes['className'] = 'is-style-' . sanitize_html_class( $config['alert_type'] );
+		}
+
+		return $attributes;
+	}
+
+	/**
+	 * Resolve a stored globalStyleId and return its appearance as block attributes.
+	 *
+	 * Missing, deleted, or wrong-kind IDs return an empty array (no fatal).
+	 *
+	 * @param int $global_style_id Block globalStyleId attribute.
+	 * @return array CamelCase appearance attributes, or empty when unusable.
+	 */
+	public static function get_global_style_block_attributes( $global_style_id ) {
+		$global_style_id = absint( $global_style_id );
+		if ( ! $global_style_id ) {
+			return array();
+		}
+
+		$post = get_post( $global_style_id );
+		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
+			return array();
+		}
+
+		if ( self::KIND_GLOBAL_STYLE !== self::get_post_kind( $global_style_id ) ) {
+			return array();
+		}
+
+		$config     = self::get_post_config( $global_style_id );
+		$appearance = array_intersect_key(
+			$config,
+			array_flip( ShortcodeBuilder::get_global_style_input_names() )
+		);
+
+		return self::library_config_to_block_attributes( $appearance );
+	}
+
+	/**
+	 * Whether appearance attributes from a global style include a showable icon.
+	 *
+	 * Global styles store the glyph or image, not an icon_enabled flag. A
+	 * non-empty SVG (or an image source with a URL) means the style intends
+	 * to show an icon.
+	 *
+	 * @param array $style_attributes CamelCase appearance from a global style.
+	 * @return bool
+	 */
+	public static function global_style_has_icon( array $style_attributes ) {
+		$icon_source = isset( $style_attributes['iconSource'] ) ? (string) $style_attributes['iconSource'] : 'icon';
+		if ( 'image' === $icon_source ) {
+			return ! empty( $style_attributes['imageUrl'] );
+		}
+
+		$icon = isset( $style_attributes['icon'] ) ? trim( (string) $style_attributes['icon'] ) : '';
+		return '' !== $icon;
+	}
+
+	/**
+	 * Merge a linked global style's appearance over block attributes for render.
+	 *
+	 * Content attributes on the block always win. Snapshot-only fields are not
+	 * taken from the global style. The block's own iconEnabled decides whether
+	 * the style's icon is shown.
+	 *
+	 * @param array $attributes Block attributes (camelCase).
+	 * @return array
+	 */
+	public static function apply_global_style_to_block_attributes( array $attributes ) {
+		$style_attributes = self::get_global_style_block_attributes( $attributes['globalStyleId'] ?? 0 );
+		if ( empty( $style_attributes ) ) {
+			return $attributes;
+		}
+
+		// Rebuild is-style-* from the resolved type while keeping other block classes.
+		if ( isset( $style_attributes['alertType'] ) ) {
+			$existing_class                = isset( $attributes['className'] ) ? (string) $attributes['className'] : '';
+			$style_attributes['className'] = self::build_alert_style_class_name(
+				$existing_class,
+				(string) $style_attributes['alertType']
+			);
+		}
+
+		return array_merge( $attributes, $style_attributes );
+	}
+
+	/**
+	 * Replace any is-style-* class with the resolved alert type class.
+	 *
+	 * @param string $class_name Existing className attribute.
+	 * @param string $alert_type Alert type slug.
+	 * @return string
+	 */
+	public static function build_alert_style_class_name( $class_name, $alert_type ) {
+		$alert_type  = sanitize_html_class( (string) $alert_type );
+		$class_name  = preg_replace( '/\bis-style-[\w-]+\b/', '', (string) $class_name );
+		$class_name  = trim( preg_replace( '/\s+/', ' ', $class_name ) );
+		$style_class = '' !== $alert_type ? 'is-style-' . $alert_type : '';
+
+		if ( '' === $class_name ) {
+			return $style_class;
+		}
+		if ( '' === $style_class ) {
+			return $class_name;
+		}
+
+		return $class_name . ' ' . $style_class;
+	}
+
+	/**
+	 * Insert a published library item with sanitized config.
+	 *
+	 * @param string $title  Post title.
+	 * @param string $slug   Post slug.
+	 * @param string $kind   Library kind.
+	 * @param array  $config Raw config (sanitized before save).
+	 * @return int|\WP_Error Post ID or error.
+	 */
+	public static function insert_item( $title, $slug, $kind, array $config ) {
+		$kind   = self::sanitize_kind( $kind );
+		$title  = sanitize_text_field( (string) $title );
+		$slug   = sanitize_title( (string) $slug );
+		$config = self::sanitize_config( $config, $kind );
+
+		if ( is_wp_error( $config ) ) {
+			return $config;
+		}
+		if ( '' === $title || '' === $slug ) {
+			return new \WP_Error( 'alerts_dlx_library_insert', __( 'A title and slug are required.', 'alerts-dlx' ) );
+		}
+		if ( ! self::is_slug_unique_for_kind( $slug, $kind ) ) {
+			return new \WP_Error( 'alerts_dlx_library_slug', __( 'That slug is already in use for this library type.', 'alerts-dlx' ) );
+		}
+
+		$post_id = wp_insert_post(
+			array(
+				'post_type'    => self::POST_TYPE,
+				'post_title'   => $title,
+				'post_name'    => $slug,
+				'post_status'  => 'publish',
+				'post_content' => self::encode_config_for_storage( $config ),
+			),
+			true
+		);
+
+		if ( is_wp_error( $post_id ) ) {
+			return $post_id;
+		}
+
+		update_post_meta( $post_id, self::META_KIND, $kind );
+
+		return (int) $post_id;
+	}
+
+	/**
+	 * Seed Maintenance notice and Download CTA snapshots once when none exist.
+	 *
+	 * Uses a dedicated option flag so deleted starter snapshots are never
+	 * re-created on later loads.
+	 */
+	public static function maybe_seed_starter_snapshots() {
+		if ( get_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION ) ) {
+			return;
+		}
+
+		if ( ! post_type_exists( self::POST_TYPE ) ) {
+			return;
+		}
+
+		$existing_query = new \WP_Query(
+			array(
+				'post_type'      => self::POST_TYPE,
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => self::META_KIND,
+						'value' => self::KIND_SNAPSHOT,
+					),
+				),
+			)
+		);
+
+		// Mark seeded when the site already has snapshots so we never insert starters later.
+		if ( ! empty( $existing_query->posts ) ) {
+			update_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION, 1, false );
+			return;
+		}
+
+		foreach ( self::get_starter_snapshot_definitions() as $definition ) {
+			self::insert_item(
+				$definition['title'],
+				$definition['slug'],
+				self::KIND_SNAPSHOT,
+				$definition['config']
+			);
+		}
+
+		update_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION, 1, false );
+	}
+
+	/**
+	 * Starter snapshot definitions mapped from the former built-in presets.
+	 *
+	 * @return array
+	 */
+	private static function get_starter_snapshot_definitions() {
+		return array(
+			array(
+				'title'  => __( 'Maintenance notice', 'alerts-dlx' ),
+				'slug'   => 'maintenance-notice',
+				'config' => array(
+					'alert_group'             => 'shoelace',
+					'alert_type'              => 'warning',
+					'variant'                 => 'top-accent',
+					'title_enabled'           => true,
+					'description_enabled'     => true,
+					'button_enabled'          => false,
+					'close_button_enabled'    => true,
+					'close_button_expiration' => 0,
+				),
+			),
+			array(
+				'title'  => __( 'Download CTA', 'alerts-dlx' ),
+				'slug'   => 'download-cta',
+				'config' => array(
+					'alert_group'             => 'bootstrap',
+					'alert_type'              => 'primary',
+					'variant'                 => 'centered',
+					'title_enabled'           => true,
+					'description_enabled'     => true,
+					'button_enabled'          => true,
+					'close_button_enabled'    => false,
+					'close_button_expiration' => 0,
+				),
+			),
+		);
+	}
+}
