@@ -35,7 +35,7 @@ const canonicalMetadata = JSON.parse(
 	fs.readFileSync('src/js/blocks/alert/block.json', 'utf8')
 );
 assert.equal(canonicalMetadata.name, canonicalName, 'Canonical public block name stays stable');
-assert.equal(canonicalMetadata.category, 'alertsdlx', 'Canonical Alert remains in the primary AlertsDLX category');
+assert.equal(canonicalMetadata.category, 'singular-alerts', 'Canonical Alert remains in the primary AlertsDLX category');
 assert.equal(
 	canonicalMetadata.attributes?.globalStyleId?.type,
 	'number',
