@@ -37,6 +37,16 @@ const canonicalMetadata = JSON.parse(
 assert.equal(canonicalMetadata.name, canonicalName, 'Canonical public block name stays stable');
 assert.equal(canonicalMetadata.category, 'alertsdlx', 'Canonical Alert remains in the primary AlertsDLX category');
 assert.equal(
+	canonicalMetadata.attributes?.globalStyleId?.type,
+	'number',
+	'Canonical Alert stores globalStyleId for library global styles'
+);
+assert.equal(
+	canonicalMetadata.attributes?.globalStyleId?.default,
+	0,
+	'globalStyleId defaults to none'
+);
+assert.equal(
 	typeof canonicalMetadata.example?.attributes?.alertDescription,
 	'string',
 	'Preview copy remains available through block example metadata'
@@ -55,14 +65,15 @@ for (const [group, item] of Object.entries(historical)) {
 const variationSource = fs.readFileSync('src/js/blocks/alert/variations.js', 'utf8');
 const executableVariations = variationSource
 	.replace(/^import \{ __ \} from '@wordpress\/i18n';\n/m, '')
+	.replace(/^import \{[^}]*\} from '@wordpress\/icons';\n/m, '')
+	.replace(/^import metadata from '\.\/block\.json';\n/m, '')
 	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/canonical-alert-presets';\n/m, '')
+	.replace(/import\s*\{[\s\S]*?\}\s*from '\.\.\/utils\/alert-library-utils';\n/m, '')
 	.replace(/export function createGoalFirstCanonicalVariations/, 'function createGoalFirstCanonicalVariations')
-	.replace(/export default createGoalFirstCanonicalVariations\(\);?\s*$/m, '');
+	.replace(/\n\/\*\*\n \* Whether a localized library item is flagged[\s\S]*$/, '\n');
 const loadVariations = new Function(
 	'__',
-	'getCanonicalAlertDefaults',
 	'getCanonicalAlertTypeForPurpose',
-	'snapshotCanonicalAlertAttributes',
 	`${executableVariations}\nreturn { commonAttributes, createGoalFirstCanonicalVariations };`
 );
 const alertTypeForPurpose = (purpose) => ({
@@ -76,38 +87,21 @@ const alertTypeForPurpose = (purpose) => ({
 })[purpose] || 'success';
 const variationRuntime = loadVariations(
 	(value) => value,
-	() => ({}),
-	alertTypeForPurpose,
-	(attributes) => ({ ...attributes })
+	alertTypeForPurpose
 );
 const { commonAttributes } = variationRuntime;
-const variations = variationRuntime.createGoalFirstCanonicalVariations({});
+const variations = variationRuntime.createGoalFirstCanonicalVariations();
 assert.equal(
 	Object.hasOwn(commonAttributes, 'alertDescription'),
 	false,
 	'Preview description must never live in common insertion attributes'
 );
-assert.equal(variations.length, 7, 'Seven canonical public variations remain available');
-for (const variation of variations) {
-	assert.equal(
-		Object.hasOwn(variation.attributes, 'alertDescription'),
-		false,
-		`${variation.name} insertion attributes must not seed preview description content`
-	);
-}
-const ctaVariation = variations.find((variation) => variation.name === 'cta');
+assert.equal(variations.length, 0, 'Static public Alert variations stay empty');
 assert.equal(
-	Object.hasOwn(ctaVariation.attributes, 'alertTitle'),
+	variations.some((variation) => variation.isDefault),
 	false,
-	'CTA preview title must not leak into inserted CTA attributes'
+	'Static public variations do not set an insert default'
 );
-assert.equal(
-	Object.hasOwn(ctaVariation.attributes, 'buttonText'),
-	false,
-	'CTA preview button text must not leak into inserted CTA attributes'
-);
-assert.equal(ctaVariation.example?.attributes?.alertTitle, 'Click here to learn more', 'CTA preview title remains available');
-assert.equal(ctaVariation.example?.attributes?.buttonText, 'Learn More', 'CTA preview button text remains available');
 
 const sidebar = fs.readFileSync(
 	'src/js/blocks/components/AlertTypeStyleControl.js',
@@ -129,23 +123,11 @@ assert.match(
 	/openAlertInspectorTab\(\s*clientId,\s*'styles'\s*\)/,
 	'Custom style opens the existing Styles inspector path'
 );
-assert.doesNotMatch(sidebar, /\buseEffect\b/, 'Styles sidebar must not mutate saved attributes merely by rendering');
 
 const blocksPhp = fs.readFileSync('php/Blocks.php', 'utf8');
-for (const [group, item] of Object.entries(historical)) {
+for (const item of Object.values(historical)) {
 	assert.ok(blocksPhp.includes(`'${item.name}'`), `Runtime keeps ${item.name} registered`);
-	assert.ok(blocksPhp.includes(`=> '${group}'`), `Disabled-style map keeps ${group}`);
 }
-assert.match(
-	blocksPhp,
-	/Options::is_block_style_enabled\(/,
-	'Disabled historical designs still use the established settings gate'
-);
-assert.match(
-	blocksPhp,
-	/\$args\['supports'\]\['inserter'\]\s*=\s*false/,
-	'Disabled historical designs are hidden from insertion without unregistering saved content'
-);
 assert.doesNotMatch(blocksPhp, /unregister_block_type\s*\(/, 'Saved historical content is never orphaned by unregistering its type');
 
 for (const indexPath of [

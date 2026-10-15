@@ -47,20 +47,57 @@ button.button-reset.components-button:hover {
 	}
 }
 
-/* Block margins on front-end and block editor */
+/* Block margins on front-end and block editor.
+ * Spacious is the previous 1.5rem margin. Other steps use the 0, 1, 2, 3, 4 ratio.
+ */
 .template-material,
 .template-chakra,
 .template-bootstrap,
 .template-shoelace {
-	margin-top: 1.5rem;
-	margin-bottom: 1.5rem;
-	margin-block-start: 1.5rem;
-	margin-block-end: 1.5rem;
+	--alerts-dlx-margin-block-start: 1.5rem;
+	--alerts-dlx-margin-block-end: 1.5rem;
+	margin-top: var(--alerts-dlx-margin-block-start);
+	margin-bottom: var(--alerts-dlx-margin-block-end);
+	margin-block-start: var(--alerts-dlx-margin-block-start);
+	margin-block-end: var(--alerts-dlx-margin-block-end);
 
 	section h2 {
 		font-family: var(--alerts-dlx-font-family, 'Helvetica', 'Arial', sans-serif);
 		font-weight: 900;
 	}
+}
+
+.alerts-dlx-margin-spacing-none {
+	--alerts-dlx-margin-block-start: 0;
+	--alerts-dlx-margin-block-end: 0;
+}
+
+.alerts-dlx-margin-spacing-compact {
+	--alerts-dlx-margin-block-start: 0.5rem;
+	--alerts-dlx-margin-block-end: 0.5rem;
+}
+
+.alerts-dlx-margin-spacing-comfortable {
+	--alerts-dlx-margin-block-start: 1rem;
+	--alerts-dlx-margin-block-end: 1rem;
+}
+
+.alerts-dlx-margin-spacing-spacious {
+	--alerts-dlx-margin-block-start: 1.5rem;
+	--alerts-dlx-margin-block-end: 1.5rem;
+}
+
+.alerts-dlx-margin-spacing-extreme {
+	--alerts-dlx-margin-block-start: 2rem;
+	--alerts-dlx-margin-block-end: 2rem;
+}
+
+.alerts-dlx-margin-spacing-target-top {
+	--alerts-dlx-margin-block-end: 0;
+}
+
+.alerts-dlx-margin-spacing-target-bottom {
+	--alerts-dlx-margin-block-start: 0;
 }
 
 .alerts-dlx-close {

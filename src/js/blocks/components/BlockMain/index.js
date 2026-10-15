@@ -55,7 +55,9 @@ const BlockMain = (props) => {
     maximumWidth,
     maximumWidthUnit,
     baseFontSize,
+    globalStyleId,
   } = attributes;
+  const appearanceLocked = Number(globalStyleId) > 0;
 
   // Calculate max width.
   const maxWidthStyle = {
@@ -87,7 +89,11 @@ const BlockMain = (props) => {
         </InspectorAdvancedControls>
       )}
       <style>{baseFontSizeStyles}</style>
-      <link rel="stylesheet" href={`${alertsDlxBlock.font_stylesheet}`} />
+      {/* wp_localize_script casts false to an empty string. A missing flag keeps the bundled font. */}
+      {("undefined" === typeof alertsDlxBlock.loadFonts ||
+        !!alertsDlxBlock.loadFonts) && (
+        <link rel="stylesheet" href={`${alertsDlxBlock.font_stylesheet}`} />
+      )}
       <figure
         role="alert"
         className={classnames(`alerts-dlx-alert alerts-dlx-${alertGroup}`, {
@@ -105,6 +111,7 @@ const BlockMain = (props) => {
               setAttributes={setAttributes}
               alertType={alertType}
               icons={iconSet}
+              disabled={appearanceLocked}
             />
           </div>
         )}

@@ -142,6 +142,7 @@ const IconPicker = (props) => {
     popoverPlacement,
     closeOnSelect,
     preventTriggerFocus = true,
+    disabled = false,
   } = props;
   const returnFocusOnCloseRef = useRef(false);
 
@@ -170,6 +171,10 @@ const IconPicker = (props) => {
   }, [isPopoverVisible, popoverRef]);
 
   const onIconPreviewMouseDown = (event) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
+    }
     if (preventTriggerFocus) {
       // Keep the block selected when clicking the in-canvas icon preview.
       event.preventDefault();
@@ -178,6 +183,9 @@ const IconPicker = (props) => {
   };
 
   const onIconPreviewKeyDown = (event) => {
+    if (disabled) {
+      return;
+    }
     if ("Enter" !== event.key && " " !== event.key) {
       return;
     }
@@ -201,6 +209,8 @@ const IconPicker = (props) => {
             className="button-reset alerts-dlx-icon-preview-button"
             label={__("Select icon", "alerts-dlx")}
             ref={setPopoverRef}
+            disabled={disabled}
+            aria-disabled={disabled}
             onMouseDown={onIconPreviewMouseDown}
             onKeyDown={onIconPreviewKeyDown}
           >
@@ -216,7 +226,7 @@ const IconPicker = (props) => {
           </Button>
         </div>
       </BaseControl>
-      {isPopoverVisible && popoverRef && (
+      {!disabled && isPopoverVisible && popoverRef && (
         <Popover
           noArrow={false}
           anchor={popoverRef}

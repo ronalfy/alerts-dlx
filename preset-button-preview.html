@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Preset button preview</title>
+	<link rel="stylesheet" href="/wp-includes/css/buttons.css">
+	<link rel="stylesheet" href="/wp-includes/css/dist/components/style.css">
+	<link rel="stylesheet" href="/wp-content/plugins/alerts-dlx/dist/alerts-dlx-block-editor.css">
+	<style>
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+			width: 280px;
+			margin: 16px;
+			background: #fff;
+		}
+
+		.label {
+			display: block;
+			margin: 16px 0 8px;
+			font-size: 11px;
+			font-weight: 500;
+			text-transform: uppercase;
+		}
+	</style>
+</head>
+
+<body class="wp-core-ui">
+	<span class="label">Preset</span>
+	<div class="alerts-dlx-preset-buttons" role="group">
+		<button type="button" class="components-button is-secondary">test</button>
+	</div>
+	<span class="label">Alert style</span>
+	<div class="alerts-dlx-alert-type-styles" role="group">
+		<button type="button" class="components-button is-secondary">Success</button>
+		<button type="button" class="components-button is-primary is-pressed" aria-pressed="true">Info</button>
+		<button type="button" class="components-button is-secondary">Warning</button>
+		<button type="button" class="components-button is-secondary">Error</button>
+		<button type="button" class="components-button is-secondary">Custom</button>
+	</div>
+</body>
+
+</html>

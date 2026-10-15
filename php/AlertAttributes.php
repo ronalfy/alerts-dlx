@@ -29,6 +29,8 @@ final class AlertAttributes {
 		'button_enabled'          => array( 'buttonEnabled', 'boolean' ),
 		'maximum_width_unit'      => array( 'maximumWidthUnit', 'text' ),
 		'maximum_width'           => array( 'maximumWidth', 'integer' ),
+		'margin_spacing'          => array( 'marginSpacing', 'text' ),
+		'margin_spacing_target'   => array( 'marginSpacingTarget', 'text' ),
 		'icon'                    => array( 'icon', 'raw' ),
 		'description_enabled'     => array( 'descriptionEnabled', 'boolean' ),
 		'title_enabled'           => array( 'titleEnabled', 'boolean' ),
@@ -91,6 +93,8 @@ final class AlertAttributes {
 			'alert_description'       => '',
 			'maximum_width_unit'      => 'px',
 			'maximum_width'           => 650,
+			'margin_spacing'          => 'spacious',
+			'margin_spacing_target'   => 'both',
 			'icon'                    => '',
 			'base_font_size'          => 16,
 			'icon_vertical_alignment' => 'top',
@@ -227,6 +231,80 @@ final class AlertAttributes {
 	}
 
 	/**
+	 * Get the available units for the maximum width attribute.
+	 *
+	 * @return array
+	 */
+	public static function get_maximum_width_units() {
+		return array( 'px', '%', 'vw', 'rem' );
+	}
+
+	/**
+	 * Margin amounts. Spacious is the historical 1.5rem block margin.
+	 *
+	 * @return string[]
+	 */
+	public static function get_margin_spacing_amounts() {
+		return array( 'none', 'compact', 'comfortable', 'spacious', 'extreme' );
+	}
+
+	/**
+	 * Edges that receive the margin.
+	 *
+	 * @return string[]
+	 */
+	public static function get_margin_spacing_targets() {
+		return array( 'both', 'top', 'bottom' );
+	}
+
+	/**
+	 * Sanitize a margin amount onto the allowlist.
+	 *
+	 * @param mixed $value Requested amount.
+	 * @return string Allowlisted amount.
+	 */
+	public static function sanitize_margin_spacing( $value ) {
+		$value = sanitize_key( (string) $value );
+		if ( ! in_array( $value, self::get_margin_spacing_amounts(), true ) ) {
+			return 'spacious';
+		}
+		return $value;
+	}
+
+	/**
+	 * Sanitize a margin target onto the allowlist.
+	 *
+	 * @param mixed $value Requested target.
+	 * @return string Allowlisted target.
+	 */
+	public static function sanitize_margin_spacing_target( $value ) {
+		$value = sanitize_key( (string) $value );
+		if ( ! in_array( $value, self::get_margin_spacing_targets(), true ) ) {
+			return 'both';
+		}
+		return $value;
+	}
+
+	/**
+	 * Public class names for a margin amount and target.
+	 *
+	 * Amount is always present. Both does not add a target class.
+	 *
+	 * @param string $amount Spacing amount.
+	 * @param string $target Spacing target.
+	 * @return string[] Class names.
+	 */
+	public static function get_margin_spacing_classes( $amount, $target ) {
+		$amount  = self::sanitize_margin_spacing( $amount );
+		$target  = self::sanitize_margin_spacing_target( $target );
+		$classes = array( 'alerts-dlx-margin-spacing-' . $amount );
+		if ( 'both' !== $target ) {
+			$classes[] = 'alerts-dlx-margin-spacing-target-' . $target;
+		}
+		return $classes;
+	}
+
+	/**
 	 * Normalize attributes without adding defaults or changing stored values.
 	 *
 	 * @param array          $attributes Block or shortcode attributes.
@@ -255,6 +333,14 @@ final class AlertAttributes {
 				$normalized['alert_group'] = $expected_alert_group;
 			}
 		}
+
+		// Every render path shares one icon result. A second pass still keeps valid icons.
+		$icon               = $normalized['icon'];
+		$normalized['icon'] = is_string( $icon ) ? Functions::sanitize_icon_svg( $icon ) : '';
+
+		$normalized['maximum_width_unit']    = in_array( $normalized['maximum_width_unit'], self::get_maximum_width_units(), true ) ? $normalized['maximum_width_unit'] : 'px';
+		$normalized['margin_spacing']        = self::sanitize_margin_spacing( $normalized['margin_spacing'] );
+		$normalized['margin_spacing_target'] = self::sanitize_margin_spacing_target( $normalized['margin_spacing_target'] );
 
 		return $normalized;
 	}

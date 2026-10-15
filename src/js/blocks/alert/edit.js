@@ -3,71 +3,80 @@ import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import AlertTypeStyleControl from '../components/AlertTypeStyleControl';
-import CanonicalAlertPresetsPanel from '../components/CanonicalAlertPresetsPanel';
+import AlertLibraryPanel from '../components/AlertLibraryPanel';
 import BootstrapEdit from '../bootstrap/edit';
-import bootstrapDefinition from '../bootstrap/theme-definition';
 import ChakraEdit from '../chakraui/edit';
-import chakraDefinition from '../chakraui/theme-definition';
 import MaterialEdit from '../material/edit';
-import materialDefinition from '../material/theme-definition';
 import ShoelaceEdit from '../shoelace/edit';
-import shoelaceDefinition from '../shoelace/theme-definition';
-import { buildAlertStyleClassName } from '../utils/alert-style-utils';
+import {
+	CANONICAL_ALERT_DESIGNS,
+	applyCanonicalAlertGroup,
+} from '../utils/canonical-alert-design';
 
-const designs = {
-	bootstrap: { label: 'Bootstrap', Edit: BootstrapEdit, definition: bootstrapDefinition },
-	chakra: { label: 'Chakra', Edit: ChakraEdit, definition: chakraDefinition },
-	material: { label: 'Material', Edit: MaterialEdit, definition: materialDefinition },
-	shoelace: { label: 'Shoelace', Edit: ShoelaceEdit, definition: shoelaceDefinition },
+const designEditors = {
+	bootstrap: BootstrapEdit,
+	chakra: ChakraEdit,
+	material: MaterialEdit,
+	shoelace: ShoelaceEdit,
 };
 
-export default function CanonicalAlertEdit( props ) {
+export default function CanonicalAlertEdit(props) {
 	const { attributes, setAttributes, name, clientId } = props;
-	const design = designs[ attributes.alertGroup ] || designs.bootstrap;
-	const DesignEdit = design.Edit;
+	const design = CANONICAL_ALERT_DESIGNS[attributes.alertGroup] || CANONICAL_ALERT_DESIGNS.bootstrap;
+	const DesignEdit = designEditors[design.definition.key] || BootstrapEdit;
+	const appearanceLocked = Number(attributes.globalStyleId) > 0;
 
-	const selectDesign = ( alertGroup ) => {
-		const nextDesign = designs[ alertGroup ] || designs.bootstrap;
-		const nextAlertType = nextDesign.definition.supportedAlertTypes.includes( attributes.alertType )
-			? attributes.alertType
-			: nextDesign.definition.defaultAlertType;
-		const nextAttributes = {
+	const selectDesign = (alertGroup) => {
+		applyCanonicalAlertGroup({
 			alertGroup,
-			variant: nextDesign.definition.defaultVariant,
-			alertType: nextAlertType,
-			className: buildAlertStyleClassName( attributes.className, nextAlertType ),
-		};
-		setAttributes( nextAttributes );
+			currentAlertGroup: attributes.alertGroup,
+			alertType: attributes.alertType,
+			className: attributes.className,
+			appearanceLocked,
+			setAttributes,
+		});
 	};
 
 	return (
 		<>
 			<InspectorControls>
-				<CanonicalAlertPresetsPanel
-					attributes={ attributes }
-					setAttributes={ setAttributes }
-				/>
-				<PanelBody title={ __( 'Alert design', 'alerts-dlx' ) } initialOpen={ true }>
+				<PanelBody title={__('Alert design', 'alerts-dlx')} initialOpen={true}>
 					<SelectControl
-						label={ __( 'Design system', 'alerts-dlx' ) }
-						value={ attributes.alertGroup }
-						options={ Object.entries( designs ).map( ( [ value, item ] ) => ( { value, label: item.label } ) ) }
-						onChange={ selectDesign }
+						label={__('Design system', 'alerts-dlx')}
+						value={attributes.alertGroup}
+						options={Object.entries(CANONICAL_ALERT_DESIGNS).map(([value, item]) => ({
+							value,
+							label: item.label,
+						}))}
+						onChange={selectDesign}
+						disabled={appearanceLocked}
+						help={
+							appearanceLocked
+								? __('Detach the global style to change the design system.', 'alerts-dlx')
+								: undefined
+						}
 						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>
 			<InspectorControls group="styles">
-				<PanelBody title={ __( 'Styles', 'alerts-dlx' ) } initialOpen={ true }>
+				<AlertLibraryPanel
+					attributes={attributes}
+					setAttributes={setAttributes}
+					clientId={clientId}
+					name={name}
+				/>
+				<PanelBody title={__('Styles', 'alerts-dlx')} initialOpen={true}>
 					<AlertTypeStyleControl
-						name={ name }
-						attributes={ attributes }
-						setAttributes={ setAttributes }
-						clientId={ clientId }
+						name={name}
+						attributes={attributes}
+						setAttributes={setAttributes}
+						clientId={clientId}
+						disabled={appearanceLocked}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<DesignEdit { ...props } />
+			<DesignEdit {...props} />
 		</>
 	);
 }

@@ -121,6 +121,226 @@ final class ShortcodeBuilder {
 	}
 
 	/**
+	 * Input names persisted on global style library entries.
+	 *
+	 * @return string[]
+	 */
+	public static function get_global_style_input_names() {
+		return array(
+			'alert_group',
+			'alert_type',
+			'variant',
+			'mode',
+			'maximum_width',
+			'maximum_width_unit',
+			'margin_spacing',
+			'margin_spacing_target',
+			'base_font_size',
+			'icon_source',
+			'icon_appearance',
+			'icon_vertical_alignment',
+			'icon',
+			'image_url',
+			'image_id',
+			'color_primary',
+			'color_border',
+			'color_accent',
+			'color_alt',
+			'color_alt_hover',
+			'color_alt_text',
+			'color_alt_text_hover',
+			'color_bold',
+			'color_light',
+		);
+	}
+
+	/**
+	 * Defaults for a new global style editor session.
+	 *
+	 * @return array
+	 */
+	public static function get_global_style_defaults() {
+		$defaults          = self::get_editor_defaults();
+		$names             = self::get_global_style_input_names();
+		$subset            = array_intersect_key( $defaults, array_flip( $names ) );
+		$subset['variant'] = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
+
+		return $subset;
+	}
+
+	/**
+	 * Field metadata for the global style inspector.
+	 *
+	 * @return array
+	 */
+	public static function get_global_style_fields() {
+		$allowed = array_flip( self::get_global_style_input_names() );
+		$fields  = array();
+
+		foreach ( self::get_editor_fields() as $field ) {
+			if ( isset( $allowed[ $field['name'] ] ) ) {
+				$fields[] = $field;
+			}
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Input names persisted on snapshot library entries.
+	 *
+	 * Snapshots keep the global-style appearance set plus alignment,
+	 * title/description/button visibility, and dismiss controls.
+	 *
+	 * @return string[]
+	 */
+	public static function get_snapshot_input_names() {
+		return array_values(
+			array_unique(
+				array_merge(
+					self::get_global_style_input_names(),
+					array(
+						'align',
+						'title_enabled',
+						'description_enabled',
+						'button_enabled',
+						'close_button_enabled',
+						'close_button_expiration',
+					)
+				)
+			)
+		);
+	}
+
+	/**
+	 * Defaults for a new snapshot editor session.
+	 *
+	 * Title, description, and button stay visibility toggles. Fixture
+	 * copy is preview-only and is not stored on the snapshot.
+	 *
+	 * @return array
+	 */
+	public static function get_snapshot_defaults() {
+		$defaults                      = self::get_editor_defaults();
+		$names                         = self::get_snapshot_input_names();
+		$subset                        = array_intersect_key( $defaults, array_flip( $names ) );
+		$subset['variant']             = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
+		$subset['title_enabled']       = true;
+		$subset['description_enabled'] = true;
+		$subset['button_enabled']      = true;
+
+		return $subset;
+	}
+
+	/**
+	 * Field metadata for the snapshot inspector.
+	 *
+	 * @return array
+	 */
+	public static function get_snapshot_fields() {
+		$allowed = array_flip( self::get_snapshot_input_names() );
+		$fields  = array(
+			array(
+				'name'    => 'title_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Title', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'description_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Alert Description', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'button_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Button', 'alerts-dlx' ),
+			),
+		);
+
+		foreach ( self::get_editor_fields() as $field ) {
+			if ( isset( $allowed[ $field['name'] ] ) ) {
+				$fields[] = $field;
+			}
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Sanitize snapshot config (appearance plus snapshot-only keys).
+	 *
+	 * Title, description, and button visibility flags are renderer-derived
+	 * on the shortcode path. Snapshots persist them as inspector toggles.
+	 *
+	 * @param array $values Raw config values.
+	 * @return array|\WP_Error
+	 */
+	public static function sanitize_snapshot_values( $values ) {
+		if ( ! is_array( $values ) ) {
+			return new \WP_Error( 'alerts_dlx_snapshot_values', __( 'Invalid preset values.', 'alerts-dlx' ) );
+		}
+
+		$allowed = array_flip( self::get_snapshot_input_names() );
+		$payload = array();
+		foreach ( $values as $key => $value ) {
+			$key = sanitize_key( (string) $key );
+			if ( isset( $allowed[ $key ] ) ) {
+				$payload[ $key ] = $value;
+			}
+		}
+
+		$title_enabled       = filter_var( $payload['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$description_enabled = filter_var( $payload['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$button_enabled      = filter_var( $payload['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		unset( $payload['title_enabled'], $payload['description_enabled'], $payload['button_enabled'] );
+
+		$merged    = array_merge( self::get_editor_defaults(), $payload );
+		$sanitized = self::sanitize_values( $merged );
+		if ( is_wp_error( $sanitized ) ) {
+			return $sanitized;
+		}
+
+		$result                        = array_intersect_key( $sanitized, $allowed );
+		$result['title_enabled']       = $title_enabled;
+		$result['description_enabled'] = $description_enabled;
+		$result['button_enabled']      = $button_enabled;
+
+		return $result;
+	}
+
+	/**
+	 * Sanitize global style config (appearance allowlist only).
+	 *
+	 * @param array $values Raw config values.
+	 * @return array|\WP_Error
+	 */
+	public static function sanitize_global_style_values( $values ) {
+		if ( ! is_array( $values ) ) {
+			return new \WP_Error( 'alerts_dlx_global_style_values', __( 'Invalid global style values.', 'alerts-dlx' ) );
+		}
+
+		$allowed = array_flip( self::get_global_style_input_names() );
+		$payload = array();
+		foreach ( $values as $key => $value ) {
+			$key = sanitize_key( (string) $key );
+			if ( isset( $allowed[ $key ] ) ) {
+				$payload[ $key ] = $value;
+			}
+		}
+
+		$merged    = array_merge( self::get_editor_defaults(), $payload );
+		$sanitized = self::sanitize_values( $merged );
+		if ( is_wp_error( $sanitized ) ) {
+			return $sanitized;
+		}
+
+		return array_intersect_key( $sanitized, $allowed );
+	}
+
+	/**
 	 * Get stable values for the visual editor without preselecting an ID.
 	 *
 	 * Uses builder-only starter content so the first-run preview is not empty.
@@ -216,6 +436,54 @@ final class ShortcodeBuilder {
 				'control' => 'select',
 				'label'   => __( 'Width unit', 'alerts-dlx' ),
 				'options' => self::options_from_values( array( 'px', 'em', 'rem', '%', 'vw' ), uppercase:true ),
+			),
+			array(
+				'name'    => 'margin_spacing',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Margin spacing', 'alerts-dlx' ),
+				'options' => array(
+					array(
+						'value' => 'none',
+						'label' => __( 'None', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'compact',
+						'label' => __( 'Compact', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'comfortable',
+						'label' => __( 'Comfortable', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'spacious',
+						'label' => __( 'Spacious', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'extreme',
+						'label' => __( 'Extreme', 'alerts-dlx' ),
+					),
+				),
+			),
+			array(
+				'name'    => 'margin_spacing_target',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Margin target', 'alerts-dlx' ),
+				'options' => array(
+					array(
+						'value' => 'both',
+						'label' => __( 'Both', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'top',
+						'label' => __( 'Top', 'alerts-dlx' ),
+					),
+					array(
+						'value' => 'bottom',
+						'label' => __( 'Bottom', 'alerts-dlx' ),
+					),
+				),
 			),
 			array(
 				'name'    => 'base_font_size',
@@ -454,6 +722,8 @@ final class ShortcodeBuilder {
 		$sanitized['align']                   = self::sanitize_choice( $values['align'] ?? $defaults['align'], array( 'left', 'center', 'right', 'wide', 'full' ), $defaults['align'] );
 		$sanitized['mode']                    = self::sanitize_choice( $values['mode'] ?? $defaults['mode'], array( 'light', 'dark' ), $defaults['mode'] );
 		$sanitized['maximum_width_unit']      = self::sanitize_choice( $values['maximum_width_unit'] ?? $defaults['maximum_width_unit'], array( 'px', 'em', 'rem', '%', 'vw' ), $defaults['maximum_width_unit'] );
+		$sanitized['margin_spacing']          = self::sanitize_choice( $values['margin_spacing'] ?? $defaults['margin_spacing'], AlertAttributes::get_margin_spacing_amounts(), $defaults['margin_spacing'] );
+		$sanitized['margin_spacing_target']   = self::sanitize_choice( $values['margin_spacing_target'] ?? $defaults['margin_spacing_target'], AlertAttributes::get_margin_spacing_targets(), $defaults['margin_spacing_target'] );
 		$sanitized['icon_vertical_alignment'] = self::sanitize_choice( $values['icon_vertical_alignment'] ?? $defaults['icon_vertical_alignment'], array( 'top', 'centered' ), $defaults['icon_vertical_alignment'] );
 		$sanitized['icon_appearance']         = self::sanitize_choice( $values['icon_appearance'] ?? $defaults['icon_appearance'], array( 'default', 'rounded' ), $defaults['icon_appearance'] );
 		$sanitized['icon_source']             = self::sanitize_choice( $values['icon_source'] ?? $defaults['icon_source'], array( 'icon', 'image' ), $defaults['icon_source'] );
@@ -479,7 +749,7 @@ final class ShortcodeBuilder {
 		if ( strlen( $icon ) > self::MAX_ICON_LENGTH ) {
 			return new \WP_Error( 'alerts_dlx_builder_icon', __( 'The icon markup is too long.', 'alerts-dlx' ) );
 		}
-		$sanitized['icon'] = wp_kses( $icon, Functions::get_kses_allowed_html() );
+		$sanitized['icon'] = Functions::sanitize_icon_svg( $icon );
 
 		foreach ( self::COLOR_FIELDS as $color_field ) {
 			$color = self::sanitize_color_value( $values[ $color_field ] ?? '' );

@@ -258,6 +258,43 @@ class Functions {
 	}
 
 	/**
+	 * Get the current admin subtab.
+	 *
+	 * @return null|string Current admin subtab.
+	 */
+	public static function get_admin_subtab() {
+		$subtab = sanitize_text_field( wp_unslash( filter_input( INPUT_GET, 'subtab', FILTER_DEFAULT ) ) );
+		if ( $subtab && is_string( $subtab ) ) {
+			return sanitize_key( $subtab );
+		}
+		return null;
+	}
+
+	/**
+	 * Get the library item ID from the admin query string.
+	 *
+	 * @return int
+	 */
+	public static function get_admin_library_item_id() {
+		$item_id = filter_input( INPUT_GET, 'item', FILTER_VALIDATE_INT );
+		return $item_id ? (int) $item_id : 0;
+	}
+
+	/**
+	 * Get the library kind from the admin query string.
+	 *
+	 * @return string
+	 */
+	public static function get_admin_library_kind() {
+		$kind = sanitize_key( (string) wp_unslash( filter_input( INPUT_GET, 'kind', FILTER_DEFAULT ) ) );
+		if ( in_array( $kind, AlertLibrary::get_allowed_kinds(), true ) ) {
+			return $kind;
+		}
+
+		return AlertLibrary::KIND_GLOBAL_STYLE;
+	}
+
+	/**
 	 * Return the URL to the admin screen
 	 *
 	 * @param string $tab     Tab path to load.
@@ -466,6 +503,8 @@ class Functions {
 		);
 		$allowed_tags['a']['class'] = array();
 
+		$allowed_tags['div']['class'] = array();
+
 		if ( ! $svg ) {
 			return $allowed_tags;
 		}
@@ -528,6 +567,18 @@ class Functions {
 		);
 
 		return $allowed_tags;
+	}
+
+	/**
+	 * Sanitize a user-supplied icon to inline presentation SVG.
+	 *
+	 * Close-button sprites are hardcoded and must not pass through this helper.
+	 *
+	 * @param string $svg Raw icon markup.
+	 * @return string Clean SVG, or an empty string when the markup is rejected.
+	 */
+	public static function sanitize_icon_svg( string $svg ): string {
+		return SvgSanitizer::sanitize( $svg );
 	}
 
 	/**

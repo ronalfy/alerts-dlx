@@ -12,7 +12,7 @@ Good:
 - `hideDismissedAlerts`
 - `check-doc-links`
 - `release-package`
-- `enabled_block_styles`
+- `margin_spacing`
 
 Avoid opaque internal codes, numbered gates, or labels that require a separate legend.
 

@@ -33,7 +33,7 @@ https://www.youtube.com/watch?v=7dKpw5uBi5o
 5. Add an optional title, description, and button to the alert block.
 6. Mark an Alert Block as Editorial, and have it only visible in the block editor.
 7. Shortcode/page builder support: use beautiful callouts and notifications anywhere shortcodes are supported.
-8. Site-wide settings for headline tags, custom title classes, enabled alert themes, and more.
+8. Site-wide settings for headline tags, custom title classes, and more.
 9. Lightweight: the plugin only loads what is needed where it's needed.
 
 Blocks are styled with inspiration from these beautiful UI libraries:
@@ -108,7 +108,7 @@ Yes, each alert can be dismissed, and can be set to expire after a certain amoun
 
 = Where are the admin settings? =
 
-Go to **Settings → AlertsDLX** in your WordPress admin. From there you can choose the headline HTML element, add custom headline CSS classes, force headline sizing over aggressive theme styles, enable or disable alert themes in the block inserter, and toggle debug mode.
+Go to **Settings → AlertsDLX** in your WordPress admin. From there you can choose the headline HTML element, add custom headline CSS classes, force headline sizing over aggressive theme styles, and toggle debug mode.
 
 = Does AlertsDLX work on Multisite? =
 
