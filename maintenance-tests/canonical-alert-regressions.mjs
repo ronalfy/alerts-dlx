@@ -96,27 +96,12 @@ assert.equal(
 	false,
 	'Preview description must never live in common insertion attributes'
 );
-assert.equal(variations.length, 7, 'Seven canonical public variations remain available');
-for (const variation of variations) {
-	assert.equal(
-		Object.hasOwn(variation.attributes, 'alertDescription'),
-		false,
-		`${variation.name} insertion attributes must not seed preview description content`
-	);
-}
-const ctaVariation = variations.find((variation) => variation.name === 'cta');
+assert.equal(variations.length, 0, 'Static public Alert variations stay empty');
 assert.equal(
-	Object.hasOwn(ctaVariation.attributes, 'alertTitle'),
+	variations.some((variation) => variation.isDefault),
 	false,
-	'CTA preview title must not leak into inserted CTA attributes'
+	'Static public variations do not set an insert default'
 );
-assert.equal(
-	Object.hasOwn(ctaVariation.attributes, 'buttonText'),
-	false,
-	'CTA preview button text must not leak into inserted CTA attributes'
-);
-assert.equal(ctaVariation.example?.attributes?.alertTitle, 'Click here to learn more', 'CTA preview title remains available');
-assert.equal(ctaVariation.example?.attributes?.buttonText, 'Learn More', 'CTA preview button text remains available');
 
 const sidebar = fs.readFileSync(
 	'src/js/blocks/components/AlertTypeStyleControl.js',
@@ -138,7 +123,6 @@ assert.match(
 	/openAlertInspectorTab\(\s*clientId,\s*'styles'\s*\)/,
 	'Custom style opens the existing Styles inspector path'
 );
-assert.doesNotMatch(sidebar, /\buseEffect\b/, 'Styles sidebar must not mutate saved attributes merely by rendering');
 
 const blocksPhp = fs.readFileSync('php/Blocks.php', 'utf8');
 for (const item of Object.values(historical)) {

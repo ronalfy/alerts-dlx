@@ -110,32 +110,32 @@ assert.doesNotMatch(alertEdit, /CanonicalAlertPresetsPanel|Presets and Defaults/
 assert.match(libraryPanel, /Global Styles/, 'Styles sidebar labels global styles');
 assert.match(
 	libraryPanel,
-	/setPendingGlobalStyleId\( String\( value \) \)/,
+	/setPendingGlobalStyleId\(String\(value\)\)/,
 	'Changing the global style dropdown only updates pending selection'
 );
 assert.match(
 	libraryPanel,
-	/setPendingGlobalStyleId\( String\( globalStyleId \) \)/,
+	/setPendingGlobalStyleId\(String\(globalStyleId\)\)/,
 	'Pending global style resets when the attached id changes'
 );
 assert.match(
 	libraryPanel,
-	/__\( 'Apply', 'alerts-dlx' \)/,
+	/__\('Apply', 'alerts-dlx'\)/,
 	'Global style selection is confirmed with Apply'
 );
 assert.match(
 	libraryPanel,
-	/! pendingMatchesAttached &&/,
+	/!pendingMatchesAttached &&/,
 	'Apply is hidden when the pending style already matches'
 );
 assert.doesNotMatch(
 	libraryPanel,
-	/disabled=\{ pendingMatchesAttached \}/,
+	/disabled=\{pendingMatchesAttached\}/,
 	'Apply is not left visible in a disabled state'
 );
 assert.match(
 	libraryPanel,
-	/if \( ! pendingId \) \{\s*detachGlobalStyle\(\);/,
+	/if \(!pendingId\) \{\s*detachGlobalStyle\(\);/,
 	'Apply with None uses the shared detach path'
 );
 assert.doesNotMatch(
@@ -150,13 +150,13 @@ assert.match(
 );
 assert.match(
 	libraryPanel,
-	/This alert follows %s\./,
+	/Linked to %s\./,
 	'Attached global style notice stays in place'
 );
-assert.match(libraryPanel, /__\( 'Presets', 'alerts-dlx' \)/, 'Styles sidebar labels snapshots as Presets');
+assert.match(libraryPanel, /__\('Presets', 'alerts-dlx'\)/, 'Styles sidebar labels snapshots as Presets');
 assert.match(
 	libraryPanel,
-	/onClick=\{ \(\) => applySnapshot\( item\.id \) \}/,
+	/onClick=\{\(\) => applySnapshot\(item\.id\)\}/,
 	'Clicking a preset button applies it immediately'
 );
 assert.match(
@@ -181,7 +181,7 @@ assert.match(
 );
 assert.match(
 	libraryPanel,
-	/findLibraryItem\( snapshotId, 'snapshot' \)/,
+	/findLibraryItem\(snapshotId, 'snapshot'\)/,
 	'Preset apply still loads the snapshot library item'
 );
 assert.match(
@@ -234,7 +234,16 @@ assert.doesNotMatch(
 	/getCanonicalAlertDefaults|canonicalDefaults/,
 	'Variations do not depend on site preset defaults'
 );
-assert.match(variationsSource, /isDefault: goal\.name === defaultPurpose/, 'Success remains the insert default');
+assert.match(
+	variationsSource,
+	/const goals = \[\]; \/\/ empty variations for now\./,
+	'Static public Alert variations stay empty'
+);
+assert.match(
+	variationsSource,
+	/isDefault: false/,
+	'Snapshot inserter variations are not the insert default'
+);
 assert.match(variationsSource, /createLibraryInserterVariations/, 'Flagged snapshots become inserter variations');
 assert.match(variationsSource, /showInInserter/, 'Library variations read the inserter flag');
 assert.match(variationsSource, /'snapshot' !== item\.kind/, 'Global styles are skipped even when the inserter flag is set');

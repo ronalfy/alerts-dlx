@@ -18,9 +18,10 @@ const commonAttributes = {
 const goals = []; // empty variations for now.
 
 /**
- * Build the seven public insertion choices once when the editor script loads.
+ * Map static public insertion choices once when the editor script loads.
  *
- * Variations use built-in goal mapping only (no site-saved preset defaults).
+ * The goal list is empty for now, so this returns no inserter variations.
+ * Mapping uses built-in goal types only (no site-saved preset defaults).
  *
  * @return {Array} Goal-first canonical Alert variations.
  */
@@ -73,8 +74,8 @@ function isShownInInserter( item ) {
  * Build preview-only attributes for a library inserter variation.
  *
  * A variation `example` replaces the block.json example, so library items
- * reuse the same sample copy the goal variations inherit. The sample copy is
- * preview-only and never becomes part of the inserted attributes.
+ * reuse the block example sample copy. The sample copy is preview-only and
+ * never becomes part of the inserted attributes.
  *
  * @param {Object} attributes Library appearance or snapshot attributes.
  * @return {Object} Example attributes with sample content.
@@ -100,9 +101,8 @@ function buildLibraryExampleAttributes( attributes = {} ) {
  * Build one inserter variation per snapshot flagged for the inserter.
  *
  * Global styles are omitted, including items that already have the inserter
- * flag. They stay linked from the Styles sidebar. Goal variations stay in
- * place. None of these are isDefault, so inserting Alert itself still uses
- * the Success variation.
+ * flag. They stay linked from the Styles sidebar. Static goal variations are
+ * empty. None of these snapshot variations are isDefault.
  *
  * @param {Array} items Localized library items.
  * @return {Array} Snapshot inserter variations.

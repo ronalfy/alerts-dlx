@@ -13,6 +13,10 @@ const svgSanitizer = read('php/SvgSanitizer.php');
 const blocks = read('php/Blocks.php');
 const admin = read('php/Admin.php');
 const builder = read('src/react/ShortcodeBuilder/ShortcodeBuilder.js');
+const builderField = read('src/react/Components/AlertBuilder/BuilderField.js');
+const builderUtils = read('src/react/Components/AlertBuilder/builder-utils.js');
+const builderInspector = read('src/react/Components/AlertBuilder/AlertBuilderInspector.js');
+const builderPreview = read('src/react/Components/AlertBuilder/AlertBuilderPreview.js');
 const dismiss = read('src/js/dismiss/index.js');
 
 let assertions = 0;
@@ -52,19 +56,23 @@ contains(blocks, "min( 31536000, max( 0, (int) $atts['close_button_expiration'] 
 contains(blocks, 'substr( (string) $content, 0, 20000 )', 'Shortcode content is bounded before filters');
 contains(blocks, "$atts['alert_description'] = substr( (string) $atts['alert_description'], 0, 20000 );", 'Filtered shortcode content is bounded before rendering');
 
-contains(builder, '["number", "url"].includes(field.control)', 'Builder exposes semantic input types');
-contains(builder, '"color" === field.control', 'Builder exposes a dedicated color control');
-contains(builder, '"icon" === field.control', 'Builder exposes a dedicated icon control');
-contains(builder, 'getIconSetForGroup', 'Builder icon presets resolve through the selected design group');
+// Field controls and visibility moved into the shared AlertBuilder components.
+// The shortcode page still owns error announcements and loading copy.
+contains(builderField, '["number", "url"].includes(field.control)', 'Builder exposes semantic input types');
+contains(builderField, '"color" === field.control', 'Builder exposes a dedicated color control');
+contains(builderField, '"icon" === field.control', 'Builder exposes a dedicated icon control');
+contains(builderField, 'getIconSetForGroup(alertGroup)', 'Builder icon presets resolve through the selected design group');
 contains(admin, "dist/alerts-dlx-admin-shortcode-builder.css", 'Builder icon picker styles are enqueued');
-contains(builder, 'const isFieldVisible = (field, values)', 'Builder evaluates field visibility from schema metadata');
-contains(builder, 'isFieldVisible(field, values)', 'Builder filters controls through field visibility');
-contains(builder, 'field.show_when.every', 'Builder ANDs every show_when condition');
+contains(builderUtils, 'export const isFieldVisible = (field, values)', 'Builder evaluates field visibility from schema metadata');
+contains(builderInspector, 'isFieldVisible(field, values)', 'Builder filters controls through field visibility');
+contains(builderUtils, 'field.show_when.every', 'Builder ANDs every show_when condition');
 contains(builder, 'aria-live="assertive"', 'Builder errors are announced assertively');
-contains(builder, 'aria-busy={loading}', 'Builder preview exposes busy state');
+contains(builderPreview, 'aria-busy={loading}', 'Builder preview exposes busy state');
 contains(builder, 'Updating shortcode preview', 'Builder exposes readable loading status');
 assert.equal(
-	builder.includes('"colors" === group && "custom" !== values.alert_type'),
+	[builder, builderField, builderUtils, builderInspector, builderPreview].some((source) =>
+		source.includes('"colors" === group && "custom" !== values.alert_type')
+	),
 	false,
 	'Builder no longer hardcodes the custom-colors group gate'
 );
@@ -85,7 +93,7 @@ contains(dismiss, 'closeButton.dataset.alertsDlxBound', 'Dismiss controls bind o
 contains(dismiss, '(prefers-reduced-motion: reduce)', 'Reduced-motion dismissal is supported');
 contains(dismiss, 'window.setTimeout( removeAlert, 1000 )', 'Dismissal has an animation fallback');
 
-const combined = [php, functions, svgSanitizer, blocks, admin, builder, dismiss].join('\n');
+const combined = [php, functions, svgSanitizer, blocks, admin, builder, builderField, builderUtils, builderInspector, builderPreview, dismiss].join('\n');
 for (const [label, forbidden] of [
 	['WordPress HTTP API', /\bwp_(?:safe_)?remote_(?:get|post|request|head)\s*\(/i],
 	['direct external fetch', /\bfetch\s*\(\s*['"`]\s*https?:/i],
@@ -104,6 +112,6 @@ console.log(JSON.stringify({
 	status: 'PASS',
 	milestone: 'RELEASE_HARDENING',
 	assertions,
-	files_checked: 7,
+	files_checked: 11,
 	remote_or_tracking_surface_added: false,
 }));
