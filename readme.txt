@@ -169,6 +169,15 @@ Please leave a detailed support request here on .org.
 
 == Changelog ==
 
+= 3.0.0 =
+* Released 2026-10-15
+* New: Renaming AlertsDLX to Singular Alerts.
+* New: Consolidated all blocks into one block named Alerts. Existing blocks will still work, but old blocks cannot be inserted via the block editor.
+* New: Added new shortcode builder to admin to aid in creating shortcodes.
+* New: Global styles and presets should make inserting new alerts easy and is better for editorial workflows.
+* New: Margin controls per block allow for better control over appearance.
+* New: Added admin option to allow users to disable the default font stack used in Singular Alerts.
+
 = 2.4.1 =
 * Released 2026-07-24
 * Announcement: This plugin is looking for a new developer <a href="https://mediaron.com/contact/adopt-a-plugin/">to adopt this plugin</a>.
@@ -297,5 +306,5 @@ Please leave a detailed support request here on .org.
 
 == Upgrade Notice ==
 
-= 2.4.1 =
-Fix: Cookie expiration now honors caching and hard-refreshing.
+= 3.0.0 =
+Renaming AlertsDLX to Singular Alerts. Consolidated all blocks into one block named Alerts. Added new shortcode builder and global styles/presets. New admin options allow you to change the global font and margin controls.
