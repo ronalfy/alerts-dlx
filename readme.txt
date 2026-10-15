@@ -13,9 +13,9 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 
 == Description ==
 
-> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/alertsdlx/">Docs</a>
-
 Elevate your WordPress site's content and user engagement with Singular Alerts, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, Singular Alerts features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
+
+> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/alertsdlx/">Docs</a>
 
 Singular Alerts is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert notifications out of blocks, and is flexible enough to quickly match most theme designs. Stop digging for that alert in a block suite, and install a dedicated notifications solution that works almost anywhere.
 
@@ -156,6 +156,10 @@ Yes, you can improve performance further by disabling the custom font supplied w
 = How can I get support or leave a feature request? =
 
 Please leave a detailed support request here on .org.
+
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/2b074cd5-ee64-41c4-88c2-2fb0b652f57f). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 
 == Screenshots ==
