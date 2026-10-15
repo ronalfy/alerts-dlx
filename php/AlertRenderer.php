@@ -283,18 +283,18 @@ final class AlertRenderer {
 		?>
 		<!-- begin AlertsDLX output -->
 		<style>
-			#<?php echo esc_html( $unique_id ); ?> {
-				max-width: <?php echo esc_html( $maximum_width ); ?><?php echo esc_html( $maximum_width_unit ); ?>;
-				--alerts-dlx-base-font-size: <?php echo esc_html( $base_font_size ); ?>px;
-				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-base-size: <?php echo esc_html( $base_font_size ); ?>px;
-			}
-			#<?php echo esc_html( $unique_id ); ?> .alerts-dlx-icon-preview svg {
+			#<?php echo esc_attr( $unique_id ); ?> {
+				max-width: <?php echo esc_attr( $maximum_width ); ?><?php echo esc_attr( $maximum_width_unit ); ?>;
+				--alerts-dlx-base-font-size: <?php echo esc_attr( $base_font_size ); ?>px;
+				--alerts-dlx-<?php echo esc_attr( $alert_group ); ?>-base-size: <?php echo esc_attr( $base_font_size ); ?>px;
+			}<?php // phpcs:ignore ?>
+			#<?php echo esc_attr( $unique_id ); ?> .alerts-dlx-icon-preview svg {
 				max-width: 1.8em;
 				max-height: 1.8em;
 			}
 		</style>
 		<div
-			class="<?php echo esc_html( implode( ' ', $container_classes ) ); ?>"
+			class="<?php echo esc_attr( implode( ' ', $container_classes ) ); ?>"
 			data-expiration="<?php echo esc_attr( absint( $close_button_expiration ) ); ?>"
 		>
 			<figure

@@ -53,10 +53,10 @@ class Blocks {
 		);
 
 		if ( function_exists( 'wp_register_block_types_from_metadata_collection' ) ) {
-			wp_register_block_types_from_metadata_collection( Functions::get_plugin_dir( 'build/js/blocks/' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
+			\wp_register_block_types_from_metadata_collection( Functions::get_plugin_dir( 'build/js/blocks/' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
 		} else {
 			if ( function_exists( 'wp_register_block_metadata_collection' ) ) {
-				wp_register_block_metadata_collection( Functions::get_plugin_dir( 'build/js/blocks/' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
+				\wp_register_block_metadata_collection( Functions::get_plugin_dir( 'build/js/blocks/' ), Functions::get_plugin_dir( 'build/blocks-manifest.php' ) );
 			}
 			$manifest_data = require Functions::get_plugin_dir( 'build/blocks-manifest.php' );
 			foreach ( array_keys( $manifest_data ) as $block_type ) {
@@ -230,7 +230,7 @@ class Blocks {
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-alt-text-hover: <?php echo esc_html( $atts['color_alt_text_hover'] ); ?>;
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-bold: <?php echo esc_html( $atts['color_bold'] ); ?>;
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-light: <?php echo esc_html( $atts['color_light'] ); ?>;
-			}
+			}<?php // phpcs:ignore ?>
 			</style>
 			<?php
 		}

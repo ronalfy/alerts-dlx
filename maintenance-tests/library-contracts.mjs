@@ -37,6 +37,11 @@ assert.match(alertLibrary, /alerts_dlx_snapshot_config/, 'Snapshot config filter
 assert.match(alertLibrary, /maybe_seed_starter_snapshots/, 'Starter snapshot seeding is wired');
 assert.match(alertLibrary, /STARTER_SNAPSHOTS_SEEDED_OPTION/, 'Starter seed option flag is defined');
 assert.match(alertLibrary, /apply_global_style_to_block_attributes/, 'Global style merge helper exists for render');
+assert.match(
+	alertLibrary,
+	/function get_global_style_block_attributes[\s\S]*?static \$resolved_by_id/,
+	'Global style resolution is memoized per request by ID'
+);
 assert.match(alertLibrary, /global_style_has_icon/, 'Global style icon presence helper exists for render');
 assert.doesNotMatch(alertLibrary, /iconEnabled.*=.*global_style_has_icon/, 'Frontend merge leaves iconEnabled on the block');
 assert.match(alertLibrary, /get_items_for_editor/, 'Editor localization helper exists');

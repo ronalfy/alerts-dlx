@@ -432,15 +432,18 @@ final class AlertLibrary {
 	 * and other markup survive WordPress save/load when properly slashed.
 	 *
 	 * @param int $post_id Post ID.
+	 * @param \WP_Post|null $post Post object.
 	 * @return array
 	 */
-	public static function get_post_config( $post_id ) {
+	public static function get_post_config( $post_id, $post = null ) {
 		$kind     = self::get_post_kind( $post_id );
 		$defaults = self::KIND_SNAPSHOT === $kind
 			? ShortcodeBuilder::get_snapshot_defaults()
 			: ShortcodeBuilder::get_global_style_defaults();
-		$post     = get_post( $post_id );
-		$raw      = ( $post instanceof \WP_Post ) ? $post->post_content : '';
+		if ( ! $post instanceof \WP_Post ) {
+			$post = get_post( $post_id );
+		}
+		$raw = ( $post instanceof \WP_Post ) ? $post->post_content : '';
 		$decoded  = self::decode_config_from_storage( $raw );
 		$config   = ! empty( $decoded ) ? array_merge( $defaults, $decoded ) : $defaults;
 		if ( self::KIND_SNAPSHOT === $kind ) {
@@ -513,7 +516,7 @@ final class AlertLibrary {
 			return new \WP_Error( 'alerts_dlx_library_not_found', __( 'Library item not found.', 'alerts-dlx' ), array( 'status' => 404 ) );
 		}
 
-		$config = self::get_post_config( $post->ID );
+		$config = self::get_post_config( $post->ID, $post );
 		$kind   = self::get_post_kind( $post->ID );
 
 		return array(
@@ -650,27 +653,33 @@ final class AlertLibrary {
 	 * @return array CamelCase appearance attributes, or empty when unusable.
 	 */
 	public static function get_global_style_block_attributes( $global_style_id ) {
+		// Request-scoped: many blocks may share one globalStyleId per page load.
+		static $resolved_by_id = array();
+
 		$global_style_id = absint( $global_style_id );
 		if ( ! $global_style_id ) {
 			return array();
 		}
 
+		if ( array_key_exists( $global_style_id, $resolved_by_id ) ) {
+			return $resolved_by_id[ $global_style_id ];
+		}
+
+		$resolved = array();
+
 		$post = get_post( $global_style_id );
-		if ( ! $post instanceof \WP_Post || self::POST_TYPE !== $post->post_type ) {
-			return array();
+		if ( $post instanceof \WP_Post && self::POST_TYPE === $post->post_type && self::KIND_GLOBAL_STYLE === self::get_post_kind( $global_style_id ) ) {
+			$config     = self::get_post_config( $global_style_id, $post );
+			$appearance = array_intersect_key(
+				$config,
+				array_flip( ShortcodeBuilder::get_global_style_input_names() )
+			);
+			$resolved   = self::library_config_to_block_attributes( $appearance );
 		}
 
-		if ( self::KIND_GLOBAL_STYLE !== self::get_post_kind( $global_style_id ) ) {
-			return array();
-		}
+		$resolved_by_id[ $global_style_id ] = $resolved;
 
-		$config     = self::get_post_config( $global_style_id );
-		$appearance = array_intersect_key(
-			$config,
-			array_flip( ShortcodeBuilder::get_global_style_input_names() )
-		);
-
-		return self::library_config_to_block_attributes( $appearance );
+		return $resolved;
 	}
 
 	/**
