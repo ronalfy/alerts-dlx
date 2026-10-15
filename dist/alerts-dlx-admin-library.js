@@ -133770,7 +133770,7 @@ var DEFAULT_VIEW = {
     direction: "asc"
   },
   titleField: "title",
-  fields: ["kind", "slug", "showInInserter", "alert_group", "alert_type", "variant", "modified"],
+  fields: ["kind", "alert_group", "alert_type", "variant"],
   filters: [],
   layout: {}
 };
@@ -133902,7 +133902,8 @@ var LibraryList = function LibraryList(_ref) {
       id: "slug",
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Slug", "alerts-dlx"),
       enableSorting: true,
-      enableGlobalSearch: true
+      enableGlobalSearch: true,
+      isVisible: false
     }, {
       id: "showInInserter",
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Inserter", "alerts-dlx"),

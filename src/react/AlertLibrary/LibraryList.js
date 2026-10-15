@@ -28,7 +28,7 @@ const DEFAULT_VIEW = {
 		direction: "asc",
 	},
 	titleField: "title",
-	fields: ["kind", "slug", "showInInserter", "alert_group", "alert_type", "variant", "modified"],
+	fields: ["kind", "alert_group", "alert_type", "variant"],
 	filters: [],
 	layout: {},
 };
@@ -62,7 +62,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 			.catch((requestError) => {
 				setError(
 					requestError.message ||
-						__("Could not load library items.", "alerts-dlx")
+					__("Could not load library items.", "alerts-dlx")
 				);
 			})
 			.finally(() => setLoading(false));
@@ -80,7 +80,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				.catch((requestError) => {
 					setError(
 						requestError.message ||
-							__("Could not duplicate this item.", "alerts-dlx")
+						__("Could not duplicate this item.", "alerts-dlx")
 					);
 				})
 				.finally(() => setActionId(0));
@@ -107,7 +107,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 			.catch((requestError) => {
 				setError(
 					requestError.message ||
-						__("Could not delete this item.", "alerts-dlx")
+					__("Could not delete this item.", "alerts-dlx")
 				);
 			})
 			.finally(() => {
@@ -155,6 +155,7 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				label: __("Slug", "alerts-dlx"),
 				enableSorting: true,
 				enableGlobalSearch: true,
+				isVisible: false,
 			},
 			{
 				id: "showInInserter",

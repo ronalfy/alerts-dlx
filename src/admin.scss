@@ -630,6 +630,11 @@ body.alerts-dlx-body .updated {
 
 		.alerts-dlx-library-list .dataviews-wrapper>.dataviews__view-actions {
 			padding-top: 0;
+			padding-left: 0;
+		}
+
+		.alerts-dlx-library-list .dataviews-wrapper .dataviews-filters__container {
+			padding-left: 0;
 		}
 	}
 
