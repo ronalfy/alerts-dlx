@@ -1599,7 +1599,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _AlertButtonLinkControl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../AlertButtonLinkControl */ "./src/js/blocks/components/AlertButtonLinkControl/index.js");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/js/blocks/components/AlertButton/editor.scss");
+/* harmony import */ var _usePopoverOutsidePointerClose__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../usePopoverOutsidePointerClose */ "./src/js/blocks/components/usePopoverOutsidePointerClose.js");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./src/js/blocks/components/AlertButton/editor.scss");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1607,6 +1608,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
 
 
 
@@ -1636,6 +1638,11 @@ var AlertButton = function AlertButton(props) {
     }
     setIsPopOverVisible(false);
   };
+  var popoverRef = (0,_usePopoverOutsidePointerClose__WEBPACK_IMPORTED_MODULE_6__["default"])({
+    isOpen: isPopOverVisible && !!linkIconAnchor,
+    onClose: closeLinkPopover,
+    anchor: linkIconAnchor
+  });
   var openLinkPopover = function openLinkPopover() {
     ignoreCloseRef.current = true;
     setIsPopOverVisible(true);
@@ -1692,6 +1699,7 @@ var AlertButton = function AlertButton(props) {
     onMouseDown: onLinkToggleMouseDown,
     onKeyDown: onLinkToggleKeyDown
   }), isPopOverVisible && linkIconAnchor && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Popover, {
+    ref: popoverRef,
     anchor: linkIconAnchor,
     noArrow: false,
     onClose: closeLinkPopover
@@ -1762,7 +1770,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/edit.js");
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/link.js");
 /* harmony import */ var _URLPicker__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../URLPicker */ "./src/js/blocks/components/URLPicker/index.js");
-/* harmony import */ var _utils_isURL__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/isURL */ "./src/js/blocks/utils/isURL.js");
+/* harmony import */ var _usePopoverOutsidePointerClose__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../usePopoverOutsidePointerClose */ "./src/js/blocks/components/usePopoverOutsidePointerClose.js");
+/* harmony import */ var _utils_isURL__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/isURL */ "./src/js/blocks/utils/isURL.js");
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1774,6 +1783,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 /**
  * WordPress dependencies
  */
+
 
 
 
@@ -1799,10 +1809,16 @@ var AlertButtonUrlPopover = function AlertButtonUrlPopover(_ref) {
     onClose = _ref.onClose,
     prefillInputValue = _ref.prefillInputValue,
     onItemSelect = _ref.onItemSelect;
+  var popoverRef = (0,_usePopoverOutsidePointerClose__WEBPACK_IMPORTED_MODULE_9__["default"])({
+    isOpen: Boolean(isOpen && anchor),
+    onClose: onClose,
+    anchor: anchor
+  });
   if (!isOpen || !anchor) {
     return null;
   }
   return /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Popover, {
+    ref: popoverRef,
     anchor: anchor,
     onClose: onClose,
     className: "alerts-dlx-button-link-popover"
@@ -1839,7 +1855,7 @@ var AlertButtonLinkPreview = function AlertButtonLinkPreview(_ref2) {
     rel: "noopener noreferrer",
     onClick: function onClick(event) {
       event.preventDefault();
-      if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_9__["default"])(buttonUrl) && !(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_3__.isValidFragment)(buttonUrl)) {
+      if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_10__["default"])(buttonUrl) && !(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_3__.isValidFragment)(buttonUrl)) {
         window.open(buttonUrl, "_blank");
       }
     }
@@ -1893,7 +1909,7 @@ var AlertButtonLinkControl = function AlertButtonLinkControl(_ref3) {
     _useState8 = _slicedToArray(_useState7, 2),
     isEditingInline = _useState8[0],
     setIsEditingInline = _useState8[1];
-  var hasValidUrl = buttonUrl && (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_9__["default"])(buttonUrl);
+  var hasValidUrl = buttonUrl && ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_10__["default"])(buttonUrl) || (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_10__.isRelativePath)(buttonUrl));
   var showPreview = hasValidUrl && (!inlinePicker || !isEditingInline);
   var showInlinePicker = inlinePicker && (!hasValidUrl || isEditingInline);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
@@ -3659,7 +3675,7 @@ var _URLPicker = function URLPicker(props) {
     _useState14 = _slicedToArray(_useState13, 2),
     suggestionValue = _useState14[0],
     setSuggestionValue = _useState14[1];
-  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(prefillInputValue ? "" : savedValue),
+  var _useState15 = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(prefillInputValue ? "" : savedValue !== null && savedValue !== void 0 ? savedValue : ""),
     _useState16 = _slicedToArray(_useState15, 2),
     savedSuggestionValue = _useState16[0],
     setSavedSuggestionValue = _useState16[1];
@@ -3670,11 +3686,12 @@ var _URLPicker = function URLPicker(props) {
     _useState20 = _slicedToArray(_useState19, 2),
     loading = _useState20[0],
     setLoading = _useState20[1];
+  var previousPrefillRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)(prefillInputValue);
   var debouncedRequest = (0,_wordpress_compose__WEBPACK_IMPORTED_MODULE_7__.useDebounce)(function (value) {
     updateSuggestions(value);
   }, 200);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    if ("" !== savedSuggestionValue && null !== savedSuggestionValue) {
+    if (savedSuggestionValue) {
       setSuggestionValue(savedSuggestionValue);
       var newSuggestion = {
         permalink: savedSuggestionValue,
@@ -3691,18 +3708,30 @@ var _URLPicker = function URLPicker(props) {
     }
   }, [suggestionValue]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    if (prefillInputValue === "" && !savedSuggestionValue) {
+    var previousPrefill = previousPrefillRef.current;
+    previousPrefillRef.current = prefillInputValue;
+    if ("" === prefillInputValue && "" !== previousPrefill) {
       setCurrentSuggestion(null);
-      setSavedSuggestionValue(null);
+      setSavedSuggestionValue("");
       setSuggestionValue("");
+      setShowSuggestions(false);
+      setSuggestions([]);
     }
   }, [prefillInputValue]);
   var onChange = function onChange(event) {
-    setSuggestionValue(event.target.value);
+    var nextValue = event.target.value;
+    setSuggestionValue(nextValue);
+    if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(nextValue) || (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(nextValue)) {
+      setCurrentSuggestion(null);
+      setShowSuggestions(false);
+      setSuggestions([]);
+      setSelectedSuggestion(null);
+      setSelectedSuggestionIndex(null);
+    }
   };
   var onFocus = function onFocus(event) {
     event.preventDefault();
-    if (null === selectedSuggestion && "" !== suggestionValue && !(0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(suggestionValue)) {
+    if (null === selectedSuggestion && "" !== suggestionValue && !(0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(suggestionValue) && !(0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(suggestionValue)) {
       debouncedRequest(suggestionValue);
     }
   };
@@ -3728,7 +3757,7 @@ var _URLPicker = function URLPicker(props) {
         case _wordpress_keycodes__WEBPACK_IMPORTED_MODULE_4__.ENTER:
           {
             event.preventDefault();
-            if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(event.target.value)) {
+            if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(event.target.value) || (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(event.target.value)) {
               onItemSelect(event, event.target.value);
               inputRef.current.focus();
               return;
@@ -3780,6 +3809,12 @@ var _URLPicker = function URLPicker(props) {
             }
             setShowSuggestions(false);
             inputRef.current.focus();
+            break;
+          }
+          if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(event.target.value) || (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(event.target.value)) {
+            onItemSelect(event, event.target.value);
+            setShowSuggestions(false);
+            inputRef.current.focus();
           }
           break;
         }
@@ -3800,7 +3835,7 @@ var _URLPicker = function URLPicker(props) {
     var isInitialSuggestions = !((_value = value) !== null && _value !== void 0 && _value.length);
     value = value.toString();
     value = value.trim();
-    if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(value)) {
+    if ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(value) || (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(value)) {
       setSuggestions([]);
       setShowSuggestions(false);
       setLoading(false);
@@ -3905,14 +3940,14 @@ var _URLPicker = function URLPicker(props) {
     ref: inputRef
   }), loading && /*#__PURE__*/React.createElement("div", {
     className: "alerts-dlx-pub-url-input__loading"
-  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Spinner, null)), !loading && !(0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(suggestionValue) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
+  }, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Spinner, null)), !loading && !(0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(suggestionValue) && !(0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(suggestionValue) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
     className: "alerts-dlx-pub-url-input__search-button",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_15__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Search for a Page", "alerts-dlx"),
     onClick: function onClick() {
       setShowSuggestions(true);
     }
-  }), !loading && (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(suggestionValue) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
+  }), !loading && ((0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__["default"])(suggestionValue) || (0,_utils_isURL__WEBPACK_IMPORTED_MODULE_16__.isRelativePath)(suggestionValue)) && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_6__.Button, {
     className: "alerts-dlx-pub-url-input__apply-button",
     icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)("Apply Link", "alerts-dlx"),
@@ -5628,6 +5663,157 @@ var UnitChooser = function UnitChooser(props) {
   }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (UnitChooser);
+
+/***/ },
+
+/***/ "./src/js/blocks/components/usePopoverOutsidePointerClose.js"
+/*!*******************************************************************!*\
+  !*** ./src/js/blocks/components/usePopoverOutsidePointerClose.js ***!
+  \*******************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
+/**
+ * WordPress dependencies
+ */
+
+
+/**
+ * Block editor writing surface. Gutenberg does not export getEditorCanvas in
+ * the WordPress version this plugin runs against, so the canvas iframe is
+ * looked up by the name the editor assigns.
+ */
+var EDITOR_CANVAS_IFRAME_SELECTOR = 'iframe[name="editor-canvas"]';
+
+/**
+ * Whether a pointer target is the node or contained by it.
+ *
+ * Targets from another document are never contained, which is how a canvas
+ * click is recognized as outside a sidebar popover.
+ *
+ * @param {EventTarget|null} target Event target.
+ * @param {Node|null}        node   Popover or anchor node.
+ * @return {boolean} True when the target is inside the node.
+ */
+function isEventTargetInside(target, node) {
+  if (!target || !node || "function" !== typeof node.contains) {
+    return false;
+  }
+  if (target === node) {
+    return true;
+  }
+  if ("number" !== typeof target.nodeType) {
+    return false;
+  }
+  return node.contains(target);
+}
+
+/**
+ * Add a document to the listener list once.
+ *
+ * @param {Document[]} documents Documents collected so far.
+ * @param {Document}   doc       Document to add.
+ */
+function addPointerDocument(documents, doc) {
+  if (!doc || "function" !== typeof doc.addEventListener) {
+    return;
+  }
+  if (!documents.includes(doc)) {
+    documents.push(doc);
+  }
+}
+
+/**
+ * Documents that can receive pointerdown while a popover is open.
+ *
+ * Pointer events do not cross documents. The parent document covers sidebar
+ * clicks, and each editor canvas iframe document covers canvas clicks.
+ *
+ * @param {Node|null} anchor      Anchor that opened the popover.
+ * @param {Node|null} popoverNode Popover element.
+ * @return {Document[]} Documents to observe.
+ */
+function getOutsidePointerDocuments(anchor, popoverNode) {
+  var documents = [];
+  if ("undefined" !== typeof document) {
+    addPointerDocument(documents, document);
+  }
+  var iframes = [];
+  try {
+    iframes = document.querySelectorAll(EDITOR_CANVAS_IFRAME_SELECTOR);
+  } catch (error) {
+    iframes = [];
+  }
+  Array.from(iframes).forEach(function (iframe) {
+    var contentDocument = null;
+    try {
+      contentDocument = iframe.contentDocument || null;
+    } catch (error) {
+      contentDocument = null;
+    }
+    addPointerDocument(documents, contentDocument);
+  });
+
+  // Cover a canvas document when the named iframe is missing or the popover
+  // is portaled into a different document than the anchor.
+  addPointerDocument(documents, anchor === null || anchor === void 0 ? void 0 : anchor.ownerDocument);
+  addPointerDocument(documents, popoverNode === null || popoverNode === void 0 ? void 0 : popoverNode.ownerDocument);
+  return documents;
+}
+
+/**
+ * Close a popover on pointerdown outside the popover and its anchor.
+ *
+ * Popover onClose only runs from focus-outside, which aborts when
+ * document.hasFocus() is false. Clicking the editor canvas moves focus into
+ * another document, so that path never closes the popover.
+ *
+ * @param {Object}                 options        Hook options.
+ * @param {boolean}                options.isOpen Whether the popover is open.
+ * @param {Function}               options.onClose Close callback. Escape still uses Popover onClose.
+ * @param {Element|null|undefined} options.anchor Anchor element that opened the popover.
+ * @return {import('react').RefObject<HTMLElement|null>} Ref to pass to Popover.
+ */
+var usePopoverOutsidePointerClose = function usePopoverOutsidePointerClose(_ref) {
+  var isOpen = _ref.isOpen,
+    onClose = _ref.onClose,
+    anchor = _ref.anchor;
+  var popoverRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var onCloseRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useRef)(onClose);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!isOpen) {
+      return undefined;
+    }
+    var onPointerDown = function onPointerDown(event) {
+      var target = event.target;
+      var popoverNode = popoverRef.current;
+      if (isEventTargetInside(target, popoverNode) || isEventTargetInside(target, anchor)) {
+        return;
+      }
+      onCloseRef.current();
+    };
+    var documents = getOutsidePointerDocuments(anchor, popoverRef.current);
+    documents.forEach(function (doc) {
+      doc.addEventListener("pointerdown", onPointerDown, true);
+    });
+    return function () {
+      documents.forEach(function (doc) {
+        doc.removeEventListener("pointerdown", onPointerDown, true);
+      });
+    };
+  }, [isOpen, anchor]);
+  return popoverRef;
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (usePopoverOutsidePointerClose);
 
 /***/ },
 
@@ -9477,11 +9663,25 @@ function getIconSetForGroup(alertGroup) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   isRelativePath: () => (/* binding */ isRelativePath)
 /* harmony export */ });
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_0__);
 
+
+/**
+ * Whether a value is a site-relative path (leading slash).
+ *
+ * @param {string} value Value to check.
+ * @return {boolean} True when the value is a valid relative path.
+ */
+var isRelativePath = function isRelativePath(value) {
+  if (!value || value.charAt(0) !== "/") {
+    return false;
+  }
+  return (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_0__.isValidPath)(value);
+};
 var isURL = function isURL(value) {
   if ("" === value) {
     return false;

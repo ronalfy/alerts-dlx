@@ -10,7 +10,8 @@ import { __ } from "@wordpress/i18n";
 import { closeSmall, edit, link } from "@wordpress/icons";
 
 import URLPicker from "../URLPicker";
-import isURL from "../../utils/isURL";
+import usePopoverOutsidePointerClose from "../usePopoverOutsidePointerClose";
+import isURL, { isRelativePath } from "../../utils/isURL";
 
 /**
  * Shared URLPicker popover for sidebar add/edit link flows.
@@ -30,12 +31,19 @@ const AlertButtonUrlPopover = ({
   prefillInputValue,
   onItemSelect,
 }) => {
+  const popoverRef = usePopoverOutsidePointerClose({
+    isOpen: Boolean(isOpen && anchor),
+    onClose,
+    anchor,
+  });
+
   if (!isOpen || !anchor) {
     return null;
   }
 
   return (
     <Popover
+      ref={popoverRef}
       anchor={anchor}
       onClose={onClose}
       className="alerts-dlx-button-link-popover"
@@ -120,7 +128,8 @@ const AlertButtonLinkControl = ({
   const [pickerPrefill, setPickerPrefill] = useState("");
   const [isEditingInline, setIsEditingInline] = useState(false);
 
-  const hasValidUrl = buttonUrl && isURL(buttonUrl);
+  const hasValidUrl =
+    buttonUrl && ( isURL( buttonUrl ) || isRelativePath( buttonUrl ) );
   const showPreview = hasValidUrl && (!inlinePicker || !isEditingInline);
   const showInlinePicker = inlinePicker && (!hasValidUrl || isEditingInline);
 

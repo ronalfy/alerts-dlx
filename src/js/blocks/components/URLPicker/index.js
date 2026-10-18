@@ -3,7 +3,7 @@ import "./editor.scss";
 /**
  * External dependencies
  */
-import { useState, useEffect, createRef } from "@wordpress/element";
+import { useState, useEffect, useRef, createRef } from "@wordpress/element";
 import classNames from "classnames";
 
 /**
@@ -20,7 +20,7 @@ import { search, keyboardReturn, closeSmall, external, page, post } from "@wordp
 
 const SEARCH_PAGES_PATH = "/dlxplugins/alerts-dlx/v1/search/pages";
 
-import isURL from "../../utils/isURL";
+import isURL, { isRelativePath } from "../../utils/isURL";
 
 /**
  * URL picker for searching posts/pages or pasting a URL.
@@ -54,17 +54,18 @@ const URLPicker = (props) => {
     prefillInputValue || ""
   );
   const [savedSuggestionValue, setSavedSuggestionValue] = useState(
-    prefillInputValue ? "" : savedValue
+    prefillInputValue ? "" : savedValue ?? ""
   );
   const [uniqueInstanceId] = useState(`url-input-control-${generatedUniqueId}`);
   const [loading, setLoading] = useState(false);
+  const previousPrefillRef = useRef(prefillInputValue);
 
   const debouncedRequest = useDebounce((value) => {
     updateSuggestions(value);
   }, 200);
 
   useEffect(() => {
-    if ("" !== savedSuggestionValue && null !== savedSuggestionValue) {
+    if ( savedSuggestionValue ) {
       setSuggestionValue(savedSuggestionValue);
       const newSuggestion = {
         permalink: savedSuggestionValue,
@@ -82,15 +83,29 @@ const URLPicker = (props) => {
   }, [suggestionValue]);
 
   useEffect(() => {
-    if (prefillInputValue === "" && !savedSuggestionValue) {
+    const previousPrefill = previousPrefillRef.current;
+    previousPrefillRef.current = prefillInputValue;
+
+    if ( "" === prefillInputValue && "" !== previousPrefill ) {
       setCurrentSuggestion(null);
-      setSavedSuggestionValue(null);
+      setSavedSuggestionValue("");
       setSuggestionValue("");
+      setShowSuggestions(false);
+      setSuggestions([]);
     }
   }, [prefillInputValue]);
 
   const onChange = (event) => {
-    setSuggestionValue(event.target.value);
+    const nextValue = event.target.value;
+    setSuggestionValue(nextValue);
+
+    if ( isURL( nextValue ) || isRelativePath( nextValue ) ) {
+      setCurrentSuggestion(null);
+      setShowSuggestions(false);
+      setSuggestions([]);
+      setSelectedSuggestion(null);
+      setSelectedSuggestionIndex(null);
+    }
   };
 
   const onFocus = (event) => {
@@ -98,7 +113,8 @@ const URLPicker = (props) => {
     if (
       null === selectedSuggestion &&
       "" !== suggestionValue &&
-      !isURL(suggestionValue)
+      !isURL(suggestionValue) &&
+      !isRelativePath(suggestionValue)
     ) {
       debouncedRequest(suggestionValue);
     }
@@ -126,7 +142,7 @@ const URLPicker = (props) => {
         }
         case ENTER: {
           event.preventDefault();
-          if (isURL(event.target.value)) {
+          if ( isURL( event.target.value ) || isRelativePath( event.target.value ) ) {
             onItemSelect(event, event.target.value);
             inputRef.current.focus();
             return;
@@ -183,6 +199,16 @@ const URLPicker = (props) => {
           }
           setShowSuggestions(false);
           inputRef.current.focus();
+          break;
+        }
+
+        if (
+          isURL( event.target.value ) ||
+          isRelativePath( event.target.value )
+        ) {
+          onItemSelect( event, event.target.value );
+          setShowSuggestions(false);
+          inputRef.current.focus();
         }
 
         break;
@@ -206,7 +232,7 @@ const URLPicker = (props) => {
     value = value.toString();
     value = value.trim();
 
-    if (isURL(value)) {
+    if ( isURL( value ) || isRelativePath( value ) ) {
       setSuggestions([]);
       setShowSuggestions(false);
       setLoading(false);
@@ -307,7 +333,7 @@ const URLPicker = (props) => {
                   <Spinner />
                 </div>
               )}
-              {!loading && !isURL(suggestionValue) && (
+              {!loading && !isURL(suggestionValue) && !isRelativePath(suggestionValue) && (
                 <Button
                   className="alerts-dlx-pub-url-input__search-button"
                   icon={search}
@@ -317,7 +343,7 @@ const URLPicker = (props) => {
                   }}
                 />
               )}
-              {!loading && isURL(suggestionValue) && (
+              {!loading && ( isURL( suggestionValue ) || isRelativePath( suggestionValue ) ) && (
                 <Button
                   className="alerts-dlx-pub-url-input__apply-button"
                   icon={keyboardReturn}

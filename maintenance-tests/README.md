@@ -7,7 +7,7 @@ They intentionally use plain language so a future maintainer can tell what faile
 ## Checks
 
 `dependency-health.mjs`
-: Confirms RC1 keeps the reviewed React and WordPress Components versions and uses only the explicit repository-local npm compatibility setting. It does **not** claim the historical dependency graph has been modernized.
+: Confirms the reviewed React 18, WordPress Components 42.x, and repository-local npm compatibility setting match `package.json` and a successful top-level `npm ls`.
 
 `public-contracts.mjs`
 : Protects the public plugin version, Stable tag, shortcode, option key, and historical block names.

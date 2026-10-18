@@ -1,13 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * Confirm the narrow RC1 developer-install compatibility bridge.
+ * Confirm the reviewed developer-install dependency lines and npm compatibility bridge.
  *
- * RC1 deliberately does not modernize @wordpress/components. That package is
- * bundled into the plugin's admin CSS, so changing it would also change the
- * user-visible admin interface. Instead, RC1 keeps the reviewed dependency
- * versions and records the repository-local npm peer-resolution compatibility
- * setting that makes install and npm ci reproducible.
+ * After dependency audit upgrades, the manifest pins React 18, WordPress Components 42.x,
+ * and the repository-local legacy-peer-deps setting that keeps install and npm ci reproducible
+ * without undeclared package overrides.
  */
 
 import assert from 'node:assert/strict';
@@ -29,15 +27,19 @@ assert.equal(
 );
 assert.equal(
   manifest.dependencies?.['@wordpress/components'],
-  '^19.13.0',
-  'RC1 does not silently change the WordPress Components line or bundled admin styles'
+  '^42.0.0',
+  'Reviewed WordPress Components line matches the post-audit dependency upgrade'
 );
 assert.equal(
   npmrc,
   'legacy-peer-deps=true\n',
-  'RC1 npm compatibility config is explicit, local, and contains no unrelated npm settings'
+  'npm compatibility config is explicit, local, and contains no unrelated npm settings'
 );
-assert.equal(manifest.overrides, undefined, 'RC1 does not force undeclared peer compatibility through package overrides');
+assert.equal(
+  manifest.overrides,
+  undefined,
+  'Project does not force undeclared peer compatibility through package overrides'
+);
 
 const result = spawnSync(
   process.platform === 'win32' ? 'npm.cmd' : 'npm',
@@ -55,4 +57,6 @@ if (result.status !== 0) {
   process.exit(result.status || 1);
 }
 
-console.log('\nRC1 keeps the reviewed dependency versions and uses the explicit repository-local npm compatibility bridge.');
+console.log(
+  '\nReviewed dependency versions and the explicit repository-local npm compatibility bridge are in place.'
+);

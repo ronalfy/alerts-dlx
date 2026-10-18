@@ -10,6 +10,7 @@ import { useState, useRef } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 import AlertButtonLinkControl from "../AlertButtonLinkControl";
+import usePopoverOutsidePointerClose from "../usePopoverOutsidePointerClose";
 import "./editor.scss";
 
 const AlertButton = (props) => {
@@ -34,6 +35,12 @@ const AlertButton = (props) => {
 
     setIsPopOverVisible(false);
   };
+
+  const popoverRef = usePopoverOutsidePointerClose({
+    isOpen: isPopOverVisible && !!linkIconAnchor,
+    onClose: closeLinkPopover,
+    anchor: linkIconAnchor,
+  });
 
   const openLinkPopover = () => {
     ignoreCloseRef.current = true;
@@ -100,6 +107,7 @@ const AlertButton = (props) => {
 
       {isPopOverVisible && linkIconAnchor && (
         <Popover
+          ref={popoverRef}
           anchor={linkIconAnchor}
           noArrow={false}
           onClose={closeLinkPopover}
