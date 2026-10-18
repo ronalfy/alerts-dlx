@@ -44,16 +44,16 @@
       }
     },
     {
-      "step": "setSiteOptions",
-      "options": {
-        "permalink_structure": "/%postname%/"
-      }
-    },
-    {
       "step": "importWxr",
       "file": {
         "resource": "url",
         "url": "https://raw.githubusercontent.com/ronalfy/alerts-dlx/main/blueprint.xml"
+      }
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "permalink_structure": "/%postname%/"
       }
     },
     {
