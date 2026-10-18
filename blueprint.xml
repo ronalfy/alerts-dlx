@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-	<!-- generator="WordPress/6.6.1" created="2024-08-22 20:59" -->
+	<!-- generator="WordPress/7.1.3" created="2026-10-18 00:38" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -26,14 +26,14 @@
 >
 
 <channel>
-	<title>AlertsDLX Demo</title>
-	<link>https://alertsdlx.local</link>
-	<description></description>
-	<pubDate>Thu, 22 Aug 2024 20:59:20 +0000</pubDate>
+	<title>Singular Alerts Demo</title>
+	<link>https://singularalerts.local</link>
+	<description>One Alert to Rule Them All</description>
+	<pubDate>Sun, 18 Oct 2026 00:38:26 +0000</pubDate>
 	<language>en-US</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
-	<wp:base_site_url>https://alertsdlx.local</wp:base_site_url>
-	<wp:base_blog_url>https://alertsdlx.local</wp:base_blog_url>
+	<wp:base_site_url>https://singularalerts.local</wp:base_site_url>
+	<wp:base_blog_url>https://singularalerts.local</wp:base_blog_url>
 
 		<wp:author><wp:author_id>1</wp:author_id><wp:author_login><![CDATA[ronalfy]]></wp:author_login><wp:author_email><![CDATA[ronald@mediaron.com]]></wp:author_email><wp:author_display_name><![CDATA[ronalfy]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
 
@@ -45,24 +45,17 @@
 	</wp:category>
 				<wp:term>
 		<wp:term_id>3</wp:term_id>
-		<wp:term_taxonomy><![CDATA[wp_theme]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[blocksy]]></wp:term_slug>
+		<wp:term_taxonomy><![CDATA[wp_template_part_area]]></wp:term_taxonomy>
+		<wp:term_slug><![CDATA[footer]]></wp:term_slug>
 		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[blocksy]]></wp:term_name>
-	</wp:term>
-		<wp:term>
-		<wp:term_id>4</wp:term_id>
-		<wp:term_taxonomy><![CDATA[nav_menu]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[main]]></wp:term_slug>
-		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[Main]]></wp:term_name>
+		<wp:term_name><![CDATA[footer]]></wp:term_name>
 	</wp:term>
 		<wp:term>
 		<wp:term_id>2</wp:term_id>
 		<wp:term_taxonomy><![CDATA[wp_theme]]></wp:term_taxonomy>
-		<wp:term_slug><![CDATA[twentytwentyfour]]></wp:term_slug>
+		<wp:term_slug><![CDATA[twentytwentyfive]]></wp:term_slug>
 		<wp:term_parent><![CDATA[]]></wp:term_parent>
-		<wp:term_name><![CDATA[twentytwentyfour]]></wp:term_name>
+		<wp:term_name><![CDATA[twentytwentyfive]]></wp:term_name>
 	</wp:term>
 		<wp:term>
 		<wp:term_id>1</wp:term_id>
@@ -71,25 +64,52 @@
 		<wp:term_parent><![CDATA[]]></wp:term_parent>
 		<wp:term_name><![CDATA[Uncategorized]]></wp:term_name>
 	</wp:term>
-			<wp:term><wp:term_id>4</wp:term_id><wp:term_taxonomy>nav_menu</wp:term_taxonomy><wp:term_slug><![CDATA[main]]></wp:term_slug><wp:term_name><![CDATA[Main]]></wp:term_name>
-</wp:term>
-
-	<generator>https://wordpress.org/?v=6.6.1</generator>
+		
+	<generator>https://wordpress.org/?v=7.1.3</generator>
 
 		<item>
-		<title><![CDATA[Navigation]]></title>
-		<link>https://alertsdlx.local/2024/04/navigation/</link>
-		<pubDate>Sat, 06 Apr 2024 03:20:55 +0000</pubDate>
-		<dc:creator><![CDATA[]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/2024/04/navigation/</guid>
+		<title><![CDATA[Custom Styles]]></title>
+		<link>https://singularalerts.local/2026/10/wp-global-styles-twentytwentyfive/</link>
+		<pubDate>Sat, 17 Oct 2026 23:44:17 +0000</pubDate>
+		<dc:creator><![CDATA[ronalfy]]></dc:creator>
+		<guid isPermaLink="false">https://singularalerts.local/2026/10/wp-global-styles-twentytwentyfive/</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:page-list /-->]]></content:encoded>
+		<content:encoded><![CDATA[{"version": 3, "isGlobalStylesUserThemeJSON": true }]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>4</wp:post_id>
-		<wp:post_date><![CDATA[2024-04-06 03:20:55]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-04-06 03:20:55]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-04-06 03:20:55]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-04-06 03:20:55]]></wp:post_modified_gmt>
+		<wp:post_id>5</wp:post_id>
+		<wp:post_date><![CDATA[2026-10-17 23:44:17]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:44:17]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-17 23:44:17]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-17 23:44:17]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[wp-global-styles-twentytwentyfive]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[wp_global_styles]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+										<category domain="wp_theme" nicename="twentytwentyfive"><![CDATA[twentytwentyfive]]></category>
+						</item>
+					<item>
+		<title><![CDATA[Navigation]]></title>
+		<link>https://singularalerts.local/2026/10/navigation/</link>
+		<pubDate>Sat, 17 Oct 2026 23:44:18 +0000</pubDate>
+		<dc:creator><![CDATA[ronalfy]]></dc:creator>
+		<guid isPermaLink="false">https://singularalerts.local/2026/10/navigation/</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:navigation-link {"label":"GitHub","url":"https://github.com/ronalfy/alerts-dlx/","kind":"custom"} /-->
+
+<!-- wp:navigation-link {"label":"Docs","url":"https://docs.mediaron.com/product/alertsdlx/","kind":"custom"} /-->
+
+<!-- wp:navigation-link {"label":"Download","url":"https://wordpress.org/plugins/alerts-dlx/","kind":"custom"} /-->]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>6</wp:post_id>
+		<wp:post_date><![CDATA[2026-10-17 23:44:18]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:44:18]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-17 23:51:08]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-17 23:51:08]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[navigation]]></wp:post_name>
@@ -101,1095 +121,294 @@
 		<wp:is_sticky>0</wp:is_sticky>
 														</item>
 					<item>
-		<title><![CDATA[AlertsDLX Demo]]></title>
-		<link>https://alertsdlx.local/</link>
-		<pubDate>Sun, 23 Jun 2024 18:53:52 +0000</pubDate>
+		<title><![CDATA[Menu]]></title>
+		<link>https://singularalerts.local/2026/10/menu/</link>
+		<pubDate>Sat, 17 Oct 2026 23:48:35 +0000</pubDate>
 		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/?page_id=10</guid>
+		<guid isPermaLink="false">https://singularalerts.local/?p=7</guid>
 		<description></description>
-		<content:encoded><![CDATA[<!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Welcome to the AlertsDLX Demo</h1>
-<!-- /wp:heading -->
+		<content:encoded><![CDATA[<!-- wp:navigation-link {"label":"Download","url":"https://wordpress.org/plugins/alerts-dlx/","kind":"custom"} /-->
 
-<!-- wp:paragraph -->
-<p>Scroll down to view all of the variations of this post. You can use blocks or shortcodes to display AlertsDLX. Edit this page to view the blocks in action.</p>
-<!-- /wp:paragraph -->
+<!-- wp:navigation-link {"label":"Docs","url":"https://docs.mediaron.com/product/alertsdlx/","kind":"custom"} /-->
 
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group"><!-- wp:heading -->
-<h2 class="wp-block-heading">Bootstrap Light</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"primary","alertTitle":"Bootstrap Primary","uniqueId":"adlx-bootstrap-0","className":"is-style-primary"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap primary description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"secondary","alertTitle":"Bootstrap Secondary","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-bootstrap-1","className":"is-style-secondary"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap secondary description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertTitle":"Bootstrap Success","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-square-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-bootstrap-2","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"warning","alertTitle":"Bootstrap Warning","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-octagon-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-bootstrap-3","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"info","alertTitle":"Bootstrap Info","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-bootstrap-4","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"dark","alertTitle":"Bootstrap Dark","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-bootstrap-5","className":"is-style-dark"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap Dark description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"warning","alertTitle":"Bootstrap Warning With Button","buttonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-bootstrap-6","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"warning","alertTitle":"Dismissible Bootstrap Warning With Button","buttonEnabled":true,"closeButtonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"alerts-dlx-31def1c0","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"danger","alertTitle":"Bootstrap Danger With Vertically Centered Icon","buttonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","iconVerticalAlignment":"centered","uniqueId":"adlx-bootstrap-7","className":"is-style-danger"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap danger description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertTitle":"Bootstrap Centered Layout","buttonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-lg\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","iconVerticalAlignment":"centered","uniqueId":"adlx-bootstrap-8","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"style":{"elements":{"link":{"color":{"text":"var:preset|color|palette-color-6"}}}},"backgroundColor":"palette-color-3","textColor":"palette-color-6","layout":{"type":"constrained"}} -->
-<div class="wp-block-group has-palette-color-6-color has-palette-color-3-background-color has-text-color has-background has-link-color"><!-- wp:heading {"style":{"elements":{"link":{"color":{"text":"var:preset|color|palette-color-6"}}}},"textColor":"palette-color-6"} -->
-<h2 class="wp-block-heading has-palette-color-6-color has-text-color has-link-color">Bootstrap Dark Mode</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"primary","alertTitle":"Bootstrap Primary","mode":"dark","uniqueId":"alerts-dlx-0d0f2fa2","className":"is-style-primary"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap primary description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"secondary","alertTitle":"Bootstrap Secondary","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-79eda0f6","className":"is-style-secondary"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap secondary description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertTitle":"Bootstrap Success","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-square-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-23e590fc","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"warning","alertTitle":"Bootstrap Warning","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-octagon-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995A.905.905 0 0 1 8 4zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-7a05ef4d","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"info","alertTitle":"Bootstrap Info","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-aae3aa5f","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"dark","alertTitle":"Bootstrap Dark","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-cdc1504c","className":"is-style-dark"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap Dark description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"warning","alertTitle":"Bootstrap Warning With Button","buttonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-98050731","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"warning","alertTitle":"Dismissible Bootstrap Warning With Button","buttonEnabled":true,"closeButtonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"alerts-dlx-654baef4","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertType":"danger","alertTitle":"Bootstrap Danger With Vertically Centered Icon","buttonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-radioactive\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M9.653 5.496A2.986 2.986 0 0 0 8 5c-.61 0-1.179.183-1.653.496L4.694 2.992A5.972 5.972 0 0 1 8 2c1.222 0 2.358.365 3.306.992L9.653 5.496Zm1.342 2.324a2.986 2.986 0 0 1-.884 2.312 3.01 3.01 0 0 1-.769.552l1.342 2.683c.57-.286 1.09-.66 1.538-1.103a5.986 5.986 0 0 0 1.767-4.624l-2.994.18Zm-5.679 5.548 1.342-2.684A3 3 0 0 1 5.005 7.82l-2.994-.18a6 6 0 0 0 3.306 5.728ZM10 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","iconVerticalAlignment":"centered","uniqueId":"alerts-dlx-98030893","className":"is-style-danger"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap danger description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap -->
-
-<!-- wp:mediaron/alerts-dlx-bootstrap {"alertTitle":"Bootstrap Centered Layout","buttonEnabled":true,"buttonText":"Bootstrap Call-to-action","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-lg\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","iconVerticalAlignment":"centered","uniqueId":"alerts-dlx-8dd03847","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Bootstrap success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-bootstrap --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group"><!-- wp:heading -->
-<h2 class="wp-block-heading">Chakra Light</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Success","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,.5A11.634,11.634,0,0,0,.262,12,11.634,11.634,0,0,0,12,23.5a11.836,11.836,0,0,0,6.624-2,1.25,1.25,0,1,0-1.393-2.076A9.34,9.34,0,0,1,12,21a9.132,9.132,0,0,1-9.238-9A9.132,9.132,0,0,1,12,3a9.132,9.132,0,0,1,9.238,9v.891a1.943,1.943,0,0,1-3.884,0V12A5.355,5.355,0,1,0,12,17.261a5.376,5.376,0,0,0,3.861-1.634,4.438,4.438,0,0,0,7.877-2.736V12A11.634,11.634,0,0,0,12,.5Zm0,14.261A2.763,2.763,0,1,1,14.854,12,2.812,2.812,0,0,1,12,14.761Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-chakra-0"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dismissible Success","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,.5A11.634,11.634,0,0,0,.262,12,11.634,11.634,0,0,0,12,23.5a11.836,11.836,0,0,0,6.624-2,1.25,1.25,0,1,0-1.393-2.076A9.34,9.34,0,0,1,12,21a9.132,9.132,0,0,1-9.238-9A9.132,9.132,0,0,1,12,3a9.132,9.132,0,0,1,9.238,9v.891a1.943,1.943,0,0,1-3.884,0V12A5.355,5.355,0,1,0,12,17.261a5.376,5.376,0,0,0,3.861-1.634,4.438,4.438,0,0,0,7.877-2.736V12A11.634,11.634,0,0,0,12,.5Zm0,14.261A2.763,2.763,0,1,1,14.854,12,2.812,2.812,0,0,1,12,14.761Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"alerts-dlx-524e07eb","closeButtonEnabled":true} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Info","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-chakra-1","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra info description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Warning","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-chakra-2","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Error","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-chakra-3","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Warning Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-chakra-4","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Warning Centered With Button","buttonEnabled":true,"buttonText":"Find out more","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-chakra-5","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Error Solid Variant","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"adlx-chakra-6","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Warning Solid Variant with icon centered","buttonEnabled":true,"buttonText":"Find out more","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","iconVerticalAlignment":"centered","uniqueId":"adlx-chakra-7","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Success Left Accent","buttonEnabled":true,"buttonText":"Find out more","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","iconVerticalAlignment":"centered","uniqueId":"adlx-chakra-8","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Warning Top Accent","buttonText":"Find out more","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"top-accent","uniqueId":"adlx-chakra-9","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description.</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"backgroundColor":"palette-color-3","layout":{"type":"constrained"}} -->
-<div class="wp-block-group has-palette-color-3-background-color has-background"><!-- wp:heading {"style":{"elements":{"link":{"color":{"text":"var:preset|color|palette-color-6"}}}},"textColor":"palette-color-6"} -->
-<h2 class="wp-block-heading has-palette-color-6-color has-text-color has-link-color">Chakra Dark Mode</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dark Mode - Success Subtle","mode":"dark","uniqueId":"adlx-chakra-10"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dark Mode - Success Solid","variant":"solid","mode":"dark","uniqueId":"adlx-chakra-11"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dark Mode - Dismissible Success Solid","variant":"solid","mode":"dark","uniqueId":"alerts-dlx-90f5d310","closeButtonEnabled":true} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dark Mode - Success Left Accent","variant":"left-accent","mode":"dark","uniqueId":"adlx-chakra-12"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dark Mode - Success Top Accent","variant":"top-accent","mode":"dark","uniqueId":"adlx-chakra-13"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertTitle":"Chakra Dark Mode - Success Centered","variant":"centered","mode":"dark","uniqueId":"adlx-chakra-14"} -->
-<!-- wp:paragraph -->
-<p>Chakra success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Dark Mode - Info Subtle","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-chakra-15","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra Info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Dark Mode - Info Solid","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-chakra-16","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Dark Mode - Info Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-chakra-17","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Dark Mode - Info Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"top-accent","mode":"dark","uniqueId":"adlx-chakra-18","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"info","alertTitle":"Chakra Dark Mode - Info Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-chakra-19","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Chakra info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Dark Mode - Warning Subtle","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-chakra-20","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Dark Mode - Warning Solid","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-chakra-21","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Dark Mode - Warning Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-chakra-22","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Dark Mode - Warning Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"top-accent","mode":"dark","uniqueId":"adlx-chakra-23","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"warning","alertTitle":"Chakra Dark Mode - Warning Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-chakra-24","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Chakra warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Dark Mode - Error Subtle","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-chakra-25","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Dark Mode - Error Solid","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-chakra-26","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Dark Mode - Error Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-chakra-27","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Dark Mode - Error Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"top-accent","mode":"dark","uniqueId":"adlx-chakra-28","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra -->
-
-<!-- wp:mediaron/alerts-dlx-chakra {"alertType":"error","alertTitle":"Chakra Dark Mode - Error Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-chakra-29","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Chakra error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-chakra --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group"><!-- wp:heading -->
-<h2 class="wp-block-heading">Material UI Light Mode</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertTitle":"Material Success","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M14.7 35.9 3.5 24.7l2.15-2.15 9.05 9.05 2.15 2.15Zm8.5 0L12 24.7l2.15-2.15 9.05 9.05 19.2-19.2 2.15 2.15Zm0-8.5-2.15-2.15L33.9 12.4l2.15 2.15Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-material-0"} -->
-<!-- wp:paragraph -->
-<p>Material success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Info","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M22.65 34h3V22h-3ZM24 18.3q.7 0 1.175-.45.475-.45.475-1.15t-.475-1.2Q24.7 15 24 15q-.7 0-1.175.5-.475.5-.475 1.2t.475 1.15q.475.45 1.175.45ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Zm.05-3q7.05 0 12-4.975T41 23.95q0-7.05-4.95-12T24 7q-7.05 0-12.025 4.95Q7 16.9 7 24q0 7.05 4.975 12.025Q16.95 41 24.05 41ZM24 24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-material-1","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"warning","alertTitle":"Material Warning","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 37.2q1.15 0 1.975-.85.825-.85.825-2h-5.65q0 1.15.85 2 .85.85 2 .85Zm-9.7-5.85h19.35v-3h-2V22.6q0-3.05-1.575-5.55T25.65 14v-1.5q0-.7-.475-1.175Q24.7 10.85 24 10.85q-.7 0-1.2.475t-.5 1.175V14q-2.85.55-4.425 2.95-1.575 2.4-1.575 5.35v6.05h-2ZM24 44q-4.25 0-7.9-1.525-3.65-1.525-6.35-4.225-2.7-2.7-4.225-6.35Q4 28.25 4 24q0-4.2 1.525-7.85Q7.05 12.5 9.75 9.8q2.7-2.7 6.35-4.25Q19.75 4 24 4q4.2 0 7.85 1.55Q35.5 7.1 38.2 9.8q2.7 2.7 4.25 6.35Q44 19.8 44 24q0 4.25-1.55 7.9-1.55 3.65-4.25 6.35-2.7 2.7-6.35 4.225Q28.2 44 24 44Zm0-3q7.25 0 12.125-4.875T41 24q0-7.25-4.875-12.125T24 7q-7.25 0-12.125 4.875T7 24q0 7.25 4.875 12.125T24 41Zm-4.7-12.65V22q0-2.05 1.325-3.475Q21.95 17.1 24 17.1t3.35 1.425q1.3 1.425 1.3 3.475v6.35ZM24 24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-material-2","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Material warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Error","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 42q-1.45 0-2.475-1.025Q20.5 39.95 20.5 38.5q0-1.45 1.025-2.475Q22.55 35 24 35q1.45 0 2.475 1.025Q27.5 37.05 27.5 38.5q0 1.45-1.025 2.475Q25.45 42 24 42Zm-3.5-12V6h7v24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-material-3","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Error Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 42q-1.45 0-2.475-1.025Q20.5 39.95 20.5 38.5q0-1.45 1.025-2.475Q22.55 35 24 35q1.45 0 2.475 1.025Q27.5 37.05 27.5 38.5q0 1.45-1.025 2.475Q25.45 42 24 42Zm-3.5-12V6h7v24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-material-4","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Info Centered With Button","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 44q-1.7 0-2.875-1.175T19.95 39.95h8.1q0 1.7-1.175 2.875T24 44Zm-8.1-7.15v-3h16.2v3Zm.25-6.05q-3.3-2.15-5.225-5.375Q9 22.2 9 18.15q0-6.1 4.45-10.55Q17.9 3.15 24 3.15q6.1 0 10.55 4.45Q39 12.05 39 18.15q0 4.05-1.9 7.275-1.9 3.225-5.25 5.375Zm1.1-3H30.8q2.4-1.6 3.8-4.15 1.4-2.55 1.4-5.5 0-4.95-3.525-8.475Q28.95 6.15 24 6.15q-4.95 0-8.475 3.525Q12 13.2 12 18.15q0 2.95 1.4 5.5t3.85 4.15Zm6.75 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-material-5","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Info Icon Vertically Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 44q-1.7 0-2.875-1.175T19.95 39.95h8.1q0 1.7-1.175 2.875T24 44Zm-8.1-7.15v-3h16.2v3Zm.25-6.05q-3.3-2.15-5.225-5.375Q9 22.2 9 18.15q0-6.1 4.45-10.55Q17.9 3.15 24 3.15q6.1 0 10.55 4.45Q39 12.05 39 18.15q0 4.05-1.9 7.275-1.9 3.225-5.25 5.375Zm1.1-3H30.8q2.4-1.6 3.8-4.15 1.4-2.55 1.4-5.5 0-4.95-3.525-8.475Q28.95 6.15 24 6.15q-4.95 0-8.475 3.525Q12 13.2 12 18.15q0 2.95 1.4 5.5t3.85 4.15Zm6.75 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","iconVerticalAlignment":"centered","uniqueId":"adlx-material-6","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Info Variant Outlined","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 44q-1.7 0-2.875-1.175T19.95 39.95h8.1q0 1.7-1.175 2.875T24 44Zm-8.1-7.15v-3h16.2v3Zm.25-6.05q-3.3-2.15-5.225-5.375Q9 22.2 9 18.15q0-6.1 4.45-10.55Q17.9 3.15 24 3.15q6.1 0 10.55 4.45Q39 12.05 39 18.15q0 4.05-1.9 7.275-1.9 3.225-5.25 5.375Zm1.1-3H30.8q2.4-1.6 3.8-4.15 1.4-2.55 1.4-5.5 0-4.95-3.525-8.475Q28.95 6.15 24 6.15q-4.95 0-8.475 3.525Q12 13.2 12 18.15q0 2.95 1.4 5.5t3.85 4.15Zm6.75 0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","uniqueId":"adlx-material-7","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"warning","alertTitle":"Material Warning Variant Outlined","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 34q.7 0 1.175-.475.475-.475.475-1.175 0-.7-.475-1.175Q24.7 30.7 24 30.7q-.7 0-1.175.475-.475.475-.475 1.175 0 .7.475 1.175Q23.3 34 24 34Zm-1.35-7.65h3V13.7h-3ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Zm.05-3q7.05 0 12-4.975T41 23.95q0-7.05-4.95-12T24 7q-7.05 0-12.025 4.95Q7 16.9 7 24q0 7.05 4.975 12.025Q16.95 41 24.05 41ZM24 24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","uniqueId":"adlx-material-8","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Material warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Error Variant Outlined","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M24 34q.7 0 1.175-.475.475-.475.475-1.175 0-.7-.475-1.175Q24.7 30.7 24 30.7q-.7 0-1.175.475-.475.475-.475 1.175 0 .7.475 1.175Q23.3 34 24 34Zm-1.35-7.65h3V13.7h-3ZM24 44q-4.1 0-7.75-1.575-3.65-1.575-6.375-4.3-2.725-2.725-4.3-6.375Q4 28.1 4 23.95q0-4.1 1.575-7.75 1.575-3.65 4.3-6.35 2.725-2.7 6.375-4.275Q19.9 4 24.05 4q4.1 0 7.75 1.575 3.65 1.575 6.35 4.275 2.7 2.7 4.275 6.35Q44 19.85 44 24q0 4.1-1.575 7.75-1.575 3.65-4.275 6.375t-6.35 4.3Q28.15 44 24 44Zm.05-3q7.05 0 12-4.975T41 23.95q0-7.05-4.95-12T24 7q-7.05 0-12.025 4.95Q7 16.9 7 24q0 7.05 4.975 12.025Q16.95 41 24.05 41ZM24 24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","uniqueId":"adlx-material-9","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Info Variant Filled","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M22.5 33.8h3V20.95h-3ZM24 17.65q.7 0 1.2-.5t.5-1.2q0-.7-.5-1.2t-1.2-.5q-.7 0-1.2.5t-.5 1.2q0 .7.5 1.2t1.2.5Zm0 26.3q-7-1.75-11.5-8.125T8 21.85V9.95l16-6 16 6v11.9q0 7.6-4.5 13.975T24 43.95Zm0-3.1q5.75-1.9 9.375-7.175T37 21.85v-9.8l-13-4.9-13 4.9v9.8q0 6.55 3.625 11.825Q18.25 38.95 24 40.85ZM24 24Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"filled","uniqueId":"adlx-material-10","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertTitle":"Material Success Variant Filled","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M5.5 40.5q-1.45 0-2.475-1.025Q2 38.45 2 37q0-1.45 1.025-2.475Q4.05 33.5 5.5 33.5q.25 0 .5.025t.65.125l10-10q-.1-.4-.125-.65-.025-.25-.025-.5 0-1.45 1.025-2.475Q18.55 19 20 19q1.45 0 2.475 1.025Q23.5 21.05 23.5 22.5q0 .1-.15 1.15l5.5 5.5q.4-.1.65-.125.25-.025.5-.025t.5.025q.25.025.65.125l8-8q-.1-.4-.125-.65Q39 20.25 39 20q0-1.45 1.025-2.475Q41.05 16.5 42.5 16.5q1.45 0 2.475 1.025Q46 18.55 46 20q0 1.45-1.025 2.475Q43.95 23.5 42.5 23.5q-.25 0-.5-.025t-.65-.125l-8 8q.1.4.125.65.025.25.025.5 0 1.45-1.025 2.475Q31.45 36 30 36q-1.45 0-2.475-1.025Q26.5 33.95 26.5 32.5q0-.25.025-.5t.125-.65l-5.5-5.5q-.4.1-.65.125-.25.025-.5.025-.1 0-1.15-.15l-10 10q.1.4.125.65.025.25.025.5 0 1.45-1.025 2.475Q6.95 40.5 5.5 40.5ZM8 18.4l-1-2.2-2.2-1 2.2-1L8 12l1 2.2 2.2 1-2.2 1Zm22-2.55-1.55-3.3-3.3-1.55 3.3-1.55L30 6.15l1.55 3.3 3.3 1.55-3.3 1.55Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"filled","uniqueId":"adlx-material-11","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Material success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Error Alert Variant Filled","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002248\u0022 width=\u002248\u0022 viewBox=\u00220 0 48 48\u0022\u003e\u003cpath d=\u0022M26.1 43.6q-.85.85-2.1.85t-2.1-.85L4.4 26.1q-.85-.85-.85-2.1t.85-2.1L21.9 4.4q.85-.85 2.1-.85t2.1.85l17.5 17.5q.85.85.85 2.1t-.85 2.1ZM24 41.45 41.45 24 24 6.55 6.55 24 24 41.45ZM22.5 26h3V14h-3Zm1.5 5.5q.6 0 1.05-.45.45-.45.45-1.05 0-.6-.45-1.05-.45-.45-1.05-.45-.6 0-1.05.45-.45.45-.45 1.05 0 .6.45 1.05.45.45 1.05.45Zm0-7.5Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"filled","uniqueId":"adlx-material-12","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material alert description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"backgroundColor":"palette-color-3","layout":{"type":"constrained"}} -->
-<div class="wp-block-group has-palette-color-3-background-color has-background"><!-- wp:heading {"style":{"elements":{"link":{"color":{"text":"var:preset|color|palette-color-6"}}}},"textColor":"palette-color-6"} -->
-<h2 class="wp-block-heading has-palette-color-6-color has-text-color has-link-color">Material UI Dark Mode</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertTitle":"Material Dark Mode - Success Default","mode":"dark","uniqueId":"adlx-material-13","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Material success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertTitle":"Material Dark Mode - Success Outlined","variant":"outlined","mode":"dark","uniqueId":"adlx-material-14","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Material success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertTitle":"Material Dark Mode - Success Filled","variant":"filled","mode":"dark","uniqueId":"adlx-material-15","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Material success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertTitle":"Material Dark Mode - Success Centered","variant":"centered","mode":"dark","uniqueId":"adlx-material-16","className":"is-style-success"} -->
-<!-- wp:paragraph -->
-<p>Material success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Dark Mode - Info Default","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-material-17","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material Info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Dark Mode - Info Outlined","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","mode":"dark","uniqueId":"adlx-material-18","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Dark Mode - Info Filled","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"filled","mode":"dark","uniqueId":"adlx-material-19","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"info","alertTitle":"Material Dark Mode - Info Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-material-20","className":"is-style-info"} -->
-<!-- wp:paragraph -->
-<p>Material info description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"warning","alertTitle":"Material Dark Mode - Warning Default","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-material-21","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Material warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"warning","alertTitle":"Material Dark Mode - Warning Outlined","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","mode":"dark","uniqueId":"adlx-material-22","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Material warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"warning","alertTitle":"Material Dark Mode - Warning Filled","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"filled","mode":"dark","uniqueId":"adlx-material-23","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Material warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"warning","alertTitle":"Material Dark Mode - Warning Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-material-24","className":"is-style-warning"} -->
-<!-- wp:paragraph -->
-<p>Material warning description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Dark Mode - Error Default","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-material-25","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Dark Mode - Error Outlined","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","mode":"dark","uniqueId":"adlx-material-26","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Dark Mode - Error Filled","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"filled","mode":"dark","uniqueId":"adlx-material-27","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material -->
-
-<!-- wp:mediaron/alerts-dlx-material {"alertType":"error","alertTitle":"Material Dark Mode - Error Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M11.983,0a12.206,12.206,0,0,0-8.51,3.653A11.8,11.8,0,0,0,0,12.207,11.779,11.779,0,0,0,11.8,24h.214A12.111,12.111,0,0,0,24,11.791h0A11.766,11.766,0,0,0,11.983,0ZM10.5,16.542a1.476,1.476,0,0,1,1.449-1.53h.027a1.527,1.527,0,0,1,1.523,1.47,1.475,1.475,0,0,1-1.449,1.53h-.027A1.529,1.529,0,0,1,10.5,16.542ZM11,12.5v-6a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-material-28","className":"is-style-error"} -->
-<!-- wp:paragraph -->
-<p>Material error description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-material --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"layout":{"type":"constrained"}} -->
-<div class="wp-block-group"><!-- wp:heading -->
-<h2 class="wp-block-heading">Shoelace Light Mode</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Top Accent","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-shoelace-0","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","uniqueId":"adlx-shoelace-1","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Solid","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"adlx-shoelace-2","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-shoelace-3","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-shoelace-4","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","uniqueId":"adlx-shoelace-5","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Solid","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"adlx-shoelace-6","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-shoelace-7","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Neutral Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-shoelace-8","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Default Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","uniqueId":"adlx-shoelace-9","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Neutral Solid","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"adlx-shoelace-10","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Neutral Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-shoelace-11","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-triangle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-shoelace-12","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","uniqueId":"adlx-shoelace-13","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Solid","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-triangle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"adlx-shoelace-14","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-octagon\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-shoelace-15","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace Warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-dash-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","uniqueId":"adlx-shoelace-16","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","uniqueId":"adlx-shoelace-17","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Solid","buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-octagon\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"adlx-shoelace-18","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-square\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-shoelace-19","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"backgroundColor":"palette-color-3","layout":{"type":"constrained"}} -->
-<div class="wp-block-group has-palette-color-3-background-color has-background"><!-- wp:heading {"style":{"elements":{"link":{"color":{"text":"var:preset|color|palette-color-6"}}}},"textColor":"palette-color-6"} -->
-<h2 class="wp-block-heading has-palette-color-6-color has-text-color has-link-color">Shoelace Dark Mode</h2>
-<!-- /wp:heading -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Top Accent Dark","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-shoelace-20","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Left Accent Dark","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-shoelace-21","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Solid Dark","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-shoelace-22","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertTitle":"Shoelace Success Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-shoelace-23","className":"is-style-success"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace success description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-shoelace-24","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-shoelace-25","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Solid","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-shoelace-26","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"primary","alertTitle":"Shoelace Default Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-shoelace-27","className":"is-style-primary"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace default style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Neutral Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-shoelace-28","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Default Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-info-circle\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-shoelace-29","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Neutral Solid","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-shoelace-30","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"neutral","alertTitle":"Shoelace Neutral Centered","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-lightbulb-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-shoelace-31","className":"is-style-neutral"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace neutral style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-triangle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-shoelace-32","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-shoelace-33","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Solid","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-triangle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-shoelace-34","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"warning","alertTitle":"Shoelace Warning Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-octagon\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-shoelace-35","className":"is-style-warning"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace Warning style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Top Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-dash-circle-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","mode":"dark","uniqueId":"adlx-shoelace-36","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Left Accent","icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","mode":"dark","uniqueId":"adlx-shoelace-37","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Solid","buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-octagon\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","mode":"dark","uniqueId":"adlx-shoelace-38","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace -->
-
-<!-- wp:mediaron/alerts-dlx-shoelace {"alertType":"danger","alertTitle":"Shoelace Danger Centered","buttonEnabled":true,"buttonText":"Alert Button","buttonUrl":"#","buttonHasUrl":true,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-exclamation-square\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z\u0022\u003e\u003c/path\u003e\u003cpath d=\u0022M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","mode":"dark","uniqueId":"adlx-shoelace-39","className":"is-style-danger"} -->
-<!-- wp:paragraph {"placeholder":""} -->
-<p>Shoelace danger style description</p>
-<!-- /wp:paragraph -->
-<!-- /wp:mediaron/alerts-dlx-shoelace --></div>
-<!-- /wp:group -->
-
-<!-- wp:embed {"url":"https://wordpress.org/plugins/alerts-dlx/","type":"wp-embed","providerNameSlug":"plugin-directory"} -->
-<figure class="wp-block-embed is-type-wp-embed is-provider-plugin-directory wp-block-embed-plugin-directory"><div class="wp-block-embed__wrapper">
-https://wordpress.org/plugins/alerts-dlx/
-</div></figure>
-<!-- /wp:embed -->]]></content:encoded>
+<!-- wp:navigation-link {"label":"GitHub","url":"https://github.com/ronalfy/alerts-dlx/","kind":"custom"} /-->]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>10</wp:post_id>
-		<wp:post_date><![CDATA[2024-06-23 18:53:52]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-23 18:53:52]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-08-22 20:56:01]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-08-22 20:56:01]]></wp:post_modified_gmt>
+		<wp:post_id>7</wp:post_id>
+		<wp:post_date><![CDATA[2026-10-17 23:48:35]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:48:35]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-17 23:48:35]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-17 23:48:35]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[home]]></wp:post_name>
+		<wp:post_name><![CDATA[menu]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[wp_navigation]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+														</item>
+					<item>
+		<title><![CDATA[Footer]]></title>
+		<link>https://singularalerts.local/2026/10/footer/</link>
+		<pubDate>Sat, 17 Oct 2026 23:48:35 +0000</pubDate>
+		<dc:creator><![CDATA[ronalfy]]></dc:creator>
+		<guid isPermaLink="false">https://singularalerts.local/2026/10/footer/</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:group {"metadata":{"patternName":"twentytwentyfive/footer","name":"Footer","description":"Footer columns with logo, title, tagline and links.","categories":["footer"]},"style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained"}} -->
+<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--50)"><!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide"><!-- wp:site-logo /-->
+
+<!-- wp:group {"align":"full","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
+<div class="wp-block-group alignfull"><!-- wp:columns -->
+<div class="wp-block-columns"><!-- wp:column {"width":"100%"} -->
+<div class="wp-block-column" style="flex-basis:100%"><!-- wp:site-title {"level":2} /-->
+
+<!-- wp:site-tagline /--></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"width":""} -->
+<div class="wp-block-column"><!-- wp:spacer {"height":"var:preset|spacing|40","width":"0px"} -->
+<div style="height:var(--wp--preset--spacing--40);width:0px" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|80"}},"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"top","justifyContent":"space-between"}} -->
+<div class="wp-block-group"><!-- wp:navigation {"ref":7,"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"}} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"var:preset|spacing|70"} -->
+<div style="height:var(--wp--preset--spacing--70)" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"align":"full","style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+<div class="wp-block-group alignfull"><!-- wp:paragraph {"fontSize":"small"} -->
+<p class="has-small-font-size">Twenty Twenty-Five</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"fontSize":"small"} -->
+<p class="has-small-font-size">
+				Designed with <a href="https://wordpress.org" rel="nofollow">WordPress</a>			</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>9</wp:post_id>
+		<wp:post_date><![CDATA[2026-10-17 23:48:35]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:48:35]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-17 23:48:35]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-17 23:48:35]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[footer]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type><![CDATA[wp_template_part]]></wp:post_type>
+		<wp:post_password><![CDATA[]]></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+										<category domain="wp_template_part_area" nicename="footer"><![CDATA[footer]]></category>
+		<category domain="wp_theme" nicename="twentytwentyfive"><![CDATA[twentytwentyfive]]></category>
+						<wp:postmeta>
+		<wp:meta_key><![CDATA[origin]]></wp:meta_key>
+		<wp:meta_value><![CDATA[theme]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
+					<item>
+		<title><![CDATA[Welcome to Singular Alerts]]></title>
+		<link>https://singularalerts.local/</link>
+		<pubDate>Sat, 17 Oct 2026 23:56:18 +0000</pubDate>
+		<dc:creator><![CDATA[ronalfy]]></dc:creator>
+		<guid isPermaLink="false">https://singularalerts.local/?page_id=12</guid>
+		<description></description>
+		<content:encoded><![CDATA[<!-- wp:group {"metadata":{"name":"Intro","categories":["about"]},"align":"full","className":"alignfull","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained","justifyContent":"center"}} -->
+<div class="wp-block-group alignfull" style="margin-top:0;margin-bottom:0"><!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+<div style="height:var(--wp--preset--spacing--20)" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer -->
+
+<!-- wp:group {"metadata":{"name":"Contents"},"align":"wide","layout":{"type":"default"}} -->
+<div class="wp-block-group alignwide"><!-- wp:columns {"verticalAlignment":"top","align":"wide","className":"is-style-section-1","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40"}}}} -->
+<div class="wp-block-columns alignwide are-vertically-aligned-top is-style-section-1"><!-- wp:column {"verticalAlignment":"top","width":"","layout":{"type":"constrained","justifyContent":"left","contentSize":"450px"}} -->
+<div class="wp-block-column is-vertically-aligned-top"><!-- wp:heading -->
+<h2 class="wp-block-heading">Uncover the possibilities of Singular Alerts. One block and shortcode cover the entire feature set.</h2>
+<!-- /wp:heading --></div>
+<!-- /wp:column -->
+
+<!-- wp:column {"verticalAlignment":"top","width":"60%"} -->
+<div class="wp-block-column is-vertically-aligned-top" style="flex-basis:60%"><!-- wp:paragraph -->
+<p>Add an alert, set a global style or preset, and keep working on your tasks or writing.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertType":"warning","alertTitle":"Warning: Creating Alerts Can Be Addictive","buttonEnabled":true,"closeButtonEnabled":true,"closeButtonExpiration":3600,"buttonText":"View on WordPress.org","buttonUrl":"https://wordpress.org/plugins/alerts-dlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"uniqueId":"alerts-dlx-24382caf","globalStyleId":14,"className":"is-style-warning"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>With beautiful and versatile alerts, you can be sure your use case is covered. And if it's not, you can request it as a feature!</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph {"placeholder":""} -->
+<p>Psst, this is a global alert style with a dismiss action.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+<div style="height:var(--wp--preset--spacing--20)" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></div>
+<!-- /wp:group -->
+
+<!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+<div style="height:var(--wp--preset--spacing--20)" aria-hidden="true" class="wp-block-spacer"></div>
+<!-- /wp:spacer --></div>
+<!-- /wp:group -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">One Alert Block and Shortcode, Limitless Possibilities</h2>
+<!-- /wp:heading -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertType":"info","alertTitle":"This is an Info alert that can be used as a starter preset","buttonEnabled":true,"closeButtonEnabled":true,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Docs","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\u0022/\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"alerts-dlx-27955cce","alertGroup":"chakra","iconAppearance":"default","className":"is-style-info"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>You can hide this alert. The expiration is set to zero, so it won't stay dismissed after a reload.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertTitle":"This is a Success alert using the Chakra UI library.","descriptionEnabled":false,"buttonEnabled":true,"closeButtonExpiration":3601,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Docs","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"solid","uniqueId":"alerts-dlx-dd5890c2","alertGroup":"chakra","iconAppearance":"default","className":"is-style-success"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p></p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertTitle":"This is the same alert, but using Material UI","buttonEnabled":true,"closeButtonExpiration":3601,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Docs","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","uniqueId":"adlx-material-0","alertGroup":"material","iconAppearance":"default","className":"is-style-success"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>You can choose from four UI libraries.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertTitle":"This is the same alert, but using Bootstrap","buttonEnabled":true,"closeButtonExpiration":3601,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Docs","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-square-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"centered","uniqueId":"adlx-material-3","iconAppearance":"default","className":"is-style-success"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>This variation is centered.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertTitle":"This is the same alert, but using Shoelace UI","buttonEnabled":true,"closeButtonExpiration":3601,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Docs","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-square-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"left-accent","uniqueId":"alerts-dlx-e960eb77","alertGroup":"shoelace","iconAppearance":"default","className":"is-style-success"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>This variation has a left accent.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertType":"danger","alertTitle":"This is a Shoelace error alert box","buttonEnabled":true,"closeButtonExpiration":3601,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Docs","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 width=\u002216\u0022 height=\u002216\u0022 fill=\u0022currentColor\u0022 class=\u0022bi bi-check-square-fill\u0022 viewBox=\u00220 0 16 16\u0022\u003e\u003cpath d=\u0022M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"top-accent","uniqueId":"alerts-dlx-249e6563","alertGroup":"shoelace","iconAppearance":"default","className":"is-style-danger"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>This variation has a top accent.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:paragraph -->
+<p>With global styles, you can ensure all similar alerts look and feel the same. This allows for immense editorial control.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:mediaron/alerts-dlx-alert {"alertType":"warning","alertTitle":"This alert uses the same global style as the alert in the introduction","closeButtonExpiration":3601,"colorPrimary":"var(\u002d\u002dchakra-info-color, #014361)","colorBorder":"var(\u002d\u002dchakra-info-color-border, #014361)","colorAccent":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAlt":"var(\u002d\u002dchakra-info-color-alt, #2d75b8)","colorAltHover":"var(\u002d\u002dchakra-info-color-accent, #3182ce)","colorAltText":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorAltTextHover":"var(\u002d\u002dchakra-info-color-contrast, #ffffff)","colorBold":"var(\u002d\u002dchakra-info-color-bold, #2d76bb)","colorLight":"var(\u002d\u002dchakra-info-color-light, #bee3f8)","buttonText":"View the Admin Options","buttonUrl":"https://docs.mediaron.com/product/alertsdlx/","buttonHasUrl":true,"buttonTarget":true,"buttonRelNoFollow":true,"baseFontSize":16,"icon":"\u003csvg xmlns=\u0022http://www.w3.org/2000/svg\u0022 height=\u002224\u0022 width=\u002224\u0022 viewBox=\u00220 0 24 24\u0022\u003e\u003cpath d=\u0022M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z\u0022\u003e\u003c/path\u003e\u003c/svg\u003e","variant":"outlined","uniqueId":"alerts-dlx-987fc4d7","alertGroup":"material","iconAppearance":"default","globalStyleId":14,"className":"is-style-warning"} -->
+<!-- wp:paragraph {"placeholder":""} -->
+<p>If you change the global style in the admin, it'll update both blocks at once.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p><a href="/wp-admin/options-general.php?page=singular-alerts">Visit the admin options</a> to edit this alert's global style.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:mediaron/alerts-dlx-alert -->
+
+<!-- wp:paragraph -->
+<p>Try it out for yourself when you get a chance by <a href="/edit">editing this post</a>.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Be sure to <a href="/wp-admin/options-general.php?page=singular-alerts">visit the admin options</a> to adjust global styles and presets, and even build a shortcode with the built-in shortcode builder.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Download the plugin and view additional screenshots below.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:wp-plugin-info-card/plugin-screenshots-info-card {"uniqueId":"wppic-0a148acf","screen":"plugin-preview","assetData":{"url":"https://wordpress.org/plugins/alerts-dlx/","name":"Singular Alerts \u0026#8211; Alert Block, Alert Box, Callout Box, and Notifications","slug":"alerts-dlx","version":"3.0.0","author":"Ronald Huereca","author_profile":"https://profiles.wordpress.org/ronalfy/","contributors":"ronalfy","tested":"7.1.3","requires":"6.9","rating":100,"num_ratings":2,"ratings":{"1":0,"2":0,"3":0,"4":0,"5":2},"downloaded":100,"active_installs":"100","last_updated_human_time":"3 days","last_updated":"3 days ago","last_updated_mk":"2026-10-15 8:36am GMT","added":"2022-09-10","homepage":"https://singularalerts.com","short_description":"Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance your site's content and user engagement.","download_link":"https://downloads.wordpress.org/plugin/alerts-dlx.3.0.0.zip","donate_link":"https://github.com/sponsors/DLXPlugins","icons":{"1x":"https://ps.w.org/alerts-dlx/assets/icon-128x128.png?rev=2782634","2x":"https://ps.w.org/alerts-dlx/assets/icon-256x256.png?rev=2782634"},"banners":{"low":"https://ps.w.org/alerts-dlx/assets/banner-772x250.png?rev=3418859","high":"https://ps.w.org/alerts-dlx/assets/banner-1544x500.png?rev=3418859"},"screenshots":{"1":{"src":"https://ps.w.org/alerts-dlx/assets/screenshot-1.jpg?rev=3418935","caption":"Dismissible alert with custom image icon selected, and alert button displaying."},"2":{"src":"https://ps.w.org/alerts-dlx/assets/screenshot-2.jpg?rev=3418935","caption":"Adding the alert box via the block editor shows four alert types."},"3":{"src":"https://ps.w.org/alerts-dlx/assets/screenshot-3.gif?rev=3418935","caption":"Edit the icon, add an alert button, and create a dismissible alert easily in Gutenberg (the Block Editor)."},"4":{"src":"https://ps.w.org/alerts-dlx/assets/screenshot-4.jpg?rev=3418935","caption":"Block editor sidebar options showing style, alert settings, variants, and custom colors."},"5":{"src":"https://ps.w.org/alerts-dlx/assets/screenshot-5.jpg?rev=3418935","caption":"Add a shortcode wherever shortcodes are supported, such as a form plugin, page builder, or widget."},"6":{"src":"https://ps.w.org/alerts-dlx/assets/screenshot-6.jpg?rev=3418935","caption":"Each alert type supports light and dark mode colors."}},"is_edd":false,"review_url":"","requires_php":"8.0","active_installs_raw":100},"slug":"alerts-dlx","colorTheme":"crimson","align":"wide"} /-->]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>12</wp:post_id>
+		<wp:post_date><![CDATA[2026-10-17 23:56:18]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:56:18]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-18 00:33:17]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-18 00:33:17]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
+		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
+		<wp:post_name><![CDATA[front-page]]></wp:post_name>
 		<wp:status><![CDATA[publish]]></wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
 		<wp:post_type><![CDATA[page]]></wp:post_type>
 		<wp:post_password><![CDATA[]]></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-														<wp:postmeta>
-		<wp:meta_key><![CDATA[blocksy_post_meta_options]]></wp:meta_key>
-		<wp:meta_value><![CDATA[a:3:{s:19:"page_structure_type";s:6:"type-3";s:16:"has_hero_section";s:8:"disabled";s:17:"styles_descriptor";a:3:{s:6:"styles";a:3:{s:7:"desktop";s:0:"";s:6:"tablet";s:0:"";s:6:"mobile";s:0:"";}s:12:"google_fonts";a:0:{}s:7:"version";i:6;}}]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_oembed_4b3f12d69a763332d1451fe4421e7d97]]></wp:meta_key>
-		<wp:meta_value><![CDATA[<blockquote class="wp-embedded-content" data-secret="7PD4BMl56e"><a href="https://wordpress.org/plugins/alerts-dlx/">AlertsDLX &#8211; Alert Banners, Callouts, and Notifications</a></blockquote><iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" style="position: absolute; visibility: hidden;" title="&#8220;AlertsDLX &#8211; Alert Banners, Callouts, and Notifications&#8221; &#8212; Plugin Directory" src="https://wordpress.org/plugins/alerts-dlx/embed/#?secret=fSP7h1oh5V#?secret=7PD4BMl56e" data-secret="7PD4BMl56e" width="600" height="338" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_oembed_time_4b3f12d69a763332d1451fe4421e7d97]]></wp:meta_key>
-		<wp:meta_value><![CDATA[1724360162]]></wp:meta_value>
-		</wp:postmeta>
-							</item>
+														</item>
 					<item>
-		<title><![CDATA[Custom Styles]]></title>
-		<link>https://alertsdlx.local/2024/06/wp-global-styles-twentytwentyfour/</link>
-		<pubDate>Sun, 23 Jun 2024 18:52:54 +0000</pubDate>
+		<title><![CDATA[Site-wide Warning]]></title>
+		<link>https://singularalerts.local/alerts_dlx_library/sa-warning/</link>
+		<pubDate>Sat, 17 Oct 2026 23:58:19 +0000</pubDate>
 		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/2024/06/wp-global-styles-twentytwentyfour/</guid>
+		<guid isPermaLink="false">https://singularalerts.local/alerts_dlx_library/sa-warning/</guid>
 		<description></description>
-		<content:encoded><![CDATA[{"version": 2, "isGlobalStylesUserThemeJSON": true }]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>11</wp:post_id>
-		<wp:post_date><![CDATA[2024-06-23 18:52:54]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-23 18:52:54]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-06-23 18:52:54]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-06-23 18:52:54]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[wp-global-styles-twentytwentyfour]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[wp_global_styles]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="wp_theme" nicename="twentytwentyfour"><![CDATA[twentytwentyfour]]></category>
-						</item>
-					<item>
-		<title><![CDATA[Custom Styles]]></title>
-		<link>https://alertsdlx.local/2024/06/wp-global-styles-blocksy/</link>
-		<pubDate>Sun, 23 Jun 2024 18:55:11 +0000</pubDate>
-		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/2024/06/wp-global-styles-blocksy/</guid>
-		<description></description>
-		<content:encoded><![CDATA[{"version": 2, "isGlobalStylesUserThemeJSON": true }]]></content:encoded>
+		<content:encoded><![CDATA[{"alert_group":"chakra","alert_type":"warning","maximum_width_unit":"px","maximum_width":650,"margin_spacing":"spacious","margin_spacing_target":"both","icon":"<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" height=\"24\" width=\"24\" viewBox=\"0 0 24 24\"><path d=\"M23.119,20,13.772,2.15h0a2,2,0,0,0-3.543,0L.881,20a2,2,0,0,0,1.772,2.928H21.347A2,2,0,0,0,23.119,20ZM11,8.423a1,1,0,0,1,2,0v6a1,1,0,1,1-2,0Zm1.05,11.51h-.028a1.528,1.528,0,0,1-1.522-1.47,1.476,1.476,0,0,1,1.448-1.53h.028A1.527,1.527,0,0,1,13.5,18.4,1.475,1.475,0,0,1,12.05,19.933Z\"\/><\/svg>","base_font_size":16,"icon_vertical_alignment":"top","variant":"solid","mode":"light","icon_appearance":"default","color_primary":"var(--chakra-info-color, #014361)","color_border":"var(--chakra-info-color-border, #014361)","color_accent":"var(--chakra-info-color-accent, #3182ce)","color_alt":"var(--chakra-info-color-alt, #2d75b8)","color_alt_hover":"var(--chakra-info-color-accent, #3182ce)","color_alt_text":"var(--chakra-info-color-contrast, #ffffff)","color_alt_text_hover":"var(--chakra-info-color-contrast, #ffffff)","color_bold":"var(--chakra-info-color-bold, #2d76bb)","color_light":"var(--chakra-info-color-light, #bee3f8)","icon_source":"icon","image_url":"","image_id":0}]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>14</wp:post_id>
-		<wp:post_date><![CDATA[2024-06-23 18:55:11]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-23 18:55:11]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-06-23 18:55:11]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-06-23 18:55:11]]></wp:post_modified_gmt>
+		<wp:post_date><![CDATA[2026-10-17 23:58:19]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:58:19]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-17 23:58:19]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-17 23:58:19]]></wp:post_modified_gmt>
 		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[wp-global-styles-blocksy]]></wp:post_name>
+		<wp:post_name><![CDATA[sa-warning]]></wp:post_name>
 		<wp:status><![CDATA[publish]]></wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[wp_global_styles]]></wp:post_type>
+		<wp:post_type><![CDATA[alerts_dlx_library]]></wp:post_type>
 		<wp:post_password><![CDATA[]]></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="wp_theme" nicename="blocksy"><![CDATA[blocksy]]></category>
-						</item>
+														<wp:postmeta>
+		<wp:meta_key><![CDATA[_alerts_dlx_kind]]></wp:meta_key>
+		<wp:meta_value><![CDATA[global_style]]></wp:meta_value>
+		</wp:postmeta>
+							</item>
 					<item>
-		<title><![CDATA[]]></title>
-		<link>https://alertsdlx.local/home/237807828_eb98cda93b_k/</link>
-		<pubDate>Sun, 23 Jun 2024 20:40:51 +0000</pubDate>
+		<title><![CDATA[Info Preset]]></title>
+		<link>https://singularalerts.local/alerts_dlx_library/sa-info-preset/</link>
+		<pubDate>Sat, 17 Oct 2026 23:58:41 +0000</pubDate>
 		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/wp-content/uploads/2024/06/237807828_eb98cda93b_k.jpg</guid>
+		<guid isPermaLink="false">https://singularalerts.local/alerts_dlx_library/sa-warning-2/</guid>
 		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[Lighting Strike in Phoenix, Arizona]]></excerpt:encoded>
-		<wp:post_id>24</wp:post_id>
-		<wp:post_date><![CDATA[2024-06-23 20:40:51]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-23 20:40:51]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-06-23 20:41:16]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-06-23 20:41:16]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[open]]></wp:comment_status>
+		<content:encoded><![CDATA[{"alert_group":"chakra","alert_type":"info","align":"center","maximum_width_unit":"px","maximum_width":650,"margin_spacing":"spacious","margin_spacing_target":"both","icon":"<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" height=\"24\" width=\"24\" viewBox=\"0 0 24 24\"><path d=\"M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm.25,5a1.5,1.5,0,1,1-1.5,1.5A1.5,1.5,0,0,1,12.25,5ZM14.5,18.5h-4a1,1,0,0,1,0-2h.75a.25.25,0,0,0,.25-.25v-4.5a.25.25,0,0,0-.25-.25H10.5a1,1,0,0,1,0-2h1a2,2,0,0,1,2,2v4.75a.25.25,0,0,0,.25.25h.75a1,1,0,1,1,0,2Z\"\/><\/svg>","base_font_size":16,"icon_vertical_alignment":"top","variant":"solid","mode":"light","icon_appearance":"default","color_primary":"var(--chakra-info-color, #014361)","color_border":"var(--chakra-info-color-border, #014361)","color_accent":"var(--chakra-info-color-accent, #3182ce)","color_alt":"var(--chakra-info-color-alt, #2d75b8)","color_alt_hover":"var(--chakra-info-color-accent, #3182ce)","color_alt_text":"var(--chakra-info-color-contrast, #ffffff)","color_alt_text_hover":"var(--chakra-info-color-contrast, #ffffff)","color_bold":"var(--chakra-info-color-bold, #2d76bb)","color_light":"var(--chakra-info-color-light, #bee3f8)","close_button_enabled":true,"close_button_expiration":3601,"icon_source":"icon","image_url":"","image_id":0,"title_enabled":true,"description_enabled":true,"button_enabled":true}]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>15</wp:post_id>
+		<wp:post_date><![CDATA[2026-10-17 23:58:41]]></wp:post_date>
+		<wp:post_date_gmt><![CDATA[2026-10-17 23:58:41]]></wp:post_date_gmt>
+		<wp:post_modified><![CDATA[2026-10-18 00:00:24]]></wp:post_modified>
+		<wp:post_modified_gmt><![CDATA[2026-10-18 00:00:24]]></wp:post_modified_gmt>
+		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[237807828_eb98cda93b_k]]></wp:post_name>
-		<wp:status><![CDATA[inherit]]></wp:status>
-		<wp:post_parent>10</wp:post_parent>
+		<wp:post_name><![CDATA[sa-info-preset]]></wp:post_name>
+		<wp:status><![CDATA[publish]]></wp:status>
+		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type><![CDATA[attachment]]></wp:post_type>
+		<wp:post_type><![CDATA[alerts_dlx_library]]></wp:post_type>
 		<wp:post_password><![CDATA[]]></wp:post_password>
 		<wp:is_sticky>0</wp:is_sticky>
-						<wp:attachment_url><![CDATA[https://alertsdlx.local/wp-content/uploads/2024/06/237807828_eb98cda93b_k.jpg]]></wp:attachment_url>
-											<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
-		<wp:meta_value><![CDATA[2024/06/237807828_eb98cda93b_k.jpg]]></wp:meta_value>
+														<wp:postmeta>
+		<wp:meta_key><![CDATA[_alerts_dlx_kind]]></wp:meta_key>
+		<wp:meta_value><![CDATA[snapshot]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>
-		<wp:meta_value><![CDATA[a:6:{s:5:"width";i:2048;s:6:"height";i:1383;s:4:"file";s:34:"2024/06/237807828_eb98cda93b_k.jpg";s:8:"filesize";i:443010;s:5:"sizes";a:5:{s:6:"medium";a:5:{s:4:"file";s:34:"237807828_eb98cda93b_k-300x203.jpg";s:5:"width";i:300;s:6:"height";i:203;s:9:"mime-type";s:10:"image/jpeg";s:8:"filesize";i:6497;}s:5:"large";a:5:{s:4:"file";s:35:"237807828_eb98cda93b_k-1024x692.jpg";s:5:"width";i:1024;s:6:"height";i:692;s:9:"mime-type";s:10:"image/jpeg";s:8:"filesize";i:50867;}s:9:"thumbnail";a:5:{s:4:"file";s:34:"237807828_eb98cda93b_k-150x150.jpg";s:5:"width";i:150;s:6:"height";i:150;s:9:"mime-type";s:10:"image/jpeg";s:8:"filesize";i:3259;}s:12:"medium_large";a:5:{s:4:"file";s:34:"237807828_eb98cda93b_k-768x519.jpg";s:5:"width";i:768;s:6:"height";i:519;s:9:"mime-type";s:10:"image/jpeg";s:8:"filesize";i:29023;}s:9:"1536x1536";a:5:{s:4:"file";s:36:"237807828_eb98cda93b_k-1536x1037.jpg";s:5:"width";i:1536;s:6:"height";i:1037;s:9:"mime-type";s:10:"image/jpeg";s:8:"filesize";i:112962;}}s:10:"image_meta";a:12:{s:8:"aperture";s:1:"0";s:6:"credit";s:0:"";s:6:"camera";s:0:"";s:7:"caption";s:0:"";s:17:"created_timestamp";s:1:"0";s:9:"copyright";s:0:"";s:12:"focal_length";s:1:"0";s:3:"iso";s:1:"0";s:13:"shutter_speed";s:1:"0";s:5:"title";s:0:"";s:11:"orientation";s:1:"0";s:8:"keywords";a:0:{}}}]]></wp:meta_value>
+		<wp:meta_key><![CDATA[_wp_old_slug]]></wp:meta_key>
+		<wp:meta_value><![CDATA[sa-warning-2]]></wp:meta_value>
 		</wp:postmeta>
 							<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_attachment_image_alt]]></wp:meta_key>
-		<wp:meta_value><![CDATA[Lighting Strike in Phoenix, Arizona]]></wp:meta_value>
-		</wp:postmeta>
-							</item>
-					<item>
-		<title><![CDATA[Demo]]></title>
-		<link>https://alertsdlx.local/2024/08/demo/</link>
-		<pubDate>Mon, 24 Jun 2024 18:28:39 +0000</pubDate>
-		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/?p=28</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>28</wp:post_id>
-		<wp:post_date><![CDATA[2024-08-22 20:54:07]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-24 18:28:39]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-08-22 20:54:07]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-08-22 20:54:07]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[demo]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>1</wp:menu_order>
-		<wp:post_type><![CDATA[nav_menu_item]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="nav_menu" nicename="main"><![CDATA[Main]]></category>
-						<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_type]]></wp:meta_key>
-		<wp:meta_value><![CDATA[post_type]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_menu_item_parent]]></wp:meta_key>
-		<wp:meta_value><![CDATA[0]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_object_id]]></wp:meta_key>
-		<wp:meta_value><![CDATA[10]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_object]]></wp:meta_key>
-		<wp:meta_value><![CDATA[page]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_target]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_classes]]></wp:meta_key>
-		<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_xfn]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_url]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
-		<wp:meta_value><![CDATA[2024-06-24]]></wp:meta_value>
-		</wp:postmeta>
-							</item>
-					<item>
-		<title><![CDATA[On WordPress.org]]></title>
-		<link>https://alertsdlx.local/2024/08/on-wordpress-org/</link>
-		<pubDate>Mon, 24 Jun 2024 18:29:40 +0000</pubDate>
-		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/?p=29</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>29</wp:post_id>
-		<wp:post_date><![CDATA[2024-08-22 20:54:07]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-24 18:29:40]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-08-22 20:54:07]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-08-22 20:54:07]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[on-wordpress-org]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>2</wp:menu_order>
-		<wp:post_type><![CDATA[nav_menu_item]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="nav_menu" nicename="main"><![CDATA[Main]]></category>
-						<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_type]]></wp:meta_key>
-		<wp:meta_value><![CDATA[custom]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_menu_item_parent]]></wp:meta_key>
-		<wp:meta_value><![CDATA[0]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_object_id]]></wp:meta_key>
-		<wp:meta_value><![CDATA[29]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_object]]></wp:meta_key>
-		<wp:meta_value><![CDATA[custom]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_target]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_classes]]></wp:meta_key>
-		<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_xfn]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_url]]></wp:meta_key>
-		<wp:meta_value><![CDATA[https://wordpress.org/plugins/alerts-dlx/]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
-		<wp:meta_value><![CDATA[2024-06-24]]></wp:meta_value>
-		</wp:postmeta>
-							</item>
-					<item>
-		<title><![CDATA[Visit Alerts DLX]]></title>
-		<link>https://alertsdlx.local/2024/08/visit-highlight-and-share/</link>
-		<pubDate>Mon, 24 Jun 2024 18:29:40 +0000</pubDate>
-		<dc:creator><![CDATA[ronalfy]]></dc:creator>
-		<guid isPermaLink="false">https://alertsdlx.local/?p=30</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>30</wp:post_id>
-		<wp:post_date><![CDATA[2024-08-22 20:54:07]]></wp:post_date>
-		<wp:post_date_gmt><![CDATA[2024-06-24 18:29:40]]></wp:post_date_gmt>
-		<wp:post_modified><![CDATA[2024-08-22 20:54:07]]></wp:post_modified>
-		<wp:post_modified_gmt><![CDATA[2024-08-22 20:54:07]]></wp:post_modified_gmt>
-		<wp:comment_status><![CDATA[closed]]></wp:comment_status>
-		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
-		<wp:post_name><![CDATA[visit-highlight-and-share]]></wp:post_name>
-		<wp:status><![CDATA[publish]]></wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>3</wp:menu_order>
-		<wp:post_type><![CDATA[nav_menu_item]]></wp:post_type>
-		<wp:post_password><![CDATA[]]></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-										<category domain="nav_menu" nicename="main"><![CDATA[Main]]></category>
-						<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_type]]></wp:meta_key>
-		<wp:meta_value><![CDATA[custom]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_menu_item_parent]]></wp:meta_key>
-		<wp:meta_value><![CDATA[0]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_object_id]]></wp:meta_key>
-		<wp:meta_value><![CDATA[30]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_object]]></wp:meta_key>
-		<wp:meta_value><![CDATA[custom]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_target]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_classes]]></wp:meta_key>
-		<wp:meta_value><![CDATA[a:1:{i:0;s:0:"";}]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_xfn]]></wp:meta_key>
-		<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_menu_item_url]]></wp:meta_key>
-		<wp:meta_value><![CDATA[https://dlxplugins.com/plugins/alertsdlx/]]></wp:meta_value>
-		</wp:postmeta>
-							<wp:postmeta>
-		<wp:meta_key><![CDATA[_wp_old_date]]></wp:meta_key>
-		<wp:meta_value><![CDATA[2024-06-24]]></wp:meta_value>
+		<wp:meta_key><![CDATA[_alerts_dlx_show_in_inserter]]></wp:meta_key>
+		<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 							</item>
 				</channel>
