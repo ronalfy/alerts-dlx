@@ -37,6 +37,16 @@
       "step": "installPlugin",
       "pluginData": {
         "resource": "wordpress.org/plugins",
+        "slug": "slash-edit"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginData": {
+        "resource": "wordpress.org/plugins",
         "slug": "wp-plugin-info-card"
       },
       "options": {
