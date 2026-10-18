@@ -45,7 +45,7 @@
     },
     {
       "step": "runPHP",
-      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$posts = get_posts(\n\tarray(\n\t\t'posts_per_page' => 100,\n\t\t'post_type'   => array( 'post', 'page' ),\n\t\t'post_status' => 'any',\n\t)\n);\nforeach ( $posts as $post ) {\n\twp_delete_post( $post->ID, true );\n}\n"
+      "code": "<?php require '/wordpress/wp-load.php';$posts = get_posts(array('posts_per_page' => 100,'post_type'   => array( 'post', 'page' ),'post_status' => 'any'));foreach ( $posts as $post ) {wp_delete_post( $post->ID, true );}"
     },
     {
       "step": "importWxr",
@@ -67,7 +67,7 @@
     },
     {
       "step": "runPHP",
-      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$page = get_page_by_path( 'front-page', OBJECT, 'page' );update_option( 'show_on_front', 'page' );update_option( 'page_on_front', (int) $page->ID );\n}\n"
+      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$page = get_page_by_path( 'front-page', OBJECT, 'page' );update_option( 'page_on_front', (int) $page->ID );update_option( 'show_on_front', 'page' );\n}\n"
     },
     {
       "step": "runPHP",
