@@ -17,7 +17,6 @@
 
 namespace DLXPlugins\AlertsDLX;
 
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -69,6 +68,7 @@ class AlertsDLX {
 		( new Admin() )->run();
 		Blocks::run();
 		Rest::run();
+		( new Abilities() )->run();
 
 		/**
 		 * When AlertsDLX can be extended.

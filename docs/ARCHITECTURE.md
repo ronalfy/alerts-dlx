@@ -10,6 +10,7 @@ flowchart LR
   bootstrap --> admin[Admin]
   bootstrap --> blocks[Blocks]
   bootstrap --> rest[Rest]
+  bootstrap --> abilities[Abilities]
   blocks --> editor[src blocks]
   blocks --> frontend[frontend markup]
   blocks --> shortcode[alertsdlx shortcode]
@@ -23,6 +24,7 @@ flowchart LR
    - `Admin::run()` — Settings screen and AJAX save/retrieve/reset.
    - `Blocks::run()` — Block registration, editor/frontend assets, shortcode.
    - `Rest::run()` — REST search for the button URL picker and alert library CRUD.
+   - `Abilities::run()` — Abilities API category, `[alertsdlx]` shortcode generator, and saved global-style list, when WordPress provides `wp_register_ability`.
 4. Fires `do_action( 'alerts_dlx_loaded' )` for extenders.
 
 A custom content pipeline `alerts_dlx_the_content` (embed, autop, shortcodes) processes alert description content without relying solely on `the_content`.
@@ -37,6 +39,7 @@ A custom content pipeline `alerts_dlx_the_content` (embed, autop, shortcodes) pr
 | `AlertLibrary` | CPT `alerts_dlx_library`, meta `_alerts_dlx_kind`, config JSON in `post_content`, kind-aware sanitize |
 | `Rest` | `search/pages` and `library-items` REST routes |
 | `ShortcodeBuilder` | Shortcode builder AJAX; global style and snapshot field allowlists |
+| `Abilities` | Abilities API: `singular-alerts/generate-alert-shortcode` returns a sanitized `[alertsdlx]` shortcode; `singular-alerts/get-global-styles` returns saved global styles |
 | `Functions` | Paths, URLs, capability helpers, shared utilities |
 
 ### Options storage
