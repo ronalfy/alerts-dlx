@@ -44,24 +44,6 @@
       }
     },
     {
-      "step": "setSiteOptions",
-      "options": {
-        "permalink_structure": "/%postname%/"
-      }
-    },
-    {
-      "step": "setSiteOptions",
-      "options": {
-        "blogname": "AlertsDLX Demo",
-        "show_on_front": "page",
-        "dismissed-blocksy_plugin_notice": "1"
-      }
-    },
-    {
-      "step": "runPHP",
-      "code": "<?php require_once 'wordpress/wp-load.php'; update_option( 'alerts_dlx', maybe_unserialize( 'a:9:{s:14:\"headline_style\";s:2:\"h2\";s:23:\"headline_custom_classes\";s:0:\"\";s:19:\"headline_force_size\";b:1;s:10:\"debug_mode\";b:0;s:14:\"margin_spacing\";s:8:\"spacious\";s:21:\"margin_spacing_target\";s:4:\"both\";s:14:\"override_fonts\";b:0;s:20:\"font_family_override\";s:0:\"\";s:15:\"options_version\";s:5:\"1.0.0\";}' ) ); ?>"
-    },
-    {
       "step": "importWxr",
       "file": {
         "resource": "url",
@@ -71,6 +53,22 @@
     {
       "step": "runPHP",
       "code": "<?php require_once 'wordpress/wp-load.php'; $path = get_page_by_path( 'front-page' ); update_option( 'page_on_front', absint( $path->ID ) );"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "permalink_structure": "/%postname%/"
+      }
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "Singular Alerts Demo"
+      }
+    },
+    {
+      "step": "runPHP",
+      "code": "<?php require_once 'wordpress/wp-load.php'; update_option( 'alerts_dlx', maybe_unserialize( 'a:9:{s:14:\"headline_style\";s:2:\"h2\";s:23:\"headline_custom_classes\";s:0:\"\";s:19:\"headline_force_size\";b:1;s:10:\"debug_mode\";b:0;s:14:\"margin_spacing\";s:8:\"spacious\";s:21:\"margin_spacing_target\";s:4:\"both\";s:14:\"override_fonts\";b:0;s:20:\"font_family_override\";s:0:\"\";s:15:\"options_version\";s:5:\"1.0.0\";}' ) ); ?>"
     }
   ]
 }
