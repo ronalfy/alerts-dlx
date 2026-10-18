@@ -164,12 +164,16 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Screenshots ==
 
-1. Dismissible alert with custom image icon selected, and alert button displaying.
-2. Adding the alert box via the block editor shows four alert types.
-3. Edit the icon, add an alert button, and create a dismissible alert easily in Gutenberg (the Block Editor).
-4. Block editor sidebar options showing style, alert settings, variants, and custom colors.
+1. A preset can be inserted just like a regular block, saving you time and configuration. You're able to configure and populate the alert in seconds.
+2. With four UI libraries (Bootstrap, Chakra, Material, Shoelace), you can customize the alert to match your brand and color scheme, even with custom colors.
+3. Custom colors allow you to have the alert match your branding and color scheme. You can even save these colors as a global style so all your alerts match a common style.
+4. Each alert style brings stylish icons, and you have the ability to set your own SVGs or even use an image for the alert icon.
 5. Add a shortcode wherever shortcodes are supported, such as a form plugin, page builder, or widget.
-6. Each alert type supports light and dark mode colors.
+6. Each alert type supports light and dark mode, as well as your own custom colors.
+7. Presets will get you up and running fast. They're easy to create in the admin, and act as a starting point for any new alerts.
+8. Global Styles allow you to have an alert configuration apply to the same style across alerts, allowing you to have a uniform block design that applies site-wide.
+9. Global Styles apply across blocks and shortcodes, while Presets allow you to insert block variations for super quick alert creation.
+10. An admin-based Shortcode Builder takes the guess work out of creating shortcodes, which when created, can be placed anywhere shortcodes are supported, including most builders.
 
 == Changelog ==
 
