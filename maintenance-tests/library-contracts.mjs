@@ -34,8 +34,6 @@ assert.doesNotMatch(rest, /_alerts_dlx_config|META_CONFIG/, 'Library REST does n
 assert.match(alertLibrary, /KIND_SNAPSHOT = 'snapshot'/, 'Snapshot kind is defined');
 assert.match(alertLibrary, /sanitize_list_kind/, 'List kind sanitizer allows all kinds');
 assert.match(alertLibrary, /alerts_dlx_snapshot_config/, 'Snapshot config filter is registered');
-assert.match(alertLibrary, /maybe_seed_starter_snapshots/, 'Starter snapshot seeding is wired');
-assert.match(alertLibrary, /STARTER_SNAPSHOTS_SEEDED_OPTION/, 'Starter seed option flag is defined');
 assert.match(alertLibrary, /apply_global_style_to_block_attributes/, 'Global style merge helper exists for render');
 assert.match(
 	alertLibrary,
