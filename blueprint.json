@@ -67,7 +67,7 @@
     },
     {
       "step": "runPHP",
-      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$page = get_page_by_path( 'front-page', OBJECT, 'page' );\nif ( $page instanceof WP_Post ) {\n\tupdate_option( 'show_on_front', 'page' );\n\tupdate_option( 'page_on_front', (int) $page->ID );\n}\n"
+      "code": "<?php\nrequire '/wordpress/wp-load.php';\n$page = get_page_by_path( 'front-page', OBJECT, 'page' );update_option( 'show_on_front', 'page' );update_option( 'page_on_front', (int) $page->ID );\n}\n"
     },
     {
       "step": "runPHP",
