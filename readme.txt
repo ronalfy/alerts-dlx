@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.9
 Tested up to: 7.1
-Stable tag: 3.0.0
+Stable tag: 3.1.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -177,6 +177,12 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Changelog ==
 
+= 3.1.0 =
+* Released 2026-10-18
+* New: Added two AI abilities, one being a shortcode generator, and the other to list available global styles.
+* Fix: Popover link control in the block editor wouldn't close when losing focus.
+* Fix: Relative paths in the link control wouldn't apply or be allowed to save.
+
 = 3.0.0 =
 * Released 2026-10-15
 * New: Renaming AlertsDLX to Singular Alerts.
@@ -314,5 +320,5 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Upgrade Notice ==
 
-= 3.0.0 =
-Renaming AlertsDLX to Singular Alerts. Consolidated all blocks into one block named Alerts. Added new shortcode builder and global styles/presets. New admin options allow you to change the global font and margin controls.
+= 3.1.0 =
+New abilities API for generating shortcodes and listing global styles. Fixes to the link control component in the block editor where relative paths couldn't be saved and the popover wouldn't close when losing focus.
