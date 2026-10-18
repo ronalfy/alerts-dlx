@@ -34,9 +34,6 @@ final class AlertLibrary {
 	/** Query value that returns every library kind. */
 	public const KIND_ALL = 'all';
 
-	/** Option flag so starter snapshots seed at most once. */
-	public const STARTER_SNAPSHOTS_SEEDED_OPTION = 'alerts_dlx_starter_snapshots_seeded';
-
 	/**
 	 * Register hooks.
 	 */
@@ -441,9 +438,9 @@ final class AlertLibrary {
 		if ( ! $post instanceof \WP_Post ) {
 			$post = get_post( $post_id );
 		}
-		$raw = ( $post instanceof \WP_Post ) ? $post->post_content : '';
-		$decoded  = self::decode_config_from_storage( $raw );
-		$config   = ! empty( $decoded ) ? array_merge( $defaults, $decoded ) : $defaults;
+		$raw     = ( $post instanceof \WP_Post ) ? $post->post_content : '';
+		$decoded = self::decode_config_from_storage( $raw );
+		$config  = ! empty( $decoded ) ? array_merge( $defaults, $decoded ) : $defaults;
 		if ( self::KIND_SNAPSHOT === $kind ) {
 			/**
 			 * Filter a snapshot configuration array before it is returned.
@@ -794,91 +791,5 @@ final class AlertLibrary {
 		update_post_meta( $post_id, self::META_KIND, $kind );
 
 		return (int) $post_id;
-	}
-
-	/**
-	 * Seed Maintenance notice and Download CTA snapshots once when none exist.
-	 *
-	 * Uses a dedicated option flag so deleted starter snapshots are never
-	 * re-created on later loads.
-	 */
-	public static function maybe_seed_starter_snapshots() {
-		if ( get_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION ) ) {
-			return;
-		}
-
-		if ( ! post_type_exists( self::POST_TYPE ) ) {
-			return;
-		}
-
-		$existing_query = new \WP_Query(
-			array(
-				'post_type'      => self::POST_TYPE,
-				'post_status'    => 'publish',
-				'posts_per_page' => 1,
-				'fields'         => 'ids',
-				'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					array(
-						'key'   => self::META_KIND,
-						'value' => self::KIND_SNAPSHOT,
-					),
-				),
-			)
-		);
-
-		// Mark seeded when the site already has snapshots so we never insert starters later.
-		if ( ! empty( $existing_query->posts ) ) {
-			update_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION, 1, false );
-			return;
-		}
-
-		foreach ( self::get_starter_snapshot_definitions() as $definition ) {
-			self::insert_item(
-				$definition['title'],
-				$definition['slug'],
-				self::KIND_SNAPSHOT,
-				$definition['config']
-			);
-		}
-
-		update_option( self::STARTER_SNAPSHOTS_SEEDED_OPTION, 1, false );
-	}
-
-	/**
-	 * Starter snapshot definitions mapped from the former built-in presets.
-	 *
-	 * @return array
-	 */
-	private static function get_starter_snapshot_definitions() {
-		return array(
-			array(
-				'title'  => __( 'Maintenance notice', 'alerts-dlx' ),
-				'slug'   => 'maintenance-notice',
-				'config' => array(
-					'alert_group'             => 'shoelace',
-					'alert_type'              => 'warning',
-					'variant'                 => 'top-accent',
-					'title_enabled'           => true,
-					'description_enabled'     => true,
-					'button_enabled'          => false,
-					'close_button_enabled'    => true,
-					'close_button_expiration' => 0,
-				),
-			),
-			array(
-				'title'  => __( 'Download CTA', 'alerts-dlx' ),
-				'slug'   => 'download-cta',
-				'config' => array(
-					'alert_group'             => 'bootstrap',
-					'alert_type'              => 'primary',
-					'variant'                 => 'centered',
-					'title_enabled'           => true,
-					'description_enabled'     => true,
-					'button_enabled'          => true,
-					'close_button_enabled'    => false,
-					'close_button_expiration' => 0,
-				),
-			),
-		);
 	}
 }
