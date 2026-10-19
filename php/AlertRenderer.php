@@ -112,10 +112,40 @@ final class AlertRenderer {
 			return '';
 		}
 
-		// Check to see if expiration cookie is set.
-		// Prefer uniqueId as cookie name; also accept legacy double-prefixed name.
+		/**
+		 * Filters whether to restart the dismissal countdown when content changes.
+		 *
+		 * @param bool   $restart_dismissal_countdown Whether to restart the dismissal countdown.
+		 * @param string $unique_id                   The unique ID of the alert.
+		 * @param array  $normalized                  The normalized alert attributes.
+		 * @return bool
+		 */
+		$reset_dismissal_countdown = apply_filters( 'alerts_dlx_allow_dismissal_reset', true, $unique_id, $normalized );
+
+		// Create hash from title, descriptions, and button text.
+		// This detects if content has changed and restarts the dismissal countdown.
+		$is_in_block_editor = is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
 		$cookie_name        = $unique_id;
 		$legacy_cookie_name = 'alerts-dlx-' . $unique_id;
+
+		if ( $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
+			$hash        = md5( $alert_title . wp_strip_all_tags( $content ) . $button_text );
+			$option_name = 'adlx-' . $unique_id;
+			$hash_option = get_option( sanitize_key( $option_name ) );
+			if ( $hash_option !== $hash || ( false === $hash_option && isset( $_COOKIE[ $cookie_name ] ) ) ) {
+				delete_option( sanitize_key( $option_name ) );
+				add_option( sanitize_key( $option_name ), $hash, '', 'no' );
+
+				// Remove cookie.
+				setcookie( sanitize_key( $unique_id ), '', time() - 3600, '/' );
+				if ( isset( $_COOKIE[ $cookie_name ] ) ) {
+					unset( $_COOKIE[ $cookie_name ] );
+				}
+			}
+		}
+
+		// Check to see if expiration cookie is set.
+		// Prefer uniqueId as cookie name; also accept legacy double-prefixed name.
 		if ( $close_button_enabled && ( isset( $_COOKIE[ $cookie_name ] ) || isset( $_COOKIE[ $legacy_cookie_name ] ) ) ) {
 			return '';
 		}
