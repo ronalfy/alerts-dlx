@@ -27,6 +27,7 @@ export default function AlertSettingsPanel( {
 } ) {
 	const {
 		buttonEnabled,
+		secondaryButtonEnabled,
 		closeButtonEnabled,
 		closeButtonExpiration,
 		descriptionEnabled,
@@ -72,6 +73,15 @@ export default function AlertSettingsPanel( {
 							checked={ buttonEnabled }
 							onChange={ ( value ) => {
 								setAttributes( { buttonEnabled: value } );
+							} }
+						/>
+					</PanelRow>
+					<PanelRow>
+						<ToggleControl
+							label={ __( 'Enable Secondary Button', 'alerts-dlx' ) }
+							checked={ secondaryButtonEnabled }
+							onChange={ ( value ) => {
+								setAttributes( { secondaryButtonEnabled: value } );
 							} }
 						/>
 					</PanelRow>

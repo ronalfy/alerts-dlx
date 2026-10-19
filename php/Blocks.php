@@ -132,6 +132,10 @@ class Blocks {
 			'color_alt_hover',
 			'color_alt_text',
 			'color_alt_text_hover',
+			'color_secondary',
+			'color_secondary_hover',
+			'color_secondary_text',
+			'color_secondary_text_hover',
 			'color_bold',
 			'color_light',
 		);
@@ -176,10 +180,11 @@ class Blocks {
 		}
 
 		// Fill in the rest of the attributes.
-		$atts['button_enabled']      = ! empty( $atts['button_text'] ) && ! empty( $atts['button_url'] );
-		$atts['description_enabled'] = ! empty( $atts['alert_description'] );
-		$atts['title_enabled']       = ! empty( $atts['alert_title'] );
-		$atts['icon_enabled']        = ! empty( $atts['icon'] ) || ! empty( $atts['image_url'] );
+		$atts['button_enabled']           = ! empty( $atts['button_text'] ) && ! empty( $atts['button_url'] );
+		$atts['secondary_button_enabled'] = ! empty( $atts['secondary_button_text'] ) && ! empty( $atts['secondary_button_url'] );
+		$atts['description_enabled']      = ! empty( $atts['alert_description'] );
+		$atts['title_enabled']            = ! empty( $atts['alert_title'] );
+		$atts['icon_enabled']             = ! empty( $atts['icon'] ) || ! empty( $atts['image_url'] );
 
 		// Register only the theme styles the public shortcode can print.
 		$this->register_frontend_styles();
@@ -228,6 +233,10 @@ class Blocks {
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-alt-hover: <?php echo esc_html( $atts['color_alt_hover'] ); ?>;
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-alt-text: <?php echo esc_html( $atts['color_alt_text'] ); ?>;
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-alt-text-hover: <?php echo esc_html( $atts['color_alt_text_hover'] ); ?>;
+				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-secondary: <?php echo esc_html( $atts['color_secondary'] ); ?>;
+				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-secondary-hover: <?php echo esc_html( $atts['color_secondary_hover'] ); ?>;
+				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-secondary-text: <?php echo esc_html( $atts['color_secondary_text'] ); ?>;
+				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-secondary-text-hover: <?php echo esc_html( $atts['color_secondary_text_hover'] ); ?>;
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-bold: <?php echo esc_html( $atts['color_bold'] ); ?>;
 				--alerts-dlx-<?php echo esc_html( $atts['alert_group'] ); ?>-color-light: <?php echo esc_html( $atts['color_light'] ); ?>;
 			}<?php // phpcs:ignore ?>

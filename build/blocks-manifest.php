@@ -97,6 +97,22 @@ return array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-bootstrap-color-alt-text-hover, #ffffff)'
 			),
+			'colorSecondary' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryTextHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
 			'colorBold' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-bootstrap-color-bold, #084298)'
@@ -126,6 +142,34 @@ return array(
 				'default' => false
 			),
 			'buttonRelSponsored' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonHasUrl' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonTarget' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelNoFollow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelSponsored' => array(
 				'type' => 'boolean',
 				'default' => false
 			),
@@ -345,6 +389,22 @@ return array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-bootstrap-color-alt-text-hover, #ffffff)'
 			),
+			'colorSecondary' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryTextHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
 			'colorBold' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-bootstrap-color-bold, #084298)'
@@ -374,6 +434,34 @@ return array(
 				'default' => false
 			),
 			'buttonRelSponsored' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonHasUrl' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonTarget' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelNoFollow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelSponsored' => array(
 				'type' => 'boolean',
 				'default' => false
 			),
@@ -607,6 +695,34 @@ return array(
 				'type' => 'boolean',
 				'default' => false
 			),
+			'secondaryButtonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonHasUrl' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonTarget' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelNoFollow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelSponsored' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'maximumWidthUnit' => array(
 				'type' => 'string',
 				'default' => 'px'
@@ -698,6 +814,22 @@ return array(
 			'colorAltTextHover' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-chakra-color-alt-text-hover, #ffffff)'
+			),
+			'colorSecondary' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryTextHover' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'colorBold' => array(
 				'type' => 'string',
@@ -857,6 +989,34 @@ return array(
 				'type' => 'boolean',
 				'default' => false
 			),
+			'secondaryButtonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonHasUrl' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonTarget' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelNoFollow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelSponsored' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'maximumWidthUnit' => array(
 				'type' => 'string',
 				'default' => 'px'
@@ -948,6 +1108,22 @@ return array(
 			'colorAltTextHover' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-material-color-alt-text-hover, #ffffff)'
+			),
+			'colorSecondary' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryTextHover' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'colorBold' => array(
 				'type' => 'string',
@@ -1107,6 +1283,34 @@ return array(
 				'type' => 'boolean',
 				'default' => false
 			),
+			'secondaryButtonEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonUrl' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'secondaryButtonHasUrl' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonTarget' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelNoFollow' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'secondaryButtonRelSponsored' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'maximumWidthUnit' => array(
 				'type' => 'string',
 				'default' => 'px'
@@ -1202,6 +1406,22 @@ return array(
 			'colorAltTextHover' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-shoelace-color-alt-text-hover, #ffffff)'
+			),
+			'colorSecondary' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryHover' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryText' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'colorSecondaryTextHover' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'colorBold' => array(
 				'type' => 'string',

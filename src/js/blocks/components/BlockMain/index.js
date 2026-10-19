@@ -44,6 +44,7 @@ const BlockMain = (props) => {
     iconSource,
     descriptionEnabled,
     buttonEnabled,
+    secondaryButtonEnabled,
     uniqueId,
     icon,
     imageUrl,
@@ -99,7 +100,7 @@ const BlockMain = (props) => {
         className={classnames(`alerts-dlx-alert alerts-dlx-${alertGroup}`, {
           "alerts-dlx-has-icon": iconEnabled,
           "alerts-dlx-has-description": descriptionEnabled,
-          "alerts-dlx-has-button": buttonEnabled,
+          "alerts-dlx-has-button": buttonEnabled || secondaryButtonEnabled,
         })}
         style={maxWidthStyle}
         id={uniqueId}
@@ -149,11 +150,28 @@ const BlockMain = (props) => {
           )}
           <div className="alerts-dlx-content-wrapper">
             {descriptionEnabled && <div {...innerBlockProps} />}
-            {buttonEnabled && (
-              <AlertButton
-                attributes={attributes}
-                setAttributes={setAttributes}
-              />
+            {(buttonEnabled || secondaryButtonEnabled) && (
+              <div className="alerts-dlx-actions">
+                {secondaryButtonEnabled && (
+                  <AlertButton
+                    attributes={attributes}
+                    setAttributes={setAttributes}
+                    textAttribute="secondaryButtonText"
+                    urlAttribute="secondaryButtonUrl"
+                    hasUrlAttribute="secondaryButtonHasUrl"
+                    targetAttribute="secondaryButtonTarget"
+                    relNoFollowAttribute="secondaryButtonRelNoFollow"
+                    relSponsoredAttribute="secondaryButtonRelSponsored"
+                    buttonClassName="alerts-dlx-button alerts-dlx-button-secondary button-reset"
+                  />
+                )}
+                {buttonEnabled && (
+                  <AlertButton
+                    attributes={attributes}
+                    setAttributes={setAttributes}
+                  />
+                )}
+              </div>
             )}
           </div>
         </section>

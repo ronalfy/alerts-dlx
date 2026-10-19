@@ -10,6 +10,14 @@ $white: #ffffff;
 	font-family: var(--alerts-dlx-font-family, 'Helvetica', 'Arial', sans-serif);
 }
 
+.alerts-dlx-actions {
+	margin-top: 0.8em;
+}
+
+.alerts-dlx-button-wrapper {
+	position: relative;
+}
+
 a.alerts-dlx-button.button-reset,
 a.alerts-dlx-button,
 button.button-reset,
@@ -19,7 +27,6 @@ button.button-reset.components-button,
 button.button-reset.components-button:hover {
 	padding: 10px 30px;
 	border-radius: 0.3125em;
-	margin-top: 0.8em;
 	line-height: 1.2em;
 	font-size: 1em;
 	height: auto;
@@ -32,6 +39,20 @@ button.button-reset.components-button:hover {
 		padding: 0;
 		transition: all 0.3s ease-in-out;
 	}
+}
+
+.editor-styles-wrapper .alerts-dlx-button-wrapper:hover .alerts-dlx-button {
+	margin-right: 32px;
+}
+
+.alertx-dlx-button-link-icon {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: -4px;
+	margin: 0 !important;
+	padding: 0 !important;
+	color: inherit !important;
 }
 
 .template-chakra {
@@ -293,6 +314,14 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
 .alerts-dlx-content a:hover {
 	color: inherit;
 	text-decoration: underline;
+}
+
+.alerts-dlx-actions {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px;
 }
 
 @keyframes alerts-dlx-dismiss {

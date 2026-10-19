@@ -17,5 +17,5 @@
 		'wp-private-apis',
 		'wp-url'
 	),
-	'version' => 'a4966cda9425befea23e'
+	'version' => '7b761d62028af8010805'
 );

@@ -1,4 +1,5 @@
 @import '../common.scss';
+@import '../secondary-button';
 
 // Material colors.
 $material-success-color: #1e4620;
@@ -288,6 +289,9 @@ $material-dark-palette: (
 	)
 );
 
+$material-light-palette: alerts-dlx-with-material-secondary( $material-light-palette );
+$material-dark-palette: alerts-dlx-with-material-secondary( $material-dark-palette );
+
 @mixin material-css-vars( $palette ) {
 	@each $variant, $config in $palette {
 		$base: map-get( $config, 'base' );
@@ -298,6 +302,10 @@ $material-dark-palette: (
 		--material-#{$variant}-color: #{map-get( $base, 'color' )};
 		--material-#{$variant}-color-accent: #{map-get( $base, 'color-accent' )};
 		--material-#{$variant}-color-alt: #{map-get( $base, 'color-alt' )};
+		--material-#{$variant}-color-secondary: #{map-get( $base, 'color-secondary' )};
+		--material-#{$variant}-color-secondary-hover: #{map-get( $base, 'color-secondary-hover' )};
+		--material-#{$variant}-color-secondary-text: #{map-get( $base, 'color-secondary-text' )};
+		--material-#{$variant}-color-secondary-text-hover: #{map-get( $base, 'color-secondary-text-hover' )};
 		--material-#{$variant}-color-bold: #{map-get( $base, 'color-bold' )};
 		--material-#{$variant}-color-light: #{map-get( $base, 'color-light' )};
 		--material-#{$variant}-subtle-button-text: #{map-get( $subtle, 'button-text' )};
@@ -307,6 +315,10 @@ $material-dark-palette: (
 		--material-#{$variant}-outlined-button-background: #{map-get( $outlined, 'button-background' )};
 		--material-#{$variant}-outlined-button-text-hover: #{map-get( $outlined, 'button-text-hover' )};
 		--material-#{$variant}-outlined-button-background-hover: #{map-get( $outlined, 'button-background-hover' )};
+		--material-#{$variant}-outlined-color-secondary: #{map-get( $outlined, 'color-secondary' )};
+		--material-#{$variant}-outlined-color-secondary-hover: #{map-get( $outlined, 'color-secondary-hover' )};
+		--material-#{$variant}-outlined-color-secondary-text: #{map-get( $outlined, 'color-secondary-text' )};
+		--material-#{$variant}-outlined-color-secondary-text-hover: #{map-get( $outlined, 'color-secondary-text-hover' )};
 		--material-#{$variant}-filled-background: #{map-get( $filled, 'background' )};
 		--material-#{$variant}-filled-border: #{map-get( $filled, 'border' )};
 		--material-#{$variant}-filled-button-text: #{map-get( $filled, 'button-text' )};
@@ -314,6 +326,10 @@ $material-dark-palette: (
 		--material-#{$variant}-filled-button-background: #{map-get( $filled, 'button-background' )};
 		--material-#{$variant}-filled-button-background-hover: #{map-get( $filled, 'button-background-hover' )};
 		--material-#{$variant}-filled-button-border-hover: #{map-get( $filled, 'button-border-hover' )};
+		--material-#{$variant}-filled-color-secondary: #{map-get( $filled, 'color-secondary' )};
+		--material-#{$variant}-filled-color-secondary-hover: #{map-get( $filled, 'color-secondary-hover' )};
+		--material-#{$variant}-filled-color-secondary-text: #{map-get( $filled, 'color-secondary-text' )};
+		--material-#{$variant}-filled-color-secondary-text-hover: #{map-get( $filled, 'color-secondary-text-hover' )};
 	}
 }
 
@@ -586,6 +602,11 @@ $material-dark-palette: (
 			}
 
 			&.is-appearance-outlined {
+				--alerts-dlx-material-color-secondary: var( --material-#{$variant}-outlined-color-secondary );
+				--alerts-dlx-material-color-secondary-hover: var( --material-#{$variant}-outlined-color-secondary-hover );
+				--alerts-dlx-material-color-secondary-text: var( --material-#{$variant}-outlined-color-secondary-text );
+				--alerts-dlx-material-color-secondary-text-hover: var( --material-#{$variant}-outlined-color-secondary-text-hover );
+
 				.alerts-dlx-title {
 					color: var( --material-#{$variant}-color );
 				}
@@ -633,6 +654,11 @@ $material-dark-palette: (
 			}
 
 			&.is-appearance-filled {
+				--alerts-dlx-material-color-secondary: var( --material-#{$variant}-filled-color-secondary );
+				--alerts-dlx-material-color-secondary-hover: var( --material-#{$variant}-filled-color-secondary-hover );
+				--alerts-dlx-material-color-secondary-text: var( --material-#{$variant}-filled-color-secondary-text );
+				--alerts-dlx-material-color-secondary-text-hover: var( --material-#{$variant}-filled-color-secondary-text-hover );
+
 				.alerts-dlx-title {
 					color: $white;
 				}
@@ -680,6 +706,8 @@ $material-dark-palette: (
 			}
 		}
 	}
+
+	@include alerts-dlx-paint-secondary-button( 'material', $material-variants );
 }
 
 

@@ -1,4 +1,5 @@
 @import "../common.scss";
+@import "../secondary-button";
 
 // Purpose: Consolidated Bootstrap alert styles for light and dark themes using CSS variables.
 
@@ -182,12 +183,31 @@ $bootstrap-dark-palette: (
 	)
 );
 
+@function bootstrap-palette-with-contrast($palette, $mode) {
+	$out: (
+	);
+
+	@each $variant, $values in $palette {
+		$contrast: map-get(map-get($bootstrap-variant-contrast, $variant), $mode);
+		$out: map-merge($out, ($variant: map-merge($values, ("contrast": $contrast))));
+	}
+
+	@return $out;
+}
+
+$bootstrap-light-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-contrast($bootstrap-light-palette, "light"), "alt", "accent", "contrast");
+$bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-contrast($bootstrap-dark-palette, "dark"), "alt", "accent", "contrast");
+
 @mixin bootstrap-variant-css-vars($palette) {
 	@each $variant, $values in $palette {
 		--bootstrap-#{$variant}-color: #{map-get($values, "color")};
 		--bootstrap-#{$variant}-color-border: #{map-get($values, "border")};
 		--bootstrap-#{$variant}-color-accent: #{map-get($values, "accent")};
 		--bootstrap-#{$variant}-color-alt: #{map-get($values, "alt")};
+		--bootstrap-#{$variant}-color-secondary: #{map-get($values, "color-secondary")};
+		--bootstrap-#{$variant}-color-secondary-hover: #{map-get($values, "color-secondary-hover")};
+		--bootstrap-#{$variant}-color-secondary-text: #{map-get($values, "color-secondary-text")};
+		--bootstrap-#{$variant}-color-secondary-text-hover: #{map-get($values, "color-secondary-text-hover")};
 		--bootstrap-#{$variant}-color-bold: #{map-get($values, "bold")};
 		--bootstrap-#{$variant}-color-light: #{map-get($values, "light")};
 		--bootstrap-#{$variant}-color-contrast: #{map-get(map-get($bootstrap-variant-contrast, $variant), "light")};
@@ -201,6 +221,10 @@ $bootstrap-dark-palette: (
 		--bootstrap-#{$variant}-color-border: #{map-get($values, "border")};
 		--bootstrap-#{$variant}-color-accent: #{map-get($values, "accent")};
 		--bootstrap-#{$variant}-color-alt: #{map-get($values, "alt")};
+		--bootstrap-#{$variant}-color-secondary: #{map-get($values, "color-secondary")};
+		--bootstrap-#{$variant}-color-secondary-hover: #{map-get($values, "color-secondary-hover")};
+		--bootstrap-#{$variant}-color-secondary-text: #{map-get($values, "color-secondary-text")};
+		--bootstrap-#{$variant}-color-secondary-text-hover: #{map-get($values, "color-secondary-text-hover")};
 		--bootstrap-#{$variant}-color-bold: #{map-get($values, "bold")};
 		--bootstrap-#{$variant}-color-light: #{map-get($values, "light")};
 		--bootstrap-#{$variant}-color-contrast: #{map-get(map-get($bootstrap-variant-contrast, $variant), "dark")};
@@ -422,5 +446,7 @@ $bootstrap-dark-palette: (
 			}
 		}
 	}
+
+	@include alerts-dlx-paint-secondary-button('bootstrap', $bootstrap-variants);
 }
 

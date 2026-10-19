@@ -1,4 +1,5 @@
 @import '../common.scss';
+@import '../secondary-button';
 
 // Shoelace variant definitions.
 $shoelace-light-variants: (
@@ -107,6 +108,9 @@ $shoelace-dark-variants: (
 		'solid-button-hover': darken(#ef437f, 5%))
 );
 
+$shoelace-light-variants: alerts-dlx-with-flat-secondary($shoelace-light-variants, 'alt', 'alt-hover', 'alt-text');
+$shoelace-dark-variants: alerts-dlx-with-flat-secondary($shoelace-dark-variants, 'alt', 'alt-hover', 'alt-text');
+
 $shoelace-modes: (
 	'light': ('text-color': #000,
 		'surface-background': transparent,
@@ -145,6 +149,10 @@ $shoelace-modes: (
 	--alerts-dlx-shoelace-color-alt-hover: #{shoelace-get( $tokens, 'alt-hover', shoelace-get( $tokens, 'alt', shoelace-get( $tokens, 'border' ) ) )};
 	--alerts-dlx-shoelace-color-alt-text: #{shoelace-get( $tokens, 'alt-text', $white )};
 	--alerts-dlx-shoelace-color-alt-text-hover: #{shoelace-get( $tokens, 'alt-text-hover', shoelace-get( $tokens, 'alt-text', $white ) )};
+	--alerts-dlx-shoelace-color-secondary: #{shoelace-get( $tokens, 'color-secondary' )};
+	--alerts-dlx-shoelace-color-secondary-hover: #{shoelace-get( $tokens, 'color-secondary-hover' )};
+	--alerts-dlx-shoelace-color-secondary-text: #{shoelace-get( $tokens, 'color-secondary-text' )};
+	--alerts-dlx-shoelace-color-secondary-text-hover: #{shoelace-get( $tokens, 'color-secondary-text-hover' )};
 	--alerts-dlx-shoelace-color-bold: #{shoelace-get( $tokens, 'bold', shoelace-get( $tokens, 'border' ) )};
 	--alerts-dlx-shoelace-solid-icon-color: #{shoelace-get( $tokens, 'solid-icon', shoelace-get( $tokens, 'alt-text', $white ) )};
 	--alerts-dlx-shoelace-solid-text-color: #{shoelace-get( $tokens, 'solid-text', shoelace-get( $tokens, 'alt-text', $white ) )};
@@ -159,6 +167,10 @@ $shoelace-modes: (
 	@each $variant, $tokens in $variants {
 		&.is-style-#{$variant} {
 			@include shoelace-assign-variant-vars($tokens );
+			--shoelace-#{$variant}-color-secondary: #{shoelace-get( $tokens, 'color-secondary' )};
+			--shoelace-#{$variant}-color-secondary-hover: #{shoelace-get( $tokens, 'color-secondary-hover' )};
+			--shoelace-#{$variant}-color-secondary-text: #{shoelace-get( $tokens, 'color-secondary-text' )};
+			--shoelace-#{$variant}-color-secondary-text-hover: #{shoelace-get( $tokens, 'color-secondary-text-hover' )};
 		}
 	}
 }
@@ -556,4 +568,6 @@ $shoelace-modes: (
 			}
 		}
 	}
+
+	@include alerts-dlx-paint-secondary-button('shoelace', ('primary', 'success', 'neutral', 'warning', 'danger'));
 }

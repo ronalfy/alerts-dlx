@@ -25,6 +25,10 @@ export const ALERT_ELEMENT_TOGGLES = [
 		label: __( 'Button', 'alerts-dlx' ),
 	},
 	{
+		attribute: 'secondaryButtonEnabled',
+		label: __( 'Secondary Button', 'alerts-dlx' ),
+	},
+	{
 		attribute: 'closeButtonEnabled',
 		label: __( 'Close Button', 'alerts-dlx' ),
 	},

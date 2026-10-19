@@ -1,4 +1,5 @@
 @import "../common.scss";
+@import "../secondary-button";
 
 // Purpose: Consolidated Chakra alert styles for light and dark themes using CSS custom properties.
 
@@ -143,11 +144,18 @@ $chakra-dark-palette: (
 		"solid-close-hover": #{darken(#302a33, 10%)})
 );
 
+$chakra-light-palette: alerts-dlx-with-chakra-secondary($chakra-light-palette);
+$chakra-dark-palette: alerts-dlx-with-chakra-secondary($chakra-dark-palette);
+
 @mixin chakra-css-vars($palette) {
 	@each $variant, $values in $palette {
 		--chakra-#{$variant}-color: #{map-get($values, "color")};
 		--chakra-#{$variant}-color-accent: #{map-get($values, "color-accent")};
 		--chakra-#{$variant}-color-alt: #{map-get($values, "color-alt")};
+		--chakra-#{$variant}-color-secondary: #{map-get($values, "color-secondary")};
+		--chakra-#{$variant}-color-secondary-hover: #{map-get($values, "color-secondary-hover")};
+		--chakra-#{$variant}-color-secondary-text: #{map-get($values, "color-secondary-text")};
+		--chakra-#{$variant}-color-secondary-text-hover: #{map-get($values, "color-secondary-text-hover")};
 		--chakra-#{$variant}-color-bold: #{map-get($values, "color-bold")};
 		--chakra-#{$variant}-color-light: #{map-get($values, "color-light")};
 		--chakra-#{$variant}-color-border: #{map-get($values, "color-border")};
@@ -161,6 +169,10 @@ $chakra-dark-palette: (
 		--chakra-#{$variant}-solid-button-border-hover: #{map-get($values, "solid-button-border-hover")};
 		--chakra-#{$variant}-solid-close: #{map-get($values, "solid-close")};
 		--chakra-#{$variant}-solid-close-hover: #{map-get($values, "solid-close-hover")};
+		--chakra-#{$variant}-solid-color-secondary: #{map-get($values, "solid-color-secondary")};
+		--chakra-#{$variant}-solid-color-secondary-hover: #{map-get($values, "solid-color-secondary-hover")};
+		--chakra-#{$variant}-solid-color-secondary-text: #{map-get($values, "solid-color-secondary-text")};
+		--chakra-#{$variant}-solid-color-secondary-text-hover: #{map-get($values, "solid-color-secondary-text-hover")};
 	}
 }
 
@@ -669,12 +681,18 @@ $chakra-dark-palette: (
 					}
 				}
 
+				--alerts-dlx-chakra-color-secondary: var(--chakra-#{$variant}-solid-color-secondary);
+				--alerts-dlx-chakra-color-secondary-hover: var(--chakra-#{$variant}-solid-color-secondary-hover);
+				--alerts-dlx-chakra-color-secondary-text: var(--chakra-#{$variant}-solid-color-secondary-text);
+				--alerts-dlx-chakra-color-secondary-text-hover: var(--chakra-#{$variant}-solid-color-secondary-text-hover);
+
 				.alerts-dlx-chakra {
 					background-color: var(--alerts-dlx-chakra-color-solid-background, var(--chakra-#{$variant}-color-alt));
 					color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-#{$variant}-solid-foreground));
 					border: 2px solid var(--alerts-dlx-chakra-color-solid-border, var(--chakra-#{$variant}-solid-foreground));
 
 					button.button-reset.alerts-dlx-button,
+					.alerts-dlx-actions .alerts-dlx-button-wrapper .button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
 					a.alerts-dlx-button,
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
@@ -684,7 +702,8 @@ $chakra-dark-palette: (
 					}
 
 					a.alerts-dlx-button:hover,
-					button.button-reset.alerts-dlx-button:hover {
+					button.button-reset.alerts-dlx-button:hover,
+					.alerts-dlx-actions .button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
 						background-color: var(--alerts-dlx-chakra-color-solid-button-background-hover, var(--chakra-#{$variant}-solid-button-background-hover));
 						color: var(--alerts-dlx-chakra-color-solid-button-text-hover, var(--chakra-#{$variant}-solid-button-text-hover));
 						border: 2px solid var(--alerts-dlx-chakra-color-solid-button-border-hover, var(--chakra-#{$variant}-solid-button-border-hover));
@@ -693,4 +712,6 @@ $chakra-dark-palette: (
 			}
 		}
 	}
+
+	@include alerts-dlx-paint-secondary-button('chakra', $chakra-variants);
 }

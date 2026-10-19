@@ -13,20 +13,46 @@ import AlertButtonLinkControl from "../AlertButtonLinkControl";
 import usePopoverOutsidePointerClose from "../usePopoverOutsidePointerClose";
 import "./editor.scss";
 
+/**
+ * Alert action button with an inline link popover.
+ *
+ * Attribute field names default to the primary button. Pass secondary
+ * keys to reuse the same control for the secondary CTA.
+ *
+ * @param {Object}   props                         Component props.
+ * @param {Object}   props.attributes              Block attributes.
+ * @param {Function} props.setAttributes           Attribute updater.
+ * @param {string}   props.textAttribute           Text attribute name.
+ * @param {string}   props.urlAttribute            URL attribute name.
+ * @param {string}   props.hasUrlAttribute         Has-URL attribute name.
+ * @param {string}   props.targetAttribute         New-tab attribute name.
+ * @param {string}   props.relNoFollowAttribute    Nofollow attribute name.
+ * @param {string}   props.relSponsoredAttribute   Sponsored attribute name.
+ * @param {string}   props.buttonClassName         Button class names.
+ * @return {import('react').JSX.Element} Alert button control.
+ */
 const AlertButton = (props) => {
   const [isPopOverVisible, setIsPopOverVisible] = useState(false);
   const [linkIconAnchor, setLinkIconAnchor] = useState(null);
   const ignoreCloseRef = useRef(false);
 
-  const { attributes, setAttributes } = props;
-
   const {
-    buttonText,
-    buttonUrl,
-    buttonTarget,
-    buttonRelNoFollow,
-    buttonRelSponsored,
-  } = attributes;
+    attributes,
+    setAttributes,
+    textAttribute = "buttonText",
+    urlAttribute = "buttonUrl",
+    hasUrlAttribute = "buttonHasUrl",
+    targetAttribute = "buttonTarget",
+    relNoFollowAttribute = "buttonRelNoFollow",
+    relSponsoredAttribute = "buttonRelSponsored",
+    buttonClassName = "alerts-dlx-button button-reset",
+  } = props;
+
+  const buttonText = attributes[textAttribute];
+  const buttonUrl = attributes[urlAttribute];
+  const buttonTarget = attributes[targetAttribute];
+  const buttonRelNoFollow = attributes[relNoFollowAttribute];
+  const buttonRelSponsored = attributes[relSponsoredAttribute];
 
   const closeLinkPopover = () => {
     if (ignoreCloseRef.current) {
@@ -82,7 +108,7 @@ const AlertButton = (props) => {
       className="alerts-dlx-button-wrapper"
       style={{ display: "inline-flex" }}
     >
-      <Button className="alerts-dlx-button button-reset">
+      <Button className={buttonClassName}>
         <RichText
           tagName="span"
           placeholder={__("Button text", "alerts-dlx")}
@@ -91,7 +117,7 @@ const AlertButton = (props) => {
           disableLineBreaks={true}
           allowedFormats={[]}
           onChange={(value) => {
-            setAttributes({ buttonText: value });
+            setAttributes({ [textAttribute]: value });
           }}
         />
       </Button>
@@ -120,6 +146,8 @@ const AlertButton = (props) => {
               <AlertButtonLinkControl
                 buttonUrl={buttonUrl}
                 setAttributes={setAttributes}
+                urlAttribute={urlAttribute}
+                hasUrlAttribute={hasUrlAttribute}
                 inlinePicker={true}
                 isActive={isPopOverVisible}
               />
@@ -129,7 +157,7 @@ const AlertButton = (props) => {
                 checked={buttonTarget || ""}
                 onChange={(value) => {
                   setAttributes({
-                    buttonTarget: value,
+                    [targetAttribute]: value,
                   });
                 }}
                 className="alerts-dlx-link-toggle"
@@ -140,7 +168,7 @@ const AlertButton = (props) => {
                 checked={buttonRelNoFollow || ""}
                 onChange={(value) => {
                   setAttributes({
-                    buttonRelNoFollow: value,
+                    [relNoFollowAttribute]: value,
                   });
                 }}
                 className="alerts-dlx-link-toggle"
@@ -151,7 +179,7 @@ const AlertButton = (props) => {
                 checked={buttonRelSponsored || ""}
                 onChange={(value) => {
                   setAttributes({
-                    buttonRelSponsored: value,
+                    [relSponsoredAttribute]: value,
                   });
                 }}
                 className="alerts-dlx-link-toggle"

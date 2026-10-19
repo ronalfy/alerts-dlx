@@ -30,6 +30,8 @@ On the **frontend**, PHP (`Blocks::frontend()`) outputs the wrapper roughly as:
 </div>
 ```
 
+When one or both action buttons are enabled, the description is followed by `.alerts-dlx-actions`, a left-to-right flex row. The secondary CTA is printed first (`.alerts-dlx-button.alerts-dlx-button-secondary`), then the primary button (`.alerts-dlx-button`).
+
 In the **editor**, each theme’s `edit.js` builds the same class list via `useBlockProps()` so the canvas matches the frontend.
 
 ---
@@ -91,7 +93,7 @@ All import `src/scss/common.scss` for shared layout (buttons, icon grid, typogra
 | Layer | Variable prefix | Set by |
 |-------|-----------------|--------|
 | Theme tokens | `--{group}-{type}-color`, `--chakra-success-color-light`, etc. | SCSS maps on `.template-{group}` |
-| Per-block overrides | `--alerts-dlx-{group}-color-primary`, `color-border`, `color-accent`, `color-alt`, `color-bold`, `color-light`, … | Block attributes; inline CSS when `alertType === 'custom'` |
+| Per-block overrides | `--alerts-dlx-{group}-color-primary`, `color-border`, `color-accent`, `color-alt`, `color-secondary`, `color-bold`, `color-light`, … | Block attributes; inline CSS when `alertType === 'custom'` |
 | Sizing | `--alerts-dlx-{group}-base-size`, `--alerts-dlx-base-font-size` | Inline `#uniqueId` styles from `baseFontSize` |
 
 Preset alert types read **theme tokens** in SCSS, e.g.:
@@ -192,7 +194,7 @@ To change preset colors for a type, edit the **palette maps** in the theme’s `
 ### Bootstrap (`src/scss/bootstrap/styles.scss`)
 
 - `$bootstrap-variants`: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark`
-- `$bootstrap-light-palette` / `$bootstrap-dark-palette`: per-type `color`, `border`, `accent`, `alt`, `bold`, `light`
+- `$bootstrap-light-palette` / `$bootstrap-dark-palette`: per-type `color`, `border`, `accent`, `alt`, `bold`, `light`, plus computed `color-secondary*` tokens
 - `$bootstrap-variant-contrast`: button text colors for light/dark
 
 ### Chakra (`src/scss/chakra/styles.scss`)
@@ -268,6 +270,7 @@ Keep **`alertType` values identical** to block style `name` values so `is-style-
 | Change which types appear in inserter | `block.json` `"styles"` array |
 | Change layout (solid vs outlined) | `variant` options in `edit.js` + `is-appearance-*` rules in SCSS |
 | Change custom-only colors | `custom-colors.js` + `is-style-custom` block in SCSS |
+| Change secondary button colors | Palette `color-secondary*` keys + `.alerts-dlx-button-secondary` |
 | Change frontend wrapper classes | `php/Blocks.php` → `$container_classes` |
 | Change editor wrapper classes | `{theme}/edit.js` → `useBlockProps` classnames |
 

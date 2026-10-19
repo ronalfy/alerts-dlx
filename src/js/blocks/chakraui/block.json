@@ -76,6 +76,34 @@
       "type": "boolean",
       "default": false
     },
+    "secondaryButtonEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "secondaryButtonText": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryButtonUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "secondaryButtonHasUrl": {
+      "type": "boolean",
+      "default": false
+    },
+    "secondaryButtonTarget": {
+      "type": "boolean",
+      "default": false
+    },
+    "secondaryButtonRelNoFollow": {
+      "type": "boolean",
+      "default": false
+    },
+    "secondaryButtonRelSponsored": {
+      "type": "boolean",
+      "default": false
+    },
     "maximumWidthUnit": {
       "type": "string",
       "default": "px"
@@ -167,6 +195,22 @@
     "colorAltTextHover": {
       "type": "string",
       "default": "var(--alerts-dlx-chakra-color-alt-text-hover, #ffffff)"
+    },
+    "colorSecondary": {
+      "type": "string",
+      "default": ""
+    },
+    "colorSecondaryHover": {
+      "type": "string",
+      "default": ""
+    },
+    "colorSecondaryText": {
+      "type": "string",
+      "default": ""
+    },
+    "colorSecondaryTextHover": {
+      "type": "string",
+      "default": ""
     },
     "colorBold": {
       "type": "string",

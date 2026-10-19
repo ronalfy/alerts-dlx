@@ -347,17 +347,22 @@ final class AlertLibrary {
 	 */
 	public static function get_global_style_preview_fixture() {
 		return array(
-			'alert_title'             => __( 'Lorem ipsum dolor sit amet', 'alerts-dlx' ),
-			'alert_description'       => __( 'Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'alerts-dlx' ),
-			'button_text'             => __( 'Lorem ipsum', 'alerts-dlx' ),
-			'button_url'              => '#',
-			'button_target'           => false,
-			'button_rel_no_follow'    => false,
-			'button_rel_sponsored'    => false,
-			'close_button_enabled'    => false,
-			'close_button_expiration' => 0,
-			'align'                   => 'center',
-			'is_block_editorial_only' => false,
+			'alert_title'                    => __( 'Lorem ipsum dolor sit amet', 'alerts-dlx' ),
+			'alert_description'              => __( 'Consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'alerts-dlx' ),
+			'button_text'                    => __( 'Lorem ipsum', 'alerts-dlx' ),
+			'button_url'                     => '#',
+			'button_target'                  => false,
+			'button_rel_no_follow'           => false,
+			'button_rel_sponsored'           => false,
+			'secondary_button_text'          => __( 'Dolor sit', 'alerts-dlx' ),
+			'secondary_button_url'           => '#',
+			'secondary_button_target'        => false,
+			'secondary_button_rel_no_follow' => false,
+			'secondary_button_rel_sponsored' => false,
+			'close_button_enabled'           => false,
+			'close_button_expiration'        => 0,
+			'align'                          => 'center',
+			'is_block_editorial_only'        => false,
 		);
 	}
 
@@ -394,13 +399,16 @@ final class AlertLibrary {
 		$config  = is_array( $config ) ? $config : array();
 		$merged  = array_merge( $fixture, $config );
 
-		$title_enabled               = filter_var( $config['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		$description_enabled         = filter_var( $config['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		$button_enabled              = filter_var( $config['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		$merged['alert_title']       = $title_enabled ? $fixture['alert_title'] : '';
-		$merged['alert_description'] = $description_enabled ? $fixture['alert_description'] : '';
-		$merged['button_text']       = $button_enabled ? $fixture['button_text'] : '';
-		$merged['button_url']        = $button_enabled ? $fixture['button_url'] : '';
+		$title_enabled                   = filter_var( $config['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$description_enabled             = filter_var( $config['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$button_enabled                  = filter_var( $config['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$secondary_button_enabled        = filter_var( $config['secondary_button_enabled'] ?? false, FILTER_VALIDATE_BOOLEAN );
+		$merged['alert_title']           = $title_enabled ? $fixture['alert_title'] : '';
+		$merged['alert_description']     = $description_enabled ? $fixture['alert_description'] : '';
+		$merged['button_text']           = $button_enabled ? $fixture['button_text'] : '';
+		$merged['button_url']            = $button_enabled ? $fixture['button_url'] : '';
+		$merged['secondary_button_text'] = $secondary_button_enabled ? $fixture['secondary_button_text'] : '';
+		$merged['secondary_button_url']  = $secondary_button_enabled ? $fixture['secondary_button_url'] : '';
 
 		if ( empty( $merged['unique_id'] ) ) {
 			$merged['unique_id'] = 'alerts-dlx-preview-' . wp_generate_password( 8, false, false );
@@ -426,7 +434,7 @@ final class AlertLibrary {
 	 * Config JSON is stored in post_content (not post meta) so SVG icons
 	 * and other markup survive WordPress save/load when properly slashed.
 	 *
-	 * @param int $post_id Post ID.
+	 * @param int           $post_id Post ID.
 	 * @param \WP_Post|null $post Post object.
 	 * @return array
 	 */

@@ -68,7 +68,7 @@ const recoverableDefaults = {
  * @return {string} A recoverable canonical purpose.
  */
 export function inferCanonicalAlertPurpose( attributes ) {
-	if ( attributes.buttonEnabled === true ) {
+	if ( attributes.buttonEnabled === true || attributes.secondaryButtonEnabled === true ) {
 		return 'cta';
 	}
 
