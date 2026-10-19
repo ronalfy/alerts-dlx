@@ -61,7 +61,7 @@ class Abilities {
 	 * @since 3.0.0
 	 */
 	public static function register_abilities() {
-		wp_register_ability(
+		\wp_register_ability(
 			'singular-alerts/generate-alert-shortcode',
 			array(
 				'label'               => esc_html__( 'Generate a Singular Alert Shortcode', 'alerts-dlx' ),
@@ -92,7 +92,7 @@ class Abilities {
 			)
 		);
 
-		wp_register_ability(
+		\wp_register_ability(
 			'singular-alerts/get-global-styles',
 			array(
 				'label'               => esc_html__( 'Get Global Styles', 'alerts-dlx' ),
