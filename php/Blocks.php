@@ -414,6 +414,7 @@ class Blocks {
 				'marginSpacingTargetDefault' => Options::get_margin_spacing_target(),
 				'libraryItems'               => AlertLibrary::get_items_for_editor(),
 				'canManageLibrary'           => current_user_can( 'manage_options' ),
+				'debugMode'                  => Options::is_debug_mode(),
 			)
 		);
 	}
