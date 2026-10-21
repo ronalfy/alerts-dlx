@@ -116,6 +116,13 @@ final class AlertRenderer {
 		$icon_source                    = $normalized['icon_source'];
 		$image_url                      = $normalized['image_url'];
 		$image_id                       = $normalized['image_id'];
+		$conditions_enabled             = $normalized['conditions_enabled'];
+		$start_date                     = $normalized['start_date'];
+		$end_date                       = $normalized['end_date'];
+		$days_of_week                   = $normalized['days_of_week'];
+		$url_param                      = $normalized['url_param'];
+		$require_login                  = $normalized['require_login'];
+		$required_roles                 = $normalized['required_roles'];
 
 		// If block is editorial only, return early.
 		if ( $is_block_editorial_only ) {
@@ -257,6 +264,17 @@ final class AlertRenderer {
 			);
 		}
 
+		// Add conditions script when any condition is enabled.
+		if ( $conditions_enabled ) {
+			wp_enqueue_script(
+				'alerts-dlx-conditions',
+				Functions::get_plugin_url( 'dist/alerts-dlx-conditions.js' ),
+				array(),
+				Functions::get_plugin_version(),
+				true
+			);
+		}
+
 		if ( 'custom' === $alert_type ) {
 			ob_start();
 			?>
@@ -340,6 +358,15 @@ final class AlertRenderer {
 		<div
 			class="<?php echo esc_attr( implode( ' ', $container_classes ) ); ?>"
 			data-expiration="<?php echo esc_attr( absint( $close_button_expiration ) ); ?>"
+			<?php if ( $conditions_enabled ) : ?>
+				data-conditions-enabled="true"
+				data-start-date="<?php echo esc_attr( $start_date ); ?>"
+				data-end-date="<?php echo esc_attr( $end_date ); ?>"
+				data-days-of-week="<?php echo esc_attr( $days_of_week ); ?>"
+				data-url-param="<?php echo esc_attr( $url_param ); ?>"
+				data-require-login="<?php echo esc_attr( $require_login ? 'true' : 'false' ); ?>"
+				data-required-roles="<?php echo esc_attr( $required_roles ); ?>"
+			<?php endif; ?>
 		>
 			<figure
 				role="alert"

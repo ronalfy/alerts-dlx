@@ -51,6 +51,8 @@ final class ShortcodeBuilder {
 		'secondary_button_rel_sponsored',
 		'close_button_enabled',
 		'is_block_editorial_only',
+		'conditions_enabled',
+		'require_login',
 	);
 
 	/**
@@ -219,6 +221,13 @@ final class ShortcodeBuilder {
 						'secondary_button_enabled',
 						'close_button_enabled',
 						'close_button_expiration',
+						'conditions_enabled',
+						'start_date',
+						'end_date',
+						'days_of_week',
+						'url_param',
+						'require_login',
+						'required_roles',
 					)
 				)
 			)
@@ -818,6 +827,11 @@ final class ShortcodeBuilder {
 		$sanitized['secondary_button_text'] = self::bounded_text( $values['secondary_button_text'] ?? '', 200 );
 		$sanitized['secondary_button_url']  = esc_url_raw( self::bounded_text( $values['secondary_button_url'] ?? '', 2048 ) );
 		$sanitized['image_url']             = esc_url_raw( self::bounded_text( $values['image_url'] ?? '', 2048 ) );
+		$sanitized['start_date']            = self::bounded_text( $values['start_date'] ?? '', 19 );
+		$sanitized['end_date']              = self::bounded_text( $values['end_date'] ?? '', 19 );
+		$sanitized['days_of_week']          = self::bounded_text( $values['days_of_week'] ?? '', 20 );
+		$sanitized['url_param']             = self::bounded_text( $values['url_param'] ?? '', 200 );
+		$sanitized['required_roles']        = self::bounded_text( $values['required_roles'] ?? '', 200 );
 
 		$description = (string) ( $values['alert_description'] ?? '' );
 		if ( strlen( $description ) > self::MAX_DESCRIPTION_LENGTH || false !== stripos( $description, '[alertsdlx' ) || false !== stripos( $description, '[/alertsdlx]' ) ) {

@@ -152,6 +152,11 @@ class Blocks {
 		$atts['maximum_width']           = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
 		$atts['base_font_size']          = min( 96, max( 8, (int) $atts['base_font_size'] ) );
 		$atts['close_button_expiration'] = min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) );
+		$atts['start_date']              = substr( sanitize_text_field( (string) $atts['start_date'] ), 0, 19 );
+		$atts['end_date']                = substr( sanitize_text_field( (string) $atts['end_date'] ), 0, 19 );
+		$atts['days_of_week']            = substr( sanitize_text_field( (string) $atts['days_of_week'] ), 0, 20 );
+		$atts['url_param']               = substr( sanitize_text_field( (string) $atts['url_param'] ), 0, 200 );
+		$atts['required_roles']          = substr( sanitize_text_field( (string) $atts['required_roles'] ), 0, 200 );
 
 		// If alert description is empty, use content.
 		if ( empty( $atts['alert_description'] ) && ! empty( $content ) ) {
@@ -415,6 +420,7 @@ class Blocks {
 				'libraryItems'               => AlertLibrary::get_items_for_editor(),
 				'canManageLibrary'           => current_user_can( 'manage_options' ),
 				'debugMode'                  => Options::is_debug_mode(),
+				'roles'                      => wp_roles()->get_names(),
 			)
 		);
 	}

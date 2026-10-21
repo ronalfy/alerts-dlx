@@ -407,6 +407,32 @@ class Abilities {
 				'is_block_editorial_only'        => self::boolean_property(
 					esc_html__( 'When true, the shortcode renders nothing on the front end. Use false for a visible alert. Defaults to false.', 'alerts-dlx' )
 				),
+				'conditions_enabled'             => self::boolean_property(
+					esc_html__( 'Enable display conditions evaluated client-side. Defaults to false.', 'alerts-dlx' )
+				),
+				'start_date'                     => self::string_property(
+					esc_html__( 'Earliest date/time to show the alert (YYYY-MM-DDTHH:MM). Evaluated client-side so it works with page caching.', 'alerts-dlx' ),
+					19
+				),
+				'end_date'                       => self::string_property(
+					esc_html__( 'Latest date/time to show the alert (YYYY-MM-DDTHH:MM). Evaluated client-side so it works with page caching.', 'alerts-dlx' ),
+					19
+				),
+				'days_of_week'                   => self::string_property(
+					esc_html__( 'Comma-separated day numbers (0=Sunday through 6=Saturday) when the alert may appear. Example: 0,6 for weekends.', 'alerts-dlx' ),
+					20
+				),
+				'url_param'                      => self::string_property(
+					esc_html__( 'Show only when a URL query parameter is present. Use key=value for an exact match or just key to check existence.', 'alerts-dlx' ),
+					200
+				),
+				'require_login'                  => self::boolean_property(
+					esc_html__( 'Show only to logged-in users. Evaluated client-side via REST so it works with page caching.', 'alerts-dlx' )
+				),
+				'required_roles'                 => self::string_property(
+					esc_html__( 'Comma-separated WordPress role slugs. The alert is shown only when the visitor has at least one of these roles. Requires require_login.', 'alerts-dlx' ),
+					200
+				),
 			),
 			'additionalProperties' => false,
 			'default'              => array(),

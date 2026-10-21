@@ -134,3 +134,14 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 		height: 16px;
 	}
 }
+
+.alerts-dlx-day-selector {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 8px;
+
+	.components-button {
+		width: 100%;
+		justify-content: center;
+	}
+}

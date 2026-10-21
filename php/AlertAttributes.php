@@ -70,6 +70,13 @@ final class AlertAttributes {
 		'icon_source'                    => array( 'iconSource', 'text' ),
 		'image_url'                      => array( 'imageUrl', 'text' ),
 		'image_id'                       => array( 'imageId', 'integer' ),
+		'conditions_enabled'             => array( 'conditionsEnabled', 'boolean' ),
+		'start_date'                     => array( 'startDate', 'text' ),
+		'end_date'                       => array( 'endDate', 'text' ),
+		'days_of_week'                   => array( 'daysOfWeek', 'text' ),
+		'url_param'                      => array( 'urlParam', 'text' ),
+		'require_login'                  => array( 'requireLogin', 'boolean' ),
+		'required_roles'                 => array( 'requiredRoles', 'text' ),
 	);
 
 	/**
@@ -140,6 +147,13 @@ final class AlertAttributes {
 			'icon_source'                    => 'icon',
 			'image_url'                      => '',
 			'image_id'                       => 0,
+			'conditions_enabled'             => false,
+			'start_date'                     => '',
+			'end_date'                       => '',
+			'days_of_week'                   => '',
+			'url_param'                      => '',
+			'require_login'                  => false,
+			'required_roles'                 => '',
 		);
 	}
 

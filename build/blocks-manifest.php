@@ -261,6 +261,34 @@ return array(
 				'type' => 'string',
 				'default' => 'rounded'
 			),
+			'conditionsEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'startDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'endDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'daysOfWeek' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'urlParam' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'requireLogin' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'requiredRoles' => array(
+				'type' => 'string',
+				'default' => ''
+			),
 			'globalStyleId' => array(
 				'type' => 'number',
 				'default' => 0
@@ -528,6 +556,34 @@ return array(
 			'adminOnlyBlockExpires' => array(
 				'type' => 'string',
 				'default' => null
+			),
+			'conditionsEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'startDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'endDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'daysOfWeek' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'urlParam' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'requireLogin' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'requiredRoles' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'isBlockEditorialOnly' => array(
 				'type' => 'boolean',
@@ -839,6 +895,34 @@ return array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-chakra-color-light, #bee3f8)'
 			),
+			'conditionsEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'startDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'endDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'daysOfWeek' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'urlParam' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'requireLogin' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'requiredRoles' => array(
+				'type' => 'string',
+				'default' => ''
+			),
 			'isBlockEditorialOnly' => array(
 				'type' => 'boolean',
 				'default' => false
@@ -1132,6 +1216,34 @@ return array(
 			'colorLight' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-material-color-light, #bee3f8)'
+			),
+			'conditionsEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'startDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'endDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'daysOfWeek' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'urlParam' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'requireLogin' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'requiredRoles' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'isBlockEditorialOnly' => array(
 				'type' => 'boolean',
@@ -1430,6 +1542,34 @@ return array(
 			'colorLight' => array(
 				'type' => 'string',
 				'default' => 'var(--alerts-dlx-shoelace-color-light, #cfe2ff)'
+			),
+			'conditionsEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'startDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'endDate' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'daysOfWeek' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'urlParam' => array(
+				'type' => 'string',
+				'default' => ''
+			),
+			'requireLogin' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
+			'requiredRoles' => array(
+				'type' => 'string',
+				'default' => ''
 			),
 			'isBlockEditorialOnly' => array(
 				'type' => 'boolean',

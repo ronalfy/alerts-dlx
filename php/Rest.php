@@ -29,6 +29,16 @@ class Rest {
 	public static function register_rest_routes() {
 		register_rest_route(
 			'dlxplugins/alerts-dlx/v1',
+			'/user-state',
+			array(
+				'methods'             => 'GET',
+				'permission_callback' => '__return_true',
+				'callback'            => array( static::class, 'rest_get_user_state' ),
+			)
+		);
+
+		register_rest_route(
+			'dlxplugins/alerts-dlx/v1',
 			'/search/pages',
 			array(
 				'methods'             => 'POST',
@@ -99,6 +109,21 @@ class Rest {
 						'sanitize_callback' => array( AlertLibrary::class, 'sanitize_kind' ),
 					),
 				),
+			)
+		);
+	}
+
+	/**
+	 * Return the current user's login state and roles for client-side condition checks.
+	 *
+	 * @return \WP_REST_Response
+	 */
+	public static function rest_get_user_state() {
+		$user = wp_get_current_user();
+		return rest_ensure_response(
+			array(
+				'isLoggedIn' => is_user_logged_in(),
+				'roles'      => $user->roles,
 			)
 		);
 	}
