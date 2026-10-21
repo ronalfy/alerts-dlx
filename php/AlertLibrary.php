@@ -367,7 +367,7 @@ final class AlertLibrary {
 			'start_date'                     => '',
 			'end_date'                       => '',
 			'days_of_week'                   => '',
-			'url_param'                      => '',
+			'url_params'                     => array(),
 			'require_login'                  => false,
 			'required_roles'                 => '',
 		);

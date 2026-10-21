@@ -78,6 +78,12 @@ class Functions {
 					return 0;
 				case 'url':
 					return esc_url( $attributes[ $attribute ] );
+				case 'array':
+					$value = $attributes[ $attribute ] ?? array();
+					if ( is_object( $value ) ) {
+						$value = (array) $value;
+					}
+					return is_array( $value ) ? $value : array();
 				case 'default':
 					return '';
 			}
@@ -579,6 +585,37 @@ class Functions {
 	 */
 	public static function sanitize_icon_svg( string $svg ): string {
 		return SvgSanitizer::sanitize( $svg );
+	}
+
+	/**
+	 * Sanitize URL parameter array from block or shortcode input.
+	 *
+	 * @param mixed $value Raw URL params.
+	 * @return array Sanitized array of {key, value} objects.
+	 */
+	public static function sanitize_url_params( $value ) {
+		if ( is_object( $value ) ) {
+			$value = (array) $value;
+		}
+		if ( ! is_array( $value ) ) {
+			return array();
+		}
+		$out = array();
+		foreach ( $value as $item ) {
+			if ( is_object( $item ) ) {
+				$item = (array) $item;
+			}
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+			$key = isset( $item['key'] ) ? sanitize_text_field( (string) $item['key'] ) : '';
+			$val = isset( $item['value'] ) ? sanitize_text_field( (string) $item['value'] ) : '';
+			if ( '' === $key ) {
+				continue;
+			}
+			$out[] = array( 'key' => $key, 'value' => $val );
+		}
+		return $out;
 	}
 
 	/**

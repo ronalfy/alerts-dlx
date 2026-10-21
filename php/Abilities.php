@@ -422,9 +422,17 @@ class Abilities {
 					esc_html__( 'Comma-separated day numbers (0=Sunday through 6=Saturday) when the alert may appear. Example: 0,6 for weekends.', 'alerts-dlx' ),
 					20
 				),
-				'url_param'                      => self::string_property(
-					esc_html__( 'Show only when a URL query parameter is present. Use key=value for an exact match or just key to check existence.', 'alerts-dlx' ),
-					200
+				'url_params'                     => array(
+					'type'        => 'array',
+					'description' => esc_html__( 'Show only when URL query parameters match. Each item needs a key and an optional value. Empty value checks for existence.', 'alerts-dlx' ),
+					'items'       => array(
+						'type'       => 'object',
+						'properties' => array(
+							'key'   => array( 'type' => 'string', 'description' => esc_html__( 'Query parameter name.', 'alerts-dlx' ) ),
+							'value' => array( 'type' => 'string', 'description' => esc_html__( 'Query parameter value. Omit or leave empty to check for existence only.', 'alerts-dlx' ) ),
+						),
+						'required'   => array( 'key' ),
+					),
 				),
 				'require_login'                  => self::boolean_property(
 					esc_html__( 'Show only to logged-in users. Evaluated client-side via REST so it works with page caching.', 'alerts-dlx' )

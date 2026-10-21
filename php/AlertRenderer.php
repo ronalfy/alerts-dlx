@@ -120,7 +120,7 @@ final class AlertRenderer {
 		$start_date                     = $normalized['start_date'];
 		$end_date                       = $normalized['end_date'];
 		$days_of_week                   = $normalized['days_of_week'];
-		$url_param                      = $normalized['url_param'];
+		$url_params                     = $normalized['url_params'];
 		$require_login                  = $normalized['require_login'];
 		$required_roles                 = $normalized['required_roles'];
 
@@ -363,7 +363,7 @@ final class AlertRenderer {
 				data-start-date="<?php echo esc_attr( $start_date ); ?>"
 				data-end-date="<?php echo esc_attr( $end_date ); ?>"
 				data-days-of-week="<?php echo esc_attr( $days_of_week ); ?>"
-				data-url-param="<?php echo esc_attr( $url_param ); ?>"
+				data-url-params="<?php echo esc_attr( wp_json_encode( $url_params ) ); ?>"
 				data-require-login="<?php echo esc_attr( $require_login ? 'true' : 'false' ); ?>"
 				data-required-roles="<?php echo esc_attr( $required_roles ); ?>"
 			<?php endif; ?>

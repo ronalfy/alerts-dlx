@@ -248,9 +248,9 @@
       "type": "string",
       "default": ""
     },
-    "urlParam": {
-      "type": "string",
-      "default": ""
+    "urlParams": {
+      "type": "array",
+      "default": []
     },
     "requireLogin": {
       "type": "boolean",

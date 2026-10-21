@@ -74,7 +74,7 @@ final class AlertAttributes {
 		'start_date'                     => array( 'startDate', 'text' ),
 		'end_date'                       => array( 'endDate', 'text' ),
 		'days_of_week'                   => array( 'daysOfWeek', 'text' ),
-		'url_param'                      => array( 'urlParam', 'text' ),
+		'url_params'                     => array( 'urlParams', 'array' ),
 		'require_login'                  => array( 'requireLogin', 'boolean' ),
 		'required_roles'                 => array( 'requiredRoles', 'text' ),
 	);
@@ -151,7 +151,7 @@ final class AlertAttributes {
 			'start_date'                     => '',
 			'end_date'                       => '',
 			'days_of_week'                   => '',
-			'url_param'                      => '',
+			'url_params'                     => array(),
 			'require_login'                  => false,
 			'required_roles'                 => '',
 		);
@@ -390,6 +390,7 @@ final class AlertAttributes {
 		$normalized['maximum_width_unit']    = in_array( $normalized['maximum_width_unit'], self::get_maximum_width_units(), true ) ? $normalized['maximum_width_unit'] : 'px';
 		$normalized['margin_spacing']        = self::sanitize_margin_spacing( $normalized['margin_spacing'] );
 		$normalized['margin_spacing_target'] = self::sanitize_margin_spacing_target( $normalized['margin_spacing_target'] );
+		$normalized['url_params']            = Functions::sanitize_url_params( $normalized['url_params'] );
 
 		return $normalized;
 	}

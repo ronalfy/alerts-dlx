@@ -277,9 +277,11 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
-			'urlParam' => array(
-				'type' => 'string',
-				'default' => ''
+			'urlParams' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			),
 			'requireLogin' => array(
 				'type' => 'boolean',
@@ -573,9 +575,11 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
-			'urlParam' => array(
-				'type' => 'string',
-				'default' => ''
+			'urlParams' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			),
 			'requireLogin' => array(
 				'type' => 'boolean',
@@ -911,9 +915,11 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
-			'urlParam' => array(
-				'type' => 'string',
-				'default' => ''
+			'urlParams' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			),
 			'requireLogin' => array(
 				'type' => 'boolean',
@@ -1233,9 +1239,11 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
-			'urlParam' => array(
-				'type' => 'string',
-				'default' => ''
+			'urlParams' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			),
 			'requireLogin' => array(
 				'type' => 'boolean',
@@ -1559,9 +1567,11 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
-			'urlParam' => array(
-				'type' => 'string',
-				'default' => ''
+			'urlParams' => array(
+				'type' => 'array',
+				'default' => array(
+					
+				)
 			),
 			'requireLogin' => array(
 				'type' => 'boolean',

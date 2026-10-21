@@ -14,6 +14,7 @@ import {
 import { __ } from '@wordpress/i18n';
 
 import DayOfWeekSelector from './DayOfWeekSelector';
+import UrlParamRepeater from './UrlParamRepeater';
 
 /**
  * Render the common alert settings without changing the public block contract.
@@ -41,7 +42,7 @@ export default function AlertSettingsPanel( {
 		startDate,
 		endDate,
 		daysOfWeek,
-		urlParam,
+		urlParams,
 		requireLogin,
 		requiredRoles,
 	} = attributes;
@@ -181,16 +182,10 @@ export default function AlertSettingsPanel( {
 								} }
 							/>
 						</PanelRow>
-						<PanelRow>
-							<TextControl
-								label={ __( 'URL Parameter', 'alerts-dlx' ) }
-								value={ urlParam }
-								onChange={ ( value ) => {
-									setAttributes( { urlParam: value } );
-								} }
-								help={ __( 'key=value for exact match, or just key to check existence.', 'alerts-dlx' ) }
-							/>
-						</PanelRow>
+						<UrlParamRepeater
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+						/>
 						<PanelRow>
 							<ToggleControl
 								label={ __( 'Require Logged-In User', 'alerts-dlx' ) }

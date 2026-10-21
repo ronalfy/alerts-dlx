@@ -75,27 +75,30 @@ const passesDateConditions = ( alert ) => {
 };
 
 /**
- * Check whether the current URL satisfies the alert's parameter rule.
+ * Check whether the current URL satisfies the alert's parameter rules.
  *
  * @param {HTMLElement} alert Alert container element.
  * @return {boolean} Whether the alert should be kept.
  */
 const passesUrlParamCondition = ( alert ) => {
-	const param = alert.dataset.urlParam;
-	if ( ! param ) {
+	let params;
+	try {
+		params = JSON.parse( alert.dataset.urlParams || '[]' );
+	} catch {
+		return true;
+	}
+	if ( ! Array.isArray( params ) || params.length === 0 ) {
 		return true;
 	}
 
-	const params = new URLSearchParams( window.location.search );
-	const separatorIndex = param.indexOf( '=' );
-
-	if ( separatorIndex !== -1 ) {
-		const key = param.slice( 0, separatorIndex );
-		const value = param.slice( separatorIndex + 1 );
-		return params.get( key ) === value;
-	}
-
-	return params.has( param );
+	const searchParams = new URLSearchParams( window.location.search );
+	return params.every( ( param ) => {
+		const current = searchParams.get( param.key );
+		if ( param.value === '' || param.value === undefined ) {
+			return searchParams.has( param.key );
+		}
+		return current === param.value;
+	} );
 };
 
 /**

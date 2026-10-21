@@ -225,7 +225,7 @@ final class ShortcodeBuilder {
 						'start_date',
 						'end_date',
 						'days_of_week',
-						'url_param',
+						'url_params',
 						'require_login',
 						'required_roles',
 					)
@@ -830,7 +830,12 @@ final class ShortcodeBuilder {
 		$sanitized['start_date']            = self::bounded_text( $values['start_date'] ?? '', 19 );
 		$sanitized['end_date']              = self::bounded_text( $values['end_date'] ?? '', 19 );
 		$sanitized['days_of_week']          = self::bounded_text( $values['days_of_week'] ?? '', 20 );
-		$sanitized['url_param']             = self::bounded_text( $values['url_param'] ?? '', 200 );
+		$url_params                         = $values['url_params'] ?? array();
+		if ( is_string( $url_params ) && '' !== $url_params ) {
+			$decoded     = json_decode( $url_params, true );
+			$url_params  = is_array( $decoded ) ? $decoded : array();
+		}
+		$sanitized['url_params']            = Functions::sanitize_url_params( is_array( $url_params ) ? $url_params : array() );
 		$sanitized['required_roles']        = self::bounded_text( $values['required_roles'] ?? '', 200 );
 
 		$description = (string) ( $values['alert_description'] ?? '' );
@@ -942,6 +947,9 @@ final class ShortcodeBuilder {
 			}
 			if ( in_array( $name, self::BOOLEAN_FIELDS, true ) ) {
 				$value = $value ? 'true' : 'false';
+			}
+			if ( is_array( $value ) ) {
+				$value = wp_json_encode( $value );
 			}
 			$attributes[ $name ] = (string) $value;
 		}
