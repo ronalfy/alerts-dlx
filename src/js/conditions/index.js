@@ -143,6 +143,7 @@ const evaluateDisplayConditions = async () => {
 
 	const userState = hasUserConditions ? await fetchUserState() : { isLoggedIn: false, roles: [] };
 
+	const passingIds = [];
 	alerts.forEach( ( alert ) => {
 		if ( ! passesDateConditions( alert ) ) {
 			alert.remove();
@@ -158,7 +159,57 @@ const evaluateDisplayConditions = async () => {
 			alert.remove();
 			return;
 		}
+		passingIds.push( alert.dataset.uniqueId );
 	} );
+
+	if ( passingIds.length === 0 ) {
+		return;
+	}
+
+	try {
+		const response = await fetch( '/wp-json/dlxplugins/alerts-dlx/v1/alert-contents', {
+			method: 'POST',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+			},
+			body: JSON.stringify( { ids: passingIds } ),
+		} );
+
+		if ( ! response.ok ) {
+			throw new Error( 'Fetch failed' );
+		}
+
+		const items = await response.json();
+		items.forEach( ( item ) => {
+			const placeholder = document.querySelector(
+				`.alerts-dlx[data-conditions-enabled="true"][data-unique-id="${ item.id }"]`
+			);
+			if ( ! placeholder || ! item.html ) {
+				placeholder?.remove();
+				return;
+			}
+			placeholder.outerHTML = item.html;
+
+			const inserted = document.querySelector(
+				`.alerts-dlx[data-unique-id="${ item.id }"]`
+			);
+			if ( inserted ) {
+				inserted.classList.add( 'alerts-dlx-conditional-show' );
+				void inserted.offsetHeight; // force reflow
+				requestAnimationFrame( () => {
+					inserted.classList.add( 'is-visible' );
+				} );
+			}
+		} );
+	} catch ( e ) {
+		passingIds.forEach( ( id ) => {
+			document.querySelector(
+				`.alerts-dlx[data-conditions-enabled="true"][data-unique-id="${ id }"]`
+			)?.remove();
+		} );
+	}
 };
 
 /**

@@ -283,6 +283,19 @@ class Blocks {
 		);
 		return $renderer->render( $attributes, $content, $block );
 	}
+
+	/**
+	 * Render an alert from stored attributes (used by REST re-render).
+	 *
+	 * @param array  $attributes Block editor attributes.
+	 * @param string $content    Current content.
+	 * @return string
+	 */
+	public static function render_alert( array $attributes, string $content = '' ) {
+		$attributes['conditionsEnabled'] = false;
+		$blocks = new self();
+		return $blocks->frontend( $attributes, $content, null );
+	}
 	/**
 	 * Register the block editor script for the iframe.
 	 */
@@ -303,6 +316,7 @@ class Blocks {
 	public function register_frontend_styles() {
 		$version = Functions::get_plugin_version();
 		$styles  = array(
+			'alerts-dlx-common-styles'    => 'dist/alerts-dlx-common.css',
 			'alerts-dlx-bootstrap-styles' => 'dist/alerts-dlx-bootstrap-styles.css',
 			'alerts-dlx-chakra-styles'    => 'dist/alerts-dlx-chakra-styles.css',
 			'alerts-dlx-material-styles'  => 'dist/alerts-dlx-material-styles.css',

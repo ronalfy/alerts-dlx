@@ -39,6 +39,25 @@ class Rest {
 
 		register_rest_route(
 			'dlxplugins/alerts-dlx/v1',
+			'/alert-contents',
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'permission_callback' => '__return_true',
+				'callback'            => array( static::class, 'rest_get_alert_contents' ),
+				'args'                => array(
+					'ids' => array(
+						'type'              => 'array',
+						'required'          => true,
+						'sanitize_callback' => function ( $value ) {
+							return array_map( 'sanitize_text_field', (array) $value );
+						},
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			'dlxplugins/alerts-dlx/v1',
 			'/search/pages',
 			array(
 				'methods'             => 'POST',
@@ -126,6 +145,34 @@ class Rest {
 				'roles'      => $user->roles,
 			)
 		);
+	}
+
+	/**
+	 * Return rendered HTML for one or more conditioned alerts.
+	 *
+	 * Re-renders from stored attributes so all escaping runs on every request.
+	 *
+	 * @param \WP_REST_Request $request REST request.
+	 * @return \WP_REST_Response
+	 */
+	public static function rest_get_alert_contents( $request ) {
+		$ids     = $request->get_param( 'ids' );
+		$results = array();
+		foreach ( $ids as $id ) {
+			$stored = get_transient( 'adlx_alert_' . sanitize_key( $id ) );
+			$html   = '';
+			if ( false !== $stored ) {
+				$data = json_decode( $stored, true );
+				if ( is_array( $data ) && isset( $data['attributes'] ) ) {
+					$html = Blocks::render_alert( $data['attributes'], $data['content'] ?? '' );
+				}
+			}
+			$results[] = array(
+				'id'   => $id,
+				'html' => $html,
+			);
+		}
+		return rest_ensure_response( $results );
 	}
 
 	/**
