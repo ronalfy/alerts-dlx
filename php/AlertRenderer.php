@@ -174,14 +174,15 @@ final class AlertRenderer {
 		 */
 		$reset_dismissal_countdown = apply_filters( 'alerts_dlx_allow_dismissal_reset', true, $unique_id, $normalized );
 
-		// Create hash from title, descriptions, and button text.
+		// Create hash from title, displayed description, and button text.
 		// This detects if content has changed and restarts the dismissal countdown.
 		$is_in_block_editor = is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
 		$cookie_name        = $unique_id;
 		$legacy_cookie_name = 'alerts-dlx-' . $unique_id;
 
 		if ( $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
-			$hash        = md5( $alert_title . wp_strip_all_tags( $content ) . $button_text . $secondary_button_text );
+			$display_content = ! empty( $alert_description ) ? $alert_description : $content;
+			$hash            = md5( $alert_title . wp_strip_all_tags( $display_content ) . $button_text . $secondary_button_text );
 			$option_name = 'adlx-' . $unique_id;
 			$hash_option = get_option( sanitize_key( $option_name ) );
 			if ( $hash_option !== $hash || ( false === $hash_option && isset( $_COOKIE[ $cookie_name ] ) ) ) {

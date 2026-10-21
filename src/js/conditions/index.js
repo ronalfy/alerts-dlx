@@ -201,6 +201,7 @@ const evaluateDisplayConditions = async () => {
 				requestAnimationFrame( () => {
 					inserted.classList.add( 'is-visible' );
 				} );
+				document.dispatchEvent( new CustomEvent( 'alertsDlxAlertInserted' ) );
 			}
 		} );
 	} catch ( e ) {
