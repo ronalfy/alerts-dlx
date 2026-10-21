@@ -10,6 +10,7 @@ export const groupLabels = {
 	icon: __("Icon or image", "alerts-dlx"),
 	colors: __("Custom colors", "alerts-dlx"),
 	dismiss: __("Dismiss", "alerts-dlx"),
+	conditions: __("Display Conditions", "alerts-dlx"),
 	advanced: __("Advanced", "alerts-dlx"),
 };
 

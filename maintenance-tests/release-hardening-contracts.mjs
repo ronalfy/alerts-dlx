@@ -58,7 +58,7 @@ contains(blocks, "$atts['alert_description'] = substr( (string) $atts['alert_des
 
 // Field controls and visibility moved into the shared AlertBuilder components.
 // The shortcode page still owns error announcements and loading copy.
-contains(builderField, '["number", "url"].includes(field.control)', 'Builder exposes semantic input types');
+contains(builderField, '["number", "url", "datetime-local"].includes(field.control)', 'Builder exposes semantic input types');
 contains(builderField, '"color" === field.control', 'Builder exposes a dedicated color control');
 contains(builderField, '"icon" === field.control', 'Builder exposes a dedicated icon control');
 contains(builderField, 'getIconSetForGroup(alertGroup)', 'Builder icon presets resolve through the selected design group');

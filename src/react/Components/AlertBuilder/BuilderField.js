@@ -76,6 +76,7 @@ const CompactColorField = ({ field, value, colors, onChange }) => {
 	return (
 		<BaseControl
 			id={inputId}
+			help={field.help || undefined}
 			className="alerts-dlx-shortcode-builder-color-control"
 		>
 			<div className="alerts-dlx-shortcode-builder-color-row">
@@ -148,6 +149,7 @@ const CompactIconField = ({ field, value, alertGroup, onChange }) => {
 		<BaseControl
 			id={inputId}
 			label={field.label}
+			help={field.help || undefined}
 			className="alerts-dlx-shortcode-builder-icon-control"
 		>
 			<div className="alerts-dlx-shortcode-builder-icon-row">
@@ -183,6 +185,7 @@ const CompactImageField = ({ field, values, onChange, onSelectImage }) => {
 		<BaseControl
 			id={inputId}
 			label={field.label}
+			help={field.help || undefined}
 			className="alerts-dlx-shortcode-builder-image-control"
 		>
 			<div className="alerts-dlx-shortcode-builder-image-row">
@@ -234,6 +237,7 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 		return (
 			<ToggleControl
 				label={field.label}
+				help={field.help || undefined}
 				checked={Boolean(value)}
 				onChange={(nextValue) => onChange(field.name, nextValue)}
 			/>
@@ -244,6 +248,7 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 		return (
 			<SelectControl
 				label={field.label}
+				help={field.help || undefined}
 				value={value}
 				options={options}
 				onChange={(nextValue) => onChange(field.name, nextValue)}
@@ -256,6 +261,7 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 		return (
 			<TextareaControl
 				label={field.label}
+				help={field.help || undefined}
 				value={value || ""}
 				onChange={(nextValue) => onChange(field.name, nextValue)}
 			/>
@@ -298,13 +304,14 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 		);
 	}
 
-	const inputType = ["number", "url"].includes(field.control)
+	const inputType = ["number", "url", "datetime-local"].includes(field.control)
 		? field.control
 		: "text";
 
 	return (
 		<TextControl
 			label={field.label}
+			help={field.help || undefined}
 			type={inputType}
 			min={field.min}
 			max={field.max}
