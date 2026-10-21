@@ -1,7 +1,48 @@
 @import "../common.scss";
-@import "../secondary-button";
 
 // Purpose: Consolidated Bootstrap alert styles for light and dark themes using CSS variables.
+
+// Palette use-cases:
+// color — title and body text.
+// border — alert border.
+// accent — primary button hover background.
+// alt — primary button background.
+// contrast — primary button text (from $bootstrap-variant-contrast).
+// bold — icon and close.
+// light — alert background.
+// color-secondary — secondary button background.
+// color-secondary-hover — secondary button hover background.
+// color-secondary-text — secondary button label.
+// color-secondary-text-hover — secondary button hover label.
+
+// Secondary CTAs also have `.alerts-dlx-button`, so nest under the actions row
+// and require both button classes.
+@mixin alerts-dlx-secondary-button($background, $color, $background-hover, $color-hover, $border: false) {
+	.alerts-dlx-actions {
+
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background;
+			color: $color;
+
+			@if $border {
+				border: 1px solid $color;
+			}
+		}
+
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background-hover;
+			color: $color-hover;
+
+			@if $border {
+				border-color: $color-hover;
+			}
+		}
+	}
+}
 
 $bootstrap-variants: (
 	"primary",
@@ -15,188 +56,204 @@ $bootstrap-variants: (
 );
 
 $bootstrap-variant-contrast: (
-	"primary": (
-		"light": #ffffff,
-		"dark": #031633
-	),
-	"secondary": (
-		"light": #ffffff,
-		"dark": #031633
-	),
-	"success": (
-		"light": #ffffff,
-		"dark": #ffffff
-	),
-	"danger": (
-		"light": #ffffff,
-		"dark": #ffffff
-	),
-	"warning": (
-		"light": #ffffff,
-		"dark": #031633
-	),
-	"info": (
-		"light": #ffffff,
-		"dark": #031633
-	),
-	"light": (
-		"light": #ffffff,
-		"dark": #031633
-	),
-	"dark": (
-		"light": #ffffff,
-		"dark": #031633
-	)
+	"primary": ("light": #ffffff,
+		"dark": #031633),
+	"secondary": ("light": #ffffff,
+		"dark": #031633),
+	"success": ("light": #ffffff,
+		"dark": #ffffff),
+	"danger": ("light": #ffffff,
+		"dark": #ffffff),
+	"warning": ("light": #ffffff,
+		"dark": #031633),
+	"info": ("light": #ffffff,
+		"dark": #031633),
+	"light": ("light": #ffffff,
+		"dark": #031633),
+	"dark": ("light": #ffffff,
+		"dark": #031633)
 );
 
 $bootstrap-light-palette: (
-	"primary": (
-		"color": #084298,
+	"primary": ("color": #084298,
 		"border": #b6d4fe,
 		"accent": #26559c,
 		"alt": #084298,
 		"bold": #084298,
-		"light": #cfe2ff
-	),
-	"secondary": (
-		"color": #41464b,
+		"light": #cfe2ff,
+		"color-secondary": #4671b2,
+		"color-secondary-hover": #3c66a6,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"secondary": ("color": #41464b,
 		"border": #d3d6d8,
 		"accent": #5c6874,
 		"alt": #41464b,
 		"bold": #41464b,
-		"light": #e2e3e5
-	),
-	"success": (
-		"color": #0f5132,
+		"light": #e2e3e5,
+		"color-secondary": #707478,
+		"color-secondary-hover": #6c7782,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"success": ("color": #0f5132,
 		"border": #badbcc,
 		"accent": #167247,
 		"alt": #0f5132,
 		"bold": #0f5132,
-		"light": #d1e7dd
-	),
-	"danger": (
-		"color": #842029,
+		"light": #d1e7dd,
+		"color-secondary": #4b7d65,
+		"color-secondary-hover": #2d8059,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"danger": ("color": #842029,
 		"border": #f5c2c7,
 		"accent": #832e35,
 		"alt": #842029,
 		"bold": #842029,
-		"light": #f8d7da
-	),
-	"warning": (
-		"color": #664d03,
+		"light": #f8d7da,
+		"color-secondary": #a3585e,
+		"color-secondary-hover": #8f4349,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"warning": ("color": #664d03,
 		"border": #ffecb5,
 		"accent": #7f6002,
 		"alt": #664d03,
 		"bold": #664d03,
-		"light": #fff3cd
-	),
-	"info": (
-		"color": #055160,
+		"light": #fff3cd,
+		"color-secondary": #8c7942,
+		"color-secondary-hover": #8c701b,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"info": ("color": #055160,
 		"border": #b6effb,
 		"accent": #076c81,
 		"alt": #055160,
 		"bold": #055160,
-		"light": #cff4fc
-	),
-	"light": (
-		"color": #636464,
+		"light": #cff4fc,
+		"color-secondary": #447d88,
+		"color-secondary-hover": #207b8e,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"light": ("color": #636464,
 		"border": #fdfdfe,
 		"accent": #7b7c7c,
 		"alt": #636464,
 		"bold": #636464,
-		"light": #fefefe
-	),
-	"dark": (
-		"color": #141619,
+		"light": #fefefe,
+		"color-secondary": #8a8b8b,
+		"color-secondary-hover": #888989,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"dark": ("color": #141619,
 		"border": #bcbebf,
 		"accent": #292d33,
 		"alt": #141619,
 		"bold": #141619,
-		"light": #d3d3d4
-	)
+		"light": #d3d3d4,
+		"color-secondary": #4f5053,
+		"color-secondary-hover": #3e4247,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff)
 );
 
 $bootstrap-dark-palette: (
-	"primary": (
-		"color": #6ea8fe,
+	"primary": ("color": #6ea8fe,
 		"border": #084298,
 		"accent": #5a91e4,
 		"alt": #6ea8fe,
 		"bold": #6ea8fe,
-		"light": #031633
-	),
-	"secondary": (
-		"color": #a7acb1,
+		"light": #031633,
+		"color-secondary": #92befe,
+		"color-secondary-hover": #6b9ce7,
+		"color-secondary-text": #031633,
+		"color-secondary-text-hover": #031633),
+	"secondary": ("color": #a7acb1,
 		"border": #084298,
 		"accent": #c2c5c9,
 		"alt": #a7acb1,
 		"bold": #a7acb1,
-		"light": #031633
-	),
-	"success": (
-		"color": #75b798,
+		"light": #031633,
+		"color-secondary": #bdc1c4,
+		"color-secondary-hover": #c8cbce,
+		"color-secondary-text": #031633,
+		"color-secondary-text-hover": #031633),
+	"success": ("color": #75b798,
 		"border": #084298,
 		"accent": #167247,
 		"alt": #75b798,
 		"bold": #75b798,
-		"light": #031633
-	),
-	"danger": (
-		"color": #ea868f,
+		"light": #031633,
+		"color-secondary": #98c9b2,
+		"color-secondary-hover": #2d8059,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"danger": ("color": #ea868f,
 		"border": #084298,
 		"accent": #832e35,
 		"alt": #ea868f,
 		"bold": #ea868f,
-		"light": #031633
-	),
-	"warning": (
-		"color": #ffda6a,
+		"light": #031633,
+		"color-secondary": #efa4ab,
+		"color-secondary-hover": #8f4349,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff),
+	"warning": ("color": #ffda6a,
 		"border": #084298,
 		"accent": #eec959,
 		"alt": #ffda6a,
 		"bold": #ffda6a,
-		"light": #031633
-	),
-	"info": (
-		"color": #6edff6,
+		"light": #031633,
+		"color-secondary": #ffe38f,
+		"color-secondary-hover": #f0ce6a,
+		"color-secondary-text": #031633,
+		"color-secondary-text-hover": #031633),
+	"info": ("color": #6edff6,
 		"border": #084298,
 		"accent": #5cc9df,
 		"alt": #6edff6,
 		"bold": #6edff6,
-		"light": #031633
-	),
-	"light": (
-		"color": #f8f9fa,
+		"light": #031633,
+		"color-secondary": #92e7f8,
+		"color-secondary-hover": #6ccee2,
+		"color-secondary-text": #031633,
+		"color-secondary-text-hover": #031633),
+	"light": ("color": #f8f9fa,
 		"border": #084298,
 		"accent": #eaf0f6,
 		"alt": #f8f9fa,
 		"bold": #f8f9fa,
-		"light": #031633
-	),
-	"dark": (
-		"color": #f8f9fa,
+		"light": #031633,
+		"color-secondary": #fafafb,
+		"color-secondary-hover": #f9fafa,
+		"color-secondary-text": #031633,
+		"color-secondary-text-hover": #031633),
+	"dark": ("color": #f8f9fa,
 		"border": #084298,
 		"accent": #eaf0f6,
 		"alt": #f8f9fa,
 		"bold": #f8f9fa,
-		"light": #031633
-	)
+		"light": #031633,
+		"color-secondary": #fafafb,
+		"color-secondary-hover": #f9fafa,
+		"color-secondary-text": #031633,
+		"color-secondary-text-hover": #031633)
 );
 
 @function bootstrap-palette-with-contrast($palette, $mode) {
 	$out: (
 	);
 
-	@each $variant, $values in $palette {
-		$contrast: map-get(map-get($bootstrap-variant-contrast, $variant), $mode);
-		$out: map-merge($out, ($variant: map-merge($values, ("contrast": $contrast))));
-	}
-
-	@return $out;
+@each $variant, $values in $palette {
+	$contrast: map-get(map-get($bootstrap-variant-contrast, $variant), $mode);
+	$out: map-merge($out, ($variant: map-merge($values, ("contrast": $contrast))));
 }
 
-$bootstrap-light-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-contrast($bootstrap-light-palette, "light"), "alt", "accent", "contrast");
-$bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-contrast($bootstrap-dark-palette, "dark"), "alt", "accent", "contrast");
+@return $out;
+}
+
+$bootstrap-light-palette: bootstrap-palette-with-contrast($bootstrap-light-palette, "light");
+$bootstrap-dark-palette: bootstrap-palette-with-contrast($bootstrap-dark-palette, "dark");
 
 @mixin bootstrap-variant-css-vars($palette) {
 	@each $variant, $values in $palette {
@@ -331,12 +388,13 @@ $bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-c
 
 			button:not(:first-child) {
 				position: absolute;
-				right: -35px;
+				right: 0;
 			}
 		}
 	}
 
 	&.is-style-custom {
+
 		&.is-appearance-default,
 		&.is-appearance-centered {
 			.alerts-dlx-bootstrap {
@@ -362,6 +420,7 @@ $bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-c
 			}
 
 			.alerts-dlx-icon {
+
 				svg,
 				svg path svg g {
 					color: var(--alerts-dlx-bootstrap-color-bold, var(--bootstrap-primary-color-bold));
@@ -387,12 +446,19 @@ $bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-c
 					background-color: var(--alerts-dlx-bootstrap-color-alt-hover, var(--bootstrap-primary-color-accent));
 					color: var(--alerts-dlx-bootstrap-color-alt-text-hover, var(--bootstrap-primary-color-contrast-hover));
 				}
+
+				@include alerts-dlx-secondary-button(var(--alerts-dlx-bootstrap-color-secondary),
+					var(--alerts-dlx-bootstrap-color-secondary-text),
+					var(--alerts-dlx-bootstrap-color-secondary-hover),
+					var(--alerts-dlx-bootstrap-color-secondary-text-hover),
+					true);
 			}
 		}
 	}
 
 	@each $variant in $bootstrap-variants {
 		&.is-style-#{$variant} {
+
 			&.is-appearance-default,
 			&.is-appearance-centered {
 				.alerts-dlx-bootstrap {
@@ -424,6 +490,11 @@ $bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-c
 					button.button-reset.alerts-dlx-button:hover {
 						background-color: var(--bootstrap-#{$variant}-color-accent);
 					}
+
+					@include alerts-dlx-secondary-button(var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-#{$variant}-color-secondary)),
+						var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-#{$variant}-color-secondary-text)),
+						var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-#{$variant}-color-secondary-hover)),
+						var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-#{$variant}-color-secondary-text-hover)));
 				}
 
 				.alerts-dlx-close {
@@ -437,6 +508,7 @@ $bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-c
 				}
 
 				.alerts-dlx-icon {
+
 					svg,
 					svg path svg g {
 						color: var(--bootstrap-#{$variant}-color-bold);
@@ -446,7 +518,4 @@ $bootstrap-dark-palette: alerts-dlx-with-flat-secondary(bootstrap-palette-with-c
 			}
 		}
 	}
-
-	@include alerts-dlx-paint-secondary-button('bootstrap', $bootstrap-variants);
 }
-

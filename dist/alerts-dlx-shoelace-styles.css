@@ -473,12 +473,83 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   text-decoration: underline;
 }
 
+.alerts-dlx {
+  container-type: inline-size;
+  container-name: alerts-dlx-block;
+}
+
 .alerts-dlx-actions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px;
+}
+
+/* Narrow alert: stack action buttons at full width (all variants). */
+@container alerts-dlx-block (max-width: 449px) {
+  .alerts-dlx-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .alerts-dlx-button-wrapper {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .alerts-dlx-button-wrapper > a.alerts-dlx-button,
+  .alerts-dlx-button-wrapper > button.alerts-dlx-button:first-child,
+  .alerts-dlx-button-wrapper > button.button-reset.alerts-dlx-button:first-child {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+/* Centered variant: capped action row; two columns from 450px container width. */
+.alerts-dlx.is-appearance-centered .alerts-dlx-actions {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 12px;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper {
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > a.alerts-dlx-button,
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button.alerts-dlx-button:first-child,
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button.button-reset.alerts-dlx-button:first-child {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button:not(:first-child) {
+  position: absolute;
+  right: 0;
+}
+@container alerts-dlx-block (min-width: 500px) {
+  .alerts-dlx.is-appearance-centered .alerts-dlx-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper {
+    flex: 1 1 calc(50% - 6px);
+    max-width: calc(50% - 6px);
+    width: auto;
+  }
+  .alerts-dlx.is-appearance-centered .alerts-dlx-actions > .alerts-dlx-button-wrapper:only-child {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
 }
 
 @keyframes alerts-dlx-dismiss {
@@ -516,8 +587,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(4.923394459%, 58.0257204096%, 81.939350639%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(25.5882352941%, 63.8235294118%, 83.5294117647%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(14.4310550131%, 62.2231483687%, 83.7454155751%);
+  --alerts-dlx-shoelace-color-secondary: #41a3d5;
+  --alerts-dlx-shoelace-color-secondary-hover: #259fd6;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #0284c7;
@@ -525,8 +596,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #0ea5e9;
   --alerts-dlx-shoelace-solid-button-hover: rgb(4.923394459%, 58.0257204096%, 81.939350639%);
-  --shoelace-primary-color-secondary: rgb(25.5882352941%, 63.8235294118%, 83.5294117647%);
-  --shoelace-primary-color-secondary-hover: rgb(14.4310550131%, 62.2231483687%, 83.7454155751%);
+  --shoelace-primary-color-secondary: #41a3d5;
+  --shoelace-primary-color-secondary-hover: #259fd6;
   --shoelace-primary-color-secondary-text: #ffffff;
   --shoelace-primary-color-secondary-text-hover: #ffffff;
 }
@@ -536,8 +607,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(11.8614718615%, 68.7267634326%, 32.7934810288%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(31.4705882353%, 72.9411764706%, 46.7647058824%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(20.6753246753%, 71.8540870894%, 39.5141329259%);
+  --alerts-dlx-shoelace-color-secondary: #50ba77;
+  --alerts-dlx-shoelace-color-secondary-hover: #35b765;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #16a34a;
@@ -545,8 +616,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #22c55e;
   --alerts-dlx-shoelace-solid-button-hover: rgb(11.8614718615%, 68.7267634326%, 32.7934810288%);
-  --shoelace-success-color-secondary: rgb(31.4705882353%, 72.9411764706%, 46.7647058824%);
-  --shoelace-success-color-secondary-hover: rgb(20.6753246753%, 71.8540870894%, 39.5141329259%);
+  --shoelace-success-color-secondary: #50ba77;
+  --shoelace-success-color-secondary-hover: #35b765;
   --shoelace-success-color-secondary-text: #ffffff;
   --shoelace-success-color-secondary-text-hover: #ffffff;
 }
@@ -556,8 +627,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(39.5052148519%, 39.5052148519%, 42.6516478932%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(49.1176470588%, 49.1176470588%, 51.7647058824%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(45.5546933667%, 45.5546933667%, 48.3864831039%);
+  --alerts-dlx-shoelace-color-secondary: #7d7d84;
+  --alerts-dlx-shoelace-color-secondary-hover: #74747b;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #52525b;
@@ -565,8 +636,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #71717a;
   --alerts-dlx-shoelace-solid-button-hover: rgb(39.5052148519%, 39.5052148519%, 42.6516478932%);
-  --shoelace-neutral-color-secondary: rgb(49.1176470588%, 49.1176470588%, 51.7647058824%);
-  --shoelace-neutral-color-secondary-hover: rgb(45.5546933667%, 45.5546933667%, 48.3864831039%);
+  --shoelace-neutral-color-secondary: #7d7d84;
+  --shoelace-neutral-color-secondary-hover: #74747b;
   --shoelace-neutral-color-secondary-text: #ffffff;
   --shoelace-neutral-color-secondary-text-hover: #ffffff;
 }
@@ -576,8 +647,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(86.8334105296%, 55.8723174309%, 3.5587463332%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(88.8235294118%, 60%, 26.7647058824%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(88.1500694766%, 60.2850856878%, 13.2028716999%);
+  --alerts-dlx-shoelace-color-secondary: #e39944;
+  --alerts-dlx-shoelace-color-secondary-hover: #e19a22;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #d97706;
@@ -585,8 +656,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #f59e0b;
   --alerts-dlx-shoelace-solid-button-hover: rgb(86.8334105296%, 55.8723174309%, 3.5587463332%);
-  --shoelace-warning-color-secondary: rgb(88.8235294118%, 60%, 26.7647058824%);
-  --shoelace-warning-color-secondary-hover: rgb(88.1500694766%, 60.2850856878%, 13.2028716999%);
+  --shoelace-warning-color-secondary: #e39944;
+  --shoelace-warning-color-secondary-hover: #e19a22;
   --shoelace-warning-color-secondary-text: #ffffff;
   --shoelace-warning-color-secondary-text-hover: #ffffff;
 }
@@ -596,8 +667,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(92.9411764706%, 17.0588235294%, 43.5294117647%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(89.7058823529%, 36.1764705882%, 36.1764705882%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(93.6470588235%, 25.3529411765%, 49.1764705882%);
+  --alerts-dlx-shoelace-color-secondary: #e55c5c;
+  --alerts-dlx-shoelace-color-secondary-hover: #ef417d;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #dc2626;
@@ -605,8 +676,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #ef437f;
   --alerts-dlx-shoelace-solid-button-hover: rgb(92.9411764706%, 17.0588235294%, 43.5294117647%);
-  --shoelace-danger-color-secondary: rgb(89.7058823529%, 36.1764705882%, 36.1764705882%);
-  --shoelace-danger-color-secondary-hover: rgb(93.6470588235%, 25.3529411765%, 49.1764705882%);
+  --shoelace-danger-color-secondary: #e55c5c;
+  --shoelace-danger-color-secondary-hover: #ef417d;
   --shoelace-danger-color-secondary-text: #ffffff;
   --shoelace-danger-color-secondary-text-hover: #ffffff;
 }
@@ -698,7 +769,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 }
 .template-shoelace.is-appearance-centered .alerts-dlx-button-wrapper button:not(:first-child) {
   position: absolute;
-  right: -35px;
+  right: 0;
 }
 .template-shoelace.is-style-primary .alerts-dlx-shoelace, .template-shoelace.is-style-success .alerts-dlx-shoelace, .template-shoelace.is-style-neutral .alerts-dlx-shoelace, .template-shoelace.is-style-warning .alerts-dlx-shoelace, .template-shoelace.is-style-danger .alerts-dlx-shoelace {
   border-top: 3px solid var(--alerts-dlx-shoelace-color-border, var(--alerts-dlx-shoelace-color-alt, var(--alerts-dlx-shoelace-text-color, #000)));
@@ -727,6 +798,34 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-shoelace.is-style-danger button.button-reset.alerts-dlx-button:hover {
   background: var(--alerts-dlx-shoelace-color-alt-hover, var(--alerts-dlx-shoelace-color-alt, var(--alerts-dlx-shoelace-color-border, var(--alerts-dlx-shoelace-text-color, #000))));
   color: var(--alerts-dlx-shoelace-color-alt-text-hover, var(--alerts-dlx-shoelace-color-alt-text, #ffffff));
+}
+.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-shoelace-color-secondary);
+  color: var(--alerts-dlx-shoelace-color-secondary-text);
+}
+.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-shoelace-color-secondary-hover);
+  color: var(--alerts-dlx-shoelace-color-secondary-text-hover);
 }
 .template-shoelace.is-style-primary .alerts-dlx-close svg, .template-shoelace.is-style-success .alerts-dlx-close svg, .template-shoelace.is-style-neutral .alerts-dlx-close svg, .template-shoelace.is-style-warning .alerts-dlx-close svg, .template-shoelace.is-style-danger .alerts-dlx-close svg {
   color: var(--alerts-dlx-shoelace-color-bold, var(--alerts-dlx-shoelace-color-alt, var(--alerts-dlx-shoelace-text-color, #000)));
@@ -830,6 +929,20 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background: var(--alerts-dlx-shoelace-color-alt-hover, #0ea5e9);
   color: var(--alerts-dlx-shoelace-color-alt-text-hover, #ffffff);
 }
+.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-shoelace-color-secondary);
+  color: var(--alerts-dlx-shoelace-color-secondary-text);
+  border: 1px solid var(--alerts-dlx-shoelace-color-secondary-text);
+}
+.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-shoelace-color-secondary-hover);
+  color: var(--alerts-dlx-shoelace-color-secondary-text-hover);
+  border-color: var(--alerts-dlx-shoelace-color-secondary-text-hover);
+}
 .template-shoelace.is-style-custom .alerts-dlx-close svg {
   color: var(--alerts-dlx-shoelace-color-bold, #0284c7);
 }
@@ -900,8 +1013,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(5.9670781893%, 55.4587267006%, 79.3270394578%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(36.4705882353%, 79.7058823529%, 99.4117647059%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(15.3703703704%, 59.9128540305%, 81.394335512%);
+  --alerts-dlx-shoelace-color-secondary: #5dcbfe;
+  --alerts-dlx-shoelace-color-secondary-hover: #2799d0;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #27bafd;
@@ -909,8 +1022,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #119ee2;
   --alerts-dlx-shoelace-solid-button-hover: rgb(5.9670781893%, 55.4587267006%, 79.3270394578%);
-  --shoelace-primary-color-secondary: rgb(36.4705882353%, 79.7058823529%, 99.4117647059%);
-  --shoelace-primary-color-secondary-hover: rgb(15.3703703704%, 59.9128540305%, 81.394335512%);
+  --shoelace-primary-color-secondary: #5dcbfe;
+  --shoelace-primary-color-secondary-hover: #2799d0;
   --shoelace-primary-color-secondary-text: #ffffff;
   --shoelace-primary-color-secondary-text-hover: #ffffff;
 }
@@ -920,8 +1033,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(11.8614718615%, 68.7267634326%, 32.7934810288%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(31.4705882353%, 72.9411764706%, 46.7647058824%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(20.6753246753%, 71.8540870894%, 39.5141329259%);
+  --alerts-dlx-shoelace-color-secondary: #50ba77;
+  --alerts-dlx-shoelace-color-secondary-hover: #35b765;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #16a34a;
@@ -929,8 +1042,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #22c55e;
   --alerts-dlx-shoelace-solid-button-hover: rgb(11.8614718615%, 68.7267634326%, 32.7934810288%);
-  --shoelace-success-color-secondary: rgb(31.4705882353%, 72.9411764706%, 46.7647058824%);
-  --shoelace-success-color-secondary-hover: rgb(20.6753246753%, 71.8540870894%, 39.5141329259%);
+  --shoelace-success-color-secondary: #50ba77;
+  --shoelace-success-color-secondary-hover: #35b765;
   --shoelace-success-color-secondary-text: #ffffff;
   --shoelace-success-color-secondary-text-hover: #ffffff;
 }
@@ -940,8 +1053,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(39.5052148519%, 39.5052148519%, 42.6516478932%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(49.1176470588%, 49.1176470588%, 51.7647058824%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(45.5546933667%, 45.5546933667%, 48.3864831039%);
+  --alerts-dlx-shoelace-color-secondary: #7d7d84;
+  --alerts-dlx-shoelace-color-secondary-hover: #74747b;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #52525b;
@@ -949,8 +1062,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #71717a;
   --alerts-dlx-shoelace-solid-button-hover: rgb(39.5052148519%, 39.5052148519%, 42.6516478932%);
-  --shoelace-neutral-color-secondary: rgb(49.1176470588%, 49.1176470588%, 51.7647058824%);
-  --shoelace-neutral-color-secondary-hover: rgb(45.5546933667%, 45.5546933667%, 48.3864831039%);
+  --shoelace-neutral-color-secondary: #7d7d84;
+  --shoelace-neutral-color-secondary-hover: #74747b;
   --shoelace-neutral-color-secondary-text: #ffffff;
   --shoelace-neutral-color-secondary-text-hover: #ffffff;
 }
@@ -960,8 +1073,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(86.8334105296%, 55.8723174309%, 3.5587463332%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(88.8235294118%, 60%, 26.7647058824%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(88.1500694766%, 60.2850856878%, 13.2028716999%);
+  --alerts-dlx-shoelace-color-secondary: #e39944;
+  --alerts-dlx-shoelace-color-secondary-hover: #e19a22;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #d97706;
@@ -969,8 +1082,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #f59e0b;
   --alerts-dlx-shoelace-solid-button-hover: rgb(86.8334105296%, 55.8723174309%, 3.5587463332%);
-  --shoelace-warning-color-secondary: rgb(88.8235294118%, 60%, 26.7647058824%);
-  --shoelace-warning-color-secondary-hover: rgb(88.1500694766%, 60.2850856878%, 13.2028716999%);
+  --shoelace-warning-color-secondary: #e39944;
+  --shoelace-warning-color-secondary-hover: #e19a22;
   --shoelace-warning-color-secondary-text: #ffffff;
   --shoelace-warning-color-secondary-text-hover: #ffffff;
 }
@@ -980,8 +1093,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-color-alt-hover: rgb(92.9411764706%, 17.0588235294%, 43.5294117647%);
   --alerts-dlx-shoelace-color-alt-text: #ffffff;
   --alerts-dlx-shoelace-color-alt-text-hover: #ffffff;
-  --alerts-dlx-shoelace-color-secondary: rgb(89.7058823529%, 36.1764705882%, 36.1764705882%);
-  --alerts-dlx-shoelace-color-secondary-hover: rgb(93.6470588235%, 25.3529411765%, 49.1764705882%);
+  --alerts-dlx-shoelace-color-secondary: #e55c5c;
+  --alerts-dlx-shoelace-color-secondary-hover: #ef417d;
   --alerts-dlx-shoelace-color-secondary-text: #ffffff;
   --alerts-dlx-shoelace-color-secondary-text-hover: #ffffff;
   --alerts-dlx-shoelace-color-bold: #dc2626;
@@ -989,8 +1102,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --alerts-dlx-shoelace-solid-text-color: #ffffff;
   --alerts-dlx-shoelace-solid-button-color: #ef437f;
   --alerts-dlx-shoelace-solid-button-hover: rgb(92.9411764706%, 17.0588235294%, 43.5294117647%);
-  --shoelace-danger-color-secondary: rgb(89.7058823529%, 36.1764705882%, 36.1764705882%);
-  --shoelace-danger-color-secondary-hover: rgb(93.6470588235%, 25.3529411765%, 49.1764705882%);
+  --shoelace-danger-color-secondary: #e55c5c;
+  --shoelace-danger-color-secondary-hover: #ef417d;
   --shoelace-danger-color-secondary-text: #ffffff;
   --shoelace-danger-color-secondary-text-hover: #ffffff;
 }
@@ -1022,76 +1135,16 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-shoelace.is-dark-mode.is-style-custom section .alerts-dlx-button:hover {
   background: var(--alerts-dlx-shoelace-color-alt-hover, #119ee2);
 }
-.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary, var(--shoelace-primary-color-secondary));
-  color: var(--alerts-dlx-shoelace-color-secondary-text, var(--shoelace-primary-color-secondary-text));
-}
-.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-primary .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary-hover, var(--shoelace-primary-color-secondary-hover));
-  color: var(--alerts-dlx-shoelace-color-secondary-text-hover, var(--shoelace-primary-color-secondary-text-hover));
-}
-.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary, var(--shoelace-success-color-secondary));
-  color: var(--alerts-dlx-shoelace-color-secondary-text, var(--shoelace-success-color-secondary-text));
-}
-.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-success .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary-hover, var(--shoelace-success-color-secondary-hover));
-  color: var(--alerts-dlx-shoelace-color-secondary-text-hover, var(--shoelace-success-color-secondary-text-hover));
-}
-.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary, var(--shoelace-neutral-color-secondary));
-  color: var(--alerts-dlx-shoelace-color-secondary-text, var(--shoelace-neutral-color-secondary-text));
-}
-.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-neutral .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary-hover, var(--shoelace-neutral-color-secondary-hover));
-  color: var(--alerts-dlx-shoelace-color-secondary-text-hover, var(--shoelace-neutral-color-secondary-text-hover));
-}
-.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary, var(--shoelace-warning-color-secondary));
-  color: var(--alerts-dlx-shoelace-color-secondary-text, var(--shoelace-warning-color-secondary-text));
-}
-.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-warning .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary-hover, var(--shoelace-warning-color-secondary-hover));
-  color: var(--alerts-dlx-shoelace-color-secondary-text-hover, var(--shoelace-warning-color-secondary-text-hover));
-}
-.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary, var(--shoelace-danger-color-secondary));
-  color: var(--alerts-dlx-shoelace-color-secondary-text, var(--shoelace-danger-color-secondary-text));
-}
-.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-danger .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-shoelace-color-secondary-hover, var(--shoelace-danger-color-secondary-hover));
-  color: var(--alerts-dlx-shoelace-color-secondary-text-hover, var(--shoelace-danger-color-secondary-text-hover));
-}
-.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+.template-shoelace.is-dark-mode.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-dark-mode.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-shoelace.is-dark-mode.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-dark-mode.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
   background-color: var(--alerts-dlx-shoelace-color-secondary);
   color: var(--alerts-dlx-shoelace-color-secondary-text);
   border: 1px solid var(--alerts-dlx-shoelace-color-secondary-text);
 }
-.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-shoelace.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+.template-shoelace.is-dark-mode.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-shoelace.is-dark-mode.is-style-custom .alerts-dlx-shoelace .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
   background-color: var(--alerts-dlx-shoelace-color-secondary-hover);
   color: var(--alerts-dlx-shoelace-color-secondary-text-hover);
   border-color: var(--alerts-dlx-shoelace-color-secondary-text-hover);

@@ -194,23 +194,28 @@ To change preset colors for a type, edit the **palette maps** in the theme’s `
 ### Bootstrap (`src/scss/bootstrap/styles.scss`)
 
 - `$bootstrap-variants`: `primary`, `secondary`, `success`, `danger`, `warning`, `info`, `light`, `dark`
-- `$bootstrap-light-palette` / `$bootstrap-dark-palette`: per-type `color`, `border`, `accent`, `alt`, `bold`, `light`, plus computed `color-secondary*` tokens
-- `$bootstrap-variant-contrast`: button text colors for light/dark
+- `$bootstrap-light-palette` / `$bootstrap-dark-palette`: per-type `color`, `border`, `accent`, `alt`, `bold`, `light`, plus authored `color-secondary*` hex (secondary button fill, hover, and label)
+- `$bootstrap-variant-contrast`: primary button text colors for light/dark
+- Secondary button paint lives next to the primary button rules in this file (`.alerts-dlx-button-secondary`)
 
 ### Chakra (`src/scss/chakra/styles.scss`)
 
 - `$chakra-variants`: `success`, `info`, `warning`, `error`
-- `$chakra-light-palette` / `$chakra-dark-palette`: includes solid button/close tokens for `solid` variant
+- `$chakra-light-palette` / `$chakra-dark-palette`: includes solid button/close tokens for `solid` variant, plus authored `color-secondary*` (non-solid) and `solid-color-secondary*` hex
+- Secondary button paint lives next to the primary button rules in this file (`.alerts-dlx-button-secondary`)
 
 ### Material (`src/scss/material/styles.scss`)
 
 - `$material-variants`: `success`, `info`, `warning`, `error`
 - `$material-light-palette` / `$material-dark-palette`: nested by type → `base`, `subtle`, `outlined`, `filled` sub-keys for variant-specific button/background rules
+- Authored `color-secondary*` hex lives on `base` (default/centered), `outlined`, and `filled`
+- Secondary button paint lives next to the primary button rules in this file (`.alerts-dlx-button-secondary`)
 
 ### Shoelace (`src/scss/shoelace/styles.scss`)
 
 - `$shoelace-light-variants` / `$shoelace-dark-variants`: `primary`, `success`, `neutral`, `warning`, `danger`
-- Keys: `border`, `alt`, `bold`, `solid-*` for solid appearance
+- Keys: `border`, `alt` / `alt-hover` (primary button), `bold`, `solid-*` for solid appearance, plus authored `color-secondary*` hex
+- Secondary button paint lives next to the primary button rules in this file (`.alerts-dlx-button-secondary`)
 
 After SCSS changes, run `npm run build` to regenerate `dist/alerts-dlx-{theme}-styles.css`.
 
@@ -270,7 +275,7 @@ Keep **`alertType` values identical** to block style `name` values so `is-style-
 | Change which types appear in inserter | `block.json` `"styles"` array |
 | Change layout (solid vs outlined) | `variant` options in `edit.js` + `is-appearance-*` rules in SCSS |
 | Change custom-only colors | `custom-colors.js` + `is-style-custom` block in SCSS |
-| Change secondary button colors | Palette `color-secondary*` keys + `.alerts-dlx-button-secondary` |
+| Change secondary button colors | Theme palette `color-secondary*` hex (and Chakra `solid-color-secondary*` / Material outlined+filled keys) plus the local `.alerts-dlx-button-secondary` rules in that theme’s `styles.scss` |
 | Change frontend wrapper classes | `php/Blocks.php` → `$container_classes` |
 | Change editor wrapper classes | `{theme}/edit.js` → `useBlockProps` classnames |
 

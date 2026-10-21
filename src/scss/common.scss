@@ -316,12 +316,94 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
 	text-decoration: underline;
 }
 
+.alerts-dlx {
+	container-type: inline-size;
+	container-name: alerts-dlx-block;
+}
+
 .alerts-dlx-actions {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 16px;
+}
+
+/* Narrow alert: stack action buttons at full width (all variants). */
+@container alerts-dlx-block (max-width: 449px) {
+	.alerts-dlx-actions {
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+	}
+
+	.alerts-dlx-button-wrapper {
+		width: 100%;
+		display: flex !important;
+		justify-content: center;
+		flex-wrap: wrap;
+
+		>a.alerts-dlx-button,
+		>button.alerts-dlx-button:first-child,
+		>button.button-reset.alerts-dlx-button:first-child {
+			width: 100%;
+			justify-content: center;
+			text-align: center;
+		}
+	}
+}
+
+/* Centered variant: capped action row; two columns from 450px container width. */
+.alerts-dlx.is-appearance-centered {
+	.alerts-dlx-actions {
+		flex-direction: column;
+		align-items: stretch;
+		width: 100%;
+		max-width: 600px;
+		margin-left: auto;
+		margin-right: auto;
+		gap: 12px;
+	}
+
+	.alerts-dlx-button-wrapper {
+		width: 100%;
+		display: flex !important;
+		justify-content: center;
+		flex-wrap: wrap;
+
+		>a.alerts-dlx-button,
+		>button.alerts-dlx-button:first-child,
+		>button.button-reset.alerts-dlx-button:first-child {
+			width: 100%;
+			justify-content: center;
+			text-align: center;
+		}
+
+		>button:not(:first-child) {
+			position: absolute;
+			right: 0;
+		}
+	}
+
+	@container alerts-dlx-block (min-width: 500px) {
+		.alerts-dlx-actions {
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: stretch;
+		}
+
+		.alerts-dlx-button-wrapper {
+			flex: 1 1 calc(50% - 6px);
+			max-width: calc(50% - 6px);
+			width: auto;
+		}
+
+		.alerts-dlx-actions>.alerts-dlx-button-wrapper:only-child {
+			flex: 0 1 auto;
+			max-width: 100%;
+		}
+	}
 }
 
 @keyframes alerts-dlx-dismiss {

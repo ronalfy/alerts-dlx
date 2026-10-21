@@ -473,12 +473,83 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   text-decoration: underline;
 }
 
+.alerts-dlx {
+  container-type: inline-size;
+  container-name: alerts-dlx-block;
+}
+
 .alerts-dlx-actions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px;
+}
+
+/* Narrow alert: stack action buttons at full width (all variants). */
+@container alerts-dlx-block (max-width: 449px) {
+  .alerts-dlx-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .alerts-dlx-button-wrapper {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .alerts-dlx-button-wrapper > a.alerts-dlx-button,
+  .alerts-dlx-button-wrapper > button.alerts-dlx-button:first-child,
+  .alerts-dlx-button-wrapper > button.button-reset.alerts-dlx-button:first-child {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+/* Centered variant: capped action row; two columns from 450px container width. */
+.alerts-dlx.is-appearance-centered .alerts-dlx-actions {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 12px;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper {
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > a.alerts-dlx-button,
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button.alerts-dlx-button:first-child,
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button.button-reset.alerts-dlx-button:first-child {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button:not(:first-child) {
+  position: absolute;
+  right: 0;
+}
+@container alerts-dlx-block (min-width: 500px) {
+  .alerts-dlx.is-appearance-centered .alerts-dlx-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper {
+    flex: 1 1 calc(50% - 6px);
+    max-width: calc(50% - 6px);
+    width: auto;
+  }
+  .alerts-dlx.is-appearance-centered .alerts-dlx-actions > .alerts-dlx-button-wrapper:only-child {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
 }
 
 @keyframes alerts-dlx-dismiss {
@@ -510,8 +581,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-primary-color-border: #b6d4fe;
   --bootstrap-primary-color-accent: #26559c;
   --bootstrap-primary-color-alt: #084298;
-  --bootstrap-primary-color-secondary: rgb(27.3529411765%, 44.4117647059%, 69.7058823529%);
-  --bootstrap-primary-color-secondary-hover: rgb(23.4117647059%, 40%, 65.0588235294%);
+  --bootstrap-primary-color-secondary: #4671b2;
+  --bootstrap-primary-color-secondary-hover: #3c66a6;
   --bootstrap-primary-color-secondary-text: #ffffff;
   --bootstrap-primary-color-secondary-text-hover: #ffffff;
   --bootstrap-primary-color-bold: #084298;
@@ -522,8 +593,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-secondary-color-border: #d3d6d8;
   --bootstrap-secondary-color-accent: #5c6874;
   --bootstrap-secondary-color-alt: #41464b;
-  --bootstrap-secondary-color-secondary: rgb(44.1176470588%, 45.5882352941%, 47.0588235294%);
-  --bootstrap-secondary-color-secondary-hover: rgb(42.4705882353%, 46.7058823529%, 50.9411764706%);
+  --bootstrap-secondary-color-secondary: #707478;
+  --bootstrap-secondary-color-secondary-hover: #6c7782;
   --bootstrap-secondary-color-secondary-text: #ffffff;
   --bootstrap-secondary-color-secondary-text-hover: #ffffff;
   --bootstrap-secondary-color-bold: #41464b;
@@ -534,8 +605,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-success-color-border: #badbcc;
   --bootstrap-success-color-accent: #167247;
   --bootstrap-success-color-alt: #0f5132;
-  --bootstrap-success-color-secondary: rgb(29.4117647059%, 48.8235294118%, 39.7058823529%);
-  --bootstrap-success-color-secondary-hover: rgb(17.7647058824%, 50.2352941176%, 35.0588235294%);
+  --bootstrap-success-color-secondary: #4b7d65;
+  --bootstrap-success-color-secondary-hover: #2d8059;
   --bootstrap-success-color-secondary-text: #ffffff;
   --bootstrap-success-color-secondary-text-hover: #ffffff;
   --bootstrap-success-color-bold: #0f5132;
@@ -546,8 +617,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-danger-color-border: #f5c2c7;
   --bootstrap-danger-color-accent: #832e35;
   --bootstrap-danger-color-alt: #842029;
-  --bootstrap-danger-color-secondary: rgb(63.8235294118%, 34.4117647059%, 37.0588235294%);
-  --bootstrap-danger-color-secondary-hover: rgb(56.2352941176%, 26.2352941176%, 28.7058823529%);
+  --bootstrap-danger-color-secondary: #a3585e;
+  --bootstrap-danger-color-secondary-hover: #8f4349;
   --bootstrap-danger-color-secondary-text: #ffffff;
   --bootstrap-danger-color-secondary-text-hover: #ffffff;
   --bootstrap-danger-color-bold: #842029;
@@ -558,8 +629,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-warning-color-border: #ffecb5;
   --bootstrap-warning-color-accent: #7f6002;
   --bootstrap-warning-color-alt: #664d03;
-  --bootstrap-warning-color-secondary: rgb(55%, 47.6470588235%, 25.8823529412%);
-  --bootstrap-warning-color-secondary-hover: rgb(54.8235294118%, 43.8823529412%, 10.7058823529%);
+  --bootstrap-warning-color-secondary: #8c7942;
+  --bootstrap-warning-color-secondary-hover: #8c701b;
   --bootstrap-warning-color-secondary-text: #ffffff;
   --bootstrap-warning-color-secondary-text-hover: #ffffff;
   --bootstrap-warning-color-bold: #664d03;
@@ -570,8 +641,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-info-color-border: #b6effb;
   --bootstrap-info-color-accent: #076c81;
   --bootstrap-info-color-alt: #055160;
-  --bootstrap-info-color-secondary: rgb(26.4705882353%, 48.8235294118%, 53.2352941176%);
-  --bootstrap-info-color-secondary-hover: rgb(12.4705882353%, 48.1176470588%, 55.5294117647%);
+  --bootstrap-info-color-secondary: #447d88;
+  --bootstrap-info-color-secondary-hover: #207b8e;
   --bootstrap-info-color-secondary-text: #ffffff;
   --bootstrap-info-color-secondary-text-hover: #ffffff;
   --bootstrap-info-color-bold: #055160;
@@ -582,8 +653,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-light-color-border: #fdfdfe;
   --bootstrap-light-color-accent: #7b7c7c;
   --bootstrap-light-color-alt: #636464;
-  --bootstrap-light-color-secondary: rgb(54.1176470588%, 54.4117647059%, 54.4117647059%);
-  --bootstrap-light-color-secondary-hover: rgb(53.4117647059%, 53.7647058824%, 53.7647058824%);
+  --bootstrap-light-color-secondary: #8a8b8b;
+  --bootstrap-light-color-secondary-hover: #888989;
   --bootstrap-light-color-secondary-text: #ffffff;
   --bootstrap-light-color-secondary-text-hover: #ffffff;
   --bootstrap-light-color-bold: #636464;
@@ -594,8 +665,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-dark-color-border: #bcbebf;
   --bootstrap-dark-color-accent: #292d33;
   --bootstrap-dark-color-alt: #141619;
-  --bootstrap-dark-color-secondary: rgb(30.8823529412%, 31.4705882353%, 32.3529411765%);
-  --bootstrap-dark-color-secondary-hover: rgb(24.4705882353%, 25.8823529412%, 28%);
+  --bootstrap-dark-color-secondary: #4f5053;
+  --bootstrap-dark-color-secondary-hover: #3e4247;
   --bootstrap-dark-color-secondary-text: #ffffff;
   --bootstrap-dark-color-secondary-text-hover: #ffffff;
   --bootstrap-dark-color-bold: #141619;
@@ -609,8 +680,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-primary-color-border: #084298;
   --bootstrap-primary-color-accent: #5a91e4;
   --bootstrap-primary-color-alt: #6ea8fe;
-  --bootstrap-primary-color-secondary: rgb(57.3529411765%, 74.4117647059%, 99.7058823529%);
-  --bootstrap-primary-color-secondary-hover: rgb(41.7647058824%, 61.1764705882%, 90.4705882353%);
+  --bootstrap-primary-color-secondary: #92befe;
+  --bootstrap-primary-color-secondary-hover: #6b9ce7;
   --bootstrap-primary-color-secondary-text: #031633;
   --bootstrap-primary-color-secondary-text-hover: #031633;
   --bootstrap-primary-color-bold: #6ea8fe;
@@ -621,8 +692,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-secondary-color-border: #084298;
   --bootstrap-secondary-color-accent: #c2c5c9;
   --bootstrap-secondary-color-alt: #a7acb1;
-  --bootstrap-secondary-color-secondary: rgb(74.1176470588%, 75.5882352941%, 77.0588235294%);
-  --bootstrap-secondary-color-secondary-hover: rgb(78.4705882353%, 79.5294117647%, 80.9411764706%);
+  --bootstrap-secondary-color-secondary: #bdc1c4;
+  --bootstrap-secondary-color-secondary-hover: #c8cbce;
   --bootstrap-secondary-color-secondary-text: #031633;
   --bootstrap-secondary-color-secondary-text-hover: #031633;
   --bootstrap-secondary-color-bold: #a7acb1;
@@ -633,8 +704,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-success-color-border: #084298;
   --bootstrap-success-color-accent: #167247;
   --bootstrap-success-color-alt: #75b798;
-  --bootstrap-success-color-secondary: rgb(59.4117647059%, 78.8235294118%, 69.7058823529%);
-  --bootstrap-success-color-secondary-hover: rgb(17.7647058824%, 50.2352941176%, 35.0588235294%);
+  --bootstrap-success-color-secondary: #98c9b2;
+  --bootstrap-success-color-secondary-hover: #2d8059;
   --bootstrap-success-color-secondary-text: #ffffff;
   --bootstrap-success-color-secondary-text-hover: #ffffff;
   --bootstrap-success-color-bold: #75b798;
@@ -645,8 +716,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-danger-color-border: #084298;
   --bootstrap-danger-color-accent: #832e35;
   --bootstrap-danger-color-alt: #ea868f;
-  --bootstrap-danger-color-secondary: rgb(93.8235294118%, 64.4117647059%, 67.0588235294%);
-  --bootstrap-danger-color-secondary-hover: rgb(56.2352941176%, 26.2352941176%, 28.7058823529%);
+  --bootstrap-danger-color-secondary: #efa4ab;
+  --bootstrap-danger-color-secondary-hover: #8f4349;
   --bootstrap-danger-color-secondary-text: #ffffff;
   --bootstrap-danger-color-secondary-text-hover: #ffffff;
   --bootstrap-danger-color-bold: #ea868f;
@@ -657,8 +728,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-warning-color-border: #084298;
   --bootstrap-warning-color-accent: #eec959;
   --bootstrap-warning-color-alt: #ffda6a;
-  --bootstrap-warning-color-secondary: rgb(100%, 89.1176470588%, 56.1764705882%);
-  --bootstrap-warning-color-secondary-hover: rgb(94%, 80.9411764706%, 41.4117647059%);
+  --bootstrap-warning-color-secondary: #ffe38f;
+  --bootstrap-warning-color-secondary-hover: #f0ce6a;
   --bootstrap-warning-color-secondary-text: #031633;
   --bootstrap-warning-color-secondary-text-hover: #031633;
   --bootstrap-warning-color-bold: #ffda6a;
@@ -669,8 +740,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-info-color-border: #084298;
   --bootstrap-info-color-accent: #5cc9df;
   --bootstrap-info-color-alt: #6edff6;
-  --bootstrap-info-color-secondary: rgb(57.3529411765%, 90.5882352941%, 97.3529411765%);
-  --bootstrap-info-color-secondary-hover: rgb(42.4705882353%, 80.9411764706%, 88.7058823529%);
+  --bootstrap-info-color-secondary: #92e7f8;
+  --bootstrap-info-color-secondary-hover: #6ccee2;
   --bootstrap-info-color-secondary-text: #031633;
   --bootstrap-info-color-secondary-text-hover: #031633;
   --bootstrap-info-color-bold: #6edff6;
@@ -681,8 +752,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-light-color-border: #084298;
   --bootstrap-light-color-accent: #eaf0f6;
   --bootstrap-light-color-alt: #f8f9fa;
-  --bootstrap-light-color-secondary: rgb(97.9411764706%, 98.2352941176%, 98.5294117647%);
-  --bootstrap-light-color-secondary-hover: rgb(97.5294117647%, 97.8823529412%, 98.2352941176%);
+  --bootstrap-light-color-secondary: #fafafb;
+  --bootstrap-light-color-secondary-hover: #f9fafa;
   --bootstrap-light-color-secondary-text: #031633;
   --bootstrap-light-color-secondary-text-hover: #031633;
   --bootstrap-light-color-bold: #f8f9fa;
@@ -693,8 +764,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --bootstrap-dark-color-border: #084298;
   --bootstrap-dark-color-accent: #eaf0f6;
   --bootstrap-dark-color-alt: #f8f9fa;
-  --bootstrap-dark-color-secondary: rgb(97.9411764706%, 98.2352941176%, 98.5294117647%);
-  --bootstrap-dark-color-secondary-hover: rgb(97.5294117647%, 97.8823529412%, 98.2352941176%);
+  --bootstrap-dark-color-secondary: #fafafb;
+  --bootstrap-dark-color-secondary-hover: #f9fafa;
   --bootstrap-dark-color-secondary-text: #031633;
   --bootstrap-dark-color-secondary-text-hover: #031633;
   --bootstrap-dark-color-bold: #f8f9fa;
@@ -777,7 +848,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 }
 .template-bootstrap.is-appearance-centered .alerts-dlx-button-wrapper button:not(:first-child) {
   position: absolute;
-  right: -35px;
+  right: 0;
 }
 .template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap, .template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap {
   border-color: var(--alerts-dlx-bootstrap-color-border, var(--bootstrap-primary-color-border));
@@ -821,6 +892,24 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-bootstrap-color-alt-hover, var(--bootstrap-primary-color-accent));
   color: var(--alerts-dlx-bootstrap-color-alt-text-hover, var(--bootstrap-primary-color-contrast-hover));
 }
+.template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary);
+  color: var(--alerts-dlx-bootstrap-color-secondary-text);
+  border: 1px solid var(--alerts-dlx-bootstrap-color-secondary-text);
+}
+.template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-custom.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-custom.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover);
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover);
+  border-color: var(--alerts-dlx-bootstrap-color-secondary-text-hover);
+}
 .template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap, .template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap {
   border-color: var(--bootstrap-primary-color-border);
 }
@@ -849,6 +938,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover, .template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap a.alerts-dlx-button:hover,
 .template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-primary-color-accent);
+}
+.template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-primary-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-primary-color-secondary-text));
+}
+.template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-primary-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-primary-color-secondary-text-hover));
 }
 .template-bootstrap.is-style-primary.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-primary.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-primary-color-alt);
@@ -891,6 +996,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-secondary-color-accent);
 }
+.template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-secondary-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-secondary-color-secondary-text));
+}
+.template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-secondary-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-secondary-color-secondary-text-hover));
+}
 .template-bootstrap.is-style-secondary.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-secondary.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-secondary-color-alt);
 }
@@ -931,6 +1052,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover, .template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap a.alerts-dlx-button:hover,
 .template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-success-color-accent);
+}
+.template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-success-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-success-color-secondary-text));
+}
+.template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-success-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-success-color-secondary-text-hover));
 }
 .template-bootstrap.is-style-success.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-success.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-success-color-alt);
@@ -973,6 +1110,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-danger-color-accent);
 }
+.template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-danger-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-danger-color-secondary-text));
+}
+.template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-danger-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-danger-color-secondary-text-hover));
+}
 .template-bootstrap.is-style-danger.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-danger.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-danger-color-alt);
 }
@@ -1013,6 +1166,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover, .template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap a.alerts-dlx-button:hover,
 .template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-warning-color-accent);
+}
+.template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-warning-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-warning-color-secondary-text));
+}
+.template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-warning-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-warning-color-secondary-text-hover));
 }
 .template-bootstrap.is-style-warning.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-warning.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-warning-color-alt);
@@ -1055,6 +1224,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-info-color-accent);
 }
+.template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-info-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-info-color-secondary-text));
+}
+.template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-info-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-info-color-secondary-text-hover));
+}
 .template-bootstrap.is-style-info.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-info.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-info-color-alt);
 }
@@ -1095,6 +1280,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover, .template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap a.alerts-dlx-button:hover,
 .template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-light-color-accent);
+}
+.template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-light-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-light-color-secondary-text));
+}
+.template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-light-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-light-color-secondary-text-hover));
 }
 .template-bootstrap.is-style-light.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-light.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-light-color-alt);
@@ -1137,6 +1338,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap button.button-reset.alerts-dlx-button:hover {
   background-color: var(--bootstrap-dark-color-accent);
 }
+.template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-dark-color-secondary));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-dark-color-secondary-text));
+}
+.template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-dark-color-secondary-hover));
+  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-dark-color-secondary-text-hover));
+}
 .template-bootstrap.is-style-dark.is-appearance-default .alerts-dlx-close svg, .template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-close svg {
   color: var(--bootstrap-dark-color-alt);
 }
@@ -1148,116 +1365,6 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-bootstrap.is-style-dark.is-appearance-centered .alerts-dlx-icon svg path svg g {
   color: var(--bootstrap-dark-color-bold);
   fill: var(--bootstrap-dark-color-bold);
-}
-.template-bootstrap.is-style-primary .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-primary .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-primary .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-primary .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-primary-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-primary-color-secondary-text));
-}
-.template-bootstrap.is-style-primary .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-primary .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-primary-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-primary-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-secondary .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-secondary .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-secondary .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-secondary .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-secondary-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-secondary-color-secondary-text));
-}
-.template-bootstrap.is-style-secondary .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-secondary .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-secondary-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-secondary-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-success .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-success .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-success .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-success .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-success-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-success-color-secondary-text));
-}
-.template-bootstrap.is-style-success .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-success .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-success-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-success-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-danger .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-danger .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-danger .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-danger .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-danger-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-danger-color-secondary-text));
-}
-.template-bootstrap.is-style-danger .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-danger .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-danger-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-danger-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-warning .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-warning .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-warning .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-warning .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-warning-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-warning-color-secondary-text));
-}
-.template-bootstrap.is-style-warning .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-warning .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-warning-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-warning-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-info .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-info .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-info .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-info .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-info-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-info-color-secondary-text));
-}
-.template-bootstrap.is-style-info .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-info .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-info-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-info-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-light .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-light .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-light .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-light .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-light-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-light-color-secondary-text));
-}
-.template-bootstrap.is-style-light .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-light .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-light-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-light-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-dark .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-dark .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-dark .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-dark .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary, var(--bootstrap-dark-color-secondary));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text, var(--bootstrap-dark-color-secondary-text));
-}
-.template-bootstrap.is-style-dark .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-dark .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover, var(--bootstrap-dark-color-secondary-hover));
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover, var(--bootstrap-dark-color-secondary-text-hover));
-}
-.template-bootstrap.is-style-custom .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-custom .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-bootstrap.is-style-custom .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-custom .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary);
-  color: var(--alerts-dlx-bootstrap-color-secondary-text);
-  border: 1px solid var(--alerts-dlx-bootstrap-color-secondary-text);
-}
-.template-bootstrap.is-style-custom .alerts-dlx-bootstrap .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-bootstrap.is-style-custom .alerts-dlx-bootstrap .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-bootstrap-color-secondary-hover);
-  color: var(--alerts-dlx-bootstrap-color-secondary-text-hover);
-  border-color: var(--alerts-dlx-bootstrap-color-secondary-text-hover);
 }
 
 /*# sourceMappingURL=alerts-dlx-bootstrap-styles.css.map*/

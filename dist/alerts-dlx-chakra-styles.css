@@ -473,12 +473,83 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   text-decoration: underline;
 }
 
+.alerts-dlx {
+  container-type: inline-size;
+  container-name: alerts-dlx-block;
+}
+
 .alerts-dlx-actions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   gap: 16px;
+}
+
+/* Narrow alert: stack action buttons at full width (all variants). */
+@container alerts-dlx-block (max-width: 449px) {
+  .alerts-dlx-actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .alerts-dlx-button-wrapper {
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .alerts-dlx-button-wrapper > a.alerts-dlx-button,
+  .alerts-dlx-button-wrapper > button.alerts-dlx-button:first-child,
+  .alerts-dlx-button-wrapper > button.button-reset.alerts-dlx-button:first-child {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+/* Centered variant: capped action row; two columns from 450px container width. */
+.alerts-dlx.is-appearance-centered .alerts-dlx-actions {
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 12px;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper {
+  width: 100%;
+  display: flex !important;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > a.alerts-dlx-button,
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button.alerts-dlx-button:first-child,
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button.button-reset.alerts-dlx-button:first-child {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+.alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper > button:not(:first-child) {
+  position: absolute;
+  right: 0;
+}
+@container alerts-dlx-block (min-width: 500px) {
+  .alerts-dlx.is-appearance-centered .alerts-dlx-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .alerts-dlx.is-appearance-centered .alerts-dlx-button-wrapper {
+    flex: 1 1 calc(50% - 6px);
+    max-width: calc(50% - 6px);
+    width: auto;
+  }
+  .alerts-dlx.is-appearance-centered .alerts-dlx-actions > .alerts-dlx-button-wrapper:only-child {
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
 }
 
 @keyframes alerts-dlx-dismiss {
@@ -509,8 +580,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-success-color: #2d3748;
   --chakra-success-color-accent: #38a169;
   --chakra-success-color-alt: #3dae71;
-  --chakra-success-color-secondary: rgb(42.9411764706%, 76.1764705882%, 58.2352941176%);
-  --chakra-success-color-secondary-hover: rgb(29.7647058824%, 66.8235294118%, 47.0588235294%);
+  --chakra-success-color-secondary: #6ec294;
+  --chakra-success-color-secondary-hover: #4caa78;
   --chakra-success-color-secondary-text: #ffffff;
   --chakra-success-color-secondary-text-hover: #ffffff;
   --chakra-success-color-bold: #38a169;
@@ -526,15 +597,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-success-solid-button-border-hover: #ffffff;
   --chakra-success-solid-close: #ffffff;
   --chakra-success-solid-close-hover: #ffffff;
-  --chakra-success-solid-color-secondary: rgb(42.9411764706%, 76.1764705882%, 58.2352941176%);
-  --chakra-success-solid-color-secondary-hover: rgb(31.5294117647%, 71.4117647059%, 49.8823529412%);
+  --chakra-success-solid-color-secondary: #ffffff;
+  --chakra-success-solid-color-secondary-hover: #3dae71;
   --chakra-success-solid-color-secondary-text: #3dae71;
-  --chakra-success-solid-color-secondary-text-hover: #3dae71;
+  --chakra-success-solid-color-secondary-text-hover: #ffffff;
   --chakra-info-color: #014361;
   --chakra-info-color-accent: #3182ce;
   --chakra-info-color-alt: #2d75b8;
-  --chakra-info-color-secondary: rgb(38.2352941176%, 59.4117647059%, 79.1176470588%);
-  --chakra-info-color-secondary-hover: rgb(27.2941176471%, 55.8823529412%, 82.7058823529%);
+  --chakra-info-color-secondary: #6198ca;
+  --chakra-info-color-secondary-hover: #468fd3;
   --chakra-info-color-secondary-text: #ffffff;
   --chakra-info-color-secondary-text-hover: #ffffff;
   --chakra-info-color-bold: #2d76bb;
@@ -550,15 +621,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-info-solid-button-border-hover: #ffffff;
   --chakra-info-solid-close: #ffffff;
   --chakra-info-solid-close-hover: #ffffff;
-  --chakra-info-solid-color-secondary: rgb(38.2352941176%, 59.4117647059%, 79.1176470588%);
-  --chakra-info-solid-color-secondary-hover: rgb(25.8823529412%, 51.2941176471%, 74.9411764706%);
+  --chakra-info-solid-color-secondary: #ffffff;
+  --chakra-info-solid-color-secondary-hover: #2d75b8;
   --chakra-info-solid-color-secondary-text: #2d75b8;
-  --chakra-info-solid-color-secondary-text-hover: #2d75b8;
+  --chakra-info-solid-color-secondary-text-hover: #ffffff;
   --chakra-warning-color: #2d3748;
   --chakra-warning-color-accent: #dd6b20;
   --chakra-warning-color-alt: #b35719;
-  --chakra-warning-color-secondary: rgb(77.6470588235%, 50.5882352941%, 32.3529411765%);
-  --chakra-warning-color-secondary-hover: rgb(88%, 47.7647058824%, 21.2941176471%);
+  --chakra-warning-color-secondary: #c68153;
+  --chakra-warning-color-secondary-hover: #e07a36;
   --chakra-warning-color-secondary-text: #ffffff;
   --chakra-warning-color-secondary-text-hover: #ffffff;
   --chakra-warning-color-bold: #dd6b20;
@@ -574,15 +645,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-warning-solid-button-border-hover: #ffffff;
   --chakra-warning-solid-close: #ffffff;
   --chakra-warning-solid-close-hover: #ffffff;
-  --chakra-warning-solid-color-secondary: rgb(77.6470588235%, 50.5882352941%, 32.3529411765%);
-  --chakra-warning-solid-color-secondary-hover: rgb(73.1764705882%, 40.7058823529%, 18.8235294118%);
+  --chakra-warning-solid-color-secondary: #ffffff;
+  --chakra-warning-solid-color-secondary-hover: #b35719;
   --chakra-warning-solid-color-secondary-text: #b35719;
-  --chakra-warning-solid-color-secondary-text-hover: #b35719;
+  --chakra-warning-solid-color-secondary-text-hover: #ffffff;
   --chakra-error-color: #2d3748;
   --chakra-error-color-accent: #a92525;
   --chakra-error-color-alt: #d32f2f;
   --chakra-error-color-secondary: #de6363;
-  --chakra-error-color-secondary-hover: rgb(69.6470588235%, 23.0588235294%, 23.0588235294%);
+  --chakra-error-color-secondary-hover: #b23b3b;
   --chakra-error-color-secondary-text: #ffffff;
   --chakra-error-color-secondary-text-hover: #ffffff;
   --chakra-error-color-bold: #ef5350;
@@ -598,10 +669,10 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-error-solid-button-border-hover: #ffffff;
   --chakra-error-solid-close: #ffffff;
   --chakra-error-solid-close-hover: #ffffff;
-  --chakra-error-solid-color-secondary: #de6363;
-  --chakra-error-solid-color-secondary-hover: rgb(84.4705882353%, 26.5882352941%, 26.5882352941%);
+  --chakra-error-solid-color-secondary: #ffffff;
+  --chakra-error-solid-color-secondary-hover: #d32f2f;
   --chakra-error-solid-color-secondary-text: #d32f2f;
-  --chakra-error-solid-color-secondary-text-hover: #d32f2f;
+  --chakra-error-solid-color-secondary-text-hover: #ffffff;
   --alerts-dlx-chakra-title-weight: 900;
 }
 .template-chakra.is-dark-mode {
@@ -609,8 +680,8 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-success-color: #edf2f7;
   --chakra-success-color-accent: #75e09b;
   --chakra-success-color-alt: #8ae3a9;
-  --chakra-success-color-secondary: rgb(65.5882352941%, 91.7647058824%, 74.7058823529%);
-  --chakra-success-color-secondary-hover: rgb(51.2941176471%, 89.0588235294%, 64.7058823529%);
+  --chakra-success-color-secondary: #a7eabe;
+  --chakra-success-color-secondary-hover: #83e3a5;
   --chakra-success-color-secondary-text: #ffffff;
   --chakra-success-color-secondary-text-hover: #ffffff;
   --chakra-success-color-bold: #9ae6b4;
@@ -626,15 +697,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-success-solid-button-border-hover: #243233;
   --chakra-success-solid-close: #243233;
   --chakra-success-solid-close-hover: rgb(5.8417849899%, 8.1135902637%, 8.275862069%);
-  --chakra-success-solid-color-secondary: rgb(35.5882352941%, 39.7058823529%, 40%);
-  --chakra-success-solid-color-secondary-hover: rgb(58.7058823529%, 90.1176470588%, 69.6470588235%);
+  --chakra-success-solid-color-secondary: #243233;
+  --chakra-success-solid-color-secondary-hover: #ffffff;
   --chakra-success-solid-color-secondary-text: #ffffff;
-  --chakra-success-solid-color-secondary-text-hover: #ffffff;
+  --chakra-success-solid-color-secondary-text-hover: #243233;
   --chakra-info-color: #edf2f7;
   --chakra-info-color-accent: #469fd7;
   --chakra-info-color-alt: #71c2f5;
-  --chakra-info-color-secondary: rgb(58.2352941176%, 82.0588235294%, 97.0588235294%);
-  --chakra-info-color-secondary-hover: rgb(34.7058823529%, 66.1176470588%, 85.8823529412%);
+  --chakra-info-color-secondary: #94d1f7;
+  --chakra-info-color-secondary-hover: #58a9db;
   --chakra-info-color-secondary-text: #ffffff;
   --chakra-info-color-secondary-text-hover: #ffffff;
   --chakra-info-color-bold: #90cdf4;
@@ -650,15 +721,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-info-solid-button-border-hover: #222e3c;
   --chakra-info-solid-close: #222e3c;
   --chakra-info-solid-close-hover: rgb(6.0992907801%, 8.2519816437%, 10.7634543179%);
-  --chakra-info-solid-color-secondary: rgb(35%, 38.5294117647%, 42.6470588235%);
-  --chakra-info-solid-color-secondary-hover: rgb(49.8823529412%, 78.4705882353%, 96.4705882353%);
+  --chakra-info-solid-color-secondary: #222e3c;
+  --chakra-info-solid-color-secondary-hover: #ffffff;
   --chakra-info-solid-color-secondary-text: #ffffff;
-  --chakra-info-solid-color-secondary-text-hover: #ffffff;
+  --chakra-info-solid-color-secondary-text-hover: #222e3c;
   --chakra-warning-color: #edf2f7;
   --chakra-warning-color-accent: #f0c16e;
   --chakra-warning-color-alt: #f6c97b;
-  --chakra-warning-color-secondary: rgb(97.3529411765%, 84.1176470588%, 61.1764705882%);
-  --chakra-warning-color-secondary-hover: rgb(94.7058823529%, 78.1176470588%, 48.8235294118%);
+  --chakra-warning-color-secondary: #f8d69c;
+  --chakra-warning-color-secondary-hover: #f1c77d;
   --chakra-warning-color-secondary-text: #ffffff;
   --chakra-warning-color-secondary-text-hover: #ffffff;
   --chakra-warning-color-bold: #fbd38d;
@@ -674,15 +745,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-warning-solid-button-border-hover: #2f2e2d;
   --chakra-warning-solid-close: #2f2e2d;
   --chakra-warning-solid-close-hover: rgb(8.2139812447%, 8.0392156863%, 7.8644501279%);
-  --chakra-warning-solid-color-secondary: rgb(38.8235294118%, 38.5294117647%, 38.2352941176%);
-  --chakra-warning-solid-color-secondary-hover: rgb(96.8235294118%, 80.9411764706%, 53.4117647059%);
+  --chakra-warning-solid-color-secondary: #2f2e2d;
+  --chakra-warning-solid-color-secondary-hover: #ffffff;
   --chakra-warning-solid-color-secondary-text: #ffffff;
-  --chakra-warning-solid-color-secondary-text-hover: #ffffff;
+  --chakra-warning-solid-color-secondary-text-hover: #2f2e2d;
   --chakra-error-color: #edf2f7;
   --chakra-error-color-accent: #f46d6d;
   --chakra-error-color-alt: #f68e8e;
-  --chakra-error-color-secondary: rgb(97.3529411765%, 66.7647058824%, 66.7647058824%);
-  --chakra-error-color-secondary-hover: rgb(96.1176470588%, 48.4705882353%, 48.4705882353%);
+  --chakra-error-color-secondary: #f8aaaa;
+  --chakra-error-color-secondary-hover: #f57c7c;
   --chakra-error-color-secondary-text: #ffffff;
   --chakra-error-color-secondary-text-hover: #ffffff;
   --chakra-error-color-bold: #feb2b2;
@@ -698,10 +769,10 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   --chakra-error-solid-button-border-hover: #302a33;
   --chakra-error-solid-close: #302a33;
   --chakra-error-solid-close-hover: rgb(8.5009487666%, 7.4383301708%, 9.0322580645%);
-  --chakra-error-solid-color-secondary: rgb(39.1176470588%, 37.3529411765%, 40%);
-  --chakra-error-solid-color-secondary-hover: rgb(96.8235294118%, 60.1176470588%, 60.1176470588%);
+  --chakra-error-solid-color-secondary: #302a33;
+  --chakra-error-solid-color-secondary-hover: #ffffff;
   --chakra-error-solid-color-secondary-text: #ffffff;
-  --chakra-error-solid-color-secondary-text-hover: #ffffff;
+  --chakra-error-solid-color-secondary-text-hover: #302a33;
   --alerts-dlx-chakra-title-weight: 500;
 }
 .template-chakra {
@@ -777,7 +848,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 }
 .template-chakra.is-appearance-centered .alerts-dlx-button-wrapper button:not(:first-child) {
   position: absolute;
-  right: -35px;
+  right: 0;
 }
 .template-chakra.is-style-custom.is-appearance-subtle .alerts-dlx-chakra, .template-chakra.is-style-custom.is-appearance-centered .alerts-dlx-chakra {
   border-color: var(--alerts-dlx-chakra-color-border, var(--chakra-info-color));
@@ -925,6 +996,20 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-info-color-contrast));
   border: 2px solid var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-info-color-accent));
 }
+.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary);
+  color: var(--alerts-dlx-chakra-color-secondary-text);
+  border: 1px solid var(--alerts-dlx-chakra-color-secondary-text);
+}
+.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover);
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover);
+  border-color: var(--alerts-dlx-chakra-color-secondary-text-hover);
+}
 .template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-title, .template-chakra.is-style-success.is-appearance-centered .alerts-dlx-title {
   color: var(--chakra-success-color);
 }
@@ -957,6 +1042,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-success-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-success-color-contrast));
+}
+.template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-success-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-success-color-secondary-text));
+}
+.template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-success-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-success-color-secondary-text-hover));
 }
 .template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg,
 .template-chakra.is-style-success.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg path svg g, .template-chakra.is-style-success.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-icon svg,
@@ -999,6 +1100,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-success-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-success-color-contrast));
 }
+.template-chakra.is-style-success.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-success-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-success-color-secondary-text));
+}
+.template-chakra.is-style-success.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-success-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-success-color-secondary-text-hover));
+}
 .template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra {
   border-top: 4px solid var(--chakra-success-color-bold);
   background-color: var(--alerts-dlx-chakra-color-light, var(--chakra-success-color-light));
@@ -1034,6 +1147,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-success-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-success-color-contrast));
 }
+.template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-success-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-success-color-secondary-text));
+}
+.template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-success.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-success-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-success-color-secondary-text-hover));
+}
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-title {
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-success-solid-foreground));
 }
@@ -1051,19 +1176,12 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-success-solid-foreground));
   fill: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-success-solid-foreground));
 }
-.template-chakra.is-style-success.is-appearance-solid {
-  --alerts-dlx-chakra-color-secondary: var(--chakra-success-solid-color-secondary);
-  --alerts-dlx-chakra-color-secondary-hover: var(--chakra-success-solid-color-secondary-hover);
-  --alerts-dlx-chakra-color-secondary-text: var(--chakra-success-solid-color-secondary-text);
-  --alerts-dlx-chakra-color-secondary-text-hover: var(--chakra-success-solid-color-secondary-text-hover);
-}
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra {
   background-color: var(--alerts-dlx-chakra-color-solid-background, var(--chakra-success-color-alt));
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-success-solid-foreground));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-border, var(--chakra-success-solid-foreground));
 }
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button,
-.template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .alerts-dlx-button-wrapper .button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button,
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
@@ -1072,8 +1190,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-solid-button-background, var(--chakra-success-solid-button-background));
 }
 .template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
-.template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover,
-.template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+.template-chakra.is-style-success.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-solid-button-background-hover, var(--chakra-success-solid-button-background-hover));
   color: var(--alerts-dlx-chakra-color-solid-button-text-hover, var(--chakra-success-solid-button-text-hover));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-button-border-hover, var(--chakra-success-solid-button-border-hover));
@@ -1110,6 +1227,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-info-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-info-color-contrast));
+}
+.template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-info-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-info-color-secondary-text));
+}
+.template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-info-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-info-color-secondary-text-hover));
 }
 .template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg,
 .template-chakra.is-style-info.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg path svg g, .template-chakra.is-style-info.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-icon svg,
@@ -1152,6 +1285,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-info-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-info-color-contrast));
 }
+.template-chakra.is-style-info.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-info-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-info-color-secondary-text));
+}
+.template-chakra.is-style-info.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-info-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-info-color-secondary-text-hover));
+}
 .template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra {
   border-top: 4px solid var(--chakra-info-color-bold);
   background-color: var(--alerts-dlx-chakra-color-light, var(--chakra-info-color-light));
@@ -1187,6 +1332,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-info-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-info-color-contrast));
 }
+.template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-info-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-info-color-secondary-text));
+}
+.template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-info.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-info-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-info-color-secondary-text-hover));
+}
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-title {
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-info-solid-foreground));
 }
@@ -1204,19 +1361,12 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-info-solid-foreground));
   fill: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-info-solid-foreground));
 }
-.template-chakra.is-style-info.is-appearance-solid {
-  --alerts-dlx-chakra-color-secondary: var(--chakra-info-solid-color-secondary);
-  --alerts-dlx-chakra-color-secondary-hover: var(--chakra-info-solid-color-secondary-hover);
-  --alerts-dlx-chakra-color-secondary-text: var(--chakra-info-solid-color-secondary-text);
-  --alerts-dlx-chakra-color-secondary-text-hover: var(--chakra-info-solid-color-secondary-text-hover);
-}
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra {
   background-color: var(--alerts-dlx-chakra-color-solid-background, var(--chakra-info-color-alt));
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-info-solid-foreground));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-border, var(--chakra-info-solid-foreground));
 }
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button,
-.template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .alerts-dlx-button-wrapper .button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button,
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
@@ -1225,8 +1375,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-solid-button-background, var(--chakra-info-solid-button-background));
 }
 .template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
-.template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover,
-.template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+.template-chakra.is-style-info.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-solid-button-background-hover, var(--chakra-info-solid-button-background-hover));
   color: var(--alerts-dlx-chakra-color-solid-button-text-hover, var(--chakra-info-solid-button-text-hover));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-button-border-hover, var(--chakra-info-solid-button-border-hover));
@@ -1263,6 +1412,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-warning-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-warning-color-contrast));
+}
+.template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-warning-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-warning-color-secondary-text));
+}
+.template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-warning-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-warning-color-secondary-text-hover));
 }
 .template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg,
 .template-chakra.is-style-warning.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg path svg g, .template-chakra.is-style-warning.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-icon svg,
@@ -1305,6 +1470,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-warning-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-warning-color-contrast));
 }
+.template-chakra.is-style-warning.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-warning-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-warning-color-secondary-text));
+}
+.template-chakra.is-style-warning.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-warning-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-warning-color-secondary-text-hover));
+}
 .template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra {
   border-top: 4px solid var(--chakra-warning-color-bold);
   background-color: var(--alerts-dlx-chakra-color-light, var(--chakra-warning-color-light));
@@ -1340,6 +1517,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-warning-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-warning-color-contrast));
 }
+.template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-warning-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-warning-color-secondary-text));
+}
+.template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-warning.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-warning-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-warning-color-secondary-text-hover));
+}
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-title {
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-warning-solid-foreground));
 }
@@ -1357,19 +1546,12 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-warning-solid-foreground));
   fill: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-warning-solid-foreground));
 }
-.template-chakra.is-style-warning.is-appearance-solid {
-  --alerts-dlx-chakra-color-secondary: var(--chakra-warning-solid-color-secondary);
-  --alerts-dlx-chakra-color-secondary-hover: var(--chakra-warning-solid-color-secondary-hover);
-  --alerts-dlx-chakra-color-secondary-text: var(--chakra-warning-solid-color-secondary-text);
-  --alerts-dlx-chakra-color-secondary-text-hover: var(--chakra-warning-solid-color-secondary-text-hover);
-}
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra {
   background-color: var(--alerts-dlx-chakra-color-solid-background, var(--chakra-warning-color-alt));
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-warning-solid-foreground));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-border, var(--chakra-warning-solid-foreground));
 }
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button,
-.template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .alerts-dlx-button-wrapper .button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button,
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
@@ -1378,8 +1560,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-solid-button-background, var(--chakra-warning-solid-button-background));
 }
 .template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
-.template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover,
-.template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+.template-chakra.is-style-warning.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-solid-button-background-hover, var(--chakra-warning-solid-button-background-hover));
   color: var(--alerts-dlx-chakra-color-solid-button-text-hover, var(--chakra-warning-solid-button-text-hover));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-button-border-hover, var(--chakra-warning-solid-button-border-hover));
@@ -1416,6 +1597,22 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
 .template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-error-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-error-color-contrast));
+}
+.template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-error-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-error-color-secondary-text));
+}
+.template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover, .template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-error-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-error-color-secondary-text-hover));
 }
 .template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg,
 .template-chakra.is-style-error.is-appearance-subtle .alerts-dlx-chakra .alerts-dlx-icon svg path svg g, .template-chakra.is-style-error.is-appearance-centered .alerts-dlx-chakra .alerts-dlx-icon svg,
@@ -1458,6 +1655,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-error-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-error-color-contrast));
 }
+.template-chakra.is-style-error.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-error-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-error-color-secondary-text));
+}
+.template-chakra.is-style-error.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-left-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-error-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-error-color-secondary-text-hover));
+}
 .template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra {
   border-top: 4px solid var(--chakra-error-color-bold);
   background-color: var(--alerts-dlx-chakra-color-light, var(--chakra-error-color-light));
@@ -1493,6 +1702,18 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-error-color-accent));
   color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-error-color-contrast));
 }
+.template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
+.template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-error-color-secondary));
+  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-error-color-secondary-text));
+}
+.template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+.template-chakra.is-style-error.is-appearance-top-accent .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-error-color-secondary-hover));
+  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-error-color-secondary-text-hover));
+}
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-title {
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-error-solid-foreground));
 }
@@ -1510,19 +1731,12 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-error-solid-foreground));
   fill: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-error-solid-foreground));
 }
-.template-chakra.is-style-error.is-appearance-solid {
-  --alerts-dlx-chakra-color-secondary: var(--chakra-error-solid-color-secondary);
-  --alerts-dlx-chakra-color-secondary-hover: var(--chakra-error-solid-color-secondary-hover);
-  --alerts-dlx-chakra-color-secondary-text: var(--chakra-error-solid-color-secondary-text);
-  --alerts-dlx-chakra-color-secondary-text-hover: var(--chakra-error-solid-color-secondary-text-hover);
-}
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra {
   background-color: var(--alerts-dlx-chakra-color-solid-background, var(--chakra-error-color-alt));
   color: var(--alerts-dlx-chakra-color-solid-foreground, var(--chakra-error-solid-foreground));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-border, var(--chakra-error-solid-foreground));
 }
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button,
-.template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .alerts-dlx-button-wrapper .button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button,
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
@@ -1531,73 +1745,10 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] .ale
   background-color: var(--alerts-dlx-chakra-color-solid-button-background, var(--chakra-error-solid-button-background));
 }
 .template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra a.alerts-dlx-button:hover,
-.template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover,
-.template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra .alerts-dlx-actions .button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+.template-chakra.is-style-error.is-appearance-solid .alerts-dlx-chakra button.button-reset.alerts-dlx-button:hover {
   background-color: var(--alerts-dlx-chakra-color-solid-button-background-hover, var(--chakra-error-solid-button-background-hover));
   color: var(--alerts-dlx-chakra-color-solid-button-text-hover, var(--chakra-error-solid-button-text-hover));
   border: 2px solid var(--alerts-dlx-chakra-color-solid-button-border-hover, var(--chakra-error-solid-button-border-hover));
-}
-.template-chakra.is-style-success .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-success .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-success .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-success .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-success-color-secondary));
-  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-success-color-secondary-text));
-}
-.template-chakra.is-style-success .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-success .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-success-color-secondary-hover));
-  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-success-color-secondary-text-hover));
-}
-.template-chakra.is-style-info .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-info .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-info .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-info .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-info-color-secondary));
-  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-info-color-secondary-text));
-}
-.template-chakra.is-style-info .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-info .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-info-color-secondary-hover));
-  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-info-color-secondary-text-hover));
-}
-.template-chakra.is-style-warning .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-warning .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-warning .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-warning .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-warning-color-secondary));
-  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-warning-color-secondary-text));
-}
-.template-chakra.is-style-warning .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-warning .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-warning-color-secondary-hover));
-  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-warning-color-secondary-text-hover));
-}
-.template-chakra.is-style-error .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-error .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-error .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-error .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary, var(--chakra-error-color-secondary));
-  color: var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-error-color-secondary-text));
-}
-.template-chakra.is-style-error .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-error .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-error-color-secondary-hover));
-  color: var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-error-color-secondary-text-hover));
-}
-.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary,
-.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary);
-  color: var(--alerts-dlx-chakra-color-secondary-text);
-  border: 1px solid var(--alerts-dlx-chakra-color-secondary-text);
-}
-.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
-.template-chakra.is-style-custom .alerts-dlx-chakra .alerts-dlx-actions button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
-  background-color: var(--alerts-dlx-chakra-color-secondary-hover);
-  color: var(--alerts-dlx-chakra-color-secondary-text-hover);
-  border-color: var(--alerts-dlx-chakra-color-secondary-text-hover);
 }
 
 /*# sourceMappingURL=alerts-dlx-chakra-styles.css.map*/
