@@ -267,6 +267,10 @@
     "imageId": {
       "type": "number",
       "default": 0
+    },
+    "iconSize": {
+      "type": "string",
+      "default": "default"
     }
   },
   "example": {

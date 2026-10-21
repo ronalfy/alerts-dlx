@@ -118,6 +118,7 @@ final class AlertRenderer {
 		$icon_enabled                   = $normalized['icon_enabled'];
 		$base_font_size                 = $normalized['base_font_size'];
 		$icon_vertical_alignment        = $normalized['icon_vertical_alignment'];
+		$icon_size                      = $normalized['icon_size'];
 		$variant                        = $normalized['variant'];
 		$mode                           = $normalized['mode'];
 		$button_text                    = $normalized['button_text'];
@@ -183,8 +184,8 @@ final class AlertRenderer {
 		if ( $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
 			$display_content = ! empty( $alert_description ) ? $alert_description : $content;
 			$hash            = md5( $alert_title . wp_strip_all_tags( $display_content ) . $button_text . $secondary_button_text );
-			$option_name = 'adlx-' . $unique_id;
-			$hash_option = get_option( sanitize_key( $option_name ) );
+			$option_name     = 'adlx-' . $unique_id;
+			$hash_option     = get_option( sanitize_key( $option_name ) );
 			if ( $hash_option !== $hash || ( false === $hash_option && isset( $_COOKIE[ $cookie_name ] ) ) ) {
 				delete_option( sanitize_key( $option_name ) );
 				add_option( sanitize_key( $option_name ), $hash, '', 'no' );
@@ -382,6 +383,9 @@ final class AlertRenderer {
 		if ( 'rounded' === $icon_appearance ) {
 			$container_classes[] = 'icon-appearance-rounded';
 		}
+		if ( 'default' !== $icon_size ) {
+			$container_classes[] = 'is-icon-size-' . $icon_size;
+		}
 		if ( Options::is_headline_force_size() ) {
 			$container_classes[] = 'is-headline-size-forced';
 		}
@@ -396,10 +400,22 @@ final class AlertRenderer {
 				max-width: <?php echo esc_attr( $maximum_width ); ?><?php echo esc_attr( $maximum_width_unit ); ?>;
 				--alerts-dlx-base-font-size: <?php echo esc_attr( $base_font_size ); ?>px;
 				--alerts-dlx-<?php echo esc_attr( $alert_group ); ?>-base-size: <?php echo esc_attr( $base_font_size ); ?>px;
+				--alerts-dlx-icon-scale: 
+				<?php
+				$scale_map = array(
+					'small'       => '0.75',
+					'default'     => '1',
+					'medium'      => '1.25',
+					'large'       => '1.5',
+					'extra-large' => '2',
+				);
+				echo esc_attr( isset( $scale_map[ $icon_size ] ) ? $scale_map[ $icon_size ] : '1' );
+				?>
+				;
 			}<?php // phpcs:ignore ?>
 			#<?php echo esc_attr( $unique_id ); ?> .alerts-dlx-icon-preview svg {
-				max-width: 1.8em;
-				max-height: 1.8em;
+				width: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
+				height: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
 			}
 		</style>
 		<div

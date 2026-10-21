@@ -258,6 +258,10 @@
       "type": "string",
       "default": "rounded"
     },
+    "iconSize": {
+      "type": "string",
+      "default": "default"
+    },
     "conditionsEnabled": {
       "type": "boolean",
       "default": false

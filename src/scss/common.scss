@@ -190,18 +190,17 @@ figure.alerts-dlx-alert {
 		font-size: 1.2em;
 	}
 
-	/* Icon sizing */
-	.alerts-dlx-icon-preview svg {
-		width: 1.4em;
-		height: 1.4em;
-	}
-
 	.alerts-dlx-icon img {
-		max-width: 2em;
-		max-height: 2em;
+		max-width: 2.5em;
+		max-height: 2.5em;
 		width: 100%;
 		height: auto;
 		margin-bottom: 0.5em;
+	}
+
+	.alerts-dlx-icon svg {
+		max-width: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
+		max-height: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
 	}
 
 	.alerts-dlx-icon-frontend .alerts-dlx-icon-preview {
@@ -218,7 +217,7 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
 	padding: 0.75em 1.25em;
 
 	.alerts-dlx-icon img {
-		max-height: 3.8em;
+		max-height: calc(3.8em * var(--alerts-dlx-icon-scale, 1));
 		max-width: unset;
 		width: auto;
 	}

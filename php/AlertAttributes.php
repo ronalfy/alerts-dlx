@@ -37,6 +37,7 @@ final class AlertAttributes {
 		'icon_enabled'                   => array( 'iconEnabled', 'boolean' ),
 		'base_font_size'                 => array( 'baseFontSize', 'integer' ),
 		'icon_vertical_alignment'        => array( 'iconVerticalAlignment', 'text' ),
+		'icon_size'                      => array( 'iconSize', 'text' ),
 		'variant'                        => array( 'variant', 'text' ),
 		'mode'                           => array( 'mode', 'text' ),
 		'button_text'                    => array( 'buttonText', 'text' ),
@@ -115,6 +116,7 @@ final class AlertAttributes {
 			'icon'                           => '',
 			'base_font_size'                 => 16,
 			'icon_vertical_alignment'        => 'top',
+			'icon_size'                      => 'default',
 			'variant'                        => '',
 			'mode'                           => 'light',
 			'button_text'                    => '',
@@ -154,6 +156,7 @@ final class AlertAttributes {
 			'url_params'                     => array(),
 			'require_login'                  => false,
 			'required_roles'                 => '',
+			'icon_size'                      => 'default',
 		);
 	}
 
@@ -307,6 +310,29 @@ final class AlertAttributes {
 	}
 
 	/**
+	 * Icon size options.
+	 *
+	 * @return string[]
+	 */
+	public static function get_icon_sizes() {
+		return array( 'small', 'default', 'medium', 'large', 'extra-large' );
+	}
+
+	/**
+	 * Sanitize an icon size onto the allowlist.
+	 *
+	 * @param mixed $value Requested size.
+	 * @return string Allowlisted size.
+	 */
+	public static function sanitize_icon_size( $value ) {
+		$value = sanitize_key( (string) $value );
+		if ( ! in_array( $value, self::get_icon_sizes(), true ) ) {
+			return 'default';
+		}
+		return $value;
+	}
+
+	/**
 	 * Sanitize a margin amount onto the allowlist.
 	 *
 	 * @param mixed $value Requested amount.
@@ -391,6 +417,7 @@ final class AlertAttributes {
 		$normalized['margin_spacing']        = self::sanitize_margin_spacing( $normalized['margin_spacing'] );
 		$normalized['margin_spacing_target'] = self::sanitize_margin_spacing_target( $normalized['margin_spacing_target'] );
 		$normalized['url_params']            = Functions::sanitize_url_params( $normalized['url_params'] );
+		$normalized['icon_size']             = self::sanitize_icon_size( $normalized['icon_size'] );
 
 		return $normalized;
 	}

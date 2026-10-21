@@ -261,6 +261,10 @@ return array(
 				'type' => 'string',
 				'default' => 'rounded'
 			),
+			'iconSize' => array(
+				'type' => 'string',
+				'default' => 'default'
+			),
 			'conditionsEnabled' => array(
 				'type' => 'boolean',
 				'default' => false
@@ -608,6 +612,10 @@ return array(
 			'imageId' => array(
 				'type' => 'number',
 				'default' => 0
+			),
+			'iconSize' => array(
+				'type' => 'string',
+				'default' => 'default'
 			)
 		),
 		'example' => array(
@@ -948,6 +956,10 @@ return array(
 			'imageId' => array(
 				'type' => 'number',
 				'default' => 0
+			),
+			'iconSize' => array(
+				'type' => 'string',
+				'default' => 'default'
 			)
 		),
 		'example' => array(
@@ -1272,6 +1284,10 @@ return array(
 			'imageId' => array(
 				'type' => 'number',
 				'default' => 0
+			),
+			'iconSize' => array(
+				'type' => 'string',
+				'default' => 'default'
 			)
 		),
 		'example' => array(
@@ -1600,6 +1616,10 @@ return array(
 			'imageId' => array(
 				'type' => 'number',
 				'default' => 0
+			),
+			'iconSize' => array(
+				'type' => 'string',
+				'default' => 'default'
 			)
 		),
 		'example' => array(

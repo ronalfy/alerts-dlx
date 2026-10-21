@@ -409,13 +409,14 @@ $material-dark-palette: (
 		margin: 0 auto;
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.8em;
-			height: 1.8em;
+			width: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		&.alerts-dlx-has-icon {
-			grid-template-columns: 3.8em 1fr;
-			padding-left: 0;
+			grid-template-columns: auto 1fr;
+			gap: 1em;
+			padding-left: 20px;
 		}
 
 		section .alerts-dlx-title {
@@ -445,8 +446,8 @@ $material-dark-palette: (
 		}
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.4em;
-			height: 1.4em;
+			width: calc(1.4em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.4em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		.alerts-dlx-icon {
@@ -485,8 +486,8 @@ $material-dark-palette: (
 		}
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.6em;
-			height: 1.6em;
+			width: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		section {
