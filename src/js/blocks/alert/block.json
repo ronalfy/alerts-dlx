@@ -258,6 +258,34 @@
       "type": "string",
       "default": "rounded"
     },
+    "conditionsEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "startDate": {
+      "type": "string",
+      "default": ""
+    },
+    "endDate": {
+      "type": "string",
+      "default": ""
+    },
+    "daysOfWeek": {
+      "type": "string",
+      "default": ""
+    },
+    "urlParams": {
+      "type": "array",
+      "default": []
+    },
+    "requireLogin": {
+      "type": "boolean",
+      "default": false
+    },
+    "requiredRoles": {
+      "type": "string",
+      "default": ""
+    },
     "globalStyleId": {
       "type": "number",
       "default": 0

@@ -178,3 +178,10 @@ if ( 'loading' === document.readyState ) {
 } else {
 	init();
 }
+
+// Re-bind handlers when alerts are dynamically inserted (e.g. conditions swap).
+document.addEventListener( 'alertsDlxAlertInserted', () => {
+	console.log( 'alertsDlxAlertInserted' );
+	hideDismissedAlerts();
+	bindCloseButtons();
+} );

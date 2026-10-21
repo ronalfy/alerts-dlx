@@ -51,6 +51,8 @@ final class ShortcodeBuilder {
 		'secondary_button_rel_sponsored',
 		'close_button_enabled',
 		'is_block_editorial_only',
+		'conditions_enabled',
+		'require_login',
 	);
 
 	/**
@@ -219,6 +221,13 @@ final class ShortcodeBuilder {
 						'secondary_button_enabled',
 						'close_button_enabled',
 						'close_button_expiration',
+						'conditions_enabled',
+						'start_date',
+						'end_date',
+						'days_of_week',
+						'url_params',
+						'require_login',
+						'required_roles',
 					)
 				)
 			)
@@ -818,6 +827,16 @@ final class ShortcodeBuilder {
 		$sanitized['secondary_button_text'] = self::bounded_text( $values['secondary_button_text'] ?? '', 200 );
 		$sanitized['secondary_button_url']  = esc_url_raw( self::bounded_text( $values['secondary_button_url'] ?? '', 2048 ) );
 		$sanitized['image_url']             = esc_url_raw( self::bounded_text( $values['image_url'] ?? '', 2048 ) );
+		$sanitized['start_date']            = self::bounded_text( $values['start_date'] ?? '', 19 );
+		$sanitized['end_date']              = self::bounded_text( $values['end_date'] ?? '', 19 );
+		$sanitized['days_of_week']          = self::bounded_text( $values['days_of_week'] ?? '', 20 );
+		$url_params                         = $values['url_params'] ?? array();
+		if ( is_string( $url_params ) && '' !== $url_params ) {
+			$decoded     = json_decode( $url_params, true );
+			$url_params  = is_array( $decoded ) ? $decoded : array();
+		}
+		$sanitized['url_params']            = Functions::sanitize_url_params( is_array( $url_params ) ? $url_params : array() );
+		$sanitized['required_roles']        = self::bounded_text( $values['required_roles'] ?? '', 200 );
 
 		$description = (string) ( $values['alert_description'] ?? '' );
 		if ( strlen( $description ) > self::MAX_DESCRIPTION_LENGTH || false !== stripos( $description, '[alertsdlx' ) || false !== stripos( $description, '[/alertsdlx]' ) ) {
@@ -928,6 +947,9 @@ final class ShortcodeBuilder {
 			}
 			if ( in_array( $name, self::BOOLEAN_FIELDS, true ) ) {
 				$value = $value ? 'true' : 'false';
+			}
+			if ( is_array( $value ) ) {
+				$value = wp_json_encode( $value );
 			}
 			$attributes[ $name ] = (string) $value;
 		}

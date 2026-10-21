@@ -24,6 +24,7 @@ module.exports = (env) => {
         "alerts-dlx-material-styles": "./src/scss/material/styles.scss",
         "alerts-dlx-shoelace-styles": "./src/scss/shoelace/styles.scss",
         "alerts-dlx-dismiss": "./src/js/dismiss/index.js",
+        "alerts-dlx-conditions": "./src/js/conditions/index.js",
         "alerts-dlx-admin-style": "./src/admin.scss",
         "alerts-dlx-admin-settings": "./src/react/Settings/index.js",
         "alerts-dlx-admin-shortcode-builder": "./src/react/ShortcodeBuilder/index.js",

@@ -38,11 +38,25 @@ final class AlertRenderer {
 	private static $footer_style_groups = array();
 
 	/**
+	 * Whether the common styles footer callback is already scheduled.
+	 *
+	 * @var bool
+	 */
+	private static $common_styles_scheduled = false;
+
+	/**
 	 * Whether the close-button sprite callback is already scheduled.
 	 *
 	 * @var bool
 	 */
 	private static $close_button_svgs_scheduled = false;
+
+	/**
+	 * Unique IDs already emitted during this request.
+	 *
+	 * @var array<string, true>
+	 */
+	private static $rendered_unique_ids = array();
 
 	/**
 	 * Store the asset and close-button callbacks.
@@ -66,7 +80,28 @@ final class AlertRenderer {
 	public function render( array $attributes, string $content, $block = null ) {
 		$normalized = AlertAttributes::normalize( $attributes, $block );
 
-		$unique_id                      = $normalized['unique_id'];
+		$unique_id = $normalized['unique_id'];
+
+		// Generate a deterministic ID when empty.
+		if ( empty( $unique_id ) ) {
+			$unique_id = 'alerts-dlx-' . substr(
+				md5( $normalized['alert_title'] . wp_strip_all_tags( $normalized['alert_description'] ) . $normalized['button_text'] . $normalized['secondary_button_text'] ),
+				0,
+				12
+			);
+		}
+
+		// Deduplicate within this request.
+		$original_id = $unique_id;
+		$suffix      = 0;
+		while ( isset( self::$rendered_unique_ids[ $unique_id ] ) ) {
+			++$suffix;
+			$unique_id = $original_id . '-' . $suffix;
+		}
+		self::$rendered_unique_ids[ $unique_id ] = true;
+		$normalized['unique_id']                 = $unique_id;
+		$attributes['uniqueId']                  = $unique_id;
+
 		$alert_group                    = $normalized['alert_group'];
 		$alert_type                     = $normalized['alert_type'];
 		$align                          = $normalized['align'];
@@ -116,6 +151,13 @@ final class AlertRenderer {
 		$icon_source                    = $normalized['icon_source'];
 		$image_url                      = $normalized['image_url'];
 		$image_id                       = $normalized['image_id'];
+		$conditions_enabled             = $normalized['conditions_enabled'];
+		$start_date                     = $normalized['start_date'];
+		$end_date                       = $normalized['end_date'];
+		$days_of_week                   = $normalized['days_of_week'];
+		$url_params                     = $normalized['url_params'];
+		$require_login                  = $normalized['require_login'];
+		$required_roles                 = $normalized['required_roles'];
 
 		// If block is editorial only, return early.
 		if ( $is_block_editorial_only ) {
@@ -132,14 +174,15 @@ final class AlertRenderer {
 		 */
 		$reset_dismissal_countdown = apply_filters( 'alerts_dlx_allow_dismissal_reset', true, $unique_id, $normalized );
 
-		// Create hash from title, descriptions, and button text.
+		// Create hash from title, displayed description, and button text.
 		// This detects if content has changed and restarts the dismissal countdown.
 		$is_in_block_editor = is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
 		$cookie_name        = $unique_id;
 		$legacy_cookie_name = 'alerts-dlx-' . $unique_id;
 
 		if ( $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
-			$hash        = md5( $alert_title . wp_strip_all_tags( $content ) . $button_text . $secondary_button_text );
+			$display_content = ! empty( $alert_description ) ? $alert_description : $content;
+			$hash            = md5( $alert_title . wp_strip_all_tags( $display_content ) . $button_text . $secondary_button_text );
 			$option_name = 'adlx-' . $unique_id;
 			$hash_option = get_option( sanitize_key( $option_name ) );
 			if ( $hash_option !== $hash || ( false === $hash_option && isset( $_COOKIE[ $cookie_name ] ) ) ) {
@@ -179,6 +222,17 @@ final class AlertRenderer {
 
 		// Register scripts.
 		call_user_func( $this->register_scripts_callback );
+
+		// Print common styles once per request.
+		if ( ! self::$common_styles_scheduled ) {
+			self::$common_styles_scheduled = true;
+			add_action(
+				'wp_footer',
+				function () {
+					wp_print_styles( 'alerts-dlx-common-styles' );
+				}
+			);
+		}
 
 		// Print each theme's styles once per request.
 		if ( ! isset( self::$footer_style_groups[ $alert_group ] ) ) {
@@ -251,6 +305,17 @@ final class AlertRenderer {
 			wp_enqueue_script(
 				'alerts-dlx-close-button',
 				Functions::get_plugin_url( 'dist/alerts-dlx-dismiss.js' ),
+				array(),
+				Functions::get_plugin_version(),
+				true
+			);
+		}
+
+		// Add conditions script when any condition is enabled.
+		if ( $conditions_enabled ) {
+			wp_enqueue_script(
+				'alerts-dlx-conditions',
+				Functions::get_plugin_url( 'dist/alerts-dlx-conditions.js' ),
 				array(),
 				Functions::get_plugin_version(),
 				true
@@ -340,6 +405,28 @@ final class AlertRenderer {
 		<div
 			class="<?php echo esc_attr( implode( ' ', $container_classes ) ); ?>"
 			data-expiration="<?php echo esc_attr( absint( $close_button_expiration ) ); ?>"
+			data-unique-id="<?php echo esc_attr( $unique_id ); ?>"
+			<?php if ( $conditions_enabled ) : ?>
+				data-conditions-enabled="true"
+			<?php endif; ?>
+			<?php if ( '' !== $start_date ) : ?>
+				data-start-date="<?php echo esc_attr( $start_date ); ?>"
+			<?php endif; ?>
+			<?php if ( '' !== $end_date ) : ?>
+				data-end-date="<?php echo esc_attr( $end_date ); ?>"
+			<?php endif; ?>
+			<?php if ( '' !== $days_of_week ) : ?>
+				data-days-of-week="<?php echo esc_attr( $days_of_week ); ?>"
+			<?php endif; ?>
+			<?php if ( ! empty( $url_params ) ) : ?>
+				data-url-params="<?php echo esc_attr( wp_json_encode( $url_params ) ); ?>"
+			<?php endif; ?>
+			<?php if ( $require_login ) : ?>
+				data-require-login="true"
+			<?php endif; ?>
+			<?php if ( '' !== $required_roles ) : ?>
+				data-required-roles="<?php echo esc_attr( $required_roles ); ?>"
+			<?php endif; ?>
 		>
 			<figure
 				role="alert"
@@ -475,7 +562,33 @@ final class AlertRenderer {
 		</div>
 		<!-- end AlertsDLX output -->
 		<?php
-		return ob_get_clean();
+		$html = ob_get_clean();
+
+		if ( $conditions_enabled ) {
+			set_transient(
+				'adlx_alert_' . sanitize_key( $unique_id ),
+				wp_json_encode(
+					array(
+						'attributes' => $attributes,
+						'content'    => $content,
+					)
+				),
+				DAY_IN_SECONDS
+			);
+
+			return sprintf(
+				'<div class="alerts-dlx alerts-dlx-placeholder" style="display:none;" data-conditions-enabled="true" data-unique-id="%s" data-start-date="%s" data-end-date="%s" data-days-of-week="%s" data-url-params="%s" data-require-login="%s" data-required-roles="%s"></div>',
+				esc_attr( $unique_id ),
+				esc_attr( $start_date ),
+				esc_attr( $end_date ),
+				esc_attr( $days_of_week ),
+				esc_attr( wp_json_encode( $url_params ) ),
+				esc_attr( $require_login ? 'true' : 'false' ),
+				esc_attr( $required_roles )
+			);
+		}
+
+		return $html;
 	}
 
 	/**

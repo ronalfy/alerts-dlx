@@ -321,6 +321,15 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
 	container-name: alerts-dlx-block;
 }
 
+.alerts-dlx-conditional-show {
+	opacity: 0;
+	transition: opacity 0.3s ease-in-out;
+}
+
+.alerts-dlx-conditional-show.is-visible {
+	opacity: 1;
+}
+
 .alerts-dlx-actions {
 	display: flex;
 	flex-direction: row;

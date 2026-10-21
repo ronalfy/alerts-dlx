@@ -363,6 +363,13 @@ final class AlertLibrary {
 			'close_button_expiration'        => 0,
 			'align'                          => 'center',
 			'is_block_editorial_only'        => false,
+			'conditions_enabled'             => false,
+			'start_date'                     => '',
+			'end_date'                       => '',
+			'days_of_week'                   => '',
+			'url_params'                     => array(),
+			'require_login'                  => false,
+			'required_roles'                 => '',
 		);
 	}
 

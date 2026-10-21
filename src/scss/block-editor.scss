@@ -134,3 +134,41 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 		height: 16px;
 	}
 }
+
+.alerts-dlx-day-selector {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 8px;
+
+	&__wrapper {
+		margin-bottom: 16px;
+	}
+
+	.components-button {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+.alerts-dlx__url-param-repeater {
+	width: 100%;
+
+	>.components-button {
+		margin-bottom: 8px;
+	}
+}
+
+.alerts-dlx__url-param-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr auto;
+	gap: 8px;
+	align-items: end;
+	margin-top: 4px;
+
+	.components-button {
+		min-height: 40px;
+		padding-left: 8px;
+		padding-right: 8px;
+		margin-bottom: 16px;
+	}
+}

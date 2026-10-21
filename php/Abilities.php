@@ -407,6 +407,40 @@ class Abilities {
 				'is_block_editorial_only'        => self::boolean_property(
 					esc_html__( 'When true, the shortcode renders nothing on the front end. Use false for a visible alert. Defaults to false.', 'alerts-dlx' )
 				),
+				'conditions_enabled'             => self::boolean_property(
+					esc_html__( 'Enable display conditions evaluated client-side. Defaults to false.', 'alerts-dlx' )
+				),
+				'start_date'                     => self::string_property(
+					esc_html__( 'Earliest date/time to show the alert (YYYY-MM-DDTHH:MM). Evaluated client-side so it works with page caching.', 'alerts-dlx' ),
+					19
+				),
+				'end_date'                       => self::string_property(
+					esc_html__( 'Latest date/time to show the alert (YYYY-MM-DDTHH:MM). Evaluated client-side so it works with page caching.', 'alerts-dlx' ),
+					19
+				),
+				'days_of_week'                   => self::string_property(
+					esc_html__( 'Comma-separated day numbers (0=Sunday through 6=Saturday) when the alert may appear. Example: 0,6 for weekends.', 'alerts-dlx' ),
+					20
+				),
+				'url_params'                     => array(
+					'type'        => 'array',
+					'description' => esc_html__( 'Show only when URL query parameters match. Each item needs a key and an optional value. Empty value checks for existence.', 'alerts-dlx' ),
+					'items'       => array(
+						'type'       => 'object',
+						'properties' => array(
+							'key'   => array( 'type' => 'string', 'description' => esc_html__( 'Query parameter name.', 'alerts-dlx' ) ),
+							'value' => array( 'type' => 'string', 'description' => esc_html__( 'Query parameter value. Omit or leave empty to check for existence only.', 'alerts-dlx' ) ),
+						),
+						'required'   => array( 'key' ),
+					),
+				),
+				'require_login'                  => self::boolean_property(
+					esc_html__( 'Show only to logged-in users. Evaluated client-side via REST so it works with page caching.', 'alerts-dlx' )
+				),
+				'required_roles'                 => self::string_property(
+					esc_html__( 'Comma-separated WordPress role slugs. The alert is shown only when the visitor has at least one of these roles. Requires require_login.', 'alerts-dlx' ),
+					200
+				),
 			),
 			'additionalProperties' => false,
 			'default'              => array(),

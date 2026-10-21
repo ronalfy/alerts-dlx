@@ -220,6 +220,34 @@
       "type": "string",
       "default": "var(--alerts-dlx-material-color-light, #bee3f8)"
     },
+    "conditionsEnabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "startDate": {
+      "type": "string",
+      "default": ""
+    },
+    "endDate": {
+      "type": "string",
+      "default": ""
+    },
+    "daysOfWeek": {
+      "type": "string",
+      "default": ""
+    },
+    "urlParams": {
+      "type": "array",
+      "default": []
+    },
+    "requireLogin": {
+      "type": "boolean",
+      "default": false
+    },
+    "requiredRoles": {
+      "type": "string",
+      "default": ""
+    },
     "isBlockEditorialOnly": {
       "type": "boolean",
       "default": false

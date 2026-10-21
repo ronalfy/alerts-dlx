@@ -3,6 +3,8 @@
  */
 
 import {
+	Button,
+	FormTokenField,
 	PanelBody,
 	PanelRow,
 	Slot,
@@ -10,6 +12,9 @@ import {
 	ToggleControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+import DayOfWeekSelector from './DayOfWeekSelector';
+import UrlParamRepeater from './UrlParamRepeater';
 
 /**
  * Render the common alert settings without changing the public block contract.
@@ -33,6 +38,13 @@ export default function AlertSettingsPanel( {
 		descriptionEnabled,
 		iconEnabled,
 		titleEnabled,
+		conditionsEnabled,
+		startDate,
+		endDate,
+		daysOfWeek,
+		urlParams,
+		requireLogin,
+		requiredRoles,
 	} = attributes;
 
 	return (
@@ -118,6 +130,89 @@ export default function AlertSettingsPanel( {
 					) }
 					<Slot name="alertsDLXSettingsPanelEnd" fillProps={ fillProps } />
 				</>
+			</PanelBody>
+			<PanelBody
+				title={ __( 'Display Conditions', 'alerts-dlx' ) }
+				initialOpen={ false }
+			>
+				<PanelRow>
+					<ToggleControl
+						label={ __( 'Enable Display Conditions', 'alerts-dlx' ) }
+						checked={ conditionsEnabled }
+						onChange={ ( value ) => {
+							setAttributes( { conditionsEnabled: value } );
+						} }
+						help={ __(
+							'Conditions are evaluated in the browser so they work with full-page caching.',
+							'alerts-dlx'
+						) }
+					/>
+				</PanelRow>
+				{ conditionsEnabled && (
+					<>
+						<PanelRow>
+							<TextControl
+								label={ __( 'Start Date/Time', 'alerts-dlx' ) }
+								value={ startDate }
+								onChange={ ( value ) => {
+									setAttributes( { startDate: value } );
+								} }
+								help={ __( 'YYYY-MM-DDTHH:MM. Leave empty for no start.', 'alerts-dlx' ) }
+								type="datetime-local"
+							/>
+						</PanelRow>
+						<PanelRow>
+							<TextControl
+								label={ __( 'End Date/Time', 'alerts-dlx' ) }
+								value={ endDate }
+								onChange={ ( value ) => {
+									setAttributes( { endDate: value } );
+								} }
+								help={ __( 'YYYY-MM-DDTHH:MM. Leave empty for no end.', 'alerts-dlx' ) }
+								type="datetime-local"
+							/>
+						</PanelRow>
+						<PanelRow>
+							<DayOfWeekSelector
+								label={ __( 'Days of Week', 'alerts-dlx' ) }
+								help={ __( 'Select the days when the alert should be visible.', 'alerts-dlx' ) }
+								value={ daysOfWeek }
+								onChange={ ( value ) => {
+									setAttributes( { daysOfWeek: value } );
+								} }
+							/>
+						</PanelRow>
+						<UrlParamRepeater
+							attributes={ attributes }
+							setAttributes={ setAttributes }
+						/>
+						<PanelRow>
+							<ToggleControl
+								label={ __( 'Require Logged-In User', 'alerts-dlx' ) }
+								checked={ requireLogin }
+								onChange={ ( value ) => {
+									setAttributes( { requireLogin: value } );
+								} }
+							/>
+						</PanelRow>
+						{ requireLogin && (
+							<PanelRow>
+								<FormTokenField
+									label={ __( 'Required Roles', 'alerts-dlx' ) }
+									value={ requiredRoles ? requiredRoles.split( ',' ).map( ( s ) => s.trim() ).filter( Boolean ) : [] }
+									suggestions={ globalThis.alertsDlxBlock?.roles ? Object.keys( globalThis.alertsDlxBlock.roles ) : [] }
+									onChange={ ( tokens ) => {
+										setAttributes( { requiredRoles: tokens.join( ',' ) } );
+									} }
+									help={ __( 'Select one or more roles. The alert is shown if the user has any of them.', 'alerts-dlx' ) }
+									placeholder={ __( 'Select roles', 'alerts-dlx' ) }
+									__experimentalExpandOnFocus={ requiredRoles.split( ',' ).length >= 2  ? false : true }
+									__experimentalAutoSelectFirstMatch={ true }
+								/>
+							</PanelRow>
+						) }
+					</>
+				) }
 			</PanelBody>
 		</>
 	);

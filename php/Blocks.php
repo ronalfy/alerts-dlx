@@ -152,6 +152,16 @@ class Blocks {
 		$atts['maximum_width']           = min( 5000, max( 1, (int) $atts['maximum_width'] ) );
 		$atts['base_font_size']          = min( 96, max( 8, (int) $atts['base_font_size'] ) );
 		$atts['close_button_expiration'] = min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) );
+		$atts['start_date']              = substr( sanitize_text_field( (string) $atts['start_date'] ), 0, 19 );
+		$atts['end_date']                = substr( sanitize_text_field( (string) $atts['end_date'] ), 0, 19 );
+		$atts['days_of_week']            = substr( sanitize_text_field( (string) $atts['days_of_week'] ), 0, 20 );
+		$url_params                      = $atts['url_params'] ?? array();
+		if ( is_string( $url_params ) && '' !== $url_params ) {
+			$decoded     = json_decode( $url_params, true );
+			$url_params  = is_array( $decoded ) ? $decoded : array();
+		}
+		$atts['url_params']              = Functions::sanitize_url_params( is_array( $url_params ) ? $url_params : array() );
+		$atts['required_roles']          = substr( sanitize_text_field( (string) $atts['required_roles'] ), 0, 200 );
 
 		// If alert description is empty, use content.
 		if ( empty( $atts['alert_description'] ) && ! empty( $content ) ) {
@@ -273,6 +283,19 @@ class Blocks {
 		);
 		return $renderer->render( $attributes, $content, $block );
 	}
+
+	/**
+	 * Render an alert from stored attributes (used by REST re-render).
+	 *
+	 * @param array  $attributes Block editor attributes.
+	 * @param string $content    Current content.
+	 * @return string
+	 */
+	public static function render_alert( array $attributes, string $content = '' ) {
+		$attributes['conditionsEnabled'] = false;
+		$blocks = new self();
+		return $blocks->frontend( $attributes, $content, null );
+	}
 	/**
 	 * Register the block editor script for the iframe.
 	 */
@@ -293,6 +316,7 @@ class Blocks {
 	public function register_frontend_styles() {
 		$version = Functions::get_plugin_version();
 		$styles  = array(
+			'alerts-dlx-common-styles'    => 'dist/alerts-dlx-common.css',
 			'alerts-dlx-bootstrap-styles' => 'dist/alerts-dlx-bootstrap-styles.css',
 			'alerts-dlx-chakra-styles'    => 'dist/alerts-dlx-chakra-styles.css',
 			'alerts-dlx-material-styles'  => 'dist/alerts-dlx-material-styles.css',
@@ -415,6 +439,7 @@ class Blocks {
 				'libraryItems'               => AlertLibrary::get_items_for_editor(),
 				'canManageLibrary'           => current_user_can( 'manage_options' ),
 				'debugMode'                  => Options::is_debug_mode(),
+				'roles'                      => wp_roles()->get_names(),
 			)
 		);
 	}
