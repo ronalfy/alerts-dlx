@@ -3,6 +3,7 @@ import {
   PanelRow,
   Fill,
   Button,
+  SelectControl,
   __experimentalToggleGroupControl as ToggleGroupControl,
   __experimentalToggleGroupControlOption as ToggleGroupControlOption,
 } from "@wordpress/components";
@@ -17,7 +18,8 @@ registerPlugin("custom-slot-fills", {
     return (
       <Fill name="alertsDLXSettingsPanelEnd">
         {({ attributes, setAttributes, name }) => {
-          const { iconSource, imageUrl, imageId, icon, alertGroup } = attributes;
+          const { iconSource, imageUrl, imageId, icon, alertGroup } =
+            attributes;
           const appearanceLocked = Number(attributes.globalStyleId) > 0;
 
           const { openMediaUploader } = useMediaUploader();
@@ -120,7 +122,27 @@ registerPlugin("custom-slot-fills", {
                   />
                 </ToggleGroupControl>
               </PanelRow>
-              {"icon" === iconSource && !appearanceLocked && (
+              {iconSource === "icon" && (
+                <PanelRow>
+                  <SelectControl
+                    label={__("Icon Size", "alerts-dlx")}
+                    value={attributes.iconSize || "default"}
+                    options={[
+                      { label: __("Small", "alerts-dlx"), value: "small" },
+                      { label: __("Default", "alerts-dlx"), value: "default" },
+                      { label: __("Medium", "alerts-dlx"), value: "medium" },
+                      { label: __("Large", "alerts-dlx"), value: "large" },
+                      {
+                        label: __("Extra Large", "alerts-dlx"),
+                        value: "extra-large",
+                      },
+                    ]}
+                    disabled={appearanceLocked}
+                    onChange={(value) => setAttributes({ iconSize: value })}
+                  />
+                </PanelRow>
+              )}
+              {iconSource === "icon" && !appearanceLocked && (
                 <PanelRow>
                   <div className="alerts-dlx-icon-sidebar-wrapper">
                     <IconPicker

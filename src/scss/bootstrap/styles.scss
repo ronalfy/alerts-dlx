@@ -309,8 +309,9 @@ $bootstrap-dark-palette: bootstrap-palette-with-contrast($bootstrap-dark-palette
 		border: 1px solid transparent;
 
 		&.alerts-dlx-has-icon {
-			grid-template-columns: 3.8em 1fr;
-			padding-left: 0;
+			grid-template-columns: auto 1fr;
+			padding-left: 20px;
+			gap: 1em;
 		}
 
 		section .alerts-dlx-title {
@@ -341,12 +342,11 @@ $bootstrap-dark-palette: bootstrap-palette-with-contrast($bootstrap-dark-palette
 		}
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.6em;
-			height: 1.6em;
+			width: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		.alerts-dlx-icon-frontend .alerts-dlx-icon-preview {
-			font-size: 1.2em;
 			line-height: 2.2em;
 		}
 
@@ -369,8 +369,8 @@ $bootstrap-dark-palette: bootstrap-palette-with-contrast($bootstrap-dark-palette
 		}
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.6em;
-			height: 1.6em;
+			width: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		section {

@@ -319,8 +319,8 @@ $shoelace-modes: (
 
 		.alerts-dlx-icon {
 			position: absolute;
-			top: calc(50% - 0.97em);
-			left: calc((-1.4em / 2) - 0.25em);
+			top: calc(50% - (0.97em * var(--alerts-dlx-icon-scale, 1)));
+			left: calc(((-1.4em * var(--alerts-dlx-icon-scale, 1)) / 2) - 0.25em);
 		}
 
 		.alerts-dlx-icon-preview {
@@ -405,8 +405,9 @@ $shoelace-modes: (
 		color: var(--alerts-dlx-shoelace-text-color, #000);
 
 		&.alerts-dlx-has-icon {
-			grid-template-columns: 3.8em 1fr;
-			padding-left: 0;
+			grid-template-columns: auto 1fr;
+			gap: 1em;
+			padding-left: 20px;
 		}
 
 		section .alerts-dlx-title {
@@ -436,13 +437,13 @@ $shoelace-modes: (
 		}
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.4em;
-			height: 1.4em;
-			font-size: 1.2em;
+			width: calc(1.4em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.4em * var(--alerts-dlx-icon-scale, 1));
+			font-size: calc(1.2em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		.alerts-dlx-icon-frontend .alerts-dlx-icon-preview {
-			font-size: 1.2em;
+			font-size: calc(1.2em * var(--alerts-dlx-icon-scale, 1));
 			line-height: 2.2em;
 		}
 
@@ -476,8 +477,8 @@ $shoelace-modes: (
 		}
 
 		.alerts-dlx-icon-preview svg {
-			width: 1.6em;
-			height: 1.6em;
+			width: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
+			height: calc(1.6em * var(--alerts-dlx-icon-scale, 1));
 		}
 
 		section {

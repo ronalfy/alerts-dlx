@@ -64,9 +64,17 @@ const BlockMain = (props) => {
   const maxWidthStyle = {
     maxWidth: maximumWidth + maximumWidthUnit,
   };
+  const iconScaleMap = {
+    small: 0.75,
+    default: 1,
+    medium: 1.25,
+    large: 1.5,
+    "extra-large": 2,
+  };
+  const iconScale = iconScaleMap[attributes.iconSize] || 1;
   const baseFontSizeStyles = `#${uniqueId} { font-size: ${parseInt(
     baseFontSize
-  )}px; }`;
+  )}px; --alerts-dlx-icon-scale: ${iconScale}; }`;
 
   const headlineTag = resolveHeadlineTag( alertsDlxBlock.headlineStyle );
   const headlineTitleClasses = classnames(

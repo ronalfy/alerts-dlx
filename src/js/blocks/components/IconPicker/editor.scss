@@ -113,8 +113,8 @@
 	font-size: 1em;
 
 	svg {
-		width: 1.2em;
-		height: 1.2em;
+		width: calc(1.2em * var(--alerts-dlx-icon-scale, 1));
+		height: calc(1.2em * var(--alerts-dlx-icon-scale, 1));
 		margin-top: 0.175em;
 	}
 }

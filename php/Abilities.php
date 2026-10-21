@@ -379,6 +379,10 @@ class Abilities {
 					esc_html__( 'Vertical alignment of the icon. Defaults to top.', 'alerts-dlx' ),
 					array( 'top', 'centered' )
 				),
+				'icon_size'                      => self::enum_property(
+					esc_html__( 'Icon size. Defaults to default.', 'alerts-dlx' ),
+					array( 'small', 'default', 'medium', 'large', 'extra-large' )
+				),
 				'color_primary'                  => self::color_property( esc_html__( 'Text color.', 'alerts-dlx' ) ),
 				'color_border'                   => self::color_property( esc_html__( 'Border color.', 'alerts-dlx' ) ),
 				'color_accent'                   => self::color_property( esc_html__( 'Accent color.', 'alerts-dlx' ) ),
