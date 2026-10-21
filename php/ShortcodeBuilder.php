@@ -149,6 +149,7 @@ final class ShortcodeBuilder {
 			'icon_source',
 			'icon_appearance',
 			'icon_vertical_alignment',
+			'icon_size',
 			'icon',
 			'image_url',
 			'image_id',
@@ -683,6 +684,13 @@ final class ShortcodeBuilder {
 				'options' => self::options_from_values( array( 'top', 'centered' ) ),
 			),
 			array(
+				'name'    => 'icon_size',
+				'group'   => 'icon',
+				'control' => 'select',
+				'label'   => __( 'Icon size', 'alerts-dlx' ),
+				'options' => self::options_from_values( AlertAttributes::get_icon_sizes() ),
+			),
+			array(
 				'name'    => 'close_button_enabled',
 				'group'   => 'dismiss',
 				'control' => 'toggle',
@@ -707,6 +715,95 @@ final class ShortcodeBuilder {
 				'group'   => 'advanced',
 				'control' => 'text',
 				'label'   => __( 'Fixed unique ID', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'conditions_enabled',
+				'group'   => 'conditions',
+				'control' => 'toggle',
+				'label'   => __( 'Enable display conditions', 'alerts-dlx' ),
+				'help'    => __( 'Conditions are evaluated in the browser so they work with full-page caching.', 'alerts-dlx' ),
+			),
+			array(
+				'name'      => 'start_date',
+				'group'     => 'conditions',
+				'control'   => 'datetime-local',
+				'label'     => __( 'Start date/time', 'alerts-dlx' ),
+				'help'      => __( 'YYYY-MM-DDTHH:MM. Leave empty for no start.', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'conditions_enabled',
+						'operator' => 'is_true',
+					),
+				),
+			),
+			array(
+				'name'      => 'end_date',
+				'group'     => 'conditions',
+				'control'   => 'datetime-local',
+				'label'     => __( 'End date/time', 'alerts-dlx' ),
+				'help'      => __( 'YYYY-MM-DDTHH:MM. Leave empty for no end.', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'conditions_enabled',
+						'operator' => 'is_true',
+					),
+				),
+			),
+			array(
+				'name'      => 'days_of_week',
+				'group'     => 'conditions',
+				'control'   => 'text',
+				'label'     => __( 'Days of week', 'alerts-dlx' ),
+				'help'      => __( 'Comma-separated day numbers (0=Sunday, 6=Saturday).', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'conditions_enabled',
+						'operator' => 'is_true',
+					),
+				),
+			),
+			array(
+				'name'      => 'url_params',
+				'group'     => 'conditions',
+				'control'   => 'textarea',
+				'label'     => __( 'URL parameters', 'alerts-dlx' ),
+				'help'      => __( 'JSON array of objects with key and value properties.', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'conditions_enabled',
+						'operator' => 'is_true',
+					),
+				),
+			),
+			array(
+				'name'      => 'require_login',
+				'group'     => 'conditions',
+				'control'   => 'toggle',
+				'label'     => __( 'Require logged-in user', 'alerts-dlx' ),
+				'help'      => __( 'Only show this alert to logged-in users.', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'conditions_enabled',
+						'operator' => 'is_true',
+					),
+				),
+			),
+			array(
+				'name'      => 'required_roles',
+				'group'     => 'conditions',
+				'control'   => 'text',
+				'label'     => __( 'Required roles', 'alerts-dlx' ),
+				'help'      => __( 'Comma-separated WordPress role slugs. Requires require_login.', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'conditions_enabled',
+						'operator' => 'is_true',
+					),
+					array(
+						'field'    => 'require_login',
+						'operator' => 'is_true',
+					),
+				),
 			),
 		);
 
@@ -778,6 +875,9 @@ final class ShortcodeBuilder {
 		// Every declared builder input is scalar. Reject PHP array-shaped request
 		// parameters before any cast so malformed payloads fail closed cleanly.
 		foreach ( self::get_input_names() as $input_name ) {
+			if ( 'url_params' === $input_name ) {
+				continue;
+			}
 			if ( array_key_exists( $input_name, $values ) && ! is_scalar( $values[ $input_name ] ) && null !== $values[ $input_name ] ) {
 				return new \WP_Error( 'alerts_dlx_builder_scalar', __( 'A shortcode builder field had an invalid value type.', 'alerts-dlx' ) );
 			}
@@ -812,6 +912,7 @@ final class ShortcodeBuilder {
 		$sanitized['margin_spacing']          = self::sanitize_choice( $values['margin_spacing'] ?? $defaults['margin_spacing'], AlertAttributes::get_margin_spacing_amounts(), $defaults['margin_spacing'] );
 		$sanitized['margin_spacing_target']   = self::sanitize_choice( $values['margin_spacing_target'] ?? $defaults['margin_spacing_target'], AlertAttributes::get_margin_spacing_targets(), $defaults['margin_spacing_target'] );
 		$sanitized['icon_vertical_alignment'] = self::sanitize_choice( $values['icon_vertical_alignment'] ?? $defaults['icon_vertical_alignment'], array( 'top', 'centered' ), $defaults['icon_vertical_alignment'] );
+		$sanitized['icon_size']               = AlertAttributes::sanitize_icon_size( $values['icon_size'] ?? $defaults['icon_size'] );
 		$sanitized['icon_appearance']         = self::sanitize_choice( $values['icon_appearance'] ?? $defaults['icon_appearance'], array( 'default', 'rounded' ), $defaults['icon_appearance'] );
 		$sanitized['icon_source']             = self::sanitize_choice( $values['icon_source'] ?? $defaults['icon_source'], array( 'icon', 'image' ), $defaults['icon_source'] );
 
