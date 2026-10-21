@@ -2635,7 +2635,7 @@ function AlertSettingsPanel(_ref) {
         requireLogin: value
       });
     }
-  })), /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FormTokenField, {
+  })), requireLogin && /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.PanelRow, null, /*#__PURE__*/React.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FormTokenField, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Required Roles', 'alerts-dlx'),
     value: requiredRoles ? requiredRoles.split(',').map(function (s) {
       return s.trim();

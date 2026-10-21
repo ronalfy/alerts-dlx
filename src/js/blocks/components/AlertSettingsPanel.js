@@ -200,20 +200,22 @@ export default function AlertSettingsPanel( {
 								} }
 							/>
 						</PanelRow>
-						<PanelRow>
-							<FormTokenField
-								label={ __( 'Required Roles', 'alerts-dlx' ) }
-								value={ requiredRoles ? requiredRoles.split( ',' ).map( ( s ) => s.trim() ).filter( Boolean ) : [] }
-								suggestions={ globalThis.alertsDlxBlock?.roles ? Object.keys( globalThis.alertsDlxBlock.roles ) : [] }
-								onChange={ ( tokens ) => {
-									setAttributes( { requiredRoles: tokens.join( ',' ) } );
-								} }
-								help={ __( 'Select one or more roles. The alert is shown if the user has any of them.', 'alerts-dlx' ) }
-								placeholder={ __( 'Select roles', 'alerts-dlx' ) }
-								__experimentalExpandOnFocus={ requiredRoles.split( ',' ).length >= 2  ? false : true }
-								__experimentalAutoSelectFirstMatch={ true }
-							/>
-						</PanelRow>
+						{ requireLogin && (
+							<PanelRow>
+								<FormTokenField
+									label={ __( 'Required Roles', 'alerts-dlx' ) }
+									value={ requiredRoles ? requiredRoles.split( ',' ).map( ( s ) => s.trim() ).filter( Boolean ) : [] }
+									suggestions={ globalThis.alertsDlxBlock?.roles ? Object.keys( globalThis.alertsDlxBlock.roles ) : [] }
+									onChange={ ( tokens ) => {
+										setAttributes( { requiredRoles: tokens.join( ',' ) } );
+									} }
+									help={ __( 'Select one or more roles. The alert is shown if the user has any of them.', 'alerts-dlx' ) }
+									placeholder={ __( 'Select roles', 'alerts-dlx' ) }
+									__experimentalExpandOnFocus={ requiredRoles.split( ',' ).length >= 2  ? false : true }
+									__experimentalAutoSelectFirstMatch={ true }
+								/>
+							</PanelRow>
+						) }
 					</>
 				) }
 			</PanelBody>
