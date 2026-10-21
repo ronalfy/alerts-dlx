@@ -52,6 +52,11 @@ assert.match(shortcodeBuilder, /sanitize_snapshot_values/, 'Snapshot sanitizer i
 assert.match(shortcodeBuilder, /title_enabled/, 'Snapshots persist title visibility');
 assert.match(shortcodeBuilder, /description_enabled/, 'Snapshots persist description visibility');
 assert.match(shortcodeBuilder, /button_enabled/, 'Snapshots persist button visibility');
+assert.match(shortcodeBuilder, /secondary_button_enabled/, 'Snapshots persist secondary button visibility');
+assert.match(shortcodeBuilder, /color_secondary/, 'Global styles persist secondary button color');
+assert.match(shortcodeBuilder, /color_secondary_hover/, 'Global styles persist secondary button hover color');
+assert.match(shortcodeBuilder, /color_secondary_text/, 'Global styles persist secondary button text color');
+assert.match(shortcodeBuilder, /color_secondary_text_hover/, 'Global styles persist secondary button text hover color');
 assert.match(alertLibrary, /sanitize_snapshot_values/, 'Library snapshots use the snapshot sanitizer');
 assert.match(alertLibrary, /merge_snapshot_preview_values/, 'Snapshot preview merge honors stored toggles');
 assert.match(rest, /\/library-items/, 'Library REST routes are registered');
@@ -214,6 +219,28 @@ assert.match(
 );
 assert.match(libraryUtils, /GLOBAL_STYLE_BLOCK_KEYS/, 'Editor maps global-style keys explicitly');
 assert.match(libraryUtils, /SNAPSHOT_BLOCK_KEYS/, 'Editor maps snapshot keys explicitly');
+assert.match(libraryUtils, /colorSecondary/, 'Editor maps secondary button color keys');
+assert.match(libraryUtils, /secondaryButtonEnabled/, 'Editor maps secondary button visibility');
+assert.match(
+	fs.readFileSync('src/js/blocks/alert/block.json', 'utf8'),
+	/"colorSecondary"/,
+	'Canonical block stores colorSecondary'
+);
+assert.match(
+	fs.readFileSync('src/js/blocks/alert/block.json', 'utf8'),
+	/"colorSecondaryHover"/,
+	'Canonical block stores colorSecondaryHover'
+);
+assert.match(
+	fs.readFileSync('src/js/blocks/alert/block.json', 'utf8'),
+	/"colorSecondaryText"/,
+	'Canonical block stores colorSecondaryText'
+);
+assert.match(
+	fs.readFileSync('src/js/blocks/alert/block.json', 'utf8'),
+	/"colorSecondaryTextHover"/,
+	'Canonical block stores colorSecondaryTextHover'
+);
 assert.match(libraryUtils, /buildSnapshotApplyAttributes/, 'Snapshot apply clears globalStyleId');
 assert.match(libraryUtils, /globalStyleHasIcon/, 'Editor can still detect whether a global style includes an icon');
 assert.doesNotMatch(

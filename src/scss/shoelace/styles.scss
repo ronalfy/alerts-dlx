@@ -1,6 +1,49 @@
 @import '../common.scss';
 
 // Shoelace variant definitions.
+
+// Palette use-cases:
+// border — alert accent/border.
+// alt — primary button background.
+// alt-hover — primary button hover background.
+// alt-text / alt-text-hover — primary button label.
+// bold — icon and close.
+// solid-icon / solid-text — solid appearance icon and copy.
+// solid-button / solid-button-hover — solid primary button.
+// color-secondary — secondary button background.
+// color-secondary-hover — secondary button hover background.
+// color-secondary-text — secondary button label.
+// color-secondary-text-hover — secondary button hover label.
+
+// Secondary CTAs also have `.alerts-dlx-button`, so nest under the actions row
+// and require both button classes.
+@mixin alerts-dlx-secondary-button($background, $color, $background-hover, $color-hover, $border: false) {
+	.alerts-dlx-actions {
+
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background;
+			color: $color;
+
+			@if $border {
+				border: 1px solid $color;
+			}
+		}
+
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background-hover;
+			color: $color-hover;
+
+			@if $border {
+				border-color: $color-hover;
+			}
+		}
+	}
+}
+
 $shoelace-light-variants: (
 	'primary': ('border': #0284c7,
 		'alt': #0284c7,
@@ -11,7 +54,11 @@ $shoelace-light-variants: (
 		'solid-icon': $white,
 		'solid-text': $white,
 		'solid-button': #0ea5e9,
-		'solid-button-hover': darken(#0ea5e9, 5%)),
+		'solid-button-hover': darken(#0ea5e9, 5%),
+		'color-secondary': #41a3d5,
+		'color-secondary-hover': #259fd6,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'success': ('border': #16a34a,
 		'alt': #16a34a,
 		'alt-hover': darken(#22c55e, 5%),
@@ -21,7 +68,11 @@ $shoelace-light-variants: (
 		'solid-icon': $white,
 		'solid-text': $white,
 		'solid-button': #22c55e,
-		'solid-button-hover': darken(#22c55e, 5%)),
+		'solid-button-hover': darken(#22c55e, 5%),
+		'color-secondary': #50ba77,
+		'color-secondary-hover': #35b765,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'neutral': ('border': #52525b,
 		'alt': #52525b,
 		'alt-hover': darken(#71717a, 5%),
@@ -31,7 +82,11 @@ $shoelace-light-variants: (
 		'solid-icon': $white,
 		'solid-text': $white,
 		'solid-button': #71717a,
-		'solid-button-hover': darken(#71717a, 5%)),
+		'solid-button-hover': darken(#71717a, 5%),
+		'color-secondary': #7d7d84,
+		'color-secondary-hover': #74747b,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'warning': ('border': #d97706,
 		'alt': #d97706,
 		'alt-hover': darken(#f59e0b, 5%),
@@ -41,7 +96,11 @@ $shoelace-light-variants: (
 		'solid-icon': $white,
 		'solid-text': $white,
 		'solid-button': #f59e0b,
-		'solid-button-hover': darken(#f59e0b, 5%)),
+		'solid-button-hover': darken(#f59e0b, 5%),
+		'color-secondary': #e39944,
+		'color-secondary-hover': #e19a22,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'danger': ('border': #dc2626,
 		'alt': #dc2626,
 		'alt-hover': darken(#ef437f, 5%),
@@ -51,7 +110,11 @@ $shoelace-light-variants: (
 		'solid-icon': $white,
 		'solid-text': $white,
 		'solid-button': #ef437f,
-		'solid-button-hover': darken(#ef437f, 5%))
+		'solid-button-hover': darken(#ef437f, 5%),
+		'color-secondary': #e55c5c,
+		'color-secondary-hover': #ef417d,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff)
 );
 
 $shoelace-dark-variants: (
@@ -64,7 +127,11 @@ $shoelace-dark-variants: (
 		'solid-icon': #119ee2,
 		'solid-text': $white,
 		'solid-button': #119ee2,
-		'solid-button-hover': darken(#119ee2, 5%)),
+		'solid-button-hover': darken(#119ee2, 5%),
+		'color-secondary': #5dcbfe,
+		'color-secondary-hover': #2799d0,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'success': ('border': #16a34a,
 		'alt': #16a34a,
 		'alt-hover': darken(#22c55e, 5%),
@@ -74,7 +141,11 @@ $shoelace-dark-variants: (
 		'solid-icon': #22c55e,
 		'solid-text': $white,
 		'solid-button': #22c55e,
-		'solid-button-hover': darken(#22c55e, 5%)),
+		'solid-button-hover': darken(#22c55e, 5%),
+		'color-secondary': #50ba77,
+		'color-secondary-hover': #35b765,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'neutral': ('border': #52525b,
 		'alt': #52525b,
 		'alt-hover': darken(#71717a, 5%),
@@ -84,7 +155,11 @@ $shoelace-dark-variants: (
 		'solid-icon': #71717a,
 		'solid-text': $white,
 		'solid-button': #71717a,
-		'solid-button-hover': darken(#71717a, 5%)),
+		'solid-button-hover': darken(#71717a, 5%),
+		'color-secondary': #7d7d84,
+		'color-secondary-hover': #74747b,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'warning': ('border': #d97706,
 		'alt': #d97706,
 		'alt-hover': darken(#f59e0b, 5%),
@@ -94,7 +169,11 @@ $shoelace-dark-variants: (
 		'solid-icon': #f59e0b,
 		'solid-text': $white,
 		'solid-button': #f59e0b,
-		'solid-button-hover': darken(#f59e0b, 5%)),
+		'solid-button-hover': darken(#f59e0b, 5%),
+		'color-secondary': #e39944,
+		'color-secondary-hover': #e19a22,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff),
 	'danger': ('border': #dc2626,
 		'alt': #dc2626,
 		'alt-hover': darken(#ef437f, 5%),
@@ -104,7 +183,11 @@ $shoelace-dark-variants: (
 		'solid-icon': #ef437f,
 		'solid-text': $white,
 		'solid-button': #ef437f,
-		'solid-button-hover': darken(#ef437f, 5%))
+		'solid-button-hover': darken(#ef437f, 5%),
+		'color-secondary': #e55c5c,
+		'color-secondary-hover': #ef417d,
+		'color-secondary-text': #ffffff,
+		'color-secondary-text-hover': #ffffff)
 );
 
 $shoelace-modes: (
@@ -145,6 +228,10 @@ $shoelace-modes: (
 	--alerts-dlx-shoelace-color-alt-hover: #{shoelace-get( $tokens, 'alt-hover', shoelace-get( $tokens, 'alt', shoelace-get( $tokens, 'border' ) ) )};
 	--alerts-dlx-shoelace-color-alt-text: #{shoelace-get( $tokens, 'alt-text', $white )};
 	--alerts-dlx-shoelace-color-alt-text-hover: #{shoelace-get( $tokens, 'alt-text-hover', shoelace-get( $tokens, 'alt-text', $white ) )};
+	--alerts-dlx-shoelace-color-secondary: #{shoelace-get( $tokens, 'color-secondary' )};
+	--alerts-dlx-shoelace-color-secondary-hover: #{shoelace-get( $tokens, 'color-secondary-hover' )};
+	--alerts-dlx-shoelace-color-secondary-text: #{shoelace-get( $tokens, 'color-secondary-text' )};
+	--alerts-dlx-shoelace-color-secondary-text-hover: #{shoelace-get( $tokens, 'color-secondary-text-hover' )};
 	--alerts-dlx-shoelace-color-bold: #{shoelace-get( $tokens, 'bold', shoelace-get( $tokens, 'border' ) )};
 	--alerts-dlx-shoelace-solid-icon-color: #{shoelace-get( $tokens, 'solid-icon', shoelace-get( $tokens, 'alt-text', $white ) )};
 	--alerts-dlx-shoelace-solid-text-color: #{shoelace-get( $tokens, 'solid-text', shoelace-get( $tokens, 'alt-text', $white ) )};
@@ -159,6 +246,10 @@ $shoelace-modes: (
 	@each $variant, $tokens in $variants {
 		&.is-style-#{$variant} {
 			@include shoelace-assign-variant-vars($tokens );
+			--shoelace-#{$variant}-color-secondary: #{shoelace-get( $tokens, 'color-secondary' )};
+			--shoelace-#{$variant}-color-secondary-hover: #{shoelace-get( $tokens, 'color-secondary-hover' )};
+			--shoelace-#{$variant}-color-secondary-text: #{shoelace-get( $tokens, 'color-secondary-text' )};
+			--shoelace-#{$variant}-color-secondary-text-hover: #{shoelace-get( $tokens, 'color-secondary-text-hover' )};
 		}
 	}
 }
@@ -187,6 +278,13 @@ $shoelace-modes: (
 	button.button-reset.alerts-dlx-button:hover {
 		background: var(--alerts-dlx-shoelace-color-alt-hover, var(--alerts-dlx-shoelace-color-alt, var(--alerts-dlx-shoelace-color-border, var(--alerts-dlx-shoelace-text-color, #000))));
 		color: var(--alerts-dlx-shoelace-color-alt-text-hover, var(--alerts-dlx-shoelace-color-alt-text, $white));
+	}
+
+	.alerts-dlx-shoelace {
+		@include alerts-dlx-secondary-button(var(--alerts-dlx-shoelace-color-secondary),
+			var(--alerts-dlx-shoelace-color-secondary-text),
+			var(--alerts-dlx-shoelace-color-secondary-hover),
+			var(--alerts-dlx-shoelace-color-secondary-text-hover));
 	}
 
 	.alerts-dlx-close {
@@ -397,7 +495,7 @@ $shoelace-modes: (
 
 			button:not(:first-child) {
 				position: absolute;
-				right: -35px;
+				right: 0;
 			}
 		}
 	}
@@ -437,6 +535,14 @@ $shoelace-modes: (
 		button.button-reset.alerts-dlx-button:hover {
 			background: var(--alerts-dlx-shoelace-color-alt-hover, #0ea5e9);
 			color: var(--alerts-dlx-shoelace-color-alt-text-hover, $white);
+		}
+
+		.alerts-dlx-shoelace {
+			@include alerts-dlx-secondary-button(var(--alerts-dlx-shoelace-color-secondary),
+				var(--alerts-dlx-shoelace-color-secondary-text),
+				var(--alerts-dlx-shoelace-color-secondary-hover),
+				var(--alerts-dlx-shoelace-color-secondary-text-hover),
+				true);
 		}
 
 		.alerts-dlx-close {
@@ -553,6 +659,14 @@ $shoelace-modes: (
 
 			section .alerts-dlx-button:hover {
 				background: var(--alerts-dlx-shoelace-color-alt-hover, #119ee2);
+			}
+
+			.alerts-dlx-shoelace {
+				@include alerts-dlx-secondary-button(var(--alerts-dlx-shoelace-color-secondary),
+					var(--alerts-dlx-shoelace-color-secondary-text),
+					var(--alerts-dlx-shoelace-color-secondary-hover),
+					var(--alerts-dlx-shoelace-color-secondary-text-hover),
+					true);
 			}
 		}
 	}

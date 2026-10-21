@@ -106,5 +106,7 @@ typings/
 .tern-port
 
 alerts-dlx.zip
+# Kimi project memory
+.kimi-memory/
 
 .kimi-memory/

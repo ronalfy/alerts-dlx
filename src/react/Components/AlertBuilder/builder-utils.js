@@ -21,6 +21,10 @@ export const COLOR_FIELD_NAMES = [
 	"color_alt_hover",
 	"color_alt_text",
 	"color_alt_text_hover",
+	"color_secondary",
+	"color_secondary_hover",
+	"color_secondary_text",
+	"color_secondary_text_hover",
 	"color_bold",
 	"color_light",
 ];
@@ -197,6 +201,14 @@ export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => 
 			: "";
 		merged.button_url = stored.button_enabled
 			? stored.button_url || fixture.button_url || ""
+			: "";
+	}
+	if (Object.prototype.hasOwnProperty.call(stored, "secondary_button_enabled")) {
+		merged.secondary_button_text = stored.secondary_button_enabled
+			? stored.secondary_button_text || fixture.secondary_button_text || ""
+			: "";
+		merged.secondary_button_url = stored.secondary_button_enabled
+			? stored.secondary_button_url || fixture.secondary_button_url || ""
 			: "";
 	}
 

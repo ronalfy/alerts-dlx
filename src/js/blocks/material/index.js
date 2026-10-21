@@ -5,6 +5,8 @@ import MaterialIconsLogo from '../components/icons/MaterialIconsLogo';
 import Edit from './edit';
 import { createHistoricalAlertTransforms } from '../utils/alert-transform-utils';
 
+const isDebugMode = typeof globalThis !== 'undefined' && globalThis.alertsDlxBlock && globalThis.alertsDlxBlock.debugMode;
+
 registerBlockType( metadata, {
 	edit: Edit,
 	save() {
@@ -12,4 +14,8 @@ registerBlockType( metadata, {
 	},
 	icon: <MaterialIconsLogo />,
 	transforms: createHistoricalAlertTransforms( metadata.name ),
+	supports: {
+		...( metadata.supports || {} ),
+		inserter: isDebugMode,
+	},
 } );

@@ -47,6 +47,10 @@ const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
       colorAltHover,
       colorAltText,
       colorAltTextHover,
+      colorSecondary,
+      colorSecondaryHover,
+      colorSecondaryText,
+      colorSecondaryTextHover,
       colorBold,
       colorLight,
       alertType,
@@ -71,6 +75,10 @@ const withAlertsPanel = createHigherOrderComponent((BlockEdit) => {
 			--alerts-dlx-${alertGroup}-color-alt-hover: ${colorAltHover};
 			--alerts-dlx-${alertGroup}-color-alt-text: ${colorAltText};
 			--alerts-dlx-${alertGroup}-color-alt-text-hover: ${colorAltTextHover};
+			--alerts-dlx-${alertGroup}-color-secondary: ${colorSecondary};
+			--alerts-dlx-${alertGroup}-color-secondary-hover: ${colorSecondaryHover};
+			--alerts-dlx-${alertGroup}-color-secondary-text: ${colorSecondaryText};
+			--alerts-dlx-${alertGroup}-color-secondary-text-hover: ${colorSecondaryTextHover};
 			--alerts-dlx-${alertGroup}-color-bold: ${colorBold};
 			--alerts-dlx-${alertGroup}-color-light: ${colorLight};
 		}`;
@@ -112,6 +120,10 @@ registerPlugin("custom-colors", {
             colorAltHover,
             colorAltText,
             colorAltTextHover,
+            colorSecondary,
+            colorSecondaryHover,
+            colorSecondaryText,
+            colorSecondaryTextHover,
             colorBold,
             colorLight,
           } = attributes;
@@ -166,6 +178,26 @@ registerPlugin("custom-colors", {
                     label: __("Button Text Hover Color", "alerts-dlx"),
                     value: colorAltTextHover,
                     onChange: onColorChange("colorAltTextHover"),
+                  },
+                  {
+                    label: __("Secondary Button Color", "alerts-dlx"),
+                    value: colorSecondary,
+                    onChange: onColorChange("colorSecondary"),
+                  },
+                  {
+                    label: __("Secondary Button Hover Color", "alerts-dlx"),
+                    value: colorSecondaryHover,
+                    onChange: onColorChange("colorSecondaryHover"),
+                  },
+                  {
+                    label: __("Secondary Button Text Color", "alerts-dlx"),
+                    value: colorSecondaryText,
+                    onChange: onColorChange("colorSecondaryText"),
+                  },
+                  {
+                    label: __("Secondary Button Text Hover Color", "alerts-dlx"),
+                    value: colorSecondaryTextHover,
+                    onChange: onColorChange("colorSecondaryTextHover"),
                   },
                   {
                     label: __("Icon Color", "alerts-dlx"),

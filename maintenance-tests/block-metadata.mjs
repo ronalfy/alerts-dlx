@@ -25,6 +25,17 @@ const sharedAttributes = [
 	'buttonTarget',
 	'buttonRelNoFollow',
 	'buttonRelSponsored',
+	'secondaryButtonEnabled',
+	'secondaryButtonText',
+	'secondaryButtonUrl',
+	'secondaryButtonHasUrl',
+	'secondaryButtonTarget',
+	'secondaryButtonRelNoFollow',
+	'secondaryButtonRelSponsored',
+	'colorSecondary',
+	'colorSecondaryHover',
+	'colorSecondaryText',
+	'colorSecondaryTextHover',
 	'maximumWidthUnit',
 	'maximumWidth',
 	'marginSpacing',
@@ -67,6 +78,10 @@ for ( const [ directory, expectedName, expectedGroup ] of blocks ) {
 
 	assert.equal( metadata.attributes.marginSpacing.default, 'spacious', `${ expectedName } defaults margin spacing to spacious` );
 	assert.equal( metadata.attributes.marginSpacingTarget.default, 'both', `${ expectedName } defaults margin target to both` );
+	assert.equal( metadata.attributes.colorSecondary.default, '', `${ expectedName } leaves secondary button color empty for stylesheet tokens` );
+	assert.equal( metadata.attributes.colorSecondaryHover.default, '', `${ expectedName } leaves secondary button hover color empty` );
+	assert.equal( metadata.attributes.colorSecondaryText.default, '', `${ expectedName } leaves secondary button text color empty` );
+	assert.equal( metadata.attributes.colorSecondaryTextHover.default, '', `${ expectedName } leaves secondary button text hover color empty` );
 
 	checked += 1;
 }

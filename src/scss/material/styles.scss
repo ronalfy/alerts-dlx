@@ -1,6 +1,49 @@
 @import '../common.scss';
 
 // Material colors.
+
+// Palette use-cases:
+// base.color — title and body text.
+// base.color-accent — default/centered primary button hover.
+// base.color-alt — accent fill used by outlined/filled variants.
+// base.color-bold — icon and close.
+// base.color-light — default/centered alert background.
+// base.color-secondary* — default/centered secondary button.
+// subtle.button-* — default/centered primary button.
+// outlined.button-* — outlined primary button.
+// outlined.color-secondary* — same as outlined button-* (secondary matches primary).
+// filled.button-* — filled primary button.
+// filled.color-secondary* — same as filled button-* (secondary matches primary).
+
+// Secondary CTAs also have `.alerts-dlx-button`, so nest under the actions row
+// and require both button classes.
+@mixin alerts-dlx-secondary-button($background, $color, $background-hover, $color-hover, $border: false) {
+	.alerts-dlx-actions {
+
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background;
+			color: $color;
+
+			@if $border {
+				border: 1px solid $color;
+			}
+		}
+
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background-hover;
+			color: $color-hover;
+
+			@if $border {
+				border-color: $color-hover;
+			}
+		}
+	}
+}
+
 $material-success-color: #1e4620;
 $material-success-color-accent: #295e2c;
 $material-success-color-alt: #2e7d32;
@@ -51,253 +94,273 @@ $material-variants: (
 );
 
 $material-light-palette: (
-	'success': (
-		'base': (
-			'color': $material-success-color,
+	'success': ('base': ('color': $material-success-color,
 			'color-accent': $material-success-color-accent,
 			'color-alt': $material-success-color-alt,
 			'color-bold': $material-success-color-bold,
-			'color-light': $material-success-color-light
-		),
-		'subtle': (
-			'button-text': $white,
-			'button-background': $material-success-color
-		),
-		'outlined': (
-			'background': $white,
+			'color-light': $material-success-color-light,
+			'color-secondary': #567458,
+			'color-secondary-hover': #3e6e41,
+			'color-secondary-text': #ffffff,
+			'color-secondary-text-hover': #ffffff),
+		'subtle': ('button-text': $white,
+			'button-background': $material-success-color),
+		'outlined': ('background': $white,
 			'button-text': $material-success-color,
 			'button-background': $white,
 			'button-text-hover': $white,
-			'button-background-hover': $material-success-color-alt
-		),
-		'filled': (
-			'background': $material-success-color-alt,
+			'button-background-hover': $material-success-color-alt,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-success-color-alt,
+			'color-secondary-text': $material-success-color,
+			'color-secondary-text-hover': $white),
+		'filled': ('background': $material-success-color-alt,
 			'border': $material-success-color-alt,
 			'button-text': $material-success-color-alt,
 			'button-border': $material-success-color-alt,
 			'button-background': $white,
 			'button-background-hover': $material-success-color-alt,
-			'button-border-hover': $white
-		)
-	),
-	'info': (
-		'base': (
-			'color': $material-info-color,
+			'button-border-hover': $white,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-success-color-alt,
+			'color-secondary-text': $material-success-color-alt,
+			'color-secondary-text-hover': $white)),
+	'info': ('base': ('color': $material-info-color,
 			'color-accent': $material-info-color-accent,
 			'color-alt': $material-info-color-alt,
 			'color-bold': $material-info-color-bold,
-			'color-light': $material-info-color-light
-		),
-		'subtle': (
-			'button-text': $white,
-			'button-background': $material-info-color
-		),
-		'outlined': (
-			'background': $white,
+			'color-light': $material-info-color-light,
+			'color-secondary': #417288,
+			'color-secondary-hover': #1c6e94,
+			'color-secondary-text': #ffffff,
+			'color-secondary-text-hover': #ffffff),
+		'subtle': ('button-text': $white,
+			'button-background': $material-info-color),
+		'outlined': ('background': $white,
 			'button-text': $material-info-color,
 			'button-background': $white,
 			'button-text-hover': $white,
-			'button-background-hover': $material-info-color-alt
-		),
-		'filled': (
-			'background': $material-info-color-alt,
+			'button-background-hover': $material-info-color-alt,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-info-color-alt,
+			'color-secondary-text': $material-info-color,
+			'color-secondary-text-hover': $white),
+		'filled': ('background': $material-info-color-alt,
 			'border': $material-info-color-alt,
 			'button-text': $material-info-color-alt,
 			'button-border': $material-info-color-alt,
 			'button-background': $white,
 			'button-background-hover': $material-info-color-alt,
-			'button-border-hover': $white
-		)
-	),
-	'warning': (
-		'base': (
-			'color': $material-warning-color,
+			'button-border-hover': $white,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-info-color-alt,
+			'color-secondary-text': $material-info-color-alt,
+			'color-secondary-text-hover': $white)),
+	'warning': ('base': ('color': $material-warning-color,
 			'color-accent': $material-warning-color-accent,
 			'color-alt': $material-warning-color-alt,
 			'color-bold': $material-warning-color-bold,
-			'color-light': $material-warning-color-light
-		),
-		'subtle': (
-			'button-text': $white,
-			'button-background': $material-warning-color
-		),
-		'outlined': (
-			'background': $white,
+			'color-light': $material-warning-color-light,
+			'color-secondary': #8c6d40,
+			'color-secondary-hover': #986e1a,
+			'color-secondary-text': #ffffff,
+			'color-secondary-text-hover': #ffffff),
+		'subtle': ('button-text': $white,
+			'button-background': $material-warning-color),
+		'outlined': ('background': $white,
 			'button-text': $material-warning-color,
 			'button-background': $white,
 			'button-text-hover': $white,
-			'button-background-hover': $material-warning-color-alt
-		),
-		'filled': (
-			'background': $material-warning-color-alt,
+			'button-background-hover': $material-warning-color-alt,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-warning-color-alt,
+			'color-secondary-text': $material-warning-color,
+			'color-secondary-text-hover': $white),
+		'filled': ('background': $material-warning-color-alt,
 			'border': $material-warning-color-alt,
 			'button-text': $material-warning-color-alt,
 			'button-border': $material-warning-color-alt,
 			'button-background': $white,
 			'button-background-hover': $material-warning-color-alt,
-			'button-border-hover': $white
-		)
-	),
-	'error': (
-		'base': (
-			'color': $material-error-color,
+			'button-border-hover': $white,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-warning-color-alt,
+			'color-secondary-text': $material-warning-color-alt,
+			'color-secondary-text-hover': $white)),
+	'error': ('base': ('color': $material-error-color,
 			'color-accent': $material-error-color-accent,
 			'color-alt': $material-error-color-alt,
 			'color-bold': $material-error-color-bold,
-			'color-light': $material-error-color-light
-		),
-		'subtle': (
-			'button-text': $white,
-			'button-background': $material-error-color
-		),
-		'outlined': (
-			'background': $white,
+			'color-light': $material-error-color-light,
+			'color-secondary': #875858,
+			'color-secondary-hover': #984240,
+			'color-secondary-text': #ffffff,
+			'color-secondary-text-hover': #ffffff),
+		'subtle': ('button-text': $white,
+			'button-background': $material-error-color),
+		'outlined': ('background': $white,
 			'button-text': $material-error-color,
 			'button-background': $white,
 			'button-text-hover': $white,
-			'button-background-hover': $material-error-color-alt
-		),
-		'filled': (
-			'background': $material-error-color-alt,
+			'button-background-hover': $material-error-color-alt,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-error-color-alt,
+			'color-secondary-text': $material-error-color,
+			'color-secondary-text-hover': $white),
+		'filled': ('background': $material-error-color-alt,
 			'border': $material-error-color-alt,
 			'button-text': $material-error-color-alt,
 			'button-border': $material-error-color-alt,
 			'button-background': $white,
 			'button-background-hover': $material-error-color-alt,
-			'button-border-hover': $white
-		)
-	)
+			'button-border-hover': $white,
+			'color-secondary': $white,
+			'color-secondary-hover': $material-error-color-alt,
+			'color-secondary-text': $material-error-color-alt,
+			'color-secondary-text-hover': $white))
 );
 
 $material-dark-palette: (
-	'success': (
-		'base': (
-			'color': $material-dark-success-color,
+	'success': ('base': ('color': $material-dark-success-color,
 			'color-accent': $material-dark-success-color-accent,
 			'color-alt': $material-dark-success-color-alt,
 			'color-bold': $material-dark-success-color-bold,
-			'color-light': $material-dark-success-color-light
-		),
-		'subtle': (
-			'button-text': $material-dark-success-color-light,
-			'button-background': $material-dark-success-color-bold
-		),
-		'outlined': (
-			'background': $material-dark-error-color-light,
+			'color-light': $material-dark-success-color-light,
+			'color-secondary': #8ccc8f,
+			'color-secondary-hover': #5bad60,
+			'color-secondary-text': #0c130d,
+			'color-secondary-text-hover': #0c130d),
+		'subtle': ('button-text': $material-dark-success-color-light,
+			'button-background': $material-dark-success-color-bold),
+		'outlined': ('background': $material-dark-error-color-light,
 			'button-text': $material-dark-success-color-light,
 			'button-background': $material-dark-success-color-bold,
 			'button-text-hover': $material-dark-success-color-light,
-			'button-background-hover': $material-dark-success-color-accent
-		),
-		'filled': (
-			'background': $material-dark-success-color-bold,
+			'button-background-hover': $material-dark-success-color-accent,
+			'color-secondary': $material-dark-success-color-bold,
+			'color-secondary-hover': $material-dark-success-color-accent,
+			'color-secondary-text': $material-dark-success-color-light,
+			'color-secondary-text-hover': $material-dark-success-color-light),
+		'filled': ('background': $material-dark-success-color-bold,
 			'border': $material-dark-success-color-bold,
 			'button-text': $white,
 			'button-border': $white,
 			'button-background': transparent,
 			'button-background-hover': $material-dark-success-color-light,
-			'button-border-hover': $material-dark-success-color-light
-		)
-	),
-	'info': (
-		'base': (
-			'color': $material-dark-info-color,
+			'button-border-hover': $material-dark-success-color-light,
+			'color-secondary': transparent,
+			'color-secondary-hover': $material-dark-success-color-light,
+			'color-secondary-text': $white,
+			'color-secondary-text-hover': $white)),
+	'info': ('base': ('color': $material-dark-info-color,
 			'color-accent': $material-dark-info-color-accent,
 			'color-alt': $material-dark-info-color-alt,
 			'color-bold': $material-dark-info-color-bold,
-			'color-light': $material-dark-info-color-light
-		),
-		'subtle': (
-			'button-text': $white,
-			'button-background': $material-dark-info-color-bold
-		),
-		'outlined': (
-			'background': $material-dark-info-color-light,
+			'color-light': $material-dark-info-color-light,
+			'color-secondary': #5ec8f8,
+			'color-secondary-hover': #39b3ec,
+			'color-secondary-text': #ffffff,
+			'color-secondary-text-hover': #ffffff),
+		'subtle': ('button-text': $white,
+			'button-background': $material-dark-info-color-bold),
+		'outlined': ('background': $material-dark-info-color-light,
 			'button-text': $white,
 			'button-background': $material-dark-info-color-bold,
 			'button-text-hover': $white,
-			'button-background-hover': $material-dark-info-color-alt
-		),
-		'filled': (
-			'background': $material-dark-info-color-bold,
+			'button-background-hover': $material-dark-info-color-alt,
+			'color-secondary': $material-dark-info-color-bold,
+			'color-secondary-hover': $material-dark-info-color-alt,
+			'color-secondary-text': $white,
+			'color-secondary-text-hover': $white),
+		'filled': ('background': $material-dark-info-color-bold,
 			'border': $material-dark-info-color-bold,
 			'button-text': $white,
 			'button-border': $white,
 			'button-background': transparent,
 			'button-background-hover': $material-dark-info-color-light,
-			'button-border-hover': $material-dark-info-color-light
-		)
-	),
-	'warning': (
-		'base': (
-			'color': $material-dark-warning-color,
+			'button-border-hover': $material-dark-info-color-light,
+			'color-secondary': transparent,
+			'color-secondary-hover': $material-dark-info-color-light,
+			'color-secondary-text': $white,
+			'color-secondary-text-hover': $white)),
+	'warning': ('base': ('color': $material-dark-warning-color,
 			'color-accent': $material-dark-warning-color-accent,
 			'color-alt': $material-dark-warning-color-alt,
 			'color-bold': $material-dark-warning-color-bold,
-			'color-light': $material-dark-warning-color-light
-		),
-		'subtle': (
-			'button-text': $material-dark-warning-color-light,
-			'button-background': $material-dark-warning-color-bold
-		),
-		'outlined': (
-			'background': $material-dark-warning-color-light,
+			'color-light': $material-dark-warning-color-light,
+			'color-secondary': #ffbd5c,
+			'color-secondary-hover': #e6aa4e,
+			'color-secondary-text': #191207,
+			'color-secondary-text-hover': #191207),
+		'subtle': ('button-text': $material-dark-warning-color-light,
+			'button-background': $material-dark-warning-color-bold),
+		'outlined': ('background': $material-dark-warning-color-light,
 			'button-text': $material-dark-warning-color-light,
 			'button-background': $material-dark-warning-color-bold,
 			'button-text-hover': $material-dark-warning-color-light,
-			'button-background-hover': $material-dark-warning-color-alt
-		),
-		'filled': (
-			'background': $material-dark-warning-color-bold,
+			'button-background-hover': $material-dark-warning-color-alt,
+			'color-secondary': $material-dark-warning-color-bold,
+			'color-secondary-hover': $material-dark-warning-color-alt,
+			'color-secondary-text': $material-dark-warning-color-light,
+			'color-secondary-text-hover': $material-dark-warning-color-light),
+		'filled': ('background': $material-dark-warning-color-bold,
 			'border': $material-dark-warning-color-bold,
 			'button-text': $material-dark-warning-color-light,
 			'button-border': $material-dark-warning-color-light,
 			'button-background': transparent,
 			'button-background-hover': $material-dark-warning-color-light,
-			'button-border-hover': $material-dark-warning-color-light
-		)
-	),
-	'error': (
-		'base': (
-			'color': $material-dark-error-color,
+			'button-border-hover': $material-dark-warning-color-light,
+			'color-secondary': transparent,
+			'color-secondary-hover': $material-dark-warning-color-light,
+			'color-secondary-text': $material-dark-warning-color-light,
+			'color-secondary-text-hover': $white)),
+	'error': ('base': ('color': $material-dark-error-color,
 			'color-accent': $material-dark-error-color-accent,
 			'color-alt': $material-dark-error-color-alt,
 			'color-bold': $material-dark-error-color-bold,
-			'color-light': $material-dark-error-color-light
-		),
-		'subtle': (
-			'button-text': $white,
-			'button-background': $material-dark-error-color-bold
-		),
-		'outlined': (
-			'background': $material-dark-error-color-light,
+			'color-light': $material-dark-error-color-light,
+			'color-secondary': #f77268,
+			'color-secondary-hover': #ce473d,
+			'color-secondary-text': #ffffff,
+			'color-secondary-text-hover': #ffffff),
+		'subtle': ('button-text': $white,
+			'button-background': $material-dark-error-color-bold),
+		'outlined': ('background': $material-dark-error-color-light,
 			'button-text': $white,
 			'button-background': $material-dark-error-color-bold,
 			'button-text-hover': $white,
-			'button-background-hover': $material-dark-error-color-alt
-		),
-		'filled': (
-			'background': $material-dark-error-color-bold,
+			'button-background-hover': $material-dark-error-color-alt,
+			'color-secondary': $material-dark-error-color-bold,
+			'color-secondary-hover': $material-dark-error-color-alt,
+			'color-secondary-text': $white,
+			'color-secondary-text-hover': $white),
+		'filled': ('background': $material-dark-error-color-bold,
 			'border': $material-dark-error-color-bold,
 			'button-text': $white,
 			'button-border': $white,
 			'button-background': transparent,
 			'button-background-hover': $material-dark-error-color-light,
-			'button-border-hover': $material-dark-error-color-light
-		)
-	)
+			'button-border-hover': $material-dark-error-color-light,
+			'color-secondary': transparent,
+			'color-secondary-hover': $material-dark-error-color-light,
+			'color-secondary-text': $white,
+			'color-secondary-text-hover': $white))
 );
 
-@mixin material-css-vars( $palette ) {
+@mixin material-css-vars($palette ) {
 	@each $variant, $config in $palette {
-		$base: map-get( $config, 'base' );
-		$subtle: map-get( $config, 'subtle' );
-		$outlined: map-get( $config, 'outlined' );
-		$filled: map-get( $config, 'filled' );
+		$base: map-get($config, 'base');
+		$subtle: map-get($config, 'subtle');
+		$outlined: map-get($config, 'outlined');
+		$filled: map-get($config, 'filled');
 
 		--material-#{$variant}-color: #{map-get( $base, 'color' )};
 		--material-#{$variant}-color-accent: #{map-get( $base, 'color-accent' )};
 		--material-#{$variant}-color-alt: #{map-get( $base, 'color-alt' )};
+		--material-#{$variant}-color-secondary: #{map-get( $base, 'color-secondary' )};
+		--material-#{$variant}-color-secondary-hover: #{map-get( $base, 'color-secondary-hover' )};
+		--material-#{$variant}-color-secondary-text: #{map-get( $base, 'color-secondary-text' )};
+		--material-#{$variant}-color-secondary-text-hover: #{map-get( $base, 'color-secondary-text-hover' )};
 		--material-#{$variant}-color-bold: #{map-get( $base, 'color-bold' )};
 		--material-#{$variant}-color-light: #{map-get( $base, 'color-light' )};
 		--material-#{$variant}-subtle-button-text: #{map-get( $subtle, 'button-text' )};
@@ -307,6 +370,10 @@ $material-dark-palette: (
 		--material-#{$variant}-outlined-button-background: #{map-get( $outlined, 'button-background' )};
 		--material-#{$variant}-outlined-button-text-hover: #{map-get( $outlined, 'button-text-hover' )};
 		--material-#{$variant}-outlined-button-background-hover: #{map-get( $outlined, 'button-background-hover' )};
+		--material-#{$variant}-outlined-color-secondary: #{map-get( $outlined, 'color-secondary' )};
+		--material-#{$variant}-outlined-color-secondary-hover: #{map-get( $outlined, 'color-secondary-hover' )};
+		--material-#{$variant}-outlined-color-secondary-text: #{map-get( $outlined, 'color-secondary-text' )};
+		--material-#{$variant}-outlined-color-secondary-text-hover: #{map-get( $outlined, 'color-secondary-text-hover' )};
 		--material-#{$variant}-filled-background: #{map-get( $filled, 'background' )};
 		--material-#{$variant}-filled-border: #{map-get( $filled, 'border' )};
 		--material-#{$variant}-filled-button-text: #{map-get( $filled, 'button-text' )};
@@ -314,17 +381,21 @@ $material-dark-palette: (
 		--material-#{$variant}-filled-button-background: #{map-get( $filled, 'button-background' )};
 		--material-#{$variant}-filled-button-background-hover: #{map-get( $filled, 'button-background-hover' )};
 		--material-#{$variant}-filled-button-border-hover: #{map-get( $filled, 'button-border-hover' )};
+		--material-#{$variant}-filled-color-secondary: #{map-get( $filled, 'color-secondary' )};
+		--material-#{$variant}-filled-color-secondary-hover: #{map-get( $filled, 'color-secondary-hover' )};
+		--material-#{$variant}-filled-color-secondary-text: #{map-get( $filled, 'color-secondary-text' )};
+		--material-#{$variant}-filled-color-secondary-text-hover: #{map-get( $filled, 'color-secondary-text-hover' )};
 	}
 }
 
 .template-material {
 	/* Light theme defaults. */
-	@include material-css-vars( $material-light-palette );
+	@include material-css-vars($material-light-palette );
 	--alerts-dlx-material-title-weight: 900;
 
 	&.is-dark-mode {
 		/* Dark theme overrides. */
-		@include material-css-vars( $material-dark-palette );
+		@include material-css-vars($material-dark-palette );
 		--alerts-dlx-material-title-weight: 500;
 	}
 
@@ -332,7 +403,7 @@ $material-dark-palette: (
 	.alerts-dlx-material {
 		display: grid;
 		grid-template-columns: 1fr;
-		font-size: var( --alerts-dlx-material-base-size, 16px );
+		font-size: var(--alerts-dlx-material-base-size, 16px);
 		padding: 16px;
 		border-radius: 4px;
 		margin: 0 auto;
@@ -349,7 +420,7 @@ $material-dark-palette: (
 
 		section .alerts-dlx-title {
 			font-size: 1.2em;
-			font-weight: var( --alerts-dlx-material-title-weight, 900 );
+			font-weight: var(--alerts-dlx-material-title-weight, 900);
 			line-height: 1.5em;
 			margin: 0 0 0.35em;
 			padding: 0;
@@ -393,19 +464,19 @@ $material-dark-palette: (
 
 	/* Dropshadows. */
 	&.is-style-success.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
-		box-shadow: 1px 1px 5px 1px rgba( 46, 125, 50, 0.2 );
+		box-shadow: 1px 1px 5px 1px rgba(46, 125, 50, 0.2);
 	}
 
 	&.is-style-info.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
-		box-shadow: 1px 1px 5px 1px rgba( 2, 119, 189, 0.2 );
+		box-shadow: 1px 1px 5px 1px rgba(2, 119, 189, 0.2);
 	}
 
 	&.is-style-warning.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
-		box-shadow: 1px 1px 5px 1px rgba( 237, 108, 2, 0.2 );
+		box-shadow: 1px 1px 5px 1px rgba(237, 108, 2, 0.2);
 	}
 
 	&.is-style-error.is-dropshadow-enabled.is-appearance-default .alerts-dlx-material {
-		box-shadow: 1px 1px 5px 1px rgba( 211, 47, 47, 0.2 );
+		box-shadow: 1px 1px 5px 1px rgba(211, 47, 47, 0.2);
 	}
 
 	&.is-appearance-centered {
@@ -433,153 +504,167 @@ $material-dark-palette: (
 
 			button:not(:first-child) {
 				position: absolute;
-				right: -35px;
+				right: 0;
 			}
 		}
 	}
 
 	&.is-style-custom {
 		.alerts-dlx-title {
-			color: var( --alerts-dlx-material-color-primary, var( --material-info-color ) );
+			color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
 		}
 
 		.alerts-dlx-content p {
-			color: var( --alerts-dlx-material-color-primary, var( --material-info-color ) );
+			color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
 		}
 
 		&.is-appearance-default,
 		&.is-appearance-centered {
 			.alerts-dlx-material {
-				background-color: var( --alerts-dlx-material-color-light, var( --material-info-color-light ) );
-				color: var( --alerts-dlx-material-color-primary, var( --material-info-color ) );
+				background-color: var(--alerts-dlx-material-color-light, var(--material-info-color-light));
+				color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
 
 				button.button-reset.alerts-dlx-button,
 				a.alerts-dlx-button,
 				a.alerts-dlx-button:hover,
 				button.button-reset.alerts-dlx-button:hover {
-					color: var( --alerts-dlx-material-color-alt-text, $white );
+					color: var(--alerts-dlx-material-color-alt-text, $white );
 					border: 1px solid transparent;
-					background-color: var( --alerts-dlx-material-color-alt, var( --material-info-color-alt ) );
+					background-color: var(--alerts-dlx-material-color-alt, var(--material-info-color-alt));
 				}
 
 				a.alerts-dlx-button:hover,
 				button.button-reset.alerts-dlx-button:hover {
-					background-color: var( --alerts-dlx-material-color-alt-hover, var( --material-info-color-accent ) );
-					color: var( --alerts-dlx-material-color-alt-text-hover, $white );
+					background-color: var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+					color: var(--alerts-dlx-material-color-alt-text-hover, $white );
 				}
 
 				svg,
 				svg path {
-					color: var( --alerts-dlx-material-color-bold, var( --material-info-color-bold ) );
-					fill: var( --alerts-dlx-material-color-bold, var( --material-info-color-bold ) );
+					color: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+					fill: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
 				}
 			}
 		}
 
 		&.is-appearance-outlined {
 			.alerts-dlx-material {
-				background-color: var( --alerts-dlx-material-color-light, $white );
-				color: var( --alerts-dlx-material-color-primary, var( --material-info-color ) );
-				border: 2px solid var( --alerts-dlx-material-color-border, var( --material-info-color-bold ) );
+				background-color: var(--alerts-dlx-material-color-light, $white );
+				color: var(--alerts-dlx-material-color-primary, var(--material-info-color));
+				border: 2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));
 
 				button.button-reset.alerts-dlx-button,
 				a.alerts-dlx-button,
 				a.alerts-dlx-button:hover,
 				button.button-reset.alerts-dlx-button:hover {
-					color: var( --alerts-dlx-material-color-alt-text, var( --material-info-color ) );
-					border: 2px solid var( --alerts-dlx-material-color-border, var( --material-info-color-bold ) );
-					background-color: var( --alerts-dlx-material-color-alt, $white );
+					color: var(--alerts-dlx-material-color-alt-text, var(--material-info-color));
+					border: 2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));
+					background-color: var(--alerts-dlx-material-color-alt, $white );
 				}
 
 				a.alerts-dlx-button:hover,
 				button.button-reset.alerts-dlx-button:hover {
-					background-color: var( --alerts-dlx-material-color-alt-hover, var( --material-info-color-accent ) );
-					color: var( --alerts-dlx-material-color-alt-text-hover, $white );
-					border: 2px solid var( --alerts-dlx-material-color-alt-hover, var( --material-info-color-accent ) );
+					background-color: var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+					color: var(--alerts-dlx-material-color-alt-text-hover, $white );
+					border: 2px solid var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
 				}
 
 				svg,
 				svg path {
-					color: var( --alerts-dlx-material-color-bold, var( --material-info-color-bold ) );
-					fill: var( --alerts-dlx-material-color-bold, var( --material-info-color-bold ) );
+					color: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+					fill: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
 				}
 			}
 		}
 
 		&.is-appearance-filled {
 			.alerts-dlx-material {
-				background-color: var( --alerts-dlx-material-color-light, var( --material-info-color-light ) );
-				color: var( --alerts-dlx-material-color-alt-text, $white );
-				border: 2px solid var( --alerts-dlx-material-color-border, var( --material-info-color-bold ) );
+				background-color: var(--alerts-dlx-material-color-light, var(--material-info-color-light));
+				color: var(--alerts-dlx-material-color-alt-text, $white );
+				border: 2px solid var(--alerts-dlx-material-color-border, var(--material-info-color-bold));
 
 				button.button-reset.alerts-dlx-button,
 				a.alerts-dlx-button,
 				a.alerts-dlx-button:hover,
 				button.button-reset.alerts-dlx-button:hover {
-					color: var( --alerts-dlx-material-color-alt-text, var( --material-info-color ) );
-					border: 2px solid var( --alerts-dlx-material-color-alt, var( --material-info-color ) );
-					background-color: var( --alerts-dlx-material-color-alt, $white );
+					color: var(--alerts-dlx-material-color-alt-text, var(--material-info-color));
+					border: 2px solid var(--alerts-dlx-material-color-alt, var(--material-info-color));
+					background-color: var(--alerts-dlx-material-color-alt, $white );
 				}
 
 				a.alerts-dlx-button:hover,
 				button.button-reset.alerts-dlx-button:hover {
-					background-color: var( --alerts-dlx-material-color-alt-hover, var( --material-info-color-accent ) );
-					color: var( --alerts-dlx-material-color-alt-text-hover, $white );
-					border: 2px solid var( --alerts-dlx-material-color-alt, $white );
+					background-color: var(--alerts-dlx-material-color-alt-hover, var(--material-info-color-accent));
+					color: var(--alerts-dlx-material-color-alt-text-hover, $white );
+					border: 2px solid var(--alerts-dlx-material-color-alt, $white );
 				}
 
 				svg,
 				svg path {
-					color: var( --alerts-dlx-material-color-bold, var( --material-info-color-bold ) );
-					fill: var( --alerts-dlx-material-color-bold, var( --material-info-color-bold ) );
+					color: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
+					fill: var(--alerts-dlx-material-color-bold, var(--material-info-color-bold));
 				}
 			}
+		}
+
+		.alerts-dlx-material {
+			@include alerts-dlx-secondary-button(var(--alerts-dlx-material-color-secondary),
+				var(--alerts-dlx-material-color-secondary-text),
+				var(--alerts-dlx-material-color-secondary-hover),
+				var(--alerts-dlx-material-color-secondary-text-hover),
+				true);
 		}
 	}
 
 	@each $variant in $material-variants {
 		&.is-style-#{$variant} {
+
 			&.is-appearance-default,
 			&.is-appearance-centered {
 				.alerts-dlx-title {
-					color: var( --material-#{$variant}-color );
+					color: var(--material-#{$variant}-color);
 				}
 
 				.alerts-dlx-content p {
-					color: var( --material-#{$variant}-color );
+					color: var(--material-#{$variant}-color);
 				}
 
 				.alerts-dlx-material {
-					background-color: var( --material-#{$variant}-color-light );
-					color: var( --material-#{$variant}-color );
+					background-color: var(--material-#{$variant}-color-light);
+					color: var(--material-#{$variant}-color);
 
 					button.button-reset.alerts-dlx-button,
 					a.alerts-dlx-button,
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
-						color: var( --material-#{$variant}-subtle-button-text, $white );
+						color: var(--material-#{$variant}-subtle-button-text, $white );
 						border: 1px solid transparent;
-						background-color: var( --material-#{$variant}-subtle-button-background, var( --material-#{$variant}-color ) );
+						background-color: var(--material-#{$variant}-subtle-button-background, var(--material-#{$variant}-color));
 					}
 
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
-						background-color: var( --material-#{$variant}-color-accent );
-						color: var( --material-#{$variant}-subtle-button-text, $white );
+						background-color: var(--material-#{$variant}-color-accent);
+						color: var(--material-#{$variant}-subtle-button-text, $white );
 					}
+
+					@include alerts-dlx-secondary-button(var(--alerts-dlx-material-color-secondary, var(--material-#{$variant}-color-secondary)),
+						var(--alerts-dlx-material-color-secondary-text, var(--material-#{$variant}-color-secondary-text)),
+						var(--alerts-dlx-material-color-secondary-hover, var(--material-#{$variant}-color-secondary-hover)),
+						var(--alerts-dlx-material-color-secondary-text-hover, var(--material-#{$variant}-color-secondary-text-hover)));
 
 					svg,
 					svg path {
-						fill: var( --material-#{$variant}-color-bold );
+						fill: var(--material-#{$variant}-color-bold);
 					}
 				}
 
 				.alerts-dlx-close {
 					svg {
-						color: var( --material-#{$variant}-color-bold );
+						color: var(--material-#{$variant}-color-bold);
 
 						&:hover {
-							color: var( --material-#{$variant}-color-accent );
+							color: var(--material-#{$variant}-color-accent);
 						}
 					}
 				}
@@ -587,46 +672,46 @@ $material-dark-palette: (
 
 			&.is-appearance-outlined {
 				.alerts-dlx-title {
-					color: var( --material-#{$variant}-color );
+					color: var(--material-#{$variant}-color);
 				}
 
 				.alerts-dlx-content p {
-					color: var( --material-#{$variant}-color );
+					color: var(--material-#{$variant}-color);
 				}
 
 				.alerts-dlx-material {
-					background-color: var( --material-#{$variant}-outlined-background, var( --material-#{$variant}-color-light ) );
-					color: var( --material-#{$variant}-color );
-					border: 2px solid var( --material-#{$variant}-color-bold );
+					background-color: var(--material-#{$variant}-outlined-background, var(--material-#{$variant}-color-light));
+					color: var(--material-#{$variant}-color);
+					border: 2px solid var(--material-#{$variant}-color-bold);
 
 					button.button-reset.alerts-dlx-button,
 					a.alerts-dlx-button,
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
-						color: var( --material-#{$variant}-outlined-button-text, var( --material-#{$variant}-color ) );
-						border: 2px solid var( --material-#{$variant}-color-bold );
-						background-color: var( --material-#{$variant}-outlined-button-background, $white );
+						color: var(--material-#{$variant}-outlined-button-text, var(--material-#{$variant}-color));
+						border: 2px solid var(--material-#{$variant}-color-bold);
+						background-color: var(--material-#{$variant}-outlined-button-background, $white );
 					}
 
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
-						background-color: var( --material-#{$variant}-outlined-button-background-hover, var( --material-#{$variant}-color-alt ) );
-						color: var( --material-#{$variant}-outlined-button-text-hover, $white );
-						border: 2px solid var( --material-#{$variant}-outlined-button-background-hover, var( --material-#{$variant}-color-alt ) );
+						background-color: var(--material-#{$variant}-outlined-button-background-hover, var(--material-#{$variant}-color-alt));
+						color: var(--material-#{$variant}-outlined-button-text-hover, $white );
+						border: 2px solid var(--material-#{$variant}-outlined-button-background-hover, var(--material-#{$variant}-color-alt));
 					}
 
 					svg,
 					svg path {
-						fill: var( --material-#{$variant}-color-bold );
+						fill: var(--material-#{$variant}-color-bold);
 					}
 				}
 
 				.alerts-dlx-close {
 					svg {
-						color: var( --material-#{$variant}-color-bold );
+						color: var(--material-#{$variant}-color-bold);
 
 						&:hover {
-							color: var( --material-#{$variant}-color-accent );
+							color: var(--material-#{$variant}-color-accent);
 						}
 					}
 				}
@@ -642,24 +727,24 @@ $material-dark-palette: (
 				}
 
 				.alerts-dlx-material {
-					background-color: var( --material-#{$variant}-filled-background, var( --material-#{$variant}-color-alt ) );
+					background-color: var(--material-#{$variant}-filled-background, var(--material-#{$variant}-color-alt));
 					color: $white;
-					border: 2px solid var( --material-#{$variant}-filled-border, var( --material-#{$variant}-color-alt ) );
+					border: 2px solid var(--material-#{$variant}-filled-border, var(--material-#{$variant}-color-alt));
 
 					button.button-reset.alerts-dlx-button,
 					a.alerts-dlx-button,
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
-						color: var( --material-#{$variant}-filled-button-text, var( --material-#{$variant}-color-alt ) );
-						border: 2px solid var( --material-#{$variant}-filled-button-border, var( --material-#{$variant}-color-alt ) );
-						background-color: var( --material-#{$variant}-filled-button-background, $white );
+						color: var(--material-#{$variant}-filled-button-text, var(--material-#{$variant}-color-alt));
+						border: 2px solid var(--material-#{$variant}-filled-button-border, var(--material-#{$variant}-color-alt));
+						background-color: var(--material-#{$variant}-filled-button-background, $white );
 					}
 
 					a.alerts-dlx-button:hover,
 					button.button-reset.alerts-dlx-button:hover {
-						background-color: var( --material-#{$variant}-filled-button-background-hover, var( --material-#{$variant}-color-light ) );
+						background-color: var(--material-#{$variant}-filled-button-background-hover, var(--material-#{$variant}-color-light));
 						color: $white;
-						border: 2px solid var( --material-#{$variant}-filled-button-border-hover, var( --material-#{$variant}-color-light ) );
+						border: 2px solid var(--material-#{$variant}-filled-button-border-hover, var(--material-#{$variant}-color-light));
 					}
 
 					svg,
@@ -673,7 +758,7 @@ $material-dark-palette: (
 						color: $white;
 
 						&:hover {
-							color: var( --material-#{$variant}-color-accent );
+							color: var(--material-#{$variant}-color-accent);
 						}
 					}
 				}
@@ -681,5 +766,3 @@ $material-dark-palette: (
 		}
 	}
 }
-
-

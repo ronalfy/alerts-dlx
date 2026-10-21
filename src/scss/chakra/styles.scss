@@ -2,6 +2,52 @@
 
 // Purpose: Consolidated Chakra alert styles for light and dark themes using CSS custom properties.
 
+// Palette use-cases:
+// color — title and body text.
+// color-accent — primary button hover background.
+// color-alt — primary button background.
+// color-contrast — primary button text.
+// color-bold — icon.
+// color-light — alert background.
+// color-border — alert border.
+// color-secondary — secondary button background (non-solid appearances).
+// color-secondary-hover — secondary button hover background (non-solid).
+// color-secondary-text — secondary button label (non-solid).
+// color-secondary-text-hover — secondary button hover label (non-solid).
+// solid-foreground — solid title, body, and icon.
+// solid-button-* — solid primary button colors.
+// solid-close* — solid close icon.
+// solid-color-secondary* — same values as solid-button-* (solid secondary matches primary).
+
+// Secondary CTAs also have `.alerts-dlx-button`, so nest under the actions row
+// and require both button classes.
+@mixin alerts-dlx-secondary-button($background, $color, $background-hover, $color-hover, $border: false) {
+	.alerts-dlx-actions {
+
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary,
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background;
+			color: $color;
+
+			@if $border {
+				border: 1px solid $color;
+			}
+		}
+
+		a.alerts-dlx-button.alerts-dlx-button-secondary:hover,
+		button.button-reset.alerts-dlx-button.alerts-dlx-button-secondary:hover {
+			background-color: $background-hover;
+			color: $color-hover;
+
+			@if $border {
+				border-color: $color-hover;
+			}
+		}
+	}
+}
+
 $chakra-variants: (
 	"success",
 	"info",
@@ -17,6 +63,10 @@ $chakra-light-palette: (
 		"color-light": #c6f6d5,
 		"color-border": #2d3748,
 		"color-contrast": #ffffff,
+		"color-secondary": #6ec294,
+		"color-secondary-hover": #4caa78,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #ffffff,
 		"solid-button-text": #3dae71,
 		"solid-button-text-hover": #ffffff,
@@ -25,7 +75,11 @@ $chakra-light-palette: (
 		"solid-button-border": #3dae71,
 		"solid-button-border-hover": #ffffff,
 		"solid-close": #ffffff,
-		"solid-close-hover": #ffffff),
+		"solid-close-hover": #ffffff,
+		"solid-color-secondary": #ffffff,
+		"solid-color-secondary-hover": #3dae71,
+		"solid-color-secondary-text": #3dae71,
+		"solid-color-secondary-text-hover": #ffffff),
 	"info": ("color": #014361,
 		"color-accent": #3182ce,
 		"color-alt": #2d75b8,
@@ -33,6 +87,10 @@ $chakra-light-palette: (
 		"color-light": #bee3f8,
 		"color-border": #014361,
 		"color-contrast": #ffffff,
+		"color-secondary": #6198ca,
+		"color-secondary-hover": #468fd3,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #ffffff,
 		"solid-button-text": #2d75b8,
 		"solid-button-text-hover": #ffffff,
@@ -41,7 +99,11 @@ $chakra-light-palette: (
 		"solid-button-border": #2d75b8,
 		"solid-button-border-hover": #ffffff,
 		"solid-close": #ffffff,
-		"solid-close-hover": #ffffff),
+		"solid-close-hover": #ffffff,
+		"solid-color-secondary": #ffffff,
+		"solid-color-secondary-hover": #2d75b8,
+		"solid-color-secondary-text": #2d75b8,
+		"solid-color-secondary-text-hover": #ffffff),
 	"warning": ("color": #2d3748,
 		"color-accent": #dd6b20,
 		"color-alt": #b35719,
@@ -49,6 +111,10 @@ $chakra-light-palette: (
 		"color-light": #feebc8,
 		"color-border": #2d3748,
 		"color-contrast": #ffffff,
+		"color-secondary": #c68153,
+		"color-secondary-hover": #e07a36,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #ffffff,
 		"solid-button-text": #b35719,
 		"solid-button-text-hover": #ffffff,
@@ -57,7 +123,11 @@ $chakra-light-palette: (
 		"solid-button-border": #b35719,
 		"solid-button-border-hover": #ffffff,
 		"solid-close": #ffffff,
-		"solid-close-hover": #ffffff),
+		"solid-close-hover": #ffffff,
+		"solid-color-secondary": #ffffff,
+		"solid-color-secondary-hover": #b35719,
+		"solid-color-secondary-text": #b35719,
+		"solid-color-secondary-text-hover": #ffffff),
 	"error": ("color": #2d3748,
 		"color-accent": #a92525,
 		"color-alt": #d32f2f,
@@ -65,6 +135,10 @@ $chakra-light-palette: (
 		"color-light": #fed7d7,
 		"color-border": #2d3748,
 		"color-contrast": #ffffff,
+		"color-secondary": #de6363,
+		"color-secondary-hover": #b23b3b,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #ffffff,
 		"solid-button-text": #d32f2f,
 		"solid-button-text-hover": #ffffff,
@@ -73,7 +147,11 @@ $chakra-light-palette: (
 		"solid-button-border": #d32f2f,
 		"solid-button-border-hover": #ffffff,
 		"solid-close": #ffffff,
-		"solid-close-hover": #ffffff)
+		"solid-close-hover": #ffffff,
+		"solid-color-secondary": #ffffff,
+		"solid-color-secondary-hover": #d32f2f,
+		"solid-color-secondary-text": #d32f2f,
+		"solid-color-secondary-text-hover": #ffffff)
 );
 
 $chakra-dark-palette: (
@@ -84,6 +162,10 @@ $chakra-dark-palette: (
 		"color-light": #243233,
 		"color-border": #243233,
 		"color-contrast": #ffffff,
+		"color-secondary": #a7eabe,
+		"color-secondary-hover": #83e3a5,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #243233,
 		"solid-button-text": #ffffff,
 		"solid-button-text-hover": #243233,
@@ -92,7 +174,11 @@ $chakra-dark-palette: (
 		"solid-button-border": #8ae3a9,
 		"solid-button-border-hover": #243233,
 		"solid-close": #243233,
-		"solid-close-hover": #{darken(#243233, 10%)}),
+		"solid-close-hover": #{darken(#243233, 10%)},
+		"solid-color-secondary": #243233,
+		"solid-color-secondary-hover": #ffffff,
+		"solid-color-secondary-text": #ffffff,
+		"solid-color-secondary-text-hover": #243233),
 	"info": ("color": #edf2f7,
 		"color-accent": #469fd7,
 		"color-alt": #71c2f5,
@@ -100,6 +186,10 @@ $chakra-dark-palette: (
 		"color-light": #222e3c,
 		"color-border": #222e3c,
 		"color-contrast": #ffffff,
+		"color-secondary": #94d1f7,
+		"color-secondary-hover": #58a9db,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #222e3c,
 		"solid-button-text": #ffffff,
 		"solid-button-text-hover": #222e3c,
@@ -108,7 +198,11 @@ $chakra-dark-palette: (
 		"solid-button-border": #71c2f5,
 		"solid-button-border-hover": #222e3c,
 		"solid-close": #222e3c,
-		"solid-close-hover": #{darken(#222e3c, 10%)}),
+		"solid-close-hover": #{darken(#222e3c, 10%)},
+		"solid-color-secondary": #222e3c,
+		"solid-color-secondary-hover": #ffffff,
+		"solid-color-secondary-text": #ffffff,
+		"solid-color-secondary-text-hover": #222e3c),
 	"warning": ("color": #edf2f7,
 		"color-accent": #f0c16e,
 		"color-alt": #f6c97b,
@@ -116,6 +210,10 @@ $chakra-dark-palette: (
 		"color-light": #2f2e2d,
 		"color-border": #2f2e2d,
 		"color-contrast": #ffffff,
+		"color-secondary": #f8d69c,
+		"color-secondary-hover": #f1c77d,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #2f2e2d,
 		"solid-button-text": #ffffff,
 		"solid-button-text-hover": #2f2e2d,
@@ -124,7 +222,11 @@ $chakra-dark-palette: (
 		"solid-button-border": #f6c97b,
 		"solid-button-border-hover": #2f2e2d,
 		"solid-close": #2f2e2d,
-		"solid-close-hover": #{darken(#2f2e2d, 10%)}),
+		"solid-close-hover": #{darken(#2f2e2d, 10%)},
+		"solid-color-secondary": #2f2e2d,
+		"solid-color-secondary-hover": #ffffff,
+		"solid-color-secondary-text": #ffffff,
+		"solid-color-secondary-text-hover": #2f2e2d),
 	"error": ("color": #edf2f7,
 		"color-accent": #f46d6d,
 		"color-alt": #f68e8e,
@@ -132,6 +234,10 @@ $chakra-dark-palette: (
 		"color-light": #302a33,
 		"color-border": #302a33,
 		"color-contrast": #ffffff,
+		"color-secondary": #f8aaaa,
+		"color-secondary-hover": #f57c7c,
+		"color-secondary-text": #ffffff,
+		"color-secondary-text-hover": #ffffff,
 		"solid-foreground": #302a33,
 		"solid-button-text": #ffffff,
 		"solid-button-text-hover": #302a33,
@@ -140,7 +246,11 @@ $chakra-dark-palette: (
 		"solid-button-border": #f68e8e,
 		"solid-button-border-hover": #302a33,
 		"solid-close": #302a33,
-		"solid-close-hover": #{darken(#302a33, 10%)})
+		"solid-close-hover": #{darken(#302a33, 10%)},
+		"solid-color-secondary": #302a33,
+		"solid-color-secondary-hover": #ffffff,
+		"solid-color-secondary-text": #ffffff,
+		"solid-color-secondary-text-hover": #302a33)
 );
 
 @mixin chakra-css-vars($palette) {
@@ -148,6 +258,10 @@ $chakra-dark-palette: (
 		--chakra-#{$variant}-color: #{map-get($values, "color")};
 		--chakra-#{$variant}-color-accent: #{map-get($values, "color-accent")};
 		--chakra-#{$variant}-color-alt: #{map-get($values, "color-alt")};
+		--chakra-#{$variant}-color-secondary: #{map-get($values, "color-secondary")};
+		--chakra-#{$variant}-color-secondary-hover: #{map-get($values, "color-secondary-hover")};
+		--chakra-#{$variant}-color-secondary-text: #{map-get($values, "color-secondary-text")};
+		--chakra-#{$variant}-color-secondary-text-hover: #{map-get($values, "color-secondary-text-hover")};
 		--chakra-#{$variant}-color-bold: #{map-get($values, "color-bold")};
 		--chakra-#{$variant}-color-light: #{map-get($values, "color-light")};
 		--chakra-#{$variant}-color-border: #{map-get($values, "color-border")};
@@ -161,6 +275,10 @@ $chakra-dark-palette: (
 		--chakra-#{$variant}-solid-button-border-hover: #{map-get($values, "solid-button-border-hover")};
 		--chakra-#{$variant}-solid-close: #{map-get($values, "solid-close")};
 		--chakra-#{$variant}-solid-close-hover: #{map-get($values, "solid-close-hover")};
+		--chakra-#{$variant}-solid-color-secondary: #{map-get($values, "solid-color-secondary")};
+		--chakra-#{$variant}-solid-color-secondary-hover: #{map-get($values, "solid-color-secondary-hover")};
+		--chakra-#{$variant}-solid-color-secondary-text: #{map-get($values, "solid-color-secondary-text")};
+		--chakra-#{$variant}-solid-color-secondary-text-hover: #{map-get($values, "solid-color-secondary-text-hover")};
 	}
 }
 
@@ -263,7 +381,7 @@ $chakra-dark-palette: (
 
 			button:not(:first-child) {
 				position: absolute;
-				right: -35px;
+				right: 0;
 			}
 		}
 	}
@@ -480,6 +598,14 @@ $chakra-dark-palette: (
 				}
 			}
 		}
+
+		.alerts-dlx-chakra {
+			@include alerts-dlx-secondary-button(var(--alerts-dlx-chakra-color-secondary),
+				var(--alerts-dlx-chakra-color-secondary-text),
+				var(--alerts-dlx-chakra-color-secondary-hover),
+				var(--alerts-dlx-chakra-color-secondary-text-hover),
+				true);
+		}
 	}
 
 	@each $variant in $chakra-variants {
@@ -523,6 +649,11 @@ $chakra-dark-palette: (
 						background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-#{$variant}-color-accent));
 						color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-#{$variant}-color-contrast));
 					}
+
+					@include alerts-dlx-secondary-button(var(--alerts-dlx-chakra-color-secondary, var(--chakra-#{$variant}-color-secondary)),
+						var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-#{$variant}-color-secondary-text)),
+						var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-#{$variant}-color-secondary-hover)),
+						var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-#{$variant}-color-secondary-text-hover)));
 
 					.alerts-dlx-icon {
 
@@ -585,6 +716,11 @@ $chakra-dark-palette: (
 						background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-#{$variant}-color-accent));
 						color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-#{$variant}-color-contrast));
 					}
+
+					@include alerts-dlx-secondary-button(var(--alerts-dlx-chakra-color-secondary, var(--chakra-#{$variant}-color-secondary)),
+						var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-#{$variant}-color-secondary-text)),
+						var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-#{$variant}-color-secondary-hover)),
+						var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-#{$variant}-color-secondary-text-hover)));
 				}
 			}
 
@@ -638,6 +774,11 @@ $chakra-dark-palette: (
 						background-color: var(--alerts-dlx-chakra-color-alt-hover, var(--chakra-#{$variant}-color-accent));
 						color: var(--alerts-dlx-chakra-color-alt-text-hover, var(--chakra-#{$variant}-color-contrast));
 					}
+
+					@include alerts-dlx-secondary-button(var(--alerts-dlx-chakra-color-secondary, var(--chakra-#{$variant}-color-secondary)),
+						var(--alerts-dlx-chakra-color-secondary-text, var(--chakra-#{$variant}-color-secondary-text)),
+						var(--alerts-dlx-chakra-color-secondary-hover, var(--chakra-#{$variant}-color-secondary-hover)),
+						var(--alerts-dlx-chakra-color-secondary-text-hover, var(--chakra-#{$variant}-color-secondary-text-hover)));
 				}
 			}
 

@@ -66,46 +66,56 @@ final class AlertRenderer {
 	public function render( array $attributes, string $content, $block = null ) {
 		$normalized = AlertAttributes::normalize( $attributes, $block );
 
-		$unique_id               = $normalized['unique_id'];
-		$alert_group             = $normalized['alert_group'];
-		$alert_type              = $normalized['alert_type'];
-		$align                   = $normalized['align'];
-		$alert_title             = $normalized['alert_title'];
-		$alert_description       = $normalized['alert_description'];
-		$button_enabled          = $normalized['button_enabled'];
-		$maximum_width_unit      = $normalized['maximum_width_unit'];
-		$maximum_width           = $normalized['maximum_width'];
-		$margin_spacing          = $normalized['margin_spacing'];
-		$margin_spacing_target   = $normalized['margin_spacing_target'];
-		$icon                    = $normalized['icon'];
-		$description_enabled     = $normalized['description_enabled'];
-		$title_enabled           = $normalized['title_enabled'];
-		$icon_enabled            = $normalized['icon_enabled'];
-		$base_font_size          = $normalized['base_font_size'];
-		$icon_vertical_alignment = $normalized['icon_vertical_alignment'];
-		$variant                 = $normalized['variant'];
-		$mode                    = $normalized['mode'];
-		$button_text             = $normalized['button_text'];
-		$button_url              = $normalized['button_url'];
-		$button_target           = $normalized['button_target'];
-		$button_rel_no_follow    = $normalized['button_rel_no_follow'];
-		$button_rel_sponsored    = $normalized['button_rel_sponsored'];
-		$icon_appearance         = $normalized['icon_appearance'];
-		$color_primary           = $normalized['color_primary'];
-		$color_border            = $normalized['color_border'];
-		$color_accent            = $normalized['color_accent'];
-		$color_alt               = $normalized['color_alt'];
-		$color_alt_hover         = $normalized['color_alt_hover'];
-		$color_alt_text          = $normalized['color_alt_text'];
-		$color_alt_text_hover    = $normalized['color_alt_text_hover'];
-		$color_bold              = $normalized['color_bold'];
-		$color_light             = $normalized['color_light'];
-		$close_button_enabled    = $normalized['close_button_enabled'];
-		$close_button_expiration = $normalized['close_button_expiration'];
-		$is_block_editorial_only = $normalized['is_block_editorial_only'];
-		$icon_source             = $normalized['icon_source'];
-		$image_url               = $normalized['image_url'];
-		$image_id                = $normalized['image_id'];
+		$unique_id                      = $normalized['unique_id'];
+		$alert_group                    = $normalized['alert_group'];
+		$alert_type                     = $normalized['alert_type'];
+		$align                          = $normalized['align'];
+		$alert_title                    = $normalized['alert_title'];
+		$alert_description              = $normalized['alert_description'];
+		$button_enabled                 = $normalized['button_enabled'];
+		$maximum_width_unit             = $normalized['maximum_width_unit'];
+		$maximum_width                  = $normalized['maximum_width'];
+		$margin_spacing                 = $normalized['margin_spacing'];
+		$margin_spacing_target          = $normalized['margin_spacing_target'];
+		$icon                           = $normalized['icon'];
+		$description_enabled            = $normalized['description_enabled'];
+		$title_enabled                  = $normalized['title_enabled'];
+		$icon_enabled                   = $normalized['icon_enabled'];
+		$base_font_size                 = $normalized['base_font_size'];
+		$icon_vertical_alignment        = $normalized['icon_vertical_alignment'];
+		$variant                        = $normalized['variant'];
+		$mode                           = $normalized['mode'];
+		$button_text                    = $normalized['button_text'];
+		$button_url                     = $normalized['button_url'];
+		$button_target                  = $normalized['button_target'];
+		$button_rel_no_follow           = $normalized['button_rel_no_follow'];
+		$button_rel_sponsored           = $normalized['button_rel_sponsored'];
+		$secondary_button_enabled       = $normalized['secondary_button_enabled'];
+		$secondary_button_text          = $normalized['secondary_button_text'];
+		$secondary_button_url           = $normalized['secondary_button_url'];
+		$secondary_button_target        = $normalized['secondary_button_target'];
+		$secondary_button_rel_no_follow = $normalized['secondary_button_rel_no_follow'];
+		$secondary_button_rel_sponsored = $normalized['secondary_button_rel_sponsored'];
+		$icon_appearance                = $normalized['icon_appearance'];
+		$color_primary                  = $normalized['color_primary'];
+		$color_border                   = $normalized['color_border'];
+		$color_accent                   = $normalized['color_accent'];
+		$color_alt                      = $normalized['color_alt'];
+		$color_alt_hover                = $normalized['color_alt_hover'];
+		$color_alt_text                 = $normalized['color_alt_text'];
+		$color_alt_text_hover           = $normalized['color_alt_text_hover'];
+		$color_secondary                = $normalized['color_secondary'];
+		$color_secondary_hover          = $normalized['color_secondary_hover'];
+		$color_secondary_text           = $normalized['color_secondary_text'];
+		$color_secondary_text_hover     = $normalized['color_secondary_text_hover'];
+		$color_bold                     = $normalized['color_bold'];
+		$color_light                    = $normalized['color_light'];
+		$close_button_enabled           = $normalized['close_button_enabled'];
+		$close_button_expiration        = $normalized['close_button_expiration'];
+		$is_block_editorial_only        = $normalized['is_block_editorial_only'];
+		$icon_source                    = $normalized['icon_source'];
+		$image_url                      = $normalized['image_url'];
+		$image_id                       = $normalized['image_id'];
 
 		// If block is editorial only, return early.
 		if ( $is_block_editorial_only ) {
@@ -129,7 +139,7 @@ final class AlertRenderer {
 		$legacy_cookie_name = 'alerts-dlx-' . $unique_id;
 
 		if ( $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
-			$hash        = md5( $alert_title . wp_strip_all_tags( $content ) . $button_text );
+			$hash        = md5( $alert_title . wp_strip_all_tags( $content ) . $button_text . $secondary_button_text );
 			$option_name = 'adlx-' . $unique_id;
 			$hash_option = get_option( sanitize_key( $option_name ) );
 			if ( $hash_option !== $hash || ( false === $hash_option && isset( $_COOKIE[ $cookie_name ] ) ) ) {
@@ -163,7 +173,7 @@ final class AlertRenderer {
 		if ( $description_enabled ) {
 			$figure_classes[] = 'alerts-dlx-has-description';
 		}
-		if ( $button_enabled ) {
+		if ( $button_enabled || $secondary_button_enabled ) {
 			$figure_classes[] = 'alerts-dlx-has-button';
 		}
 
@@ -260,6 +270,10 @@ final class AlertRenderer {
 				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-alt-hover: <?php echo esc_html( $color_alt_hover ); ?>;
 				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-alt-text: <?php echo esc_html( $color_alt_text ); ?>;
 				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-alt-text-hover: <?php echo esc_html( $color_alt_text_hover ); ?>;
+				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-secondary: <?php echo esc_html( $color_secondary ); ?>;
+				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-secondary-hover: <?php echo esc_html( $color_secondary_hover ); ?>;
+				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-secondary-text: <?php echo esc_html( $color_secondary_text ); ?>;
+				--alerts-dlx-<?php echo esc_html( $alert_group ); ?>-color-secondary-text-hover: <?php echo esc_html( $color_secondary_text_hover ); ?>;
 			}
 			<?php
 			$custom_css = ob_get_clean();
@@ -424,37 +438,33 @@ final class AlertRenderer {
 						}
 						?>
 						<?php
-						if ( $button_enabled && ! empty( $button_text ) && ! empty( $button_url ) ) {
+						$show_primary_button   = $button_enabled && ! empty( $button_text ) && ! empty( $button_url );
+						$show_secondary_button = $secondary_button_enabled && ! empty( $secondary_button_text ) && ! empty( $secondary_button_url );
+						if ( $show_primary_button || $show_secondary_button ) {
 							?>
-							<div
-								class="alerts-dlx-button-wrapper"
-								style="display: inline-flex;"
-							>
-								<a
-									class="alerts-dlx-button button-reset"
-									href="<?php echo esc_url( $button_url ); ?>"
-									<?php
-									if ( $button_target ) {
-										?>
-										target="_blank"
-										<?php
-									}
-									?>
-									<?php
-									$rel = array();
-									if ( $button_rel_no_follow ) {
-										$rel[] = 'nofollow';
-									}
-									if ( $button_rel_sponsored ) {
-										$rel[] = 'sponsored';
-									}
-									if ( ! empty( $rel ) ) {
-										?>
-										rel="<?php echo esc_attr( implode( ' ', $rel ) ); ?>"
-										<?php
-									}
-									?>
-								><?php echo esc_html( $button_text ); ?></a>
+							<div class="alerts-dlx-actions">
+								<?php
+								if ( $show_secondary_button ) {
+									$this->print_action_button(
+										'alerts-dlx-button alerts-dlx-button-secondary button-reset',
+										$secondary_button_url,
+										$secondary_button_text,
+										$secondary_button_target,
+										$secondary_button_rel_no_follow,
+										$secondary_button_rel_sponsored
+									);
+								}
+								if ( $show_primary_button ) {
+									$this->print_action_button(
+										'alerts-dlx-button button-reset',
+										$button_url,
+										$button_text,
+										$button_target,
+										$button_rel_no_follow,
+										$button_rel_sponsored
+									);
+								}
+								?>
 							</div>
 							<?php
 						}
@@ -466,5 +476,50 @@ final class AlertRenderer {
 		<!-- end AlertsDLX output -->
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * Print one alert action button.
+	 *
+	 * @param string $class_name Button class names.
+	 * @param string $url        Button URL.
+	 * @param string $text       Button label.
+	 * @param bool   $target     Open in a new tab.
+	 * @param bool   $nofollow   Add rel=nofollow.
+	 * @param bool   $sponsored  Add rel=sponsored.
+	 */
+	private function print_action_button( $class_name, $url, $text, $target, $nofollow, $sponsored ) {
+		?>
+		<div
+			class="alerts-dlx-button-wrapper"
+			style="display: inline-flex;"
+		>
+			<a
+				class="<?php echo esc_attr( $class_name ); ?>"
+				href="<?php echo esc_url( $url ); ?>"
+				<?php
+				if ( $target ) {
+					?>
+					target="_blank"
+					<?php
+				}
+				?>
+				<?php
+				$rel = array();
+				if ( $nofollow ) {
+					$rel[] = 'nofollow';
+				}
+				if ( $sponsored ) {
+					$rel[] = 'sponsored';
+				}
+				if ( ! empty( $rel ) ) {
+					?>
+					rel="<?php echo esc_attr( implode( ' ', $rel ) ); ?>"
+					<?php
+				}
+				?>
+			><?php echo esc_html( $text ); ?></a>
+		</div>
+		<?php
 	}
 }

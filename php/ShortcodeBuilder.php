@@ -33,6 +33,7 @@ final class ShortcodeBuilder {
 	 */
 	private const DERIVED_FIELDS = array(
 		'button_enabled',
+		'secondary_button_enabled',
 		'description_enabled',
 		'title_enabled',
 		'icon_enabled',
@@ -45,6 +46,9 @@ final class ShortcodeBuilder {
 		'button_target',
 		'button_rel_no_follow',
 		'button_rel_sponsored',
+		'secondary_button_target',
+		'secondary_button_rel_no_follow',
+		'secondary_button_rel_sponsored',
 		'close_button_enabled',
 		'is_block_editorial_only',
 	);
@@ -60,6 +64,10 @@ final class ShortcodeBuilder {
 		'color_alt_hover',
 		'color_alt_text',
 		'color_alt_text_hover',
+		'color_secondary',
+		'color_secondary_hover',
+		'color_secondary_text',
+		'color_secondary_text_hover',
 		'color_bold',
 		'color_light',
 	);
@@ -149,6 +157,10 @@ final class ShortcodeBuilder {
 			'color_alt_hover',
 			'color_alt_text',
 			'color_alt_text_hover',
+			'color_secondary',
+			'color_secondary_hover',
+			'color_secondary_text',
+			'color_secondary_text_hover',
 			'color_bold',
 			'color_light',
 		);
@@ -204,6 +216,7 @@ final class ShortcodeBuilder {
 						'title_enabled',
 						'description_enabled',
 						'button_enabled',
+						'secondary_button_enabled',
 						'close_button_enabled',
 						'close_button_expiration',
 					)
@@ -221,13 +234,14 @@ final class ShortcodeBuilder {
 	 * @return array
 	 */
 	public static function get_snapshot_defaults() {
-		$defaults                      = self::get_editor_defaults();
-		$names                         = self::get_snapshot_input_names();
-		$subset                        = array_intersect_key( $defaults, array_flip( $names ) );
-		$subset['variant']             = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
-		$subset['title_enabled']       = true;
-		$subset['description_enabled'] = true;
-		$subset['button_enabled']      = true;
+		$defaults                           = self::get_editor_defaults();
+		$names                              = self::get_snapshot_input_names();
+		$subset                             = array_intersect_key( $defaults, array_flip( $names ) );
+		$subset['variant']                  = self::THEME_DEFINITIONS[ $subset['alert_group'] ]['default_variant'];
+		$subset['title_enabled']            = true;
+		$subset['description_enabled']      = true;
+		$subset['button_enabled']           = true;
+		$subset['secondary_button_enabled'] = false;
 
 		return $subset;
 	}
@@ -257,6 +271,12 @@ final class ShortcodeBuilder {
 				'group'   => 'content',
 				'control' => 'toggle',
 				'label'   => __( 'Enable Button', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'secondary_button_enabled',
+				'group'   => 'content',
+				'control' => 'toggle',
+				'label'   => __( 'Enable Secondary Button', 'alerts-dlx' ),
 			),
 		);
 
@@ -292,10 +312,11 @@ final class ShortcodeBuilder {
 			}
 		}
 
-		$title_enabled       = filter_var( $payload['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		$description_enabled = filter_var( $payload['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		$button_enabled      = filter_var( $payload['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
-		unset( $payload['title_enabled'], $payload['description_enabled'], $payload['button_enabled'] );
+		$title_enabled            = filter_var( $payload['title_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$description_enabled      = filter_var( $payload['description_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$button_enabled           = filter_var( $payload['button_enabled'] ?? true, FILTER_VALIDATE_BOOLEAN );
+		$secondary_button_enabled = filter_var( $payload['secondary_button_enabled'] ?? false, FILTER_VALIDATE_BOOLEAN );
+		unset( $payload['title_enabled'], $payload['description_enabled'], $payload['button_enabled'], $payload['secondary_button_enabled'] );
 
 		$merged    = array_merge( self::get_editor_defaults(), $payload );
 		$sanitized = self::sanitize_values( $merged );
@@ -303,10 +324,11 @@ final class ShortcodeBuilder {
 			return $sanitized;
 		}
 
-		$result                        = array_intersect_key( $sanitized, $allowed );
-		$result['title_enabled']       = $title_enabled;
-		$result['description_enabled'] = $description_enabled;
-		$result['button_enabled']      = $button_enabled;
+		$result                             = array_intersect_key( $sanitized, $allowed );
+		$result['title_enabled']            = $title_enabled;
+		$result['description_enabled']      = $description_enabled;
+		$result['button_enabled']           = $button_enabled;
+		$result['secondary_button_enabled'] = $secondary_button_enabled;
 
 		return $result;
 	}
@@ -542,6 +564,54 @@ final class ShortcodeBuilder {
 				),
 			),
 			array(
+				'name'    => 'secondary_button_text',
+				'group'   => 'action',
+				'control' => 'text',
+				'label'   => __( 'Secondary button text', 'alerts-dlx' ),
+			),
+			array(
+				'name'    => 'secondary_button_url',
+				'group'   => 'action',
+				'control' => 'url',
+				'label'   => __( 'Secondary button URL', 'alerts-dlx' ),
+			),
+			array(
+				'name'      => 'secondary_button_target',
+				'group'     => 'action',
+				'control'   => 'toggle',
+				'label'     => __( 'Open secondary button in a new tab', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'secondary_button_url',
+						'operator' => 'filled',
+					),
+				),
+			),
+			array(
+				'name'      => 'secondary_button_rel_no_follow',
+				'group'     => 'action',
+				'control'   => 'toggle',
+				'label'     => __( 'Add nofollow to secondary button', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'secondary_button_url',
+						'operator' => 'filled',
+					),
+				),
+			),
+			array(
+				'name'      => 'secondary_button_rel_sponsored',
+				'group'     => 'action',
+				'control'   => 'toggle',
+				'label'     => __( 'Mark secondary button as sponsored', 'alerts-dlx' ),
+				'show_when' => array(
+					array(
+						'field'    => 'secondary_button_url',
+						'operator' => 'filled',
+					),
+				),
+			),
+			array(
 				'name'    => 'icon_source',
 				'group'   => 'icon',
 				'control' => 'select',
@@ -632,27 +702,35 @@ final class ShortcodeBuilder {
 		);
 
 		$color_labels = array(
-			'color_primary'        => __( 'Text Color', 'alerts-dlx' ),
-			'color_border'         => __( 'Border Color', 'alerts-dlx' ),
-			'color_accent'         => __( 'Accent Color', 'alerts-dlx' ),
-			'color_alt'            => __( 'Button Color', 'alerts-dlx' ),
-			'color_alt_hover'      => __( 'Button Hover Color', 'alerts-dlx' ),
-			'color_alt_text'       => __( 'Button Text Color', 'alerts-dlx' ),
-			'color_alt_text_hover' => __( 'Button Text Hover Color', 'alerts-dlx' ),
-			'color_bold'           => __( 'Icon Color', 'alerts-dlx' ),
-			'color_light'          => __( 'Background Color', 'alerts-dlx' ),
+			'color_primary'              => __( 'Text Color', 'alerts-dlx' ),
+			'color_border'               => __( 'Border Color', 'alerts-dlx' ),
+			'color_accent'               => __( 'Accent Color', 'alerts-dlx' ),
+			'color_alt'                  => __( 'Button Color', 'alerts-dlx' ),
+			'color_alt_hover'            => __( 'Button Hover Color', 'alerts-dlx' ),
+			'color_alt_text'             => __( 'Button Text Color', 'alerts-dlx' ),
+			'color_alt_text_hover'       => __( 'Button Text Hover Color', 'alerts-dlx' ),
+			'color_secondary'            => __( 'Secondary Button Color', 'alerts-dlx' ),
+			'color_secondary_hover'      => __( 'Secondary Button Hover Color', 'alerts-dlx' ),
+			'color_secondary_text'       => __( 'Secondary Button Text Color', 'alerts-dlx' ),
+			'color_secondary_text_hover' => __( 'Secondary Button Text Hover Color', 'alerts-dlx' ),
+			'color_bold'                 => __( 'Icon Color', 'alerts-dlx' ),
+			'color_light'                => __( 'Background Color', 'alerts-dlx' ),
 		);
 
 		$color_subgroups = array(
-			'color_primary'        => __( 'Alert surface', 'alerts-dlx' ),
-			'color_border'         => __( 'Alert surface', 'alerts-dlx' ),
-			'color_accent'         => __( 'Alert surface', 'alerts-dlx' ),
-			'color_light'          => __( 'Alert surface', 'alerts-dlx' ),
-			'color_alt'            => __( 'Button', 'alerts-dlx' ),
-			'color_alt_hover'      => __( 'Button', 'alerts-dlx' ),
-			'color_alt_text'       => __( 'Button', 'alerts-dlx' ),
-			'color_alt_text_hover' => __( 'Button', 'alerts-dlx' ),
-			'color_bold'           => __( 'Icon', 'alerts-dlx' ),
+			'color_primary'              => __( 'Alert surface', 'alerts-dlx' ),
+			'color_border'               => __( 'Alert surface', 'alerts-dlx' ),
+			'color_accent'               => __( 'Alert surface', 'alerts-dlx' ),
+			'color_light'                => __( 'Alert surface', 'alerts-dlx' ),
+			'color_alt'                  => __( 'Button', 'alerts-dlx' ),
+			'color_alt_hover'            => __( 'Button', 'alerts-dlx' ),
+			'color_alt_text'             => __( 'Button', 'alerts-dlx' ),
+			'color_alt_text_hover'       => __( 'Button', 'alerts-dlx' ),
+			'color_secondary'            => __( 'Secondary button', 'alerts-dlx' ),
+			'color_secondary_hover'      => __( 'Secondary button', 'alerts-dlx' ),
+			'color_secondary_text'       => __( 'Secondary button', 'alerts-dlx' ),
+			'color_secondary_text_hover' => __( 'Secondary button', 'alerts-dlx' ),
+			'color_bold'                 => __( 'Icon', 'alerts-dlx' ),
 		);
 
 		foreach ( self::COLOR_FIELDS as $color_field ) {
@@ -733,11 +811,13 @@ final class ShortcodeBuilder {
 		$sanitized['close_button_expiration'] = self::bounded_integer( $values['close_button_expiration'] ?? $defaults['close_button_expiration'], 0, 31536000 );
 		$sanitized['image_id']                = self::bounded_integer( $values['image_id'] ?? $defaults['image_id'], 0, 2147483647 );
 
-		$sanitized['unique_id']   = sanitize_html_class( (string) ( $values['unique_id'] ?? '' ) );
-		$sanitized['alert_title'] = self::bounded_text( $values['alert_title'] ?? '', 300 );
-		$sanitized['button_text'] = self::bounded_text( $values['button_text'] ?? '', 200 );
-		$sanitized['button_url']  = esc_url_raw( self::bounded_text( $values['button_url'] ?? '', 2048 ) );
-		$sanitized['image_url']   = esc_url_raw( self::bounded_text( $values['image_url'] ?? '', 2048 ) );
+		$sanitized['unique_id']             = sanitize_html_class( (string) ( $values['unique_id'] ?? '' ) );
+		$sanitized['alert_title']           = self::bounded_text( $values['alert_title'] ?? '', 300 );
+		$sanitized['button_text']           = self::bounded_text( $values['button_text'] ?? '', 200 );
+		$sanitized['button_url']            = esc_url_raw( self::bounded_text( $values['button_url'] ?? '', 2048 ) );
+		$sanitized['secondary_button_text'] = self::bounded_text( $values['secondary_button_text'] ?? '', 200 );
+		$sanitized['secondary_button_url']  = esc_url_raw( self::bounded_text( $values['secondary_button_url'] ?? '', 2048 ) );
+		$sanitized['image_url']             = esc_url_raw( self::bounded_text( $values['image_url'] ?? '', 2048 ) );
 
 		$description = (string) ( $values['alert_description'] ?? '' );
 		if ( strlen( $description ) > self::MAX_DESCRIPTION_LENGTH || false !== stripos( $description, '[alertsdlx' ) || false !== stripos( $description, '[/alertsdlx]' ) ) {

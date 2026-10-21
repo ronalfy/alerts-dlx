@@ -262,19 +262,19 @@ class Abilities {
 			'type'                 => 'object',
 			'description'          => esc_html__( 'Properties for one [alertsdlx] shortcode. Omit a property to keep the public shortcode default. The description is shortcode content, not an attribute.', 'alerts-dlx' ),
 			'properties'           => array(
-				'alert_title'             => self::string_property(
+				'alert_title'                    => self::string_property(
 					esc_html__( 'Alert heading. Plain text. The title is shown only when this is not empty.', 'alerts-dlx' ),
 					300
 				),
-				'alert_description'       => self::string_property(
+				'alert_description'              => self::string_property(
 					esc_html__( 'Alert body. Limited HTML is allowed. Placed between the shortcode tags. Nested [alertsdlx] tags are rejected. The description is shown only when this is not empty.', 'alerts-dlx' ),
 					20000
 				),
-				'alert_group'             => self::enum_property(
+				'alert_group'                    => self::enum_property(
 					esc_html__( 'Design system. Defaults to chakra when omitted.', 'alerts-dlx' ),
 					array_keys( $themes )
 				),
-				'alert_type'              => self::enum_property(
+				'alert_type'                     => self::enum_property(
 					sprintf(
 						/* translators: %s: alert groups and the alert types each one accepts. */
 						esc_html__( 'Semantic alert type. Valid types depend on alert_group: %s. Use custom to apply the color properties. Defaults to success when omitted.', 'alerts-dlx' ),
@@ -282,7 +282,7 @@ class Abilities {
 					),
 					self::collect_theme_values( 'alert_types' )
 				),
-				'variant'                 => self::enum_property(
+				'variant'                        => self::enum_property(
 					sprintf(
 						/* translators: %s: alert groups and the variants each one accepts. */
 						esc_html__( 'Layout treatment. Valid variants depend on alert_group: %s. Omit to use the default variant for that design.', 'alerts-dlx' ),
@@ -290,100 +290,121 @@ class Abilities {
 					),
 					self::collect_theme_values( 'variants' )
 				),
-				'align'                   => self::enum_property(
+				'align'                          => self::enum_property(
 					esc_html__( 'Horizontal alignment. Defaults to center.', 'alerts-dlx' ),
 					array( 'left', 'center', 'right', 'wide', 'full' )
 				),
-				'mode'                    => self::enum_property(
+				'mode'                           => self::enum_property(
 					esc_html__( 'Color mode. Defaults to light.', 'alerts-dlx' ),
 					array( 'light', 'dark' )
 				),
-				'maximum_width'           => self::integer_property(
+				'maximum_width'                  => self::integer_property(
 					esc_html__( 'Maximum width number. Pair with maximum_width_unit. Defaults to 650.', 'alerts-dlx' ),
 					1,
 					5000
 				),
-				'maximum_width_unit'      => self::enum_property(
+				'maximum_width_unit'             => self::enum_property(
 					esc_html__( 'Unit for maximum_width. Defaults to px.', 'alerts-dlx' ),
 					AlertAttributes::get_maximum_width_units()
 				),
-				'margin_spacing'          => self::enum_property(
+				'margin_spacing'                 => self::enum_property(
 					esc_html__( 'Space outside the alert. Defaults to spacious.', 'alerts-dlx' ),
 					AlertAttributes::get_margin_spacing_amounts()
 				),
-				'margin_spacing_target'   => self::enum_property(
+				'margin_spacing_target'          => self::enum_property(
 					esc_html__( 'Which edges receive the margin. Defaults to both.', 'alerts-dlx' ),
 					AlertAttributes::get_margin_spacing_targets()
 				),
-				'base_font_size'          => self::integer_property(
+				'base_font_size'                 => self::integer_property(
 					esc_html__( 'Base font size in pixels. Defaults to 16.', 'alerts-dlx' ),
 					8,
 					96
 				),
-				'button_text'             => self::string_property(
+				'button_text'                    => self::string_property(
 					esc_html__( 'Button label. Plain text. The button is shown only when both button text and a button URL are set.', 'alerts-dlx' ),
 					200
 				),
-				'button_url'              => self::string_property(
+				'button_url'                     => self::string_property(
 					esc_html__( 'Button link. Absolute or relative URL.', 'alerts-dlx' ),
 					2048
 				),
-				'button_target'           => self::boolean_property(
+				'button_target'                  => self::boolean_property(
 					esc_html__( 'Open the button link in a new tab. Included only when button_url is set.', 'alerts-dlx' )
 				),
-				'button_rel_no_follow'    => self::boolean_property(
+				'button_rel_no_follow'           => self::boolean_property(
 					esc_html__( 'Add rel="nofollow" on the button link. Included only when button_url is set.', 'alerts-dlx' )
 				),
-				'button_rel_sponsored'    => self::boolean_property(
+				'button_rel_sponsored'           => self::boolean_property(
 					esc_html__( 'Add rel="sponsored" on the button link. Included only when button_url is set.', 'alerts-dlx' )
 				),
-				'icon_source'             => self::enum_property(
+				'secondary_button_text'          => self::string_property(
+					esc_html__( 'Secondary button label. Plain text. The secondary button is shown only when both secondary button text and a secondary button URL are set.', 'alerts-dlx' ),
+					200
+				),
+				'secondary_button_url'           => self::string_property(
+					esc_html__( 'Secondary button link. Absolute or relative URL.', 'alerts-dlx' ),
+					2048
+				),
+				'secondary_button_target'        => self::boolean_property(
+					esc_html__( 'Open the secondary button link in a new tab. Included only when secondary_button_url is set.', 'alerts-dlx' )
+				),
+				'secondary_button_rel_no_follow' => self::boolean_property(
+					esc_html__( 'Add rel="nofollow" on the secondary button link. Included only when secondary_button_url is set.', 'alerts-dlx' )
+				),
+				'secondary_button_rel_sponsored' => self::boolean_property(
+					esc_html__( 'Add rel="sponsored" on the secondary button link. Included only when secondary_button_url is set.', 'alerts-dlx' )
+				),
+				'icon_source'                    => self::enum_property(
 					esc_html__( 'Where the alert icon comes from. icon uses the icon SVG. image uses image_url and, when set, image_id. Defaults to icon. Omit this when supplying only an image; generation then selects image.', 'alerts-dlx' ),
 					array( 'icon', 'image' )
 				),
-				'icon'                    => self::string_property(
+				'icon'                           => self::string_property(
 					esc_html__( 'Inline SVG markup for the icon. Sanitized before it is written into the shortcode. Included only when icon_source is icon.', 'alerts-dlx' ),
 					12000
 				),
-				'image_url'               => self::string_property(
+				'image_url'                      => self::string_property(
 					esc_html__( 'Image address used when icon_source is image.', 'alerts-dlx' ),
 					2048
 				),
-				'image_id'                => self::integer_property(
+				'image_id'                       => self::integer_property(
 					esc_html__( 'Media library attachment ID used when icon_source is image. When the attachment exists, it replaces image_url in the rendered alert. Use 0 when there is no attachment.', 'alerts-dlx' ),
 					0,
 					2147483647
 				),
-				'icon_appearance'         => self::enum_property(
+				'icon_appearance'                => self::enum_property(
 					esc_html__( 'Icon shape. Defaults to default.', 'alerts-dlx' ),
 					array( 'default', 'rounded' )
 				),
-				'icon_vertical_alignment' => self::enum_property(
+				'icon_vertical_alignment'        => self::enum_property(
 					esc_html__( 'Vertical alignment of the icon. Defaults to top.', 'alerts-dlx' ),
 					array( 'top', 'centered' )
 				),
-				'color_primary'           => self::color_property( esc_html__( 'Text color.', 'alerts-dlx' ) ),
-				'color_border'            => self::color_property( esc_html__( 'Border color.', 'alerts-dlx' ) ),
-				'color_accent'            => self::color_property( esc_html__( 'Accent color.', 'alerts-dlx' ) ),
-				'color_alt'               => self::color_property( esc_html__( 'Button color.', 'alerts-dlx' ) ),
-				'color_alt_hover'         => self::color_property( esc_html__( 'Button hover color.', 'alerts-dlx' ) ),
-				'color_alt_text'          => self::color_property( esc_html__( 'Button text color.', 'alerts-dlx' ) ),
-				'color_alt_text_hover'    => self::color_property( esc_html__( 'Button text hover color.', 'alerts-dlx' ) ),
-				'color_bold'              => self::color_property( esc_html__( 'Icon color.', 'alerts-dlx' ) ),
-				'color_light'             => self::color_property( esc_html__( 'Background color.', 'alerts-dlx' ) ),
-				'close_button_enabled'    => self::boolean_property(
+				'color_primary'                  => self::color_property( esc_html__( 'Text color.', 'alerts-dlx' ) ),
+				'color_border'                   => self::color_property( esc_html__( 'Border color.', 'alerts-dlx' ) ),
+				'color_accent'                   => self::color_property( esc_html__( 'Accent color.', 'alerts-dlx' ) ),
+				'color_alt'                      => self::color_property( esc_html__( 'Button color.', 'alerts-dlx' ) ),
+				'color_alt_hover'                => self::color_property( esc_html__( 'Button hover color.', 'alerts-dlx' ) ),
+				'color_alt_text'                 => self::color_property( esc_html__( 'Button text color.', 'alerts-dlx' ) ),
+				'color_alt_text_hover'           => self::color_property( esc_html__( 'Button text hover color.', 'alerts-dlx' ) ),
+				'color_secondary'                => self::color_property( esc_html__( 'Secondary button color.', 'alerts-dlx' ) ),
+				'color_secondary_hover'          => self::color_property( esc_html__( 'Secondary button hover color.', 'alerts-dlx' ) ),
+				'color_secondary_text'           => self::color_property( esc_html__( 'Secondary button text color.', 'alerts-dlx' ) ),
+				'color_secondary_text_hover'     => self::color_property( esc_html__( 'Secondary button text hover color.', 'alerts-dlx' ) ),
+				'color_bold'                     => self::color_property( esc_html__( 'Icon color.', 'alerts-dlx' ) ),
+				'color_light'                    => self::color_property( esc_html__( 'Background color.', 'alerts-dlx' ) ),
+				'close_button_enabled'           => self::boolean_property(
 					esc_html__( 'Show a dismiss control. Defaults to false.', 'alerts-dlx' )
 				),
-				'close_button_expiration' => self::integer_property(
+				'close_button_expiration'        => self::integer_property(
 					esc_html__( 'How long a dismissal is remembered, in seconds. 0 means the current browser session only. Included only when close_button_enabled is true.', 'alerts-dlx' ),
 					0,
 					31536000
 				),
-				'unique_id'               => self::string_property(
+				'unique_id'                      => self::string_property(
 					esc_html__( 'Optional HTML id and dismiss-cookie name. Use a stable value when the alert can be dismissed so the choice survives reloads. Letters, numbers, hyphens, and underscores. Omit to let each view assign a new id.', 'alerts-dlx' ),
 					100
 				),
-				'is_block_editorial_only' => self::boolean_property(
+				'is_block_editorial_only'        => self::boolean_property(
 					esc_html__( 'When true, the shortcode renders nothing on the front end. Use false for a visible alert. Defaults to false.', 'alerts-dlx' )
 				),
 			),
@@ -508,7 +529,7 @@ class Abilities {
 	private static function get_global_style_appearance_fields() {
 		$groups = implode( ', ', array_keys( ShortcodeBuilder::get_theme_definitions() ) );
 		$fields = array(
-			'alert_group'             => array(
+			'alert_group'                => array(
 				'type'        => 'string',
 				'description' => sprintf(
 					/* translators: %s: comma-separated design system slugs. */
@@ -516,7 +537,7 @@ class Abilities {
 					$groups
 				),
 			),
-			'alert_type'              => array(
+			'alert_type'                 => array(
 				'type'        => 'string',
 				'description' => sprintf(
 					/* translators: %s: alert groups and the alert types each one accepts. */
@@ -524,7 +545,7 @@ class Abilities {
 					self::format_grouped_choices( 'alert_types' )
 				),
 			),
-			'variant'                 => array(
+			'variant'                    => array(
 				'type'        => 'string',
 				'description' => sprintf(
 					/* translators: %s: alert groups and the variants each one accepts. */
@@ -532,93 +553,109 @@ class Abilities {
 					self::format_grouped_choices( 'variants' )
 				),
 			),
-			'mode'                    => array(
+			'mode'                       => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Color mode: light or dark.', 'alerts-dlx' ),
 			),
-			'maximum_width'           => array(
+			'maximum_width'              => array(
 				'type'        => 'integer',
 				'description' => esc_html__( 'Maximum width number. Pair with maximum_width_unit.', 'alerts-dlx' ),
 				'minimum'     => 1,
 				'maximum'     => 5000,
 			),
-			'maximum_width_unit'      => array(
+			'maximum_width_unit'         => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Unit for maximum_width.', 'alerts-dlx' ),
 			),
-			'margin_spacing'          => array(
+			'margin_spacing'             => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Space outside the alert.', 'alerts-dlx' ),
 			),
-			'margin_spacing_target'   => array(
+			'margin_spacing_target'      => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Which edges receive the margin.', 'alerts-dlx' ),
 			),
-			'base_font_size'          => array(
+			'base_font_size'             => array(
 				'type'        => 'integer',
 				'description' => esc_html__( 'Base font size in pixels.', 'alerts-dlx' ),
 				'minimum'     => 8,
 				'maximum'     => 96,
 			),
-			'icon_source'             => array(
+			'icon_source'                => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Where the alert icon comes from: icon or image.', 'alerts-dlx' ),
 			),
-			'icon_appearance'         => array(
+			'icon_appearance'            => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Icon shape: default or rounded.', 'alerts-dlx' ),
 			),
-			'icon_vertical_alignment' => array(
+			'icon_vertical_alignment'    => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Vertical alignment of the icon: top or centered.', 'alerts-dlx' ),
 			),
-			'icon'                    => array(
+			'icon'                       => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Inline SVG markup for the icon.', 'alerts-dlx' ),
 			),
-			'image_url'               => array(
+			'image_url'                  => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Image address used when icon_source is image.', 'alerts-dlx' ),
 			),
-			'image_id'                => array(
+			'image_id'                   => array(
 				'type'        => 'integer',
 				'description' => esc_html__( 'Media library attachment ID used when icon_source is image. 0 when there is no attachment.', 'alerts-dlx' ),
 				'minimum'     => 0,
 				'maximum'     => 2147483647,
 			),
-			'color_primary'           => array(
+			'color_primary'              => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Text color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_border'            => array(
+			'color_border'               => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Border color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_accent'            => array(
+			'color_accent'               => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Accent color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_alt'               => array(
+			'color_alt'                  => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Button color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_alt_hover'         => array(
+			'color_alt_hover'            => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Button hover color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_alt_text'          => array(
+			'color_alt_text'             => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Button text color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_alt_text_hover'    => array(
+			'color_alt_text_hover'       => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Button text hover color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_bold'              => array(
+			'color_secondary'            => array(
+				'type'        => 'string',
+				'description' => esc_html__( 'Secondary button color. Used when alert_type is custom.', 'alerts-dlx' ),
+			),
+			'color_secondary_hover'      => array(
+				'type'        => 'string',
+				'description' => esc_html__( 'Secondary button hover color. Used when alert_type is custom.', 'alerts-dlx' ),
+			),
+			'color_secondary_text'       => array(
+				'type'        => 'string',
+				'description' => esc_html__( 'Secondary button text color. Used when alert_type is custom.', 'alerts-dlx' ),
+			),
+			'color_secondary_text_hover' => array(
+				'type'        => 'string',
+				'description' => esc_html__( 'Secondary button text hover color. Used when alert_type is custom.', 'alerts-dlx' ),
+			),
+			'color_bold'                 => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Icon color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),
-			'color_light'             => array(
+			'color_light'                => array(
 				'type'        => 'string',
 				'description' => esc_html__( 'Background color. Used when alert_type is custom.', 'alerts-dlx' ),
 			),

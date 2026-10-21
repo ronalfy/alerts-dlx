@@ -110,16 +110,20 @@ const AlertButtonLinkPreview = ({ buttonUrl, onEdit, onClear }) => {
 /**
  * Link control with preview, edit, clear, and URLPicker.
  *
- * @param {Object}   props              Component props.
- * @param {string}   props.buttonUrl    Current button URL.
- * @param {Function} props.setAttributes Block setAttributes callback.
- * @param {boolean}  props.inlinePicker  Render URLPicker inline instead of a nested popover.
- * @param {boolean}  props.isActive      Whether the parent popover is open (inline mode).
+ * @param {Object}   props                    Component props.
+ * @param {string}   props.buttonUrl          Current button URL.
+ * @param {Function} props.setAttributes      Block setAttributes callback.
+ * @param {string}   props.urlAttribute       URL attribute name.
+ * @param {string}   props.hasUrlAttribute    Has-URL attribute name.
+ * @param {boolean}  props.inlinePicker       Render URLPicker inline instead of a nested popover.
+ * @param {boolean}  props.isActive           Whether the parent popover is open (inline mode).
  * @return {import('react').JSX.Element} AlertButtonLinkControl component.
  */
 const AlertButtonLinkControl = ({
   buttonUrl,
   setAttributes,
+  urlAttribute = "buttonUrl",
+  hasUrlAttribute = "buttonHasUrl",
   inlinePicker = false,
   isActive = true,
 }) => {
@@ -151,8 +155,8 @@ const AlertButtonLinkControl = ({
 
   const clearUrl = () => {
     setAttributes({
-      buttonUrl: "",
-      buttonHasUrl: false,
+      [urlAttribute]: "",
+      [hasUrlAttribute]: false,
     });
     setPickerPrefill("");
     setIsEditingInline(false);
@@ -163,8 +167,8 @@ const AlertButtonLinkControl = ({
 
     if (linkUrl) {
       setAttributes({
-        buttonUrl: linkUrl,
-        buttonHasUrl: true,
+        [urlAttribute]: linkUrl,
+        [hasUrlAttribute]: true,
       });
     }
 
