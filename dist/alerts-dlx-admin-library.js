@@ -43886,7 +43886,8 @@ var BuilderField = function BuilderField(_ref6) {
         return _onChange3(field.name, nextTokens.join(","));
       },
       placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)("Select roles", "alerts-dlx"),
-      __nextHasNoMarginBottom: true
+      __experimentalExpandOnFocus: tokens.length >= 2 ? false : true,
+      __experimentalAutoSelectFirstMatch: true
     });
   }
   var inputType = ["number", "url", "datetime-local"].includes(field.control) ? field.control : "text";

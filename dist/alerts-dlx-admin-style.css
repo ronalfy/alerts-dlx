@@ -7042,12 +7042,13 @@ body.alerts-dlx-body .updated {
   gap: 8px;
   align-items: end;
   margin-top: 4px;
+  margin-bottom: 16px !important;
 }
 .alerts-dlx__url-param-row .components-button {
   min-height: 40px;
   padding-left: 8px;
   padding-right: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 0 !important;
 }
 
 svg.components-checkbox-control__checked,

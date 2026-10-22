@@ -343,7 +343,8 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 				suggestions={suggestions}
 				onChange={(nextTokens) => onChange(field.name, nextTokens.join(","))}
 				placeholder={__("Select roles", "alerts-dlx")}
-				__nextHasNoMarginBottom
+				__experimentalExpandOnFocus={ tokens.length >= 2  ? false : true }
+				__experimentalAutoSelectFirstMatch={ true }
 			/>
 		);
 	}

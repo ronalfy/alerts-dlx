@@ -770,7 +770,7 @@ body.alerts-dlx-body .updated {
 .alerts-dlx__url-param-repeater {
 	width: 100%;
 
-	> .components-button {
+	>.components-button {
 		margin-bottom: 8px;
 	}
 }
@@ -781,12 +781,13 @@ body.alerts-dlx-body .updated {
 	gap: 8px;
 	align-items: end;
 	margin-top: 4px;
+	margin-bottom: 16px !important;
 
 	.components-button {
 		min-height: 40px;
 		padding-left: 8px;
 		padding-right: 8px;
-		margin-bottom: 16px;
+		margin-bottom: 0 !important;
 	}
 }
 
