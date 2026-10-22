@@ -312,23 +312,23 @@ $shoelace-modes: (
 			border-left-color: var(--alerts-dlx-shoelace-color-border, var(--alerts-dlx-shoelace-color-alt, var(--alerts-dlx-shoelace-text-color, #000)));
 		}
 
-		.alerts-dlx-has-icon {
-			display: flex;
-			padding-left: 2.8em;
-		}
-
 		.alerts-dlx-icon {
 			position: absolute;
-			top: calc(50% - (0.97em * var(--alerts-dlx-icon-scale, 1)));
-			left: calc(((-1.4em * var(--alerts-dlx-icon-scale, 1)) / 2) - 0.25em);
+			top: calc(50% - 0.97em);
+			left: calc((-1.4em / 2) - 0.50em);
 		}
 
 		.alerts-dlx-icon-preview {
-			font-size: unset;
-			line-height: unset;
+			svg {
+				border-radius: 100%;
+				border: 0;
+				width: 1.4em;
+				height: 1.4em;
+				font-size: 1.2em;
+			}
 		}
 
-		svg {
+		.alerts-dlx-icon-preview svg {
 			background: var(--alerts-dlx-shoelace-color-border, var(--alerts-dlx-shoelace-color-alt, var(--alerts-dlx-shoelace-text-color, #000)));
 			color: var(--alerts-dlx-shoelace-color-alt-text, $white);
 			fill: var(--alerts-dlx-shoelace-color-alt-text, $white);
@@ -454,13 +454,6 @@ $shoelace-modes: (
 		}
 	}
 
-	&.is-appearance-left-accent {
-		svg {
-			border-radius: 100%;
-			border: 0;
-		}
-	}
-
 	&.icon-vertical-align-centered {
 		.alerts-dlx-icon {
 			align-items: center;
@@ -573,13 +566,7 @@ $shoelace-modes: (
 
 			.alerts-dlx-has-icon {
 				display: flex;
-				padding-left: 2.8em;
-			}
-
-			.alerts-dlx-icon {
-				position: absolute;
-				top: calc(50% - 0.97em);
-				left: calc((-1.4em / 2) - 0.25em);
+				padding-left: calc(2.8em * var(--alerts-dlx-icon-scale, 1));
 			}
 
 			.alerts-dlx-icon-preview {

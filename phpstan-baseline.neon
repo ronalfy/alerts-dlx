@@ -1,0 +1,151 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to DLXPlugins\\AlertsDLX\\Options\:\:run\(\) on a separate line has no effect\.$#'
+			identifier: staticMethod.resultUnused
+			count: 1
+			path: alerts-dlx.php
+
+		-
+			message: '#^Action callback returns string but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: php/Admin.php
+
+		-
+			message: '#^Parameter \#4 \$ver of function wp_enqueue_style expects bool\|string\|null, float given\.$#'
+			identifier: argument.type
+			count: 3
+			path: php/Admin.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between null and string will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: php/Admin.php
+
+		-
+			message: '#^Array has 2 duplicate keys with value ''icon_size'' \(''icon_size'', ''icon_size''\)\.$#'
+			identifier: array.duplicateKey
+			count: 1
+			path: php/AlertAttributes.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 3
+			path: php/AlertLibrary.php
+
+		-
+			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: php/AlertLibrary.php
+
+		-
+			message: '#^Instanceof between WP_Post and WP_Post will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: php/AlertLibrary.php
+
+		-
+			message: '#^Parameter \#1 \$text of function esc_attr expects string, int\<0, max\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: php/AlertRenderer.php
+
+		-
+			message: '#^Parameter \#4 \$autoload of function add_option expects bool\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: php/AlertRenderer.php
+
+		-
+			message: '#^Parameter \#4 \$ver of function wp_enqueue_script expects bool\|string\|null, float given\.$#'
+			identifier: argument.type
+			count: 2
+			path: php/AlertRenderer.php
+
+		-
+			message: '#^Parameter \#4 \$ver of function wp_register_style expects bool\|string\|null, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: php/AlertRenderer.php
+
+		-
+			message: '#^Result of && is always false\.$#'
+			identifier: booleanAnd.alwaysFalse
+			count: 1
+			path: php/AlertRenderer.php
+
+		-
+			message: '#^Strict comparison using \=\=\= between false and non\-falsy\-string will always evaluate to false\.$#'
+			identifier: identical.alwaysFalse
+			count: 1
+			path: php/AlertRenderer.php
+
+		-
+			message: '#^PHPDoc tag @return has invalid value \(Blocks\.\)\: Unexpected token "\.", expected TOKEN_HORIZONTAL_WS at offset 49 on line 4$#'
+			identifier: phpDoc.parseError
+			count: 1
+			path: php/Blocks.php
+
+		-
+			message: '#^Parameter \#4 \$ver of function wp_register_style expects bool\|string\|null, float given\.$#'
+			identifier: argument.type
+			count: 5
+			path: php/Blocks.php
+
+		-
+			message: '#^Call to function is_bool\(\) with string will always evaluate to false\.$#'
+			identifier: function.impossibleType
+			count: 1
+			path: php/Functions.php
+
+		-
+			message: '#^Call to function is_string\(\) with non\-falsy\-string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 4
+			path: php/Functions.php
+
+		-
+			message: '#^Method DLXPlugins\\AlertsDLX\\Functions\:\:get_plugin_version\(\) should return float but returns string\.$#'
+			identifier: return.type
+			count: 1
+			path: php/Functions.php
+
+		-
+			message: '#^Method DLXPlugins\\AlertsDLX\\Functions\:\:is_multisite\(\) should return true but returns false\.$#'
+			identifier: return.type
+			count: 2
+			path: php/Functions.php
+
+		-
+			message: '#^Ternary operator condition is always true\.$#'
+			identifier: ternary.alwaysTrue
+			count: 1
+			path: php/Functions.php
+
+		-
+			message: '#^Call to function is_string\(\) with string will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: php/Options.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 2
+			path: php/Rest.php
+
+		-
+			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 5
+			path: php/ShortcodeBuilder.php
+
+		-
+			message: '#^Instanceof between DOMAttr and DOMAttr will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: php/SvgSanitizer.php

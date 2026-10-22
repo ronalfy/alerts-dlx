@@ -110,3 +110,7 @@ alerts-dlx.zip
 .kimi-memory/
 
 .kimi-memory/
+
+# PHPStan tooling
+tools/phpstan/vendor/
+.phpstan-cache/

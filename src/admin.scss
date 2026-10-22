@@ -752,6 +752,45 @@ body.alerts-dlx-body .updated {
 	}
 }
 
+.alerts-dlx-day-selector {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 8px;
+
+	&__wrapper {
+		margin-bottom: 16px;
+	}
+
+	.components-button {
+		width: 100%;
+		justify-content: center;
+	}
+}
+
+.alerts-dlx__url-param-repeater {
+	width: 100%;
+
+	>.components-button {
+		margin-bottom: 8px;
+	}
+}
+
+.alerts-dlx__url-param-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr auto;
+	gap: 8px;
+	align-items: end;
+	margin-top: 4px;
+	margin-bottom: 16px !important;
+
+	.components-button {
+		min-height: 40px;
+		padding-left: 8px;
+		padding-right: 8px;
+		margin-bottom: 0 !important;
+	}
+}
+
 svg.components-checkbox-control__checked,
 svg.components-checkbox-control__indeterminate {
 	left: 50% !important;

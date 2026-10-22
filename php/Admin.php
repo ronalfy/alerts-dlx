@@ -345,6 +345,7 @@ class Admin {
 					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
 					'colorPalette'               => Functions::get_theme_color_palette(),
 					'themeLabels'                => $theme_labels,
+					'roles'                      => wp_roles()->get_names(),
 					'libraryBoot'                => array(
 						'view'   => ( 'edit' === $subtab ) ? 'edit' : 'list',
 						'itemId' => $item_id,
@@ -397,6 +398,7 @@ class Admin {
 					'shortcodeBuilderFields'     => ShortcodeBuilder::get_editor_fields(),
 					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
 					'colorPalette'               => Functions::get_theme_color_palette(),
+					'roles'                      => wp_roles()->get_names(),
 				)
 			);
 
