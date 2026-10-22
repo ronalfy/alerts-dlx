@@ -1,0 +1,32 @@
+name: PHP Static Analysis
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+          tools: composer
+
+      - name: Install PHPStan tooling
+        run: composer install --no-interaction --no-progress --working-dir=tools/phpstan
+
+      - name: Run PHPStan
+        run: composer run phpstan --working-dir=tools/phpstan

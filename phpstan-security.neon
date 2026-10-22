@@ -1,0 +1,29 @@
+parameters:
+    disallowedFunctionCalls:
+        -
+            function: 'eval()'
+            message: 'eval() is dangerous and should never be used.'
+        -
+            function: 'exec()'
+            message: 'Use WP_Filesystem or wp_remote_* instead of shell execution.'
+        -
+            function: 'shell_exec()'
+            message: 'Use WP_Filesystem or wp_remote_* instead of shell execution.'
+        -
+            function: 'passthru()'
+            message: 'Use WP_Filesystem or wp_remote_* instead of shell execution.'
+        -
+            function: 'system()'
+            message: 'Use WP_Filesystem or wp_remote_* instead of shell execution.'
+        -
+            function: 'proc_open()'
+            message: 'Use WP_Filesystem or wp_remote_* instead of shell execution.'
+        -
+            function: 'popen()'
+            message: 'Use WP_Filesystem or wp_remote_* instead of shell execution.'
+        -
+            function: 'extract()'
+            message: 'extract() can overwrite variables unexpectedly and is a common source of security bugs.'
+        -
+            function: 'unserialize()'
+            message: 'Use json_decode() or unserialize() with an allowed classes option.'
