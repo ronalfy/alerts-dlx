@@ -155,12 +155,7 @@ class Blocks {
 		$atts['start_date']              = substr( sanitize_text_field( (string) $atts['start_date'] ), 0, 19 );
 		$atts['end_date']                = substr( sanitize_text_field( (string) $atts['end_date'] ), 0, 19 );
 		$atts['days_of_week']            = substr( sanitize_text_field( (string) $atts['days_of_week'] ), 0, 20 );
-		$url_params                      = $atts['url_params'] ?? array();
-		if ( is_string( $url_params ) && '' !== $url_params ) {
-			$decoded     = json_decode( $url_params, true );
-			$url_params  = is_array( $decoded ) ? $decoded : array();
-		}
-		$atts['url_params']              = Functions::sanitize_url_params( is_array( $url_params ) ? $url_params : array() );
+		$atts['url_params']              = Functions::sanitize_url_params( Functions::decode_url_params_string( $atts['url_params'] ?? array() ) );
 		$atts['required_roles']          = substr( sanitize_text_field( (string) $atts['required_roles'] ), 0, 200 );
 
 		// If alert description is empty, use content.

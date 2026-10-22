@@ -613,9 +613,64 @@ class Functions {
 			if ( '' === $key ) {
 				continue;
 			}
-			$out[] = array( 'key' => $key, 'value' => $val );
+			$out[] = array(
+				'key'   => $key,
+				'value' => $val,
+			);
 		}
 		return $out;
+	}
+
+	/**
+	 * Encode URL params for the shortcode attribute value.
+	 *
+	 * WordPress' shortcode parser treats a literal `]` inside an attribute
+	 * value as the end of the shortcode tag. Only the JSON brackets are
+	 * escaped so the generated shortcode stays readable while remaining
+	 * parseable.
+	 *
+	 * @param array $url_params Sanitized URL parameter list.
+	 * @return string Bracket-escaped JSON.
+	 */
+	public static function encode_url_params_for_shortcode( array $url_params ): string {
+		$json = wp_json_encode( $url_params );
+		return str_replace( array( '[', ']' ), array( '%5B', '%5D' ), $json );
+	}
+
+	/**
+	 * Decode a URL params shortcode attribute value back into an array.
+	 *
+	 * Supports the bracket-escaped JSON format, the previous full
+	 * URL-encoded JSON format, and the older plain JSON format.
+	 *
+	 * @param mixed $value Raw attribute value.
+	 * @return array Decoded URL parameter list.
+	 */
+	public static function decode_url_params_string( $value ): array {
+		if ( is_array( $value ) ) {
+			return $value;
+		}
+		if ( ! is_string( $value ) || '' === $value ) {
+			return array();
+		}
+
+		// Escape url encoded params.
+		$decoded = str_replace( array( '%5B', '%5D', '%5b', '%5d' ), array( '[', ']', '[', ']' ), $value );
+		$array   = json_decode( $decoded, true );
+		if ( is_array( $array ) ) {
+			return $array;
+		}
+
+		// Legacy full URL-encoded JSON format.
+		$decoded = rawurldecode( $value );
+		$array   = json_decode( $decoded, true );
+		if ( is_array( $array ) ) {
+			return $array;
+		}
+
+		// Older plain JSON fallback.
+		$array = json_decode( $value, true );
+		return is_array( $array ) ? $array : array();
 	}
 
 	/**

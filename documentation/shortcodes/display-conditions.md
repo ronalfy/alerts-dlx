@@ -59,7 +59,7 @@ Show the alert only when specific URL query parameters are present and match. Mu
 In the shortcode builder, this is configured as a list of key/value pairs. In the shortcode, it is passed as an array-style attribute.
 
 ```
-[alertsdlx alert_group="shoelace" conditions_enabled="true" url_params="{\"source\":\"newsletter\"}"]Welcome, newsletter reader[/alertsdlx]
+[alertsdlx alert_group="shoelace" conditions_enabled="true" url_params='%5B{"source":"newsletter"}%5D']Welcome, newsletter reader[/alertsdlx]
 ```
 
 When using the shortcode builder, add each parameter key and value through the URL parameter repeater.

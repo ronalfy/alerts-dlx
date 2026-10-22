@@ -932,12 +932,7 @@ final class ShortcodeBuilder {
 		$sanitized['start_date']            = self::bounded_text( $values['start_date'] ?? '', 19 );
 		$sanitized['end_date']              = self::bounded_text( $values['end_date'] ?? '', 19 );
 		$sanitized['days_of_week']          = self::bounded_text( $values['days_of_week'] ?? '', 20 );
-		$url_params                         = $values['url_params'] ?? array();
-		if ( is_string( $url_params ) && '' !== $url_params ) {
-			$decoded     = json_decode( $url_params, true );
-			$url_params  = is_array( $decoded ) ? $decoded : array();
-		}
-		$sanitized['url_params']            = Functions::sanitize_url_params( is_array( $url_params ) ? $url_params : array() );
+		$sanitized['url_params']            = Functions::sanitize_url_params( Functions::decode_url_params_string( $values['url_params'] ?? array() ) );
 		$sanitized['required_roles']        = self::bounded_text( $values['required_roles'] ?? '', 200 );
 
 		$description = (string) ( $values['alert_description'] ?? '' );
@@ -1050,7 +1045,9 @@ final class ShortcodeBuilder {
 			if ( in_array( $name, self::BOOLEAN_FIELDS, true ) ) {
 				$value = $value ? 'true' : 'false';
 			}
-			if ( is_array( $value ) ) {
+			if ( 'url_params' === $name && is_array( $value ) ) {
+				$value = Functions::encode_url_params_for_shortcode( $value );
+			} elseif ( is_array( $value ) ) {
 				$value = wp_json_encode( $value );
 			}
 			$attributes[ $name ] = (string) $value;
@@ -1094,7 +1091,7 @@ final class ShortcodeBuilder {
 			return new \WP_Error( 'alerts_dlx_builder_runtime', __( 'The AlertsDLX shortcode is unavailable.', 'alerts-dlx' ) );
 		}
 
-		$force_preview_conditions_off = function( $atts ) {
+		$force_preview_conditions_off = function ( $atts ) {
 			$atts['conditions_enabled'] = 'false';
 			return $atts;
 		};
