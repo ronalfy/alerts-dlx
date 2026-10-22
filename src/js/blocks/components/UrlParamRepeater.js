@@ -13,8 +13,16 @@ import { __ } from '@wordpress/i18n';
  * @return {Function} Component.
  */
 const UrlParamRepeater = ( props ) => {
-	const { attributes, setAttributes } = props;
-	const { urlParams } = attributes;
+	const { attributes, setAttributes, value: valueProp, onChange: onChangeProp } = props;
+	const urlParams = valueProp !== undefined ? valueProp : attributes?.urlParams;
+
+	const updateParams = ( newParams ) => {
+		if ( onChangeProp ) {
+			onChangeProp( newParams );
+		} else if ( setAttributes ) {
+			setAttributes( { urlParams: newParams } );
+		}
+	};
 
 	/**
 	 * Iterate through the URL params and show controls.
@@ -32,7 +40,7 @@ const UrlParamRepeater = ( props ) => {
 						onChange={ ( value ) => {
 							const newParams = [ ...urlParams ];
 							newParams[ index ].key = value;
-							setAttributes( { urlParams: newParams } );
+							updateParams( newParams );
 						} }
 					/>
 					<TextControl
@@ -42,7 +50,7 @@ const UrlParamRepeater = ( props ) => {
 						onChange={ ( value ) => {
 							const newParams = [ ...urlParams ];
 							newParams[ index ].value = value;
-							setAttributes( { urlParams: newParams } );
+							updateParams( newParams );
 						} }
 					/>
 					<Button
@@ -52,7 +60,7 @@ const UrlParamRepeater = ( props ) => {
 						onClick={ () => {
 							const newParams = [ ...urlParams ];
 							newParams.splice( index, 1 );
-							setAttributes( { urlParams: newParams } );
+							updateParams( newParams );
 						} }
 					/>
 				</div>
@@ -72,7 +80,7 @@ const UrlParamRepeater = ( props ) => {
 			<Button
 				variant="secondary"
 				onClick={ () => {
-					setAttributes( { urlParams: [ ...urlParams, { key: '', value: '' } ] } );
+					updateParams( [ ...urlParams, { key: '', value: '' } ] );
 				} }
 			>
 				{ __( 'Add Parameter', 'alerts-dlx' ) }

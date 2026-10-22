@@ -7,6 +7,7 @@ import {
 	ColorIndicator,
 	ColorPalette,
 	Dropdown,
+	FormTokenField,
 	SelectControl,
 	TextControl,
 	TextareaControl,
@@ -15,6 +16,8 @@ import {
 import { getAlertColorPalette } from "../../../js/blocks/utils/alert-color-palette";
 import { getIconSetForGroup } from "../../../js/blocks/utils/icon-sets";
 import IconPicker from "../../../js/blocks/components/IconPicker";
+import DayOfWeekSelector from "../../../js/blocks/components/DayOfWeekSelector";
+import UrlParamRepeater from "../../../js/blocks/components/UrlParamRepeater";
 import useMediaUploader from "../../../js/blocks/hooks/useMediaUploader";
 import { isCommitableColor } from "./builder-utils";
 
@@ -300,6 +303,47 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 				values={values}
 				onChange={onChange}
 				onSelectImage={onSelectImage}
+			/>
+		);
+	}
+
+	if ("day_selector" === field.control) {
+		return (
+			<DayOfWeekSelector
+				label={field.label}
+				help={field.help || undefined}
+				value={value || ""}
+				onChange={(nextValue) => onChange(field.name, nextValue)}
+			/>
+		);
+	}
+
+	if ("url_param_repeater" === field.control) {
+		return (
+			<UrlParamRepeater
+				value={value || []}
+				onChange={(nextValue) => onChange(field.name, nextValue)}
+			/>
+		);
+	}
+
+	if ("token_field" === field.control) {
+		const suggestions =
+			"roles" === field.token_source
+				? Object.keys(alertsDlxAdmin?.roles || {})
+				: [];
+		const tokens = value
+			? value.split(",").map((s) => s.trim()).filter(Boolean)
+			: [];
+		return (
+			<FormTokenField
+				label={field.label}
+				help={field.help || undefined}
+				value={tokens}
+				suggestions={suggestions}
+				onChange={(nextTokens) => onChange(field.name, nextTokens.join(","))}
+				placeholder={__("Select roles", "alerts-dlx")}
+				__nextHasNoMarginBottom
 			/>
 		);
 	}

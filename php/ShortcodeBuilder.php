@@ -752,9 +752,9 @@ final class ShortcodeBuilder {
 			array(
 				'name'      => 'days_of_week',
 				'group'     => 'conditions',
-				'control'   => 'text',
+				'control'   => 'day_selector',
 				'label'     => __( 'Days of week', 'alerts-dlx' ),
-				'help'      => __( 'Comma-separated day numbers (0=Sunday, 6=Saturday).', 'alerts-dlx' ),
+				'help'      => __( 'Select the days when the alert should be visible.', 'alerts-dlx' ),
 				'show_when' => array(
 					array(
 						'field'    => 'conditions_enabled',
@@ -765,9 +765,9 @@ final class ShortcodeBuilder {
 			array(
 				'name'      => 'url_params',
 				'group'     => 'conditions',
-				'control'   => 'textarea',
+				'control'   => 'url_param_repeater',
 				'label'     => __( 'URL parameters', 'alerts-dlx' ),
-				'help'      => __( 'JSON array of objects with key and value properties.', 'alerts-dlx' ),
+				'help'      => __( 'Add one or more URL parameters to check for in the URL. Leave the value empty to check for existence only.', 'alerts-dlx' ),
 				'show_when' => array(
 					array(
 						'field'    => 'conditions_enabled',
@@ -789,12 +789,13 @@ final class ShortcodeBuilder {
 				),
 			),
 			array(
-				'name'      => 'required_roles',
-				'group'     => 'conditions',
-				'control'   => 'text',
-				'label'     => __( 'Required roles', 'alerts-dlx' ),
-				'help'      => __( 'Comma-separated WordPress role slugs. Requires require_login.', 'alerts-dlx' ),
-				'show_when' => array(
+				'name'         => 'required_roles',
+				'group'        => 'conditions',
+				'control'      => 'token_field',
+				'token_source' => 'roles',
+				'label'        => __( 'Required roles', 'alerts-dlx' ),
+				'help'         => __( 'Select one or more roles. The alert is shown if the user has any of them.', 'alerts-dlx' ),
+				'show_when'    => array(
 					array(
 						'field'    => 'conditions_enabled',
 						'operator' => 'is_true',
