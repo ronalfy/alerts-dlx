@@ -1,3 +1,7 @@
+---
+title: "Shortcode Builder"
+---
+
 # Shortcode Builder
 
 The Shortcode Builder is a visual admin tool for constructing `[alertsdlx]` shortcodes without memorizing every parameter. It is available under **AlertsDLX → Shortcode Builder** in the WordPress admin.

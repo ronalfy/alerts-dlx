@@ -1,3 +1,7 @@
+---
+title: "Editorial-Only Blocks"
+---
+
 # Editorial-Only Blocks
 
 Singular Alerts can mark an alert block as **Editorial Only** so it appears in the block editor but does not render on the frontend.

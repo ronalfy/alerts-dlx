@@ -1,3 +1,7 @@
+---
+title: "Use Cases"
+---
+
 # Use Cases
 
 Singular Alerts is more than a beautiful alert block in post content. Here are popular ways to use it on your site.

@@ -1,3 +1,7 @@
+---
+title: "Shortcodes"
+---
+
 # Shortcodes
 
 - [alertsdlx Reference](alertsdlx.md)

@@ -1,3 +1,7 @@
+---
+title: "Installation"
+---
+
 # Installation
 
 ## Install from the WordPress Admin

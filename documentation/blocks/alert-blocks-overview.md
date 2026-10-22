@@ -1,3 +1,7 @@
+---
+title: "Alert Blocks Overview"
+---
+
 # Alert Blocks Overview
 
 All four Singular Alerts blocks (Bootstrap, Chakra, Material, Shoelace) share the same core options. This page covers shared behavior; theme-specific alert types and variants are listed at the end.

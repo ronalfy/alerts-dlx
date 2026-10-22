@@ -1,3 +1,7 @@
+---
+title: "Blocks"
+---
+
 # Blocks
 
 - [Finding the Blocks](finding-the-blocks.md)

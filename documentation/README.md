@@ -1,3 +1,7 @@
+---
+title: "Welcome to Singular Alerts"
+---
+
 # Welcome to Singular Alerts
 
 <!-- TODO: image - images/alerts-dlx-editor-slash-command.jpg -->

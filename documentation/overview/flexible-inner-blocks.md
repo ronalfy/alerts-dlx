@@ -1,3 +1,7 @@
+---
+title: "Flexible Inner Blocks"
+---
+
 # Flexible Inner Blocks
 
 By default, Singular Alerts alert blocks contain a single paragraph block for the alert description. **Flexible InnerBlocks (Advanced)** lets you insert any block type inside the alert shell.

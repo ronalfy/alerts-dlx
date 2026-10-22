@@ -1,3 +1,7 @@
+---
+title: "Dismissible Alerts"
+---
+
 # Dismissible Alerts
 
 Singular Alerts supports dismissible alerts with an optional close button. When a visitor dismisses an alert, the plugin can remember that choice using a browser cookie.

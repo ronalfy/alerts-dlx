@@ -1,3 +1,7 @@
+---
+title: "Finding the Blocks"
+---
+
 # Finding the Blocks
 
 Singular Alerts comes with four alert blocks — one for each supported UI library theme.

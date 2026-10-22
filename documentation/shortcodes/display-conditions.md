@@ -1,3 +1,7 @@
+---
+title: "Display Conditions"
+---
+
 # Display Conditions
 
 Display conditions let you show or hide an alert based on date, day of week, URL parameters, or user roles. They are available in the block sidebar and as `[alertsdlx]` shortcode parameters.

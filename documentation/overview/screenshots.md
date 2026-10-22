@@ -1,3 +1,7 @@
+---
+title: "Screenshots"
+---
+
 # Screenshots
 
 ## Frontend Screenshots

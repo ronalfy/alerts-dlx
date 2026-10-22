@@ -1,3 +1,7 @@
+---
+title: "Finding the Admin Settings"
+---
+
 # Finding the Admin Settings
 
 Singular Alerts adds a site-wide settings screen for headline options, enabled block themes, and debug mode.

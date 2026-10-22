@@ -1,3 +1,7 @@
+---
+title: "Shortcode Usage"
+---
+
 # Shortcode Usage
 
 To use Singular Alerts as a shortcode, you can use the following format:

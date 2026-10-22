@@ -1,3 +1,7 @@
+---
+title: "Features"
+---
+
 # Features
 
 For such a small plugin, Singular Alerts comes with many features.

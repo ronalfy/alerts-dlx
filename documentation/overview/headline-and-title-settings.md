@@ -1,3 +1,7 @@
+---
+title: "Headline and Title Settings"
+---
+
 # Headline and Title Settings
 
 Singular Alerts provides site-wide controls for how alert titles are rendered. These settings apply to all alert blocks and shortcodes on your site.

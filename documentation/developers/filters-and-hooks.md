@@ -1,3 +1,7 @@
+---
+title: "Filters and Hooks"
+---
+
 # Filters and Hooks
 
 Singular Alerts exposes WordPress filters for customizing fonts, headlines, block availability, content processing, and branding.

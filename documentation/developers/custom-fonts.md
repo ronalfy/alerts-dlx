@@ -1,3 +1,7 @@
+---
+title: "Custom Fonts"
+---
+
 # Custom Fonts
 
 This section covers how to disable the Singular Alerts Lato font for performance and specify your own fonts for Singular Alerts to use.
