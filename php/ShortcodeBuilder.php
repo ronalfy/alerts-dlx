@@ -1094,10 +1094,18 @@ final class ShortcodeBuilder {
 			return new \WP_Error( 'alerts_dlx_builder_runtime', __( 'The AlertsDLX shortcode is unavailable.', 'alerts-dlx' ) );
 		}
 
+		$force_preview_conditions_off = function( $atts ) {
+			$atts['conditions_enabled'] = 'false';
+			return $atts;
+		};
+		add_filter( 'shortcode_atts_alertsdlx', $force_preview_conditions_off );
+		$preview_html = do_shortcode( $shortcode );
+		remove_filter( 'shortcode_atts_alertsdlx', $force_preview_conditions_off );
+
 		return array(
 			'values'       => $sanitized,
 			'shortcode'    => $shortcode,
-			'preview_html' => do_shortcode( $shortcode ),
+			'preview_html' => $preview_html,
 		);
 	}
 
