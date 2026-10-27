@@ -359,7 +359,7 @@ class Abilities {
 					array( 'icon', 'image' )
 				),
 				'icon'                           => self::string_property(
-					esc_html__( 'Inline SVG markup for the icon. Sanitized before it is written into the shortcode. Included only when icon_source is icon.', 'alerts-dlx' ),
+					esc_html__( 'Catalog icon key such as info or check, or inline SVG markup. Keys resolve from the shipped set for alert_group. Markup is sanitized before it is written into the shortcode. Included only when icon_source is icon.', 'alerts-dlx' ),
 					12000
 				),
 				'image_url'                      => self::string_property(
@@ -432,8 +432,14 @@ class Abilities {
 					'items'       => array(
 						'type'       => 'object',
 						'properties' => array(
-							'key'   => array( 'type' => 'string', 'description' => esc_html__( 'Query parameter name.', 'alerts-dlx' ) ),
-							'value' => array( 'type' => 'string', 'description' => esc_html__( 'Query parameter value. Omit or leave empty to check for existence only.', 'alerts-dlx' ) ),
+							'key'   => array(
+								'type'        => 'string',
+								'description' => esc_html__( 'Query parameter name.', 'alerts-dlx' ),
+							),
+							'value' => array(
+								'type'        => 'string',
+								'description' => esc_html__( 'Query parameter value. Omit or leave empty to check for existence only.', 'alerts-dlx' ),
+							),
 						),
 						'required'   => array( 'key' ),
 					),
@@ -633,7 +639,7 @@ class Abilities {
 			),
 			'icon'                       => array(
 				'type'        => 'string',
-				'description' => esc_html__( 'Inline SVG markup for the icon.', 'alerts-dlx' ),
+				'description' => esc_html__( 'Catalog icon key or sanitized inline SVG markup for the icon.', 'alerts-dlx' ),
 			),
 			'image_url'                  => array(
 				'type'        => 'string',

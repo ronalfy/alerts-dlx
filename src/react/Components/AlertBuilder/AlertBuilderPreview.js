@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 import { Spinner } from "@wordpress/components";
 import sendCommand from "../../Utils/SendCommand";
-import { mergePreviewValues } from "./builder-utils";
+import { applyCustomPreviewIcon, preparePreviewPayload } from "./builder-utils";
 
 /**
  * Debounced production preview via the shortcode builder AJAX endpoint.
@@ -46,17 +46,13 @@ const AlertBuilderPreview = ({
 	);
 
 	const previewPayloadKey = useMemo(() => {
-		const payload = fixture
-			? mergePreviewValues(values, fixture, { iconFallback })
-			: { ...values };
-		if (!payload.unique_id) {
-			payload.unique_id = "alerts-dlx-admin-preview";
-		}
-		return JSON.stringify(payload);
+		return JSON.stringify(
+			preparePreviewPayload(values, fixture, { iconFallback })
+		);
 	}, [values, fixtureKey, iconFallback, fixture]);
 
 	useEffect(() => {
-		const payload = JSON.parse(previewPayloadKey);
+		const { payload, customIcon } = JSON.parse(previewPayloadKey);
 
 		const requestId = requestSequence.current + 1;
 		requestSequence.current = requestId;
@@ -80,12 +76,16 @@ const AlertBuilderPreview = ({
 							__("Could not render the shortcode preview.", "alerts-dlx")
 						);
 					}
-					setPreviewHtml(response.data.data.preview_html);
+					const previewData = applyCustomPreviewIcon(
+						response.data.data,
+						customIcon
+					);
+					setPreviewHtml(previewData.preview_html);
 					if (onPreviewErrorRef.current) {
 						onPreviewErrorRef.current("");
 					}
 					if (onPreviewSuccessRef.current) {
-						onPreviewSuccessRef.current(response.data.data);
+						onPreviewSuccessRef.current(previewData);
 					}
 				})
 				.catch((requestError) => {

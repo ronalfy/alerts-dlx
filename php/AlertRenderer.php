@@ -454,7 +454,7 @@ final class AlertRenderer {
 					?>
 					<div class="alerts-dlx-icon alerts-dlx-icon-frontend" aria-hidden="true">
 						<div class="alerts-dlx-icon-preview">
-							<?php echo Functions::sanitize_icon_svg( (string) $icon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitize_icon_svg() is the SVG escaping boundary. ?>
+							<?php echo Functions::resolve_icon_svg( (string) $icon, (string) $alert_group ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- resolve_icon_svg() is the SVG escaping boundary. ?>
 						</div>
 					</div>
 					<?php

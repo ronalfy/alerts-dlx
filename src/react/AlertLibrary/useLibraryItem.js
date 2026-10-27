@@ -1,7 +1,9 @@
 /* eslint-disable no-undef */
 import apiFetch from "@wordpress/api-fetch";
+import { isRawSvg } from "../../js/blocks/utils/icon-value";
 
 const namespace = "/dlxplugins/alerts-dlx/v1";
+const coreLibraryPath = "/wp/v2/alerts-dlx-library";
 
 /**
  * Fetch library items, optionally filtered by kind.
@@ -29,17 +31,56 @@ export const fetchLibraryItem = (id) =>
 	});
 
 /**
+ * Whether this payload must use core CPT content for a custom SVG.
+ *
+ * @param {Object} payload Item payload.
+ * @return {boolean} Whether the icon is raw SVG.
+ */
+const needsCoreContentSave = (payload) =>
+	isRawSvg(payload?.config?.icon || "");
+
+/**
+ * Create or update a library item through core post REST.
+ *
+ * @param {number} id      Existing post ID or 0.
+ * @param {Object} payload Item payload.
+ * @return {Promise<Object>} Formatted library item.
+ */
+const saveViaCoreRest = async (id, payload) => {
+	const path = id ? `${coreLibraryPath}/${id}` : coreLibraryPath;
+	const response = await apiFetch({
+		path,
+		method: "POST",
+		data: {
+			title: payload.title,
+			slug: payload.slug,
+			status: "publish",
+			content: JSON.stringify(payload.config || {}),
+			meta: {
+				_alerts_dlx_kind: payload.kind,
+				_alerts_dlx_show_in_inserter: Boolean(payload.showInInserter),
+			},
+		},
+	});
+	response.then((saved) => fetchLibraryItem(saved.id));
+};
+
+/**
  * Create a library item.
  *
  * @param {Object} payload Item payload.
  * @return {Promise<Object>} Created item.
  */
-export const createLibraryItem = (payload) =>
-	apiFetch({
+export const createLibraryItem = (payload) => {
+	if (needsCoreContentSave(payload)) {
+		return saveViaCoreRest(0, payload);
+	}
+	return apiFetch({
 		path: `${namespace}/library-items`,
 		method: "POST",
 		data: payload,
 	});
+};
 
 /**
  * Update a library item.
@@ -48,12 +89,16 @@ export const createLibraryItem = (payload) =>
  * @param {Object} payload Item payload.
  * @return {Promise<Object>} Updated item.
  */
-export const updateLibraryItem = (id, payload) =>
-	apiFetch({
+export const updateLibraryItem = (id, payload) => {
+	if (needsCoreContentSave(payload)) {
+		return saveViaCoreRest(id, payload);
+	}
+	return apiFetch({
 		path: `${namespace}/library-items/${id}`,
 		method: "PUT",
 		data: payload,
 	});
+};
 
 /**
  * Delete a library item.

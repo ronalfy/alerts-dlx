@@ -144,8 +144,8 @@ class Blocks {
 			$atts[ $color_field ] = false === $color ? $defaults[ $color_field ] : $color;
 		}
 
-		// User icons are inline SVG. The sanitizer caps length and drops active content.
-		$atts['icon'] = Functions::sanitize_icon_svg( (string) $atts['icon'] );
+		// Catalog keys resolve to SVG. Custom and legacy markup stay sanitized.
+		$atts['icon'] = Functions::resolve_icon_svg( (string) $atts['icon'], (string) $atts['alert_group'] );
 
 		// Numeric shortcode attributes share the builder's documented bounds.
 		// This prevents extreme values from reaching CSS or cookie metadata.
@@ -288,7 +288,7 @@ class Blocks {
 	 */
 	public static function render_alert( array $attributes, string $content = '' ) {
 		$attributes['conditionsEnabled'] = false;
-		$blocks = new self();
+		$blocks                          = new self();
 		return $blocks->frontend( $attributes, $content, null );
 	}
 	/**
