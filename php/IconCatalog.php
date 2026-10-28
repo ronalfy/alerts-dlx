@@ -19,7 +19,10 @@ class IconCatalog {
 	/**
 	 * Decoded catalog, loaded once per request.
 	 *
-	 * @var array<string, array<string, string>>|null
+	 * The shipped file maps a group to icon keys and SVG strings. require()
+	 * only guarantees an array, so callers validate nested values.
+	 *
+	 * @var array|null
 	 */
 	private static $catalog = null;
 
@@ -54,7 +57,7 @@ class IconCatalog {
 	/**
 	 * Return the decoded catalog.
 	 *
-	 * @return array<string, array<string, string>>
+	 * @return array Group map, or an empty array when the file cannot be read.
 	 */
 	public static function get_catalog() {
 		if ( null !== self::$catalog ) {
@@ -77,16 +80,17 @@ class IconCatalog {
 	 * Catalog keys for one alert group.
 	 *
 	 * @param string $alert_group Alert design slug.
-	 * @return string[]
+	 * @return array Icon keys, or an empty array when the group is missing or not a map.
 	 */
 	public static function get_keys( $alert_group ) {
 		$catalog = self::get_catalog();
 		$group   = self::normalize_group( $alert_group );
-		if ( empty( $catalog[ $group ] ) || ! is_array( $catalog[ $group ] ) ) {
+		$icons   = $catalog[ $group ] ?? null;
+		if ( empty( $icons ) || ! is_array( $icons ) ) {
 			return array();
 		}
 
-		return array_keys( $catalog[ $group ] );
+		return array_keys( $icons );
 	}
 
 	/**
@@ -104,8 +108,12 @@ class IconCatalog {
 
 		$catalog = self::get_catalog();
 		$group   = self::normalize_group( $alert_group );
+		$icons   = $catalog[ $group ] ?? null;
+		if ( ! is_array( $icons ) ) {
+			return false;
+		}
 
-		return isset( $catalog[ $group ][ $value ] ) && is_string( $catalog[ $group ][ $value ] );
+		return isset( $icons[ $value ] ) && is_string( $icons[ $value ] );
 	}
 
 	/**
@@ -122,8 +130,12 @@ class IconCatalog {
 
 		$catalog = self::get_catalog();
 		$group   = self::normalize_group( $alert_group );
+		$icons   = $catalog[ $group ] ?? null;
+		if ( ! is_array( $icons ) || ! isset( $icons[ $key ] ) || ! is_string( $icons[ $key ] ) ) {
+			return '';
+		}
 
-		return (string) $catalog[ $group ][ $key ];
+		return $icons[ $key ];
 	}
 
 	/**
