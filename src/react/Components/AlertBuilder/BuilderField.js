@@ -15,7 +15,6 @@ import {
 } from "@wordpress/components";
 import { getAlertColorPalette } from "../../../js/blocks/utils/alert-color-palette";
 import { getIconSetForGroup } from "../../../js/blocks/utils/icon-sets";
-import { isCatalogIconKey } from "../../../js/blocks/utils/icon-value";
 import IconPicker from "../../../js/blocks/components/IconPicker";
 import DayOfWeekSelector from "../../../js/blocks/components/DayOfWeekSelector";
 import UrlParamRepeater from "../../../js/blocks/components/UrlParamRepeater";
@@ -146,40 +145,22 @@ const CompactColorField = ({ field, value, colors, onChange }) => {
 };
 
 const CompactIconField = ({ field, value, alertGroup, onChange }) => {
-	const inputId = `alerts-dlx-${field.name}`;
-	const committedValue = value || "";
 	const icons = getIconSetForGroup(alertGroup);
-	const textareaValue = isCatalogIconKey(committedValue, icons)
-		? ""
-		: committedValue;
 
 	return (
 		<BaseControl
-			id={inputId}
 			label={field.label}
 			help={field.help || undefined}
 			className="alerts-dlx-shortcode-builder-icon-control"
 		>
-			<div className="alerts-dlx-shortcode-builder-icon-row">
-				<div className="alerts-dlx-shortcode-builder-icon-svg">
-					<TextareaControl
-						id={inputId}
-						label={field.label}
-						hideLabelFromVision
-						value={textareaValue}
-						onChange={(nextValue) => onChange(field.name, nextValue || "")}
-						rows={5}
-					/>
-				</div>
-				<IconPicker
-					defaultSvg={committedValue}
-					onChange={(nextValue) => onChange(field.name, nextValue || "")}
-					icons={icons}
-					popoverPlacement="bottom-start"
-					closeOnSelect
-					preventTriggerFocus={false}
-				/>
-			</div>
+			<IconPicker
+				defaultSvg={value || ""}
+				onChange={(nextValue) => onChange(field.name, nextValue || "")}
+				icons={icons}
+				popoverPlacement="bottom-start"
+				closeOnSelect
+				preventTriggerFocus={false}
+			/>
 		</BaseControl>
 	);
 };

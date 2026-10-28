@@ -632,7 +632,7 @@ final class ShortcodeBuilder {
 				'name'      => 'icon',
 				'group'     => 'icon',
 				'control'   => 'icon',
-				'label'     => __( 'Icon SVG', 'alerts-dlx' ),
+				'label'     => __( 'Icon', 'alerts-dlx' ),
 				'show_when' => array(
 					array(
 						'field'    => 'icon_source',

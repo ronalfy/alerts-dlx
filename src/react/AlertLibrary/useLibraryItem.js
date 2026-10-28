@@ -48,7 +48,7 @@ const needsCoreContentSave = (payload) =>
  */
 const saveViaCoreRest = async (id, payload) => {
 	const path = id ? `${coreLibraryPath}/${id}` : coreLibraryPath;
-	const response = await apiFetch({
+	const saved = await apiFetch({
 		path,
 		method: "POST",
 		data: {
@@ -62,7 +62,9 @@ const saveViaCoreRest = async (id, payload) => {
 			},
 		},
 	});
-	response.then((saved) => fetchLibraryItem(saved.id));
+
+	// apiFetch already resolved the post. Return the formatted library item.
+	return fetchLibraryItem(saved.id);
 };
 
 /**
