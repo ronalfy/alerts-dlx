@@ -75,7 +75,7 @@ You can also use a custom **image** as the icon via the image URL option.
 Enable the button in the toolbar or sidebar, then set:
 
 * Button text
-* URL (with improved search for posts and pages)
+* URL (with search across posts, pages, and other public content)
 * Open in new tab
 * `rel` attributes (nofollow, sponsored)
 

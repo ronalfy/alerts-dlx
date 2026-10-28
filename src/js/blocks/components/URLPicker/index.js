@@ -23,7 +23,7 @@ const SEARCH_PAGES_PATH = "/dlxplugins/alerts-dlx/v1/search/pages";
 import isURL, { isRelativePath } from "../../utils/isURL";
 
 /**
- * URL picker for searching posts/pages or pasting a URL.
+ * URL picker for searching public content or pasting a URL.
  *
  * @param {Object} props Incoming props.
  * @return {import('react').JSX.Element} URLPicker component.

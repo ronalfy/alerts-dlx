@@ -114,7 +114,7 @@ add_filter(
 
 ### `alerts_dlx_rest_post_types_to_search`
 
-Filter post types searched when picking button links in the block editor. Default: `post`, `page`.
+Filter post types searched when picking button links in the block editor. Default: public, viewable post types (posts, pages, and public custom post types). Attachments, revisions, and nav menu items are excluded.
 
 ```php
 add_filter(

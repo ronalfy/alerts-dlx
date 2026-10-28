@@ -479,7 +479,55 @@ class Rest {
 	}
 
 	/**
-	 * Search published posts and pages for URL picker suggestions.
+	 * Public post types the button link search can return.
+	 *
+	 * Uses registered public types that are viewable on the front end, which
+	 * includes posts, pages, and public custom post types. Attachments are
+	 * excluded even though they are public. Revisions and nav menu items are
+	 * not public.
+	 *
+	 * @return string[] Post type slugs.
+	 */
+	public static function get_link_search_post_types() {
+		$post_types = get_post_types(
+			array(
+				'public' => true,
+			),
+			'objects'
+		);
+
+		$excluded = array(
+			'attachment',
+			'revision',
+			'nav_menu_item',
+		);
+
+		$searchable = array();
+
+		foreach ( $post_types as $post_type => $post_type_object ) {
+			if ( in_array( $post_type, $excluded, true ) ) {
+				continue;
+			}
+
+			if ( ! is_post_type_viewable( $post_type_object ) ) {
+				continue;
+			}
+
+			$searchable[] = $post_type;
+		}
+
+		if ( empty( $searchable ) ) {
+			$searchable = array(
+				'post',
+				'page',
+			);
+		}
+
+		return $searchable;
+	}
+
+	/**
+	 * Search published public content for URL picker suggestions.
 	 *
 	 * @param \WP_REST_Request $request The REST request object.
 	 * @return \WP_REST_Response
@@ -487,17 +535,30 @@ class Rest {
 	public static function rest_get_pages( $request ) {
 		$search = sanitize_text_field( wp_unslash( urldecode( $request->get_param( 'search' ) ) ) );
 
-		$post_types_to_search = array(
-			'post',
-			'page',
-		);
+		$post_types_to_search = self::get_link_search_post_types();
 
 		/**
-		 * Filter the post types to search.
+		 * Filter the post types searched by the button link picker.
+		 *
+		 * Default is public, viewable post types except attachments.
 		 *
 		 * @param array $post_types_to_search The post types to search.
 		 */
 		$post_types_to_search = apply_filters( 'alerts_dlx_rest_post_types_to_search', $post_types_to_search );
+		$post_types_to_search = array_values(
+			array_unique(
+				array_filter(
+					array_map( 'sanitize_key', (array) $post_types_to_search )
+				)
+			)
+		);
+
+		if ( empty( $post_types_to_search ) ) {
+			$post_types_to_search = array(
+				'post',
+				'page',
+			);
+		}
 
 		$args = array(
 			'post_type'      => $post_types_to_search,
