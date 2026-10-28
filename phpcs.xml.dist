@@ -4,6 +4,7 @@
 
 	<file>alerts-dlx.php</file>
 	<file>includes</file>
+	<exclude-pattern>php/icon-catalog\.php</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
 	<arg name="basepath" value="."/>

@@ -28,8 +28,8 @@ Set the alert title and description. The description can also be entered as the 
 
 ### Icon
 
-* Pick a preset icon from Material, Chakra, or Bootstrap icon sets.
-* Paste custom SVG markup.
+* Open the icon picker and choose a preset from the Material, Chakra, or Bootstrap icon sets.
+* Paste SVG on the picker's Custom SVG tab, then click **Set Icon**.
 * Switch to an image icon and provide an image URL.
 * Adjust **Icon size** and **Icon vertical alignment**.
 

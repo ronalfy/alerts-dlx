@@ -116,7 +116,6 @@ final class AlertAttributes {
 			'icon'                           => '',
 			'base_font_size'                 => 16,
 			'icon_vertical_alignment'        => 'top',
-			'icon_size'                      => 'default',
 			'variant'                        => '',
 			'mode'                           => 'light',
 			'button_text'                    => '',
@@ -409,9 +408,11 @@ final class AlertAttributes {
 			}
 		}
 
-		// Every render path shares one icon result. A second pass still keeps valid icons.
+		// Keys expand here. Legacy and custom markup still pass through the sanitizer.
 		$icon               = $normalized['icon'];
-		$normalized['icon'] = is_string( $icon ) ? Functions::sanitize_icon_svg( $icon ) : '';
+		$normalized['icon'] = is_string( $icon )
+			? Functions::resolve_icon_svg( $icon, (string) $normalized['alert_group'] )
+			: '';
 
 		$normalized['maximum_width_unit']    = in_array( $normalized['maximum_width_unit'], self::get_maximum_width_units(), true ) ? $normalized['maximum_width_unit'] : 'px';
 		$normalized['margin_spacing']        = self::sanitize_margin_spacing( $normalized['margin_spacing'] );

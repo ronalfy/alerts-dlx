@@ -35,6 +35,13 @@ final class AlertLibrary {
 	public const KIND_ALL = 'all';
 
 	/**
+	 * Whether content kses was removed for the current library REST write.
+	 *
+	 * @var bool
+	 */
+	private static $content_kses_removed = false;
+
+	/**
 	 * Register hooks.
 	 */
 	public static function run() {
@@ -42,6 +49,8 @@ final class AlertLibrary {
 		add_action( 'init', array( self::class, 'register_meta' ) );
 		add_filter( 'map_meta_cap', array( self::class, 'map_meta_cap' ), 10, 4 );
 		add_filter( 'update_post_metadata', array( self::class, 'block_global_style_inserter_flag' ), 10, 3 );
+		add_filter( 'rest_pre_insert_' . self::POST_TYPE, array( self::class, 'rest_pre_insert' ), 10, 2 );
+		add_action( 'rest_after_insert_' . self::POST_TYPE, array( self::class, 'restore_content_kses' ) );
 	}
 
 	/**
@@ -58,10 +67,24 @@ final class AlertLibrary {
 				'public'              => false,
 				'show_ui'             => false,
 				'show_in_menu'        => false,
-				'show_in_rest'        => false,
+				'show_in_rest'        => true,
+				'rest_base'           => 'alerts-dlx-library',
 				'exclude_from_search' => true,
 				'capability_type'     => 'post',
 				'map_meta_cap'        => true,
+				'capabilities'        => array(
+					'edit_posts'             => 'manage_options',
+					'edit_others_posts'      => 'manage_options',
+					'publish_posts'          => 'manage_options',
+					'read_private_posts'     => 'manage_options',
+					'create_posts'           => 'manage_options',
+					'delete_posts'           => 'manage_options',
+					'delete_private_posts'   => 'manage_options',
+					'delete_published_posts' => 'manage_options',
+					'delete_others_posts'    => 'manage_options',
+					'edit_private_posts'     => 'manage_options',
+					'edit_published_posts'   => 'manage_options',
+				),
 				// Title plus editor so post_content is a first-class supported field.
 				'supports'            => array( 'title', 'editor' ),
 				'delete_with_user'    => false,
@@ -79,7 +102,7 @@ final class AlertLibrary {
 			array(
 				'type'              => 'string',
 				'single'            => true,
-				'show_in_rest'      => false,
+				'show_in_rest'      => true,
 				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
 				'sanitize_callback' => array( self::class, 'sanitize_kind_meta' ),
 			)
@@ -91,7 +114,7 @@ final class AlertLibrary {
 			array(
 				'type'              => 'boolean',
 				'single'            => true,
-				'show_in_rest'      => false,
+				'show_in_rest'      => true,
 				'auth_callback'     => array( self::class, 'meta_auth_callback' ),
 				'sanitize_callback' => array( self::class, 'sanitize_show_in_inserter_meta' ),
 			)
@@ -247,6 +270,109 @@ final class AlertLibrary {
 
 		$decoded = json_decode( $raw, true );
 		return is_array( $decoded ) ? $decoded : array();
+	}
+
+	/**
+	 * Sanitize library JSON arriving through core post REST.
+	 *
+	 * Custom SVG is allowed here because the client writes `content`, which
+	 * Wordfence typically allowlists on /wp/v2 routes.
+	 *
+	 * @param \stdClass        $prepared Prepared post data.
+	 * @param \WP_REST_Request $request  REST request.
+	 * @return \stdClass|\WP_Error
+	 */
+	public static function rest_pre_insert( $prepared, $request ) {
+		$post_id     = ! empty( $prepared->ID ) ? (int) $prepared->ID : 0;
+		$has_content = $request->has_param( 'content' );
+
+		$meta = $request->get_param( 'meta' );
+		$kind = '';
+		if ( is_array( $meta ) && isset( $meta[ self::META_KIND ] ) ) {
+			$kind = (string) $meta[ self::META_KIND ];
+		}
+		if ( $post_id ) {
+			$kind = $kind ? $kind : self::get_post_kind( $post_id );
+		}
+		$kind = self::sanitize_kind( $kind );
+
+		$title = isset( $prepared->post_title ) ? sanitize_text_field( (string) $prepared->post_title ) : '';
+		if ( '' === $title && $post_id ) {
+			$existing = get_post( $post_id );
+			$title    = $existing ? $existing->post_title : '';
+		}
+		if ( '' === $title ) {
+			return new \WP_Error( 'alerts_dlx_library_title', __( 'A title is required.', 'alerts-dlx' ), array( 'status' => 400 ) );
+		}
+
+		$slug = sanitize_title( (string) ( $prepared->post_name ?? '' ) );
+		if ( '' === $slug && $post_id ) {
+			$existing = get_post( $post_id );
+			$slug     = $existing ? $existing->post_name : '';
+		}
+		if ( '' === $slug ) {
+			$slug = sanitize_title( $title );
+		}
+		if ( ! self::is_slug_unique_for_kind( $slug, $kind, $post_id ) ) {
+			return new \WP_Error( 'alerts_dlx_library_slug', __( 'That slug is already in use for this library type.', 'alerts-dlx' ), array( 'status' => 400 ) );
+		}
+
+		if ( isset( $prepared->post_title ) || ! $post_id ) {
+			$prepared->post_title = $title;
+		}
+		if ( isset( $prepared->post_name ) || ! $post_id ) {
+			$prepared->post_name = $slug;
+		}
+		$prepared->post_status = 'publish';
+
+		// Partial updates must not replace stored JSON with empty defaults.
+		if ( ! $has_content && $post_id ) {
+			return $prepared;
+		}
+
+		$raw_content = $prepared->post_content ?? '';
+		if ( is_array( $raw_content ) && isset( $raw_content['raw'] ) ) {
+			$raw_content = $raw_content['raw'];
+		}
+		$config = self::decode_config_from_storage( (string) $raw_content );
+		if ( empty( $config ) ) {
+			$request_content = $request->get_param( 'content' );
+			if ( is_array( $request_content ) && isset( $request_content['raw'] ) ) {
+				$request_content = $request_content['raw'];
+			}
+			$config = self::decode_config_from_storage( (string) $request_content );
+		}
+
+		$sanitized = self::sanitize_config( $config, $kind );
+		if ( is_wp_error( $sanitized ) ) {
+			return $sanitized;
+		}
+
+		// Core REST slashes once before wp_insert_post; undo the storage slash here.
+		$prepared->post_content = wp_unslash( self::encode_config_for_storage( $sanitized ) );
+		self::suspend_content_kses();
+
+		return $prepared;
+	}
+
+	/**
+	 * Prevent core kses from corrupting sanitized library JSON.
+	 */
+	public static function suspend_content_kses() {
+		if ( has_filter( 'content_save_pre', 'wp_filter_post_kses' ) ) {
+			remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+			self::$content_kses_removed = true;
+		}
+	}
+
+	/**
+	 * Restore content kses after a core REST library write.
+	 */
+	public static function restore_content_kses() {
+		if ( self::$content_kses_removed ) {
+			add_filter( 'content_save_pre', 'wp_filter_post_kses' );
+			self::$content_kses_removed = false;
+		}
 	}
 
 	/**

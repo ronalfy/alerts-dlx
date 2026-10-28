@@ -1,7 +1,13 @@
 /* eslint-disable no-undef */
 import { __ } from "@wordpress/i18n";
-import { renderToStaticMarkup } from "react-dom/server";
 import { getIconSetForGroup } from "../../../js/blocks/utils/icon-sets";
+import {
+	appendIconAttribute,
+	getSampleIconKey,
+	injectPreviewIcon,
+	isRawSvg,
+	resolveIconMarkup,
+} from "../../../js/blocks/utils/icon-value";
 
 export const groupLabels = {
 	content: __("Content", "alerts-dlx"),
@@ -150,7 +156,19 @@ export const isCommitableColor = (raw) => {
 };
 
 /**
- * Sample icon markup for preview when a style stores no icon.
+ * Sample catalog key for preview when a style stores no icon.
+ *
+ * @param {string} alertGroup Alert design slug.
+ * @param {string} alertType  Alert type slug.
+ * @return {string} Catalog key or empty string.
+ */
+export const getSampleIconKeyForType = (alertGroup, alertType) => {
+	const icons = getIconSetForGroup(alertGroup);
+	return getSampleIconKey(icons, alertType, TYPE_TO_ICON_KEY);
+};
+
+/**
+ * Sample icon markup for local display when a style stores no icon.
  *
  * @param {string} alertGroup Alert design slug.
  * @param {string} alertType  Alert type slug.
@@ -158,16 +176,50 @@ export const isCommitableColor = (raw) => {
  */
 export const getSampleIconMarkup = (alertGroup, alertType) => {
 	const icons = getIconSetForGroup(alertGroup);
-	const key = TYPE_TO_ICON_KEY[alertType] || alertType;
-	const entry = icons[key] || icons.info || Object.values(icons)[0];
-	if (!entry?.icon) {
-		return "";
+	return resolveIconMarkup(getSampleIconKeyForType(alertGroup, alertType), icons);
+};
+
+/**
+ * Prepare a preview payload that never sends raw SVG over admin-ajax.
+ *
+ * @param {Object} storedValues Config values.
+ * @param {Object} fixture       Preview-only overlay.
+ * @param {Object} options       Options.
+ * @return {{payload: Object, customIcon: string}} Wire payload and custom SVG.
+ */
+export const preparePreviewPayload = (storedValues, fixture = null, options = {}) => {
+	const payload = fixture
+		? mergePreviewValues(storedValues, fixture, options)
+		: { ...(storedValues || {}) };
+	if (!payload.unique_id) {
+		payload.unique_id = "alerts-dlx-admin-preview";
 	}
-	try {
-		return renderToStaticMarkup(entry.icon);
-	} catch (error) {
-		return "";
+
+	let customIcon = "";
+	if (isRawSvg(payload.icon)) {
+		customIcon = payload.icon;
+		payload.icon = getSampleIconKeyForType(payload.alert_group, payload.alert_type);
 	}
+
+	return { payload, customIcon };
+};
+
+/**
+ * Apply a custom icon to server-rendered preview HTML and shortcode.
+ *
+ * @param {Object} data       Server preview payload.
+ * @param {string} customIcon Custom SVG markup.
+ * @return {Object} Preview payload with injected icon.
+ */
+export const applyCustomPreviewIcon = (data, customIcon) => {
+	if (!customIcon || !data) {
+		return data;
+	}
+	return {
+		...data,
+		preview_html: injectPreviewIcon(data.preview_html || "", customIcon),
+		shortcode: appendIconAttribute(data.shortcode || "", customIcon),
+	};
 };
 
 /**
@@ -217,7 +269,7 @@ export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => 
 		merged.unique_id = fixture.unique_id || "alerts-dlx-admin-preview";
 	}
 	if (options.iconFallback && !merged.icon && !merged.image_url) {
-		const sample = getSampleIconMarkup(merged.alert_group, merged.alert_type);
+		const sample = getSampleIconKeyForType(merged.alert_group, merged.alert_type);
 		if (sample) {
 			merged.icon = sample;
 		}

@@ -15,9 +15,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once dirname( __DIR__ ) . '/php/SvgSanitizer.php';
+require_once dirname( __DIR__ ) . '/php/IconCatalog.php';
 require_once dirname( __DIR__ ) . '/php/Functions.php';
 
 use DLXPlugins\AlertsDLX\Functions;
+use DLXPlugins\AlertsDLX\IconCatalog;
 use DLXPlugins\AlertsDLX\SvgSanitizer;
 
 $failures = 0;
@@ -95,6 +97,37 @@ if ( '' !== SvgSanitizer::sanitize( '<div><span>nope</span></div>' ) ) {
 }
 if ( '' !== SvgSanitizer::sanitize( str_repeat( '<svg></svg>', 2000 ) ) ) {
 	alerts_dlx_svg_fail( 'length cap', 'oversized markup was not rejected.' );
+}
+
+if ( 'info' !== Functions::sanitize_icon_value( 'info', 'chakra' ) ) {
+	alerts_dlx_svg_fail( 'catalog persist', 'chakra info key was not kept.' );
+}
+$resolved_info = Functions::resolve_icon_svg( 'info', 'chakra' );
+if ( false === strpos( $resolved_info, '<svg' ) || false === strpos( $resolved_info, '<path' ) ) {
+	alerts_dlx_svg_fail( 'catalog resolve', 'chakra info key did not expand to SVG: ' . $resolved_info );
+}
+if ( Functions::resolve_icon_svg( $good, 'chakra' ) !== $kept ) {
+	alerts_dlx_svg_fail( 'legacy resolve', 'legacy SVG did not survive resolve_icon_svg().' );
+}
+if ( ! IconCatalog::is_key( 'shoelace', 'check' ) ) {
+	alerts_dlx_svg_fail( 'shoelace alias', 'shoelace did not reuse the bootstrap catalog.' );
+}
+
+foreach ( IconCatalog::get_catalog() as $group => $icons ) {
+	if ( ! is_array( $icons ) ) {
+		alerts_dlx_svg_fail( 'catalog group', $group . ' is not an icon map.' );
+		continue;
+	}
+	foreach ( $icons as $key => $svg ) {
+		if ( ! is_string( $svg ) || false !== strpos( $svg, '={' ) ) {
+			alerts_dlx_svg_fail( 'catalog jsx', $group . '/' . $key . ' still contains JSX attributes.' );
+			continue;
+		}
+		$resolved = Functions::resolve_icon_svg( (string) $key, (string) $group );
+		if ( false === strpos( $resolved, '<svg' ) || ! preg_match( '/<(path|polygon|polyline|circle|ellipse|line|rect)\b/', $resolved ) ) {
+			alerts_dlx_svg_fail( 'catalog resolve all', $group . '/' . $key . ' did not expand to SVG: ' . $resolved );
+		}
+	}
 }
 
 if ( $failures > 0 ) {

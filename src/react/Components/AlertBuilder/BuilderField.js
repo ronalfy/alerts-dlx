@@ -145,36 +145,22 @@ const CompactColorField = ({ field, value, colors, onChange }) => {
 };
 
 const CompactIconField = ({ field, value, alertGroup, onChange }) => {
-	const inputId = `alerts-dlx-${field.name}`;
-	const committedValue = value || "";
+	const icons = getIconSetForGroup(alertGroup);
 
 	return (
 		<BaseControl
-			id={inputId}
 			label={field.label}
 			help={field.help || undefined}
 			className="alerts-dlx-shortcode-builder-icon-control"
 		>
-			<div className="alerts-dlx-shortcode-builder-icon-row">
-				<div className="alerts-dlx-shortcode-builder-icon-svg">
-					<TextareaControl
-						id={inputId}
-						label={field.label}
-						hideLabelFromVision
-						value={committedValue}
-						onChange={(nextValue) => onChange(field.name, nextValue || "")}
-						rows={5}
-					/>
-				</div>
-				<IconPicker
-					defaultSvg={committedValue}
-					onChange={(nextValue) => onChange(field.name, nextValue || "")}
-					icons={getIconSetForGroup(alertGroup)}
-					popoverPlacement="bottom-start"
-					closeOnSelect
-					preventTriggerFocus={false}
-				/>
-			</div>
+			<IconPicker
+				defaultSvg={value || ""}
+				onChange={(nextValue) => onChange(field.name, nextValue || "")}
+				icons={icons}
+				popoverPlacement="bottom-start"
+				closeOnSelect
+				preventTriggerFocus={false}
+			/>
 		</BaseControl>
 	);
 };

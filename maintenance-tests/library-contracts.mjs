@@ -217,6 +217,36 @@ assert.match(
 	/disabled = false/,
 	'Icon picker accepts a disabled prop'
 );
+assert.match(
+	alertLibrary,
+	/rest_base'\s+=>\s+'alerts-dlx-library'/,
+	'Library CPT exposes a core REST base for custom SVG writes'
+);
+assert.doesNotMatch(
+	alertLibrary,
+	/'edit_post'\s+=>\s+'manage_options'/,
+	'Library CPT does not alias edit_post to manage_options'
+);
+assert.doesNotMatch(
+	alertLibrary,
+	/'delete_post'\s+=>\s+'manage_options'/,
+	'Library CPT does not alias delete_post to manage_options'
+);
+assert.match(
+	alertLibrary,
+	/wp_unslash\(\s*self::encode_config_for_storage\(\s*\$sanitized\s*\)\s*\)/,
+	'Core REST writes sanitized config through the storage encoder'
+);
+assert.match(
+	rest,
+	/reject_plugin_route_svg/,
+	'Plugin library routes reject raw SVG payloads'
+);
+assert.match(
+	fs.readFileSync('src/react/AlertLibrary/useLibraryItem.js', 'utf8'),
+	/wp\/v2\/alerts-dlx-library/,
+	'Library client writes custom SVG through core CPT content'
+);
 assert.match(libraryUtils, /GLOBAL_STYLE_BLOCK_KEYS/, 'Editor maps global-style keys explicitly');
 assert.match(libraryUtils, /SNAPSHOT_BLOCK_KEYS/, 'Editor maps snapshot keys explicitly');
 assert.match(libraryUtils, /colorSecondary/, 'Editor maps secondary button color keys');

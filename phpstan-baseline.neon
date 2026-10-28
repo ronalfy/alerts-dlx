@@ -25,12 +25,6 @@ parameters:
 			path: php/Admin.php
 
 		-
-			message: '#^Array has 2 duplicate keys with value ''icon_size'' \(''icon_size'', ''icon_size''\)\.$#'
-			identifier: array.duplicateKey
-			count: 1
-			path: php/AlertAttributes.php
-
-		-
 			message: '#^Call to function is_array\(\) with array will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 3

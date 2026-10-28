@@ -632,7 +632,7 @@ final class ShortcodeBuilder {
 				'name'      => 'icon',
 				'group'     => 'icon',
 				'control'   => 'icon',
-				'label'     => __( 'Icon SVG', 'alerts-dlx' ),
+				'label'     => __( 'Icon', 'alerts-dlx' ),
 				'show_when' => array(
 					array(
 						'field'    => 'icon_source',
@@ -945,7 +945,7 @@ final class ShortcodeBuilder {
 		if ( strlen( $icon ) > self::MAX_ICON_LENGTH ) {
 			return new \WP_Error( 'alerts_dlx_builder_icon', __( 'The icon markup is too long.', 'alerts-dlx' ) );
 		}
-		$sanitized['icon'] = Functions::sanitize_icon_svg( $icon );
+		$sanitized['icon'] = Functions::sanitize_icon_value( $icon, $sanitized['alert_group'] );
 
 		foreach ( self::COLOR_FIELDS as $color_field ) {
 			$color = self::sanitize_color_value( $values[ $color_field ] ?? '' );
@@ -1123,8 +1123,12 @@ final class ShortcodeBuilder {
 				$result = self::build_preview( $result );
 			}
 		} elseif ( 'render' === $operation ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize_values() is the sanitizer for this payload.
 			$form_data = isset( $_POST['form_data'] ) && is_array( $_POST['form_data'] ) ? wp_unslash( $_POST['form_data'] ) : array();
-			$result    = self::build_preview( $form_data );
+			if ( isset( $form_data['icon'] ) && Functions::is_raw_svg_icon( (string) $form_data['icon'] ) ) {
+				unset( $form_data['icon'] );
+			}
+			$result = self::build_preview( $form_data );
 		} else {
 			$result = new \WP_Error( 'alerts_dlx_builder_operation', __( 'Unsupported shortcode builder operation.', 'alerts-dlx' ) );
 		}

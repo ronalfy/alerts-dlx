@@ -1,7 +1,7 @@
 import "./editor.scss";
 
 import { __ } from "@wordpress/i18n";
-import { renderToString, useEffect, useRef, useState } from "@wordpress/element";
+import { useEffect, useRef, useState } from "@wordpress/element";
 import {
   BaseControl,
   TextareaControl,
@@ -13,21 +13,22 @@ import {
 } from "@wordpress/components";
 import { closeSmall, image as imageIcon } from "@wordpress/icons";
 import sanitizeSVG from "../../utils/sanitize-svg";
+import { isRawSvg, resolveIconMarkup } from "../../utils/icon-value";
 
 /**
- * Apply an SVG value through the supported picker callbacks.
+ * Apply an icon key or SVG value through the supported picker callbacks.
  *
- * @param {string}   svg            Sanitized or serialized SVG markup.
- * @param {Function} [onChange]     Direct SVG change callback.
+ * @param {string}   value           Catalog key or sanitized SVG markup.
+ * @param {Function} [onChange]      Direct icon change callback.
  * @param {Function} [setAttributes] Block setAttributes callback.
  */
-const applyIconValue = (svg, onChange, setAttributes) => {
+const applyIconValue = (value, onChange, setAttributes) => {
   if (typeof onChange === "function") {
-    onChange(svg);
+    onChange(value);
   }
   if (typeof setAttributes === "function") {
     setAttributes({
-      icon: svg,
+      icon: value,
     });
   }
 };
@@ -37,7 +38,7 @@ const applyIconValue = (svg, onChange, setAttributes) => {
  *
  * @param {Object}   props              Component props.
  * @param {Object}   props.icons        Preset icon map.
- * @param {Function} props.onSelect     Callback with the selected SVG string.
+ * @param {Function} props.onSelect     Callback with the selected catalog key.
  * @return {import('react').JSX.Element} Icons tab content.
  */
 const IconsTab = ({ icons, onSelect }) => {
@@ -55,7 +56,7 @@ const IconsTab = ({ icons, onSelect }) => {
                   event.preventDefault();
                 }}
                 onClick={() => {
-                  onSelect(renderToString(icons[svg].icon));
+                  onSelect(svg);
                 }}
               >
                 <span className="editor-block-types-list__item-icon">
@@ -130,7 +131,9 @@ const CustomIconTab = ({
 };
 
 const IconPicker = (props) => {
-  const [selectedIcon, setSelectedIcon] = useState(props.defaultSvg);
+  const [selectedIcon, setSelectedIcon] = useState(
+    isRawSvg(props.defaultSvg) ? props.defaultSvg : ""
+  );
   const [isPopoverVisible, setIsPopOverVisible] = useState(false);
   const [popoverRef, setPopoverRef] = useState(null);
   const [initialTabName] = useState("icons");
@@ -145,9 +148,10 @@ const IconPicker = (props) => {
     disabled = false,
   } = props;
   const returnFocusOnCloseRef = useRef(false);
+  const previewMarkup = resolveIconMarkup(defaultSvg, icons);
 
   useEffect(() => {
-    setSelectedIcon(defaultSvg);
+    setSelectedIcon(isRawSvg(defaultSvg) ? defaultSvg : "");
   }, [defaultSvg]);
 
   const closeIconPopover = () => {
@@ -214,10 +218,10 @@ const IconPicker = (props) => {
             onMouseDown={onIconPreviewMouseDown}
             onKeyDown={onIconPreviewKeyDown}
           >
-            {defaultSvg ? (
+            {previewMarkup ? (
               <span
                 dangerouslySetInnerHTML={{
-                  __html: sanitizeSVG(defaultSvg),
+                  __html: sanitizeSVG(previewMarkup),
                 }}
               />
             ) : (

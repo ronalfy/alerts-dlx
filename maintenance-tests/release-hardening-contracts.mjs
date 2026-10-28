@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -18,6 +19,13 @@ const builderUtils = read('src/react/Components/AlertBuilder/builder-utils.js');
 const builderInspector = read('src/react/Components/AlertBuilder/AlertBuilderInspector.js');
 const builderPreview = read('src/react/Components/AlertBuilder/AlertBuilderPreview.js');
 const dismiss = read('src/js/dismiss/index.js');
+const iconPicker = read('src/js/blocks/components/IconPicker/index.js');
+const iconValue = read('src/js/blocks/utils/icon-value.js');
+const iconCatalog = JSON.parse(read('php/icon-catalog.json'));
+const iconCatalogLoader = read('php/IconCatalog.php');
+const bootstrapIcons = read('src/js/blocks/components/icons/BootstrapIcons.js');
+const chakraIcons = read('src/js/blocks/components/icons/ChakraIcons.js');
+const materialIcons = read('src/js/blocks/components/icons/MaterialIcons.js');
 
 let assertions = 0;
 const contains = (source, needle, label) => {
@@ -48,8 +56,10 @@ contains(svgSanitizer, 'private const MAX_BYTES = 12000;', 'Icon SVG sanitizer c
 contains(svgSanitizer, 'LIBXML_NONET', 'Icon SVG sanitizer blocks network access while parsing');
 assert.equal(svgSanitizer.includes('LIBXML_NOENT'), false, 'Icon SVG sanitizer does not enable entity substitution');
 assertions += 1;
-contains(blocks, "Functions::sanitize_icon_svg( (string) $atts['icon'] )", 'Shortcode icon markup is sanitized');
-contains(php, 'Functions::sanitize_icon_svg( $icon )', 'Builder stores sanitized icon markup');
+contains(blocks, "Functions::resolve_icon_svg( (string) $atts['icon'], (string) $atts['alert_group'] )", 'Shortcode icon keys resolve to sanitized SVG');
+contains(php, 'Functions::sanitize_icon_value( $icon, $sanitized[\'alert_group\'] )', 'Builder persists catalog keys or sanitized markup');
+contains(functions, 'function sanitize_icon_value( string $icon, string $alert_group )', 'Persisted icons keep catalog keys');
+contains(functions, 'function resolve_icon_svg( string $icon, string $alert_group )', 'Render expands catalog keys to SVG');
 contains(blocks, "min( 5000, max( 1, (int) $atts['maximum_width'] ) )", 'Shortcode width is bounded');
 contains(blocks, "min( 96, max( 8, (int) $atts['base_font_size'] ) )", 'Shortcode font size is bounded');
 contains(blocks, "min( 31536000, max( 0, (int) $atts['close_button_expiration'] ) )", 'Shortcode cookie lifetime is bounded');
@@ -86,6 +96,41 @@ contains(php, "'field'    => 'icon_source',\n\t\t\t\t\t\t'operator' => 'equals',
 contains(php, "'field'    => 'icon_source',\n\t\t\t\t\t\t'operator' => 'equals',\n\t\t\t\t\t\t'value'    => 'image',", 'Image fields are gated on icon source');
 contains(php, "'field'    => 'close_button_enabled',\n\t\t\t\t\t\t'operator' => 'is_true',", 'Dismiss duration is gated on the dismiss toggle');
 contains(php, "'field'    => 'alert_type',\n\t\t\t\t\t\t'operator' => 'equals',\n\t\t\t\t\t\t'value'    => 'custom',", 'Custom colors are gated on alert type');
+contains(iconPicker, 'onSelect(svg);', 'Icon picker writes catalog keys');
+contains(iconPicker, 'resolveIconMarkup(defaultSvg, icons)', 'Icon picker resolves keys for preview');
+contains(builderUtils, 'export const preparePreviewPayload', 'Preview helper strips raw SVG from admin-ajax payloads');
+contains(builderPreview, 'preparePreviewPayload(values, fixture, { iconFallback })', 'Preview uses the WAF-safe payload helper');
+contains(iconValue, 'export const isRawSvg', 'Shared helper detects raw SVG');
+contains(builderUtils, 'if (isRawSvg(payload.icon))', 'Preview helper replaces raw SVG before admin-ajax');
+contains(builderUtils, 'payload.icon = getSampleIconKeyForType', 'Preview helper sends a catalog key instead of markup');
+assert.doesNotMatch(
+	JSON.stringify(iconCatalog),
+	/=\{\s*\d+\s*\}/,
+	'Catalog SVG is HTML markup, not JSX expressions'
+);
+assertions += 1;
+
+const jsIconKeys = (source) => [
+	...new Set([...source.matchAll(/^\t([A-Za-z][A-Za-z0-9]*): \{/gm)].map((match) => match[1])),
+];
+const catalogGroups = {
+	bootstrap: jsIconKeys(bootstrapIcons),
+	chakra: jsIconKeys(chakraIcons),
+	material: jsIconKeys(materialIcons),
+};
+contains(iconCatalogLoader, 'require $path', 'PHP catalog loads from a return file');
+const phpCatalog = JSON.parse(
+	execFileSync(
+		'php',
+		['-r', 'define("ABSPATH", "1"); echo json_encode(require "php/icon-catalog.php");'],
+		{ encoding: 'utf8', cwd: root }
+	)
+);
+for (const [group, keys] of Object.entries(catalogGroups)) {
+	assert.deepEqual(Object.keys(iconCatalog[group] || {}), keys, `${group} catalog keys match the JS icon set`);
+	assert.deepEqual(Object.keys(phpCatalog[group] || {}), keys, `${group} PHP catalog keys match the JS icon set`);
+	assertions += 2;
+}
 
 contains(dismiss, 'try {\n\t\treturn decodeURIComponent( match[ 1 ] );', 'Malformed cookies fail closed');
 contains(dismiss, 'const boundedMaxAge = Math.min( 31536000, Math.max( 1, maxAge ) );', 'Client cookie lifetime is bounded');

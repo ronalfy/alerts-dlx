@@ -588,6 +588,60 @@ class Functions {
 	}
 
 	/**
+	 * Whether an icon value is inline SVG markup.
+	 *
+	 * @param string $icon Stored icon value.
+	 * @return bool
+	 */
+	public static function is_raw_svg_icon( string $icon ): bool {
+		return IconCatalog::is_raw_svg( $icon );
+	}
+
+	/**
+	 * Persist an icon as a catalog key or sanitized custom SVG.
+	 *
+	 * @param string $icon        Raw icon value.
+	 * @param string $alert_group Alert design slug.
+	 * @return string Catalog key, sanitized SVG, or empty string.
+	 */
+	public static function sanitize_icon_value( string $icon, string $alert_group ): string {
+		$icon = trim( $icon );
+		if ( '' === $icon ) {
+			return '';
+		}
+		if ( IconCatalog::is_key( $alert_group, $icon ) ) {
+			return $icon;
+		}
+		if ( IconCatalog::is_raw_svg( $icon ) ) {
+			return self::sanitize_icon_svg( $icon );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Expand a stored icon to sanitized SVG for output.
+	 *
+	 * Catalog keys resolve from the shipped set. Legacy and custom markup
+	 * still pass through the SVG sanitizer.
+	 *
+	 * @param string $icon        Stored icon value.
+	 * @param string $alert_group Alert design slug.
+	 * @return string Sanitized SVG or empty string.
+	 */
+	public static function resolve_icon_svg( string $icon, string $alert_group ): string {
+		$icon = trim( $icon );
+		if ( '' === $icon ) {
+			return '';
+		}
+		if ( IconCatalog::is_key( $alert_group, $icon ) ) {
+			return self::sanitize_icon_svg( IconCatalog::get_svg( $alert_group, $icon ) );
+		}
+
+		return self::sanitize_icon_svg( $icon );
+	}
+
+	/**
 	 * Sanitize URL parameter array from block or shortcode input.
 	 *
 	 * @param mixed $value Raw URL params.

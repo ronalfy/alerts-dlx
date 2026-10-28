@@ -197,6 +197,28 @@ class Rest {
 	}
 
 	/**
+	 * Reject raw SVG on plugin library routes.
+	 *
+	 * Custom markup must be written through core CPT content.
+	 *
+	 * @param array $params Request params.
+	 * @return true|\WP_Error
+	 */
+	public static function reject_plugin_route_svg( array $params ) {
+		$config = isset( $params['config'] ) && is_array( $params['config'] ) ? $params['config'] : array();
+		$icon   = isset( $config['icon'] ) ? (string) $config['icon'] : '';
+		if ( Functions::is_raw_svg_icon( $icon ) ) {
+			return new \WP_Error(
+				'alerts_dlx_library_icon_route',
+				__( 'Custom SVG icons must be saved through the library content route.', 'alerts-dlx' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		return true;
+	}
+
+	/**
 	 * List library items for one kind, or every kind when omitted.
 	 *
 	 * @param \WP_REST_Request $request REST request.
@@ -238,6 +260,11 @@ class Rest {
 		$params = $request->get_json_params();
 		if ( ! is_array( $params ) ) {
 			$params = array();
+		}
+
+		$icon_error = self::reject_plugin_route_svg( $params );
+		if ( is_wp_error( $icon_error ) ) {
+			return $icon_error;
 		}
 
 		$kind  = AlertLibrary::sanitize_kind( (string) ( $params['kind'] ?? AlertLibrary::KIND_GLOBAL_STYLE ) );
@@ -299,6 +326,11 @@ class Rest {
 		$params = $request->get_json_params();
 		if ( ! is_array( $params ) ) {
 			$params = array();
+		}
+
+		$icon_error = self::reject_plugin_route_svg( $params );
+		if ( is_wp_error( $icon_error ) ) {
+			return $icon_error;
 		}
 
 		$kind = AlertLibrary::get_post_kind( $post_id );
