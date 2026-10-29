@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.9
 Tested up to: 7.1
-Stable tag: 3.2.1
+Stable tag: 3.2.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -15,7 +15,7 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 
 Elevate your WordPress site's content and user engagement with Singular Alerts, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, Singular Alerts features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 
-> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/alertsdlx/">Docs</a>
+> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/singular-alerts/">Docs</a>
 
 Singular Alerts is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert notifications out of blocks, and is flexible enough to quickly match most theme designs. Stop digging for that alert in a block suite, and install a dedicated notifications solution that works almost anywhere.
 
@@ -177,6 +177,21 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Changelog ==
 
+= 3.2.0 =
+* Released 2026-10-27
+* New: Added a secondary button, with its own label, link, and colors. Turn it on from the block toolbar or Settings sidebar. Custom colors cover the fill, hover, and text.
+* New: Added an icon size option (small, default, medium, large, and extra large) in the block editor, shortcodes, and global styles.
+* New: Added display conditions so an alert can be limited by date range, day of week, URL parameters, or logged-in user and role. The same options are in the block sidebar, shortcodes, and the shortcode builder, and conditions are checked in the browser so they work with full-page caching.
+* New: Shortcodes and the shortcode builder can use a published global style. Appearance comes from that style, and editing it updates every shortcode that uses its slug. Title, description, buttons, dismiss, display conditions, and alignment stay on the shortcode.
+* Update: Dismissed alerts show again when the title, description, or button text changes.
+* Update: Enabling Debug Mode shows the older alert blocks in the block inserter again.
+* Update: The button link picker now searches public post types, including posts, pages, and custom post types.
+* Fix: Shoelace left accent icons were forced into a circle.
+* Fix: Shortcodes with URL parameter conditions could fail to parse. Bracket characters in those parameters are now escaped.
+* Fix: Saving a global style or preset with a custom SVG icon could fail in the admin even after the item was stored.
+* Fix: Preset previews in the block editor could show a blank description. Sample title, description, and button text now appear only when the alert has not set them, and that sample copy is not saved onto the block.
+* Fix: Firewalls such as Wordfence could flag the plugin because built-in icons were stored as raw SVG. Built-in icons are now stored as keys, and custom SVG is still supported.
+
 = 3.1.0 =
 * Released 2026-10-18
 * New: Added two AI abilities, one being a shortcode generator, and the other to list available global styles.
@@ -319,6 +334,9 @@ Please report security bugs found in the source code of the plugin through the [
 * Initial release.
 
 == Upgrade Notice ==
+
+= 3.2.0 =
+Added a secondary button, icon size options, and display conditions for date range, day of week, URL parameters, and logged-in users. Shortcodes can use a published global style, and the button link picker searches public post types. Fixes include dismissed alerts showing again after text changes, firewalls flagging icon SVG, preset previews, saving styles and presets with a custom icon, Shoelace left accent icons, and shortcode URL parameters.
 
 = 3.1.0 =
 New abilities API for generating shortcodes and listing global styles. Fixes to the link control component in the block editor where relative paths couldn't be saved and the popover wouldn't close when losing focus.
