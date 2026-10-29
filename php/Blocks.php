@@ -104,6 +104,7 @@ class Blocks {
 	public function shortcode( $atts = array(), $content = '' ) {
 		$defaults = AlertAttributes::get_shortcode_defaults();
 		$atts     = shortcode_atts( $defaults, $atts, 'alertsdlx' );
+		$atts     = AlertLibrary::apply_global_style_slug_to_shortcode_atts( $atts );
 
 		// Sanitize values used before the shared renderer. Inline CSS is emitted
 		// below, so waiting for renderer normalization would be too late.
@@ -248,6 +249,9 @@ class Blocks {
 			</style>
 			<?php
 		}
+
+		// The slug was applied above. The renderer still links blocks by globalStyleId.
+		unset( $atts['global_style'] );
 
 		// Convert atts to camelCase.
 		$new_atts = array();

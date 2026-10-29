@@ -270,6 +270,10 @@ class Abilities {
 					esc_html__( 'Alert body. Limited HTML is allowed. Placed between the shortcode tags. Nested [alertsdlx] tags are rejected. The description is shown only when this is not empty.', 'alerts-dlx' ),
 					20000
 				),
+				'global_style'                   => self::string_property(
+					esc_html__( 'Slug of a published global style. When it resolves, appearance properties are omitted and come from that style at render time. Title, description, buttons, dismiss, conditions, and alignment stay on the shortcode.', 'alerts-dlx' ),
+					200
+				),
 				'alert_group'                    => self::enum_property(
 					esc_html__( 'Design system. Defaults to chakra when omitted.', 'alerts-dlx' ),
 					array_keys( $themes )

@@ -126,8 +126,12 @@ final class ShortcodeBuilder {
 		$schema_names  = array_keys( AlertAttributes::get_schema() );
 		$default_names = array_keys( AlertAttributes::get_shortcode_defaults() );
 		$input_names   = array_values( array_diff( $schema_names, self::DERIVED_FIELDS ) );
+		$input_names   = array_values( array_intersect( $input_names, $default_names ) );
 
-		return array_values( array_intersect( $input_names, $default_names ) );
+		// Shortcode-only live reference. It stays out of the block attribute schema.
+		$input_names[] = 'global_style';
+
+		return array_values( array_unique( $input_names ) );
 	}
 
 	/**
@@ -407,6 +411,19 @@ final class ShortcodeBuilder {
 		}
 
 		$fields = array(
+			array(
+				'name'    => 'global_style',
+				'group'   => 'appearance',
+				'control' => 'select',
+				'label'   => __( 'Global style', 'alerts-dlx' ),
+				'help'    => __( 'Use a published global style for appearance. Clear it to edit appearance on this shortcode.', 'alerts-dlx' ),
+				'options' => array(
+					array(
+						'value' => '',
+						'label' => __( 'None', 'alerts-dlx' ),
+					),
+				),
+			),
 			array(
 				'name'    => 'alert_title',
 				'group'   => 'content',
@@ -923,6 +940,7 @@ final class ShortcodeBuilder {
 		$sanitized['image_id']                = self::bounded_integer( $values['image_id'] ?? $defaults['image_id'], 0, 2147483647 );
 
 		$sanitized['unique_id']             = sanitize_html_class( (string) ( $values['unique_id'] ?? '' ) );
+		$sanitized['global_style']          = sanitize_title( (string) ( $values['global_style'] ?? '' ) );
 		$sanitized['alert_title']           = self::bounded_text( $values['alert_title'] ?? '', 300 );
 		$sanitized['button_text']           = self::bounded_text( $values['button_text'] ?? '', 200 );
 		$sanitized['button_url']            = esc_url_raw( self::bounded_text( $values['button_url'] ?? '', 2048 ) );
@@ -970,6 +988,16 @@ final class ShortcodeBuilder {
 			}
 		}
 		$sanitized['extra_attributes'] = $extra_attributes;
+
+		// A resolved style replaces appearance in the form values. Generation omits those keys.
+		$linked_style = AlertLibrary::get_global_style_config_by_slug( $sanitized['global_style'] );
+		if ( ! empty( $linked_style ) ) {
+			foreach ( self::get_global_style_input_names() as $name ) {
+				if ( array_key_exists( $name, $linked_style ) ) {
+					$sanitized[ $name ] = $linked_style[ $name ];
+				}
+			}
+		}
 
 		return $sanitized;
 	}
@@ -1030,8 +1058,14 @@ final class ShortcodeBuilder {
 			$fields_by_name[ $field['name'] ] = $field;
 		}
 
+		// Resolved styles stay a live slug. Unknown slugs keep explicit appearance attributes.
+		$linked_style_names = array();
+		if ( '' !== (string) $values['global_style'] && ! empty( AlertLibrary::get_global_style_config_by_slug( $values['global_style'] ) ) ) {
+			$linked_style_names = array_flip( self::get_global_style_input_names() );
+		}
+
 		foreach ( self::get_input_names() as $name ) {
-			if ( 'alert_description' === $name ) {
+			if ( 'alert_description' === $name || isset( $linked_style_names[ $name ] ) ) {
 				continue;
 			}
 			if ( isset( $fields_by_name[ $name ] ) && ! self::field_is_visible( $fields_by_name[ $name ], $values ) ) {

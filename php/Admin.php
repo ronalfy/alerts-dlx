@@ -393,12 +393,14 @@ class Admin {
 				'alerts-dlx-shortcode-builder-admin-js',
 				'alertsDlxAdmin',
 				array(
-					'shortcodeBuilderNonce'      => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
-					'shortcodeBuilderDefaults'   => Options::overlay_margin_spacing_defaults( ShortcodeBuilder::get_editor_defaults() ),
-					'shortcodeBuilderFields'     => ShortcodeBuilder::get_editor_fields(),
-					'shortcodeBuilderInfoColors' => AlertAttributes::get_info_colors_by_group(),
-					'colorPalette'               => Functions::get_theme_color_palette(),
-					'roles'                      => wp_roles()->get_names(),
+					'shortcodeBuilderNonce'             => wp_create_nonce( ShortcodeBuilder::NONCE_ACTION ),
+					'shortcodeBuilderDefaults'          => Options::overlay_margin_spacing_defaults( ShortcodeBuilder::get_editor_defaults() ),
+					'shortcodeBuilderFields'            => ShortcodeBuilder::get_editor_fields(),
+					'shortcodeBuilderGlobalStyles'      => AlertLibrary::get_published_global_styles(),
+					'shortcodeBuilderGlobalStyleFields' => ShortcodeBuilder::get_global_style_input_names(),
+					'shortcodeBuilderInfoColors'        => AlertAttributes::get_info_colors_by_group(),
+					'colorPalette'                      => Functions::get_theme_color_palette(),
+					'roles'                             => wp_roles()->get_names(),
 				)
 			);
 
