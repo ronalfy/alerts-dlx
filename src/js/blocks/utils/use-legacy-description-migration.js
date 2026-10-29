@@ -38,6 +38,11 @@ export function hasMeaningfulAlertInnerBlocks(innerBlocks = []) {
     if (typeof content === "string") {
       return content.trim() !== "";
     }
+    // Edit-time paragraph content is rich text with a text property.
+    // An empty value is the template placeholder, not authored copy.
+    if (content && typeof content.text === "string") {
+      return content.text.trim() !== "";
+    }
     return content !== null && content !== undefined;
   });
 }

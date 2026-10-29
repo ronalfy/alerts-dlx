@@ -15,7 +15,8 @@
 		'wp-plugins',
 		'wp-primitives',
 		'wp-private-apis',
+		'wp-rich-text',
 		'wp-url'
 	),
-	'version' => '78113f6076e122072901'
+	'version' => 'df08c8da26c1bcba32cf'
 );

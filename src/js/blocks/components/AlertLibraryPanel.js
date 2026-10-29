@@ -3,7 +3,7 @@
  */
 
 import { BlockPreview, store as blockEditorStore } from '@wordpress/block-editor';
-import { cloneBlock, createBlock } from '@wordpress/blocks';
+import { cloneBlock, createBlock, rawHandler } from '@wordpress/blocks';
 import { Icon, link } from '@wordpress/icons';
 import {
 	BaseControl,
@@ -16,6 +16,7 @@ import {
 import { useRegistry } from '@wordpress/data';
 import { useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
+import { create, RichTextData } from '@wordpress/rich-text';
 
 import {
 	SNAPSHOT_BLOCK_KEYS,
@@ -26,6 +27,7 @@ import {
 	libraryConfigToBlockAttributes,
 	mergeGlobalStyleIntoAttributes,
 } from '../utils/alert-library-utils';
+import { hasMeaningfulAlertInnerBlocks } from '../utils/use-legacy-description-migration';
 
 const PREVIEW_VIEWPORT_WIDTH = 600;
 const EMPTY_PREVIEW_BLOCKS = [];
@@ -65,11 +67,132 @@ function usePersistentPanelOpen(clientId, panelName) {
 }
 
 /**
+ * Whether a title or button attribute has no authored text.
+ *
+ * Missing values, empty strings, and whitespace-only RichText count as unset.
+ * Editor placeholders are not stored on the attribute.
+ *
+ * @param {*} value Attribute value from the canvas block.
+ * @return {boolean} True when the preview may supply sample copy.
+ */
+function isUnsetPreviewText(value) {
+	if (typeof value !== 'string') {
+		return true;
+	}
+
+	const text = value
+		.replace(/<[^>]*>/g, '')
+		.replace(/&nbsp;/gi, ' ')
+		.trim();
+
+	return text === '';
+}
+
+/**
+ * Fill title and button labels that the canvas block has not set.
+ *
+ * Visibility still comes from the preset. Sample copy is written only onto
+ * the preview attribute object, never through setAttributes.
+ *
+ * @param {Object} previewAttributes Appearance and visibility for the preview.
+ * @param {Object} sourceAttributes  Current block attributes.
+ * @return {Object} Preview attributes, with sample copy for missing labels.
+ */
+function applyPresetPreviewSampleCopy(previewAttributes, sourceAttributes) {
+	const merged = {
+		...sourceAttributes,
+		...previewAttributes,
+	};
+
+	if (
+		merged.titleEnabled &&
+		isUnsetPreviewText(sourceAttributes.alertTitle)
+	) {
+		previewAttributes.alertTitle = __('Sample alert title', 'alerts-dlx');
+	}
+
+	if (
+		merged.buttonEnabled &&
+		isUnsetPreviewText(sourceAttributes.buttonText)
+	) {
+		previewAttributes.buttonText = __('Learn More', 'alerts-dlx');
+	}
+
+	if (
+		merged.secondaryButtonEnabled &&
+		isUnsetPreviewText(sourceAttributes.secondaryButtonText)
+	) {
+		previewAttributes.secondaryButtonText = __('Dolor sit', 'alerts-dlx');
+	}
+
+	return previewAttributes;
+}
+
+/**
+ * Inner blocks for a preset preview.
+ *
+ * Authored description content wins, including a legacy alertDescription.
+ * An empty template paragraph counts as unset. Returning undefined tells
+ * cloneBlock to keep the canvas block's inner blocks.
+ *
+ * @param {Object|null} sourceBlock        Canvas block, when it is available.
+ * @param {Object}      sourceAttributes   Current block attributes.
+ * @param {boolean}     descriptionEnabled Whether the preview shows a description.
+ * @return {Object[]|undefined} Replacement inner blocks, or undefined to keep the source.
+ */
+function getPresetPreviewInnerBlocks(
+	sourceBlock,
+	sourceAttributes,
+	descriptionEnabled
+) {
+	const innerBlocks = sourceBlock?.innerBlocks || [];
+
+	if (hasMeaningfulAlertInnerBlocks(innerBlocks)) {
+		return sourceBlock ? undefined : innerBlocks;
+	}
+
+	if (!isUnsetPreviewText(sourceAttributes?.alertDescription)) {
+		const converted = rawHandler({
+			HTML: sourceAttributes.alertDescription,
+		});
+		if (Array.isArray(converted) && converted.length) {
+			return converted;
+		}
+
+		return sourceBlock ? undefined : [];
+	}
+
+	if (!descriptionEnabled) {
+		return sourceBlock ? undefined : innerBlocks;
+	}
+
+	// create() returns { text, formats, replacements }. createBlock keeps rich
+	// text only when content is a RichTextData instance, which is the shape a
+	// parsed paragraph has in the editor. A plain string or plain object is
+	// dropped or shown empty. Each paragraph gets its own value.
+	const createSampleParagraph = () =>
+		createBlock('core/paragraph', {
+			content: new RichTextData(
+				create({
+					text: __(
+						'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+						'alerts-dlx'
+					),
+				})
+			),
+		});
+
+	return [createSampleParagraph(), createSampleParagraph()];
+}
+
+/**
  * Build a BlockPreview block list for one preset.
  *
  * The popover is the same treatment as alert styles. Snapshot fields are
  * mapped with libraryConfigToBlockAttributes and SNAPSHOT_BLOCK_KEYS.
  * globalStyleId is cleared so the preview matches an immediate apply.
+ * Title, description, and button text stay on the block. Missing pieces
+ * are filled on this preview block only.
  *
  * @param {Object} registry   WordPress data registry.
  * @param {string} clientId   Block client ID.
@@ -78,35 +201,41 @@ function usePersistentPanelOpen(clientId, panelName) {
  * @param {Object} item       Snapshot library item.
  * @return {Object[]} Preview blocks.
  */
-function getPresetPreviewBlocks(registry, clientId, blockName, attributes, item) {
+function getPresetPreviewBlocks(
+	registry,
+	clientId,
+	blockName,
+	attributes,
+	item
+) {
 	const sourceBlock = clientId
 		? registry.select(blockEditorStore).getBlock(clientId)
 		: null;
 	const sourceAttributes = sourceBlock?.attributes ?? attributes ?? {};
-	const previewAttributes = {
-		...libraryConfigToBlockAttributes(
-			item?.config || {},
-			SNAPSHOT_BLOCK_KEYS,
-			sourceAttributes.className || ''
-		),
-		globalStyleId: 0,
-		// Keep this id off the canvas block so the theme edit effect does not rewrite it.
-		uniqueId: `alerts-dlx-preset-preview-${item?.id || 'preset'}`,
-	};
-	const fallbackInnerBlocks = () => [
-		createBlock('core/paragraph', {
-			content: __('This is an alert preview.', 'alerts-dlx'),
-		}),
-	];
+	const previewAttributes = applyPresetPreviewSampleCopy(
+		{
+			...libraryConfigToBlockAttributes(
+				item?.config || {},
+				SNAPSHOT_BLOCK_KEYS,
+				sourceAttributes.className || ''
+			),
+			globalStyleId: 0,
+			// Keep this id off the canvas block so the theme edit effect does not rewrite it.
+			uniqueId: `alerts-dlx-preset-preview-${item?.id || 'preset'}`,
+		},
+		sourceAttributes
+	);
+	const previewInnerBlocks = getPresetPreviewInnerBlocks(
+		sourceBlock,
+		sourceAttributes,
+		Boolean(
+			previewAttributes.descriptionEnabled ??
+				sourceAttributes.descriptionEnabled
+		)
+	);
 
 	if (sourceBlock) {
-		return [
-			cloneBlock(
-				sourceBlock,
-				previewAttributes,
-				sourceBlock.innerBlocks?.length ? undefined : fallbackInnerBlocks()
-			),
-		];
+		return [cloneBlock(sourceBlock, previewAttributes, previewInnerBlocks)];
 	}
 
 	if (!blockName) {
@@ -120,7 +249,7 @@ function getPresetPreviewBlocks(registry, clientId, blockName, attributes, item)
 				...sourceAttributes,
 				...previewAttributes,
 			},
-			fallbackInnerBlocks()
+			previewInnerBlocks || []
 		),
 	];
 }
