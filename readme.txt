@@ -176,7 +176,7 @@ Please report security bugs found in the source code of the plugin through the [
 == Changelog ==
 
 = 3.2.0 =
-* Released 2026-10-27
+* Released 2026-10-29
 * New: Added a secondary button, with its own label, link, and colors. Turn it on from the block toolbar or Settings sidebar. Custom colors cover the fill, hover, and text.
 * New: Added an icon size option (small, default, medium, large, and extra large) in the block editor, shortcodes, and global styles.
 * New: Added display conditions so an alert can be limited by date range, day of week, URL parameters, or logged-in user and role. The same options are in the block sidebar, shortcodes, and the shortcode builder, and conditions are checked in the browser so they work with full-page caching.

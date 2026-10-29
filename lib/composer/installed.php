@@ -1,8 +1,9 @@
-<?php return array(
+<?php
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+return array(
     'root' => array(
         'name' => 'dlxplugins/alerts-dlx',
         'pretty_version' => 'dev-main',
