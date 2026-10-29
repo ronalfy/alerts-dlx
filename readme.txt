@@ -15,13 +15,11 @@ Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance
 
 Elevate your WordPress site's content and user engagement with Singular Alerts, a versatile plugin offering beautifully styled alerts, callouts, and notification boxes for Gutenberg, Full-Site Editing, Classic Editor, and beyond. Compatible with most page builders and supporting blocks and shortcodes. If you need an alert block solution for the block editor, Singular Alerts features four easy-to-use, yet extremely versatile, alert blocks inspired by the most popular (and best looking) UI libraries.
 
-> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/singular-alerts/">Docs</a>
+> <a href="https://github.com/ronalfy/alerts-dlx">GitHub</a> | <a href="https://docs.mediaron.com/product/singular-alerts/">Docs</a> | <a href="https://docs.mediaron.com/product/singular-alerts/alertsdlx/">Shortcode Usage</a>
 
 Singular Alerts is designed to be lightweight, user-friendly, and highly customizable. It saves you the time needed to craft your own alert notifications out of blocks, and is flexible enough to quickly match most theme designs. Stop digging for that alert in a block suite, and install a dedicated notifications solution that works almost anywhere.
 
-Coupled with a free plugin like <a href="https://blockvisibilitywp.com/">Block Visibility</a>, your imagination can really go wild. For example, you can create an "Empty Cart" callout for WooCommerce or Easy Digital Downloads when a cart is empty. For site-wide notifications, most themes and builders (including FSE) allow for site-wide template parts. Just add the notification to it, make it dismissible, and you now have a site-wide callout or notification that can be hidden when dismissed.
-
-https://www.youtube.com/watch?v=7dKpw5uBi5o
+With <a href="https://docs.mediaron.com/product/singular-alerts/display-conditions/">Display Conditions</a>, your imagination can really go wild. For example, you can create a time-based sale alert that'll automatically hide after a certain date. For site-wide notifications, most themes and builders (including FSE) allow for site-wide template parts. Just add the notification to it, make it dismissible, and you now have a site-wide callout or notification that can be hidden when dismissed.
 
 ## Major features
 
@@ -31,7 +29,7 @@ https://www.youtube.com/watch?v=7dKpw5uBi5o
 4. Add dismissible notification and callout boxes, and have it remember the user's choice.
 5. Add an optional title, description, and button to the alert block.
 6. Mark an Alert Block as Editorial, and have it only visible in the block editor.
-7. Shortcode/page builder support: use beautiful callouts and notifications anywhere shortcodes are supported.
+7. Shortcode/page builder support: use beautiful callouts and notifications anywhere shortcodes are supported. Use the built-in shortcode builder (in the admin) to easily create these shortcodes.
 8. Site-wide settings for headline tags, custom title classes, and more.
 9. Lightweight: the plugin only loads what is needed where it's needed.
 
