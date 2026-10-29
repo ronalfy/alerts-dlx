@@ -9,9 +9,9 @@ The Shortcode Builder is a visual admin tool for constructing `[alertsdlx]` shor
 ## Opening the Builder
 
 1. In the WordPress admin, go to **AlertsDLX → Shortcode Builder**.
-2. Select an alert group (Bootstrap, Chakra, Material, or Shoelace).
-3. Configure styles, content, icon, button, and display conditions in the sidebar panels.
-4. Copy the generated shortcode or insert it directly into the editor.
+2. Optionally choose a published global style. Appearance then comes from that style.
+3. Configure content, button, alignment, and display conditions. Without a global style, also set the design, icon, and colors.
+4. Copy the generated shortcode and paste it into any content area that processes shortcodes.
 
 <!-- TODO: image - images/alerts-dlx-editor-chakra-side-options.jpg -->
 <!-- Caption: Shortcode Builder Interface -->
@@ -20,7 +20,7 @@ The Shortcode Builder is a visual admin tool for constructing `[alertsdlx]` shor
 
 ### Alert Group and Style
 
-Choose the alert group and alert type. Selecting **Custom** opens the color palette for custom colors.
+Choose the alert group and alert type. Selecting **Custom** opens the color palette for custom colors. These appearance controls stay locked while a global style is selected.
 
 ### Content
 
@@ -52,9 +52,13 @@ Toggle **Display Conditions** to schedule the alert or restrict it by URL parame
 <!-- TODO: image - images/alerts-dlx-editor-chakra-side-options.jpg -->
 <!-- Caption: Display Conditions Panel -->
 
-## Presets and Global Styles
+## Global style
 
-The builder supports presets and global styles. Once you save a configuration, you can reuse it across your site. Global styles let you define default values that new shortcodes inherit.
+At the top of **Appearance**, choose a published global style. The generated shortcode stores `global_style="your-slug"` and does not copy that style's appearance attributes. Title, description, buttons, dismiss, display conditions, and alignment stay editable.
+
+Clear the global style to keep its current appearance on the shortcode and edit those fields directly.
+
+If the slug is not a published global style, the builder keeps the slug, shows a notice, and leaves appearance editable.
 
 ## Generated Shortcode
 

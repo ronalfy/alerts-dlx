@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 import { useCallback, useState } from "@wordpress/element";
-import { __ } from "@wordpress/i18n";
+import { __, sprintf } from "@wordpress/i18n";
 import {
-	Button,
-	Notice,
-	TextareaControl,
-	PanelBody,
-	Spinner,
+  Button,
+  Notice,
+  TextareaControl,
+  PanelBody,
+  Spinner,
 } from "@wordpress/components";
 
 import sendCommand from "../Utils/SendCommand";
@@ -20,193 +20,256 @@ import { applyBuilderFieldChange } from "../Components/AlertBuilder/builder-util
  * @return {Element} Shortcode builder interface.
  */
 const ShortcodeBuilder = () => {
-	const fields = alertsDlxAdmin.shortcodeBuilderFields || [];
-	const [values, setValues] = useState(
-		alertsDlxAdmin.shortcodeBuilderDefaults || {}
-	);
-	const [shortcode, setShortcode] = useState("");
-	const [source, setSource] = useState("");
-	const [error, setError] = useState("");
-	const [status, setStatus] = useState("");
-	const [loading, setLoading] = useState(false);
-	const [previewLoading, setPreviewLoading] = useState(false);
+  const baseFields = alertsDlxAdmin.shortcodeBuilderFields || [];
+  const globalStyles = alertsDlxAdmin.shortcodeBuilderGlobalStyles || [];
+  const globalStyleFields =
+    alertsDlxAdmin.shortcodeBuilderGlobalStyleFields || [];
+  const [values, setValues] = useState(
+    alertsDlxAdmin.shortcodeBuilderDefaults || {}
+  );
+  const [shortcode, setShortcode] = useState("");
+  const [source, setSource] = useState("");
+  const [error, setError] = useState("");
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false);
 
-	const requestBuilder = (operation, data) =>
-		sendCommand("alerts_dlx_shortcode_builder", {
-			nonce: alertsDlxAdmin.shortcodeBuilderNonce,
-			operation,
-			...data,
-		});
+  const requestBuilder = (operation, data) =>
+    sendCommand("alerts_dlx_shortcode_builder", {
+      nonce: alertsDlxAdmin.shortcodeBuilderNonce,
+      operation,
+      ...data,
+    });
 
-	const handleChange = (name, value) => {
-		setStatus("");
-		setValues((current) => applyBuilderFieldChange(name, value, current, fields));
-	};
+  const handleChange = (name, value) => {
+    setStatus("");
+    setValues((current) => {
+      let next = applyBuilderFieldChange(name, value, current, baseFields);
+      if ("global_style" === name) {
+        const style = globalStyles.find((item) => item.slug === value);
+        if (style?.config) {
+          next = {
+            ...next,
+            ...style.config,
+            global_style: value,
+          };
+        }
+      }
+      return next;
+    });
+  };
 
-	const handleImageSelect = (attachment) => {
-		setStatus("");
-		setValues((current) => ({
-			...current,
-			image_url: attachment.url || "",
-			image_id: attachment.id || 0,
-		}));
-	};
+  const selectedStyle = globalStyles.find(
+    (item) => item.slug === (values.global_style || "")
+  );
+  const missingStyle = Boolean(values.global_style) && !selectedStyle;
+  const styleOptions = globalStyles.map((style) => ({
+    value: style.slug,
+    label: style.title || style.slug,
+  }));
+  if (
+    missingStyle &&
+    !styleOptions.some((option) => option.value === values.global_style)
+  ) {
+    styleOptions.push({
+      value: values.global_style,
+      label: values.global_style,
+    });
+  }
+  const fields = baseFields.map((field) => {
+    if ("global_style" !== field.name) {
+      return field;
+    }
+    const noneOption = (field.options || []).find(
+      (option) => "" === option.value
+    ) || {
+      value: "",
+      label: __("None", "alerts-dlx"),
+    };
+    return {
+      ...field,
+      options: [noneOption, ...styleOptions],
+    };
+  });
 
-	const parseSource = () => {
-		setLoading(true);
-		setStatus("");
-		requestBuilder("parse", { shortcode: source })
-			.then((response) => {
-				if (!response.data.success) {
-					throw new Error(
-						response.data.data?.message ||
-							__("Could not parse the shortcode.", "alerts-dlx")
-					);
-				}
-				setValues(response.data.data.values);
-				setShortcode(response.data.data.shortcode);
-				setError("");
-				setStatus(__("Shortcode loaded into the builder.", "alerts-dlx"));
-			})
-			.catch((requestError) => {
-				setError(
-					requestError.response?.data?.data?.message ||
-						requestError.message ||
-						__("Could not parse the shortcode.", "alerts-dlx")
-				);
-			})
-			.finally(() => setLoading(false));
-	};
+  const handleImageSelect = (attachment) => {
+    setStatus("");
+    setValues((current) => ({
+      ...current,
+      image_url: attachment.url || "",
+      image_id: attachment.id || 0,
+    }));
+  };
 
-	const handlePreviewSuccess = useCallback((data) => {
-		const nextShortcode = data.shortcode || "";
-		setShortcode((current) =>
-			current === nextShortcode ? current : nextShortcode
-		);
-	}, []);
+  const parseSource = () => {
+    setLoading(true);
+    setStatus("");
+    requestBuilder("parse", { shortcode: source })
+      .then((response) => {
+        if (!response.data.success) {
+          throw new Error(
+            response.data.data?.message ||
+              __("Could not parse the shortcode.", "alerts-dlx")
+          );
+        }
+        setValues(response.data.data.values);
+        setShortcode(response.data.data.shortcode);
+        setError("");
+        setStatus(__("Shortcode loaded into the builder.", "alerts-dlx"));
+      })
+      .catch((requestError) => {
+        setError(
+          requestError.response?.data?.data?.message ||
+            requestError.message ||
+            __("Could not parse the shortcode.", "alerts-dlx")
+        );
+      })
+      .finally(() => setLoading(false));
+  };
 
-	const copyShortcode = () => {
-		if (!shortcode || !navigator.clipboard?.writeText) {
-			setError(
-				__("Clipboard access is unavailable in this browser.", "alerts-dlx")
-			);
-			return;
-		}
-		navigator.clipboard
-			.writeText(shortcode)
-			.then(() => {
-				setError("");
-				setStatus(__("Shortcode copied.", "alerts-dlx"));
-			})
-			.catch(() => setError(__("Could not copy the shortcode.", "alerts-dlx")));
-	};
+  const handlePreviewSuccess = useCallback((data) => {
+    const nextShortcode = data.shortcode || "";
+    setShortcode((current) =>
+      current === nextShortcode ? current : nextShortcode
+    );
+  }, []);
 
-	return (
-		<section
-			className="adlx-admin-content-wrapper alerts-dlx-shortcode-builder"
-			aria-labelledby="alerts-dlx-shortcode-builder-title"
-		>
-			<div className="adlx-admin-content-panel">
-				<div className="adlx-admin-content-heading">
-					<h2 id="alerts-dlx-shortcode-builder-title">
-						{__("Visual shortcode builder", "alerts-dlx")}
-					</h2>
-					<p className="description">
-						{__(
-							"Build or edit the existing [alertsdlx] shortcode. Nothing is inserted or saved automatically.",
-							"alerts-dlx"
-						)}
-					</p>
-				</div>
+  const copyShortcode = () => {
+    if (!shortcode || !navigator.clipboard?.writeText) {
+      setError(
+        __("Clipboard access is unavailable in this browser.", "alerts-dlx")
+      );
+      return;
+    }
+    navigator.clipboard
+      .writeText(shortcode)
+      .then(() => {
+        setError("");
+        setStatus(__("Shortcode copied.", "alerts-dlx"));
+      })
+      .catch(() => setError(__("Could not copy the shortcode.", "alerts-dlx")));
+  };
 
-				{error && (
-					<Notice status="error" isDismissible={false} aria-live="assertive">
-						{error}
-					</Notice>
-				)}
-				{status && (
-					<Notice status="success" isDismissible={false} aria-live="polite">
-						{status}
-					</Notice>
-				)}
+  return (
+    <section
+      className="adlx-admin-content-wrapper alerts-dlx-shortcode-builder"
+      aria-labelledby="alerts-dlx-shortcode-builder-title"
+    >
+      <div className="adlx-admin-content-panel">
+        <div className="adlx-admin-content-heading">
+          <h2 id="alerts-dlx-shortcode-builder-title">
+            {__("Visual shortcode builder", "alerts-dlx")}
+          </h2>
+          <p className="description">
+            {__(
+              "Build or edit the existing [alertsdlx] shortcode. Nothing is inserted or saved automatically.",
+              "alerts-dlx"
+            )}
+          </p>
+        </div>
 
-				<PanelBody
-					title={__("Edit an existing shortcode", "alerts-dlx")}
-					initialOpen={false}
-					className="adlx-admin-panel"
-				>
-					<div className="adlx-admin-content-body">
-						<div className="adlx-admin-component-wrapper">
-							<h3 className="adlx-admin-content-subheading">
-								{__("Edit an existing shortcode", "alerts-dlx")}
-							</h3>
-							<TextareaControl
-								label={__("Existing shortcode", "alerts-dlx")}
-								value={source}
-								onChange={setSource}
-								help={__(
-									"Paste exactly one [alertsdlx] shortcode, then load it into the controls.",
-									"alerts-dlx"
-								)}
-							/>
-							<Button
-								variant="secondary"
-								onClick={parseSource}
-								disabled={!source || loading}
-							>
-								{__("Load shortcode", "alerts-dlx")}
-							</Button>
-						</div>
-					</div>
-				</PanelBody>
+        {error && (
+          <Notice status="error" isDismissible={false} aria-live="assertive">
+            {error}
+          </Notice>
+        )}
+        {status && (
+          <Notice status="success" isDismissible={false} aria-live="polite">
+            {status}
+          </Notice>
+        )}
 
-				<AlertBuilderInspector
-					fields={fields}
-					values={values}
-					onChange={handleChange}
-					onSelectImage={handleImageSelect}
-				/>
+        <PanelBody
+          title={__("Edit an existing shortcode", "alerts-dlx")}
+          initialOpen={false}
+          className="adlx-admin-panel"
+        >
+          <div className="adlx-admin-content-body">
+            <div className="adlx-admin-component-wrapper">
+              <h3 className="adlx-admin-content-subheading">
+                {__("Edit an existing shortcode", "alerts-dlx")}
+              </h3>
+              <TextareaControl
+                label={__("Existing shortcode", "alerts-dlx")}
+                value={source}
+                onChange={setSource}
+                help={__(
+                  "Paste exactly one [alertsdlx] shortcode, then load it into the controls.",
+                  "alerts-dlx"
+                )}
+              />
+              <Button
+                variant="secondary"
+                onClick={parseSource}
+                disabled={!source || loading}
+              >
+                {__("Load shortcode", "alerts-dlx")}
+              </Button>
+            </div>
+          </div>
+        </PanelBody>
 
-				<div className="adlx-admin-content-body">
-					<div className="adlx-admin-component-wrapper">
-						<h3 className="adlx-admin-content-subheading">
-							{__("Generated shortcode", "alerts-dlx")}
-						</h3>
-						{previewLoading && (
-							<span role="status" aria-live="polite">
-								<Spinner />
-								<span className="screen-reader-text">
-									{__("Updating shortcode preview.", "alerts-dlx")}
-								</span>
-							</span>
-						)}
-						<TextareaControl
-							label={__("Copy this shortcode", "alerts-dlx")}
-							value={shortcode}
-							onChange={() => {}}
-							readOnly
-						/>
-						<Button
-							variant="primary"
-							onClick={copyShortcode}
-							disabled={!shortcode || previewLoading}
-						>
-							{__("Copy shortcode", "alerts-dlx")}
-						</Button>
-					</div>
-				</div>
+        {missingStyle && (
+          <Notice status="warning" isDismissible={false}>
+            {sprintf(
+              /* translators: %s: global style slug. */
+              __(
+                'Global style "%s" is not published. Appearance stays editable, and the slug remains on the shortcode.',
+                "alerts-dlx"
+              ),
+              values.global_style
+            )}
+          </Notice>
+        )}
 
-				<div className="adlx-admin-content-body">
-					<AlertBuilderPreview
-						values={values}
-						onPreviewError={setError}
-						onPreviewLoading={setPreviewLoading}
-						onPreviewSuccess={handlePreviewSuccess}
-					/>
-				</div>
-			</div>
-		</section>
-	);
+        <AlertBuilderInspector
+          fields={fields}
+          values={values}
+          onChange={handleChange}
+          onSelectImage={handleImageSelect}
+          lockedFieldNames={selectedStyle ? globalStyleFields : []}
+        />
+
+        <div className="adlx-admin-content-body">
+          <div className="adlx-admin-component-wrapper">
+            <h3 className="adlx-admin-content-subheading">
+              {__("Generated shortcode", "alerts-dlx")}
+            </h3>
+            {previewLoading && (
+              <span role="status" aria-live="polite">
+                <Spinner />
+                <span className="screen-reader-text">
+                  {__("Updating shortcode preview.", "alerts-dlx")}
+                </span>
+              </span>
+            )}
+            <TextareaControl
+              label={__("Copy this shortcode", "alerts-dlx")}
+              value={shortcode}
+              onChange={() => {}}
+              readOnly
+            />
+            <Button
+              variant="primary"
+              onClick={copyShortcode}
+              disabled={!shortcode || previewLoading}
+            >
+              {__("Copy shortcode", "alerts-dlx")}
+            </Button>
+          </div>
+        </div>
+
+        <div className="adlx-admin-content-body">
+          <AlertBuilderPreview
+            values={values}
+            onPreviewError={setError}
+            onPreviewLoading={setPreviewLoading}
+            onPreviewSuccess={handlePreviewSuccess}
+          />
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default ShortcodeBuilder;

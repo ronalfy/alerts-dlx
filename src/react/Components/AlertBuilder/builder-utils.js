@@ -2,47 +2,47 @@
 import { __ } from "@wordpress/i18n";
 import { getIconSetForGroup } from "../../../js/blocks/utils/icon-sets";
 import {
-	appendIconAttribute,
-	getSampleIconKey,
-	injectPreviewIcon,
-	isRawSvg,
-	resolveIconMarkup,
+  appendIconAttribute,
+  getSampleIconKey,
+  injectPreviewIcon,
+  isRawSvg,
+  resolveIconMarkup,
 } from "../../../js/blocks/utils/icon-value";
 
 export const groupLabels = {
-	content: __("Content", "alerts-dlx"),
-	appearance: __("Appearance", "alerts-dlx"),
-	action: __("Button", "alerts-dlx"),
-	icon: __("Icon or image", "alerts-dlx"),
-	colors: __("Custom colors", "alerts-dlx"),
-	dismiss: __("Dismiss", "alerts-dlx"),
-	conditions: __("Display Conditions", "alerts-dlx"),
-	advanced: __("Advanced", "alerts-dlx"),
+  content: __("Content", "alerts-dlx"),
+  appearance: __("Appearance", "alerts-dlx"),
+  action: __("Button", "alerts-dlx"),
+  icon: __("Icon or image", "alerts-dlx"),
+  colors: __("Custom colors", "alerts-dlx"),
+  dismiss: __("Dismiss", "alerts-dlx"),
+  conditions: __("Display Conditions", "alerts-dlx"),
+  advanced: __("Advanced", "alerts-dlx"),
 };
 
 export const COLOR_FIELD_NAMES = [
-	"color_primary",
-	"color_border",
-	"color_accent",
-	"color_alt",
-	"color_alt_hover",
-	"color_alt_text",
-	"color_alt_text_hover",
-	"color_secondary",
-	"color_secondary_hover",
-	"color_secondary_text",
-	"color_secondary_text_hover",
-	"color_bold",
-	"color_light",
+  "color_primary",
+  "color_border",
+  "color_accent",
+  "color_alt",
+  "color_alt_hover",
+  "color_alt_text",
+  "color_alt_text_hover",
+  "color_secondary",
+  "color_secondary_hover",
+  "color_secondary_text",
+  "color_secondary_text_hover",
+  "color_bold",
+  "color_light",
 ];
 
 const TYPE_TO_ICON_KEY = {
-	danger: "error",
-	primary: "info",
-	neutral: "info",
-	light: "info",
-	dark: "info",
-	secondary: "info",
+  danger: "error",
+  primary: "info",
+  neutral: "info",
+  light: "info",
+  dark: "info",
+  secondary: "info",
 };
 
 /**
@@ -52,107 +52,121 @@ const TYPE_TO_ICON_KEY = {
  * @return {Object} Color attribute map.
  */
 export const getInfoColors = (alertGroup) =>
-	alertsDlxAdmin.shortcodeBuilderInfoColors?.[alertGroup] || {};
+  alertsDlxAdmin.shortcodeBuilderInfoColors?.[alertGroup] || {};
 
 export const colorsAreEmpty = (values) =>
-	COLOR_FIELD_NAMES.every((name) => !values[name]);
+  COLOR_FIELD_NAMES.every((name) => !values[name]);
 
 export const colorsMatchInfo = (values, alertGroup) => {
-	const infoColors = getInfoColors(alertGroup);
-	if (!Object.keys(infoColors).length) {
-		return false;
-	}
-	return COLOR_FIELD_NAMES.every(
-		(name) => (values[name] || "") === (infoColors[name] || "")
-	);
+  const infoColors = getInfoColors(alertGroup);
+  if (!Object.keys(infoColors).length) {
+    return false;
+  }
+  return COLOR_FIELD_NAMES.every(
+    (name) => (values[name] || "") === (infoColors[name] || "")
+  );
 };
 
 export const applyInfoColors = (values, alertGroup, fromGroup) => {
-	const infoColors = getInfoColors(alertGroup);
-	if (!Object.keys(infoColors).length) {
-		return values;
-	}
-	if (
-		colorsAreEmpty(values) ||
-		(fromGroup && colorsMatchInfo(values, fromGroup))
-	) {
-		return { ...values, ...infoColors };
-	}
-	const next = { ...values };
-	COLOR_FIELD_NAMES.forEach((name) => {
-		if (!next[name] && infoColors[name]) {
-			next[name] = infoColors[name];
-		}
-	});
-	return next;
+  const infoColors = getInfoColors(alertGroup);
+  if (!Object.keys(infoColors).length) {
+    return values;
+  }
+  if (
+    colorsAreEmpty(values) ||
+    (fromGroup && colorsMatchInfo(values, fromGroup))
+  ) {
+    return { ...values, ...infoColors };
+  }
+  const next = { ...values };
+  COLOR_FIELD_NAMES.forEach((name) => {
+    if (!next[name] && infoColors[name]) {
+      next[name] = infoColors[name];
+    }
+  });
+  return next;
 };
 
 export const conditionMatches = (condition, values) => {
-	if (!condition?.field || !condition?.operator) {
-		return false;
-	}
+  if (!condition?.field || !condition?.operator) {
+    return false;
+  }
 
-	const actual = values[condition.field];
-	switch (condition.operator) {
-		case "equals":
-			return String(actual ?? "") === String(condition.value ?? "");
-		case "not_equals":
-			return String(actual ?? "") !== String(condition.value ?? "");
-		case "filled":
-			return "" !== String(actual ?? "").trim();
-		case "is_true":
-			return true === actual || "true" === actual || 1 === actual || "1" === actual;
-		case "is_false":
-			return true !== actual && "true" !== actual && 1 !== actual && "1" !== actual;
-		default:
-			return false;
-	}
+  const actual = values[condition.field];
+  switch (condition.operator) {
+    case "equals":
+      return String(actual ?? "") === String(condition.value ?? "");
+    case "not_equals":
+      return String(actual ?? "") !== String(condition.value ?? "");
+    case "filled":
+      return "" !== String(actual ?? "").trim();
+    case "is_true":
+      return (
+        true === actual || "true" === actual || 1 === actual || "1" === actual
+      );
+    case "is_false":
+      return (
+        true !== actual && "true" !== actual && 1 !== actual && "1" !== actual
+      );
+    default:
+      return false;
+  }
 };
 
 export const isFieldVisible = (field, values) => {
-	if (!Array.isArray(field.show_when) || !field.show_when.length) {
-		return true;
-	}
-	return field.show_when.every((condition) => conditionMatches(condition, values));
+  if (!Array.isArray(field.show_when) || !field.show_when.length) {
+    return true;
+  }
+  return field.show_when.every((condition) =>
+    conditionMatches(condition, values)
+  );
 };
 
 export const groupColorFields = (fields) => {
-	const sections = [];
-	const indexBySubgroup = {};
+  const sections = [];
+  const indexBySubgroup = {};
 
-	fields.forEach((field) => {
-		const subgroup = field.subgroup || "";
-		if (undefined === indexBySubgroup[subgroup]) {
-			indexBySubgroup[subgroup] = sections.length;
-			sections.push({
-				subgroup,
-				fields: [],
-			});
-		}
-		sections[indexBySubgroup[subgroup]].fields.push(field);
-	});
+  fields.forEach((field) => {
+    const subgroup = field.subgroup || "";
+    if (undefined === indexBySubgroup[subgroup]) {
+      indexBySubgroup[subgroup] = sections.length;
+      sections.push({
+        subgroup,
+        fields: [],
+      });
+    }
+    sections[indexBySubgroup[subgroup]].fields.push(field);
+  });
 
-	return sections;
+  return sections;
 };
 
 export const isCommitableColor = (raw) => {
-	const next = (raw || "").trim();
-	if ("" === next) {
-		return true;
-	}
-	if (/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(next)) {
-		return true;
-	}
-	if (/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+/\-]+\)$/i.test(next)) {
-		return true;
-	}
-	if (/^var\(\s*--[a-zA-Z0-9_-]+(?:\s*,\s*(?:#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+/\-]+\)|var\(\s*--[a-zA-Z0-9_-]+\s*\)|[a-zA-Z]+))?\s*\)$/.test(next)) {
-		return true;
-	}
-	if (/^[a-zA-Z]+$/.test(next)) {
-		return true;
-	}
-	return false;
+  const next = (raw || "").trim();
+  if ("" === next) {
+    return true;
+  }
+  if (
+    /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(
+      next
+    )
+  ) {
+    return true;
+  }
+  if (/^(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+/\-]+\)$/i.test(next)) {
+    return true;
+  }
+  if (
+    /^var\(\s*--[a-zA-Z0-9_-]+(?:\s*,\s*(?:#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})|(?:rgb|rgba|hsl|hsla)\([0-9.,%\s+/\-]+\)|var\(\s*--[a-zA-Z0-9_-]+\s*\)|[a-zA-Z]+))?\s*\)$/.test(
+      next
+    )
+  ) {
+    return true;
+  }
+  if (/^[a-zA-Z]+$/.test(next)) {
+    return true;
+  }
+  return false;
 };
 
 /**
@@ -163,8 +177,8 @@ export const isCommitableColor = (raw) => {
  * @return {string} Catalog key or empty string.
  */
 export const getSampleIconKeyForType = (alertGroup, alertType) => {
-	const icons = getIconSetForGroup(alertGroup);
-	return getSampleIconKey(icons, alertType, TYPE_TO_ICON_KEY);
+  const icons = getIconSetForGroup(alertGroup);
+  return getSampleIconKey(icons, alertType, TYPE_TO_ICON_KEY);
 };
 
 /**
@@ -175,8 +189,11 @@ export const getSampleIconKeyForType = (alertGroup, alertType) => {
  * @return {string} SVG markup or empty string.
  */
 export const getSampleIconMarkup = (alertGroup, alertType) => {
-	const icons = getIconSetForGroup(alertGroup);
-	return resolveIconMarkup(getSampleIconKeyForType(alertGroup, alertType), icons);
+  const icons = getIconSetForGroup(alertGroup);
+  return resolveIconMarkup(
+    getSampleIconKeyForType(alertGroup, alertType),
+    icons
+  );
 };
 
 /**
@@ -187,21 +204,35 @@ export const getSampleIconMarkup = (alertGroup, alertType) => {
  * @param {Object} options       Options.
  * @return {{payload: Object, customIcon: string}} Wire payload and custom SVG.
  */
-export const preparePreviewPayload = (storedValues, fixture = null, options = {}) => {
-	const payload = fixture
-		? mergePreviewValues(storedValues, fixture, options)
-		: { ...(storedValues || {}) };
-	if (!payload.unique_id) {
-		payload.unique_id = "alerts-dlx-admin-preview";
-	}
+export const preparePreviewPayload = (
+  storedValues,
+  fixture = null,
+  options = {}
+) => {
+  const payload = fixture
+    ? mergePreviewValues(storedValues, fixture, options)
+    : { ...(storedValues || {}) };
+  if (!payload.unique_id) {
+    payload.unique_id = "alerts-dlx-admin-preview";
+  }
 
-	let customIcon = "";
-	if (isRawSvg(payload.icon)) {
-		customIcon = payload.icon;
-		payload.icon = getSampleIconKeyForType(payload.alert_group, payload.alert_type);
-	}
+  let customIcon = "";
+  if (isRawSvg(payload.icon)) {
+    const linkedStyles = alertsDlxAdmin.shortcodeBuilderGlobalStyles || [];
+    const styleLinked = linkedStyles.some(
+      (item) => item.slug === payload.global_style
+    );
+    // A linked global style supplies its own icon, so leave that SVG off the shortcode.
+    if (!styleLinked) {
+      customIcon = payload.icon;
+    }
+    payload.icon = getSampleIconKeyForType(
+      payload.alert_group,
+      payload.alert_type
+    );
+  }
 
-	return { payload, customIcon };
+  return { payload, customIcon };
 };
 
 /**
@@ -212,14 +243,14 @@ export const preparePreviewPayload = (storedValues, fixture = null, options = {}
  * @return {Object} Preview payload with injected icon.
  */
 export const applyCustomPreviewIcon = (data, customIcon) => {
-	if (!customIcon || !data) {
-		return data;
-	}
-	return {
-		...data,
-		preview_html: injectPreviewIcon(data.preview_html || "", customIcon),
-		shortcode: appendIconAttribute(data.shortcode || "", customIcon),
-	};
+  if (!customIcon || !data) {
+    return data;
+  }
+  return {
+    ...data,
+    preview_html: injectPreviewIcon(data.preview_html || "", customIcon),
+    shortcode: appendIconAttribute(data.shortcode || "", customIcon),
+  };
 };
 
 /**
@@ -230,51 +261,61 @@ export const applyCustomPreviewIcon = (data, customIcon) => {
  * @param {Object} options       Options.
  * @return {Object} Merged preview payload.
  */
-export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => {
-	const stored = storedValues && "object" === typeof storedValues ? storedValues : {};
-	const merged = {
-		...fixture,
-		...stored,
-	};
+export const mergePreviewValues = (
+  storedValues,
+  fixture = {},
+  options = {}
+) => {
+  const stored =
+    storedValues && "object" === typeof storedValues ? storedValues : {};
+  const merged = {
+    ...fixture,
+    ...stored,
+  };
 
-	// Snapshot visibility toggles: fixture title/description/button stay preview-only.
-	if (Object.prototype.hasOwnProperty.call(stored, "title_enabled")) {
-		merged.alert_title = stored.title_enabled
-			? stored.alert_title || fixture.alert_title || ""
-			: "";
-	}
-	if (Object.prototype.hasOwnProperty.call(stored, "description_enabled")) {
-		merged.alert_description = stored.description_enabled
-			? stored.alert_description || fixture.alert_description || ""
-			: "";
-	}
-	if (Object.prototype.hasOwnProperty.call(stored, "button_enabled")) {
-		merged.button_text = stored.button_enabled
-			? stored.button_text || fixture.button_text || ""
-			: "";
-		merged.button_url = stored.button_enabled
-			? stored.button_url || fixture.button_url || ""
-			: "";
-	}
-	if (Object.prototype.hasOwnProperty.call(stored, "secondary_button_enabled")) {
-		merged.secondary_button_text = stored.secondary_button_enabled
-			? stored.secondary_button_text || fixture.secondary_button_text || ""
-			: "";
-		merged.secondary_button_url = stored.secondary_button_enabled
-			? stored.secondary_button_url || fixture.secondary_button_url || ""
-			: "";
-	}
+  // Snapshot visibility toggles: fixture title/description/button stay preview-only.
+  if (Object.prototype.hasOwnProperty.call(stored, "title_enabled")) {
+    merged.alert_title = stored.title_enabled
+      ? stored.alert_title || fixture.alert_title || ""
+      : "";
+  }
+  if (Object.prototype.hasOwnProperty.call(stored, "description_enabled")) {
+    merged.alert_description = stored.description_enabled
+      ? stored.alert_description || fixture.alert_description || ""
+      : "";
+  }
+  if (Object.prototype.hasOwnProperty.call(stored, "button_enabled")) {
+    merged.button_text = stored.button_enabled
+      ? stored.button_text || fixture.button_text || ""
+      : "";
+    merged.button_url = stored.button_enabled
+      ? stored.button_url || fixture.button_url || ""
+      : "";
+  }
+  if (
+    Object.prototype.hasOwnProperty.call(stored, "secondary_button_enabled")
+  ) {
+    merged.secondary_button_text = stored.secondary_button_enabled
+      ? stored.secondary_button_text || fixture.secondary_button_text || ""
+      : "";
+    merged.secondary_button_url = stored.secondary_button_enabled
+      ? stored.secondary_button_url || fixture.secondary_button_url || ""
+      : "";
+  }
 
-	if (!merged.unique_id) {
-		merged.unique_id = fixture.unique_id || "alerts-dlx-admin-preview";
-	}
-	if (options.iconFallback && !merged.icon && !merged.image_url) {
-		const sample = getSampleIconKeyForType(merged.alert_group, merged.alert_type);
-		if (sample) {
-			merged.icon = sample;
-		}
-	}
-	return merged;
+  if (!merged.unique_id) {
+    merged.unique_id = fixture.unique_id || "alerts-dlx-admin-preview";
+  }
+  if (options.iconFallback && !merged.icon && !merged.image_url) {
+    const sample = getSampleIconKeyForType(
+      merged.alert_group,
+      merged.alert_type
+    );
+    if (sample) {
+      merged.icon = sample;
+    }
+  }
+  return merged;
 };
 
 /**
@@ -287,20 +328,20 @@ export const mergePreviewValues = (storedValues, fixture = {}, options = {}) => 
  * @return {Object} Next values.
  */
 export const applyBuilderFieldChange = (name, value, current, fields) => {
-	let next = { ...current, [name]: value };
-	if ("alert_group" === name) {
-		const typeField = fields.find((field) => "alert_type" === field.name);
-		const variantField = fields.find((field) => "variant" === field.name);
-		const typeOptions = typeField?.options_by_theme?.[value] || [];
-		const variantOptions = variantField?.options_by_theme?.[value] || [];
-		if (!typeOptions.some((option) => option.value === next.alert_type)) {
-			next.alert_type = typeOptions[0]?.value || "success";
-		}
-		next.variant = variantOptions[0]?.value || "default";
-		next = applyInfoColors(next, value, current.alert_group);
-	}
-	if ("alert_type" === name && "custom" === value) {
-		next = applyInfoColors(next, next.alert_group);
-	}
-	return next;
+  let next = { ...current, [name]: value };
+  if ("alert_group" === name) {
+    const typeField = fields.find((field) => "alert_type" === field.name);
+    const variantField = fields.find((field) => "variant" === field.name);
+    const typeOptions = typeField?.options_by_theme?.[value] || [];
+    const variantOptions = variantField?.options_by_theme?.[value] || [];
+    if (!typeOptions.some((option) => option.value === next.alert_type)) {
+      next.alert_type = typeOptions[0]?.value || "success";
+    }
+    next.variant = variantOptions[0]?.value || "default";
+    next = applyInfoColors(next, value, current.alert_group);
+  }
+  if ("alert_type" === name && "custom" === value) {
+    next = applyInfoColors(next, next.alert_group);
+  }
+  return next;
 };

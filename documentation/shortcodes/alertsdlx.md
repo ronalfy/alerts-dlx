@@ -20,6 +20,16 @@ Add a unique ID around the alerts container. This is useful if you need to style
 [alertsdlx unique_id="my-unique-id" alert_title="this is a title"]Alert Description[/alertsdlx]
 ```
 
+## global_style
+
+Slug of a published global style. Appearance (design, colors, icon, width, margin, and font size) comes from that style when the shortcode renders. Title, description, buttons, dismiss, display conditions, and alignment stay on the shortcode.
+
+```html
+[alertsdlx global_style="custody-notice" alert_title="Heading"]Body text[/alertsdlx]
+```
+
+Editing the global style updates every shortcode that uses its slug. Renaming the slug means updating those shortcodes. If the slug is missing or unpublished, the shortcode renders its own appearance attributes.
+
 ## alert_group
 
 The type of alert style to use. This can be:

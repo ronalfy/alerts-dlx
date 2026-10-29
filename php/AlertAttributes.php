@@ -104,6 +104,7 @@ final class AlertAttributes {
 	public static function get_shortcode_defaults() {
 		return array(
 			'unique_id'                      => 'alerts-dlx-' . wp_rand( 0, 1000 ) . wp_generate_password( 6, false, false ),
+			'global_style'                   => '',
 			'alert_group'                    => 'chakra',
 			'alert_type'                     => 'success',
 			'align'                          => 'center',

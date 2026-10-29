@@ -712,6 +712,47 @@ final class AlertLibrary {
 	}
 
 	/**
+	 * Published global styles for the shortcode builder picker.
+	 *
+	 * Each item is a slug, title, and appearance config. The list is cached
+	 * for the request.
+	 *
+	 * @return array
+	 */
+	public static function get_published_global_styles() {
+		static $styles = null;
+		if ( is_array( $styles ) ) {
+			return $styles;
+		}
+
+		$names  = array_flip( ShortcodeBuilder::get_global_style_input_names() );
+		$styles = array();
+		$items  = self::query_items(
+			self::KIND_GLOBAL_STYLE,
+			array(
+				'posts_per_page' => 100,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			)
+		);
+
+		foreach ( $items as $item ) {
+			$slug = sanitize_title( (string) ( $item['slug'] ?? '' ) );
+			if ( '' === $slug ) {
+				continue;
+			}
+			$title    = (string) ( $item['title'] ?? '' );
+			$styles[] = array(
+				'slug'   => $slug,
+				'title'  => '' !== $title ? $title : $slug,
+				'config' => array_intersect_key( is_array( $item['config'] ?? null ) ? $item['config'] : array(), $names ),
+			);
+		}
+
+		return $styles;
+	}
+
+	/**
 	 * Library items for block editor localization (id, title, slug, kind, config).
 	 *
 	 * @return array
@@ -778,6 +819,88 @@ final class AlertLibrary {
 		}
 
 		return $attributes;
+	}
+
+	/**
+	 * Load a published global style's appearance by slug.
+	 *
+	 * Missing, unpublished, or wrong-kind slugs return an empty array.
+	 *
+	 * @param string $slug Global style post_name.
+	 * @return array Snake_case appearance attributes, or empty when unusable.
+	 */
+	public static function get_global_style_config_by_slug( $slug ) {
+		static $resolved_by_slug = array();
+
+		$slug = sanitize_title( (string) $slug );
+		if ( '' === $slug ) {
+			return array();
+		}
+
+		if ( array_key_exists( $slug, $resolved_by_slug ) ) {
+			return $resolved_by_slug[ $slug ];
+		}
+
+		$resolved = array();
+		$query    = new \WP_Query(
+			array(
+				'post_type'              => self::POST_TYPE,
+				'post_status'            => 'publish',
+				'name'                   => $slug,
+				'posts_per_page'         => 1,
+				'no_found_rows'          => true,
+				'update_post_term_cache' => false,
+				'meta_query'             => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+					array(
+						'key'   => self::META_KIND,
+						'value' => self::KIND_GLOBAL_STYLE,
+					),
+				),
+			)
+		);
+
+		$post = ! empty( $query->posts ) ? $query->posts[0] : null;
+		if ( $post instanceof \WP_Post ) {
+			$config   = self::get_post_config( $post->ID, $post );
+			$resolved = array_intersect_key(
+				$config,
+				array_flip( ShortcodeBuilder::get_global_style_input_names() )
+			);
+			$group    = sanitize_key( (string) ( $resolved['alert_group'] ?? '' ) );
+			if ( ! isset( ShortcodeBuilder::get_theme_definitions()[ $group ] ) ) {
+				$resolved = array();
+			}
+		}
+
+		$resolved_by_slug[ $slug ] = $resolved;
+
+		return $resolved;
+	}
+
+	/**
+	 * Overwrite shortcode appearance attributes from a global_style slug.
+	 *
+	 * Content attributes on the shortcode stay as authored. An unknown slug
+	 * leaves those appearance attributes in place.
+	 *
+	 * @param array $atts Shortcode attributes.
+	 * @return array
+	 */
+	public static function apply_global_style_slug_to_shortcode_atts( array $atts ) {
+		$slug                 = sanitize_title( (string) ( $atts['global_style'] ?? '' ) );
+		$atts['global_style'] = $slug;
+		$style                = self::get_global_style_config_by_slug( $slug );
+		if ( empty( $style ) ) {
+			return $atts;
+		}
+
+		foreach ( ShortcodeBuilder::get_global_style_input_names() as $name ) {
+			if ( array_key_exists( $name, $style ) ) {
+				$atts[ $name ] = $style[ $name ];
+			}
+		}
+
+		return $atts;
 	}
 
 	/**
