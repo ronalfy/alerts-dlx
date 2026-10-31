@@ -1,11 +1,15 @@
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import metadata from './block.json';
 import { getCanonicalAlertTypeForPurpose } from '../utils/canonical-alert-presets';
 import {
+	GLOBAL_STYLE_BLOCK_KEYS,
 	buildSnapshotApplyAttributes,
 	getLocalizedLibraryItems,
+	libraryConfigToBlockAttributes,
 } from '../utils/alert-library-utils';
+
+const GLOBAL_STYLE_INSERTER_CATEGORY = 'singular-alerts-global';
 
 const commonAttributes = {
 	alertGroup: 'bootstrap',
@@ -98,14 +102,64 @@ function buildLibraryExampleAttributes( attributes = {} ) {
 }
 
 /**
- * Build one inserter variation per snapshot flagged for the inserter.
+ * Readable title for a library inserter item.
  *
- * Global styles are omitted, including items that already have the inserter
- * flag. They stay linked from the Styles sidebar. Static goal variations are
- * empty. None of these snapshot variations are isDefault.
+ * @param {Object} item Library item.
+ * @return {string}
+ */
+function libraryItemTitle( item ) {
+	return typeof item.title === 'string' && item.title.trim()
+		? item.title.trim()
+		: __( 'Library item', 'alerts-dlx' );
+}
+
+/**
+ * Build one linked inserter variation for a flagged global style.
+ *
+ * The inserted block stores only globalStyleId. Appearance is resolved
+ * while the style stays attached. The example is preview-only.
+ *
+ * @param {Object} item Library item.
+ * @param {number} id   Library post ID.
+ * @return {Object} Inserter variation.
+ */
+function createGlobalStyleInserterVariation( item, id ) {
+	const title = libraryItemTitle( item );
+	const config = item.config && typeof item.config === 'object' ? item.config : {};
+	const previewAttributes = {
+		...libraryConfigToBlockAttributes( config, GLOBAL_STYLE_BLOCK_KEYS, '' ),
+		globalStyleId: id,
+	};
+
+	return {
+		name: `global-style-${ id }`,
+		title: sprintf(
+			/* translators: %s: global style title. */
+			__( '%s (Global)', 'alerts-dlx' ),
+			title
+		),
+		description: __( 'Insert an alert linked to this global style.', 'alerts-dlx' ),
+		category: GLOBAL_STYLE_INSERTER_CATEGORY,
+		scope: [ 'inserter' ],
+		isDefault: false,
+		attributes: {
+			globalStyleId: id,
+		},
+		example: {
+			attributes: buildLibraryExampleAttributes( previewAttributes ),
+		},
+	};
+}
+
+/**
+ * Build inserter variations for library items flagged for the inserter.
+ *
+ * Flagged snapshots stay in Singular Alerts and copy attributes. Flagged
+ * global styles go in Singular Alerts (Global) and stay linked. Unflagged
+ * items are omitted. None of these variations are isDefault.
  *
  * @param {Array} items Localized library items.
- * @return {Array} Snapshot inserter variations.
+ * @return {Array} Library inserter variations.
  */
 export function createLibraryInserterVariations( items = getLocalizedLibraryItems() ) {
 	if ( ! Array.isArray( items ) ) {
@@ -114,14 +168,19 @@ export function createLibraryInserterVariations( items = getLocalizedLibraryItem
 
 	return items.filter( isShownInInserter ).flatMap( ( item ) => {
 		const id = Number( item.id ) || 0;
-		// Global styles are not inserter choices, even when the flag is still stored.
-		if ( ! id || 'snapshot' !== item.kind ) {
+		if ( ! id ) {
 			return [];
 		}
 
-		const title = typeof item.title === 'string' && item.title.trim()
-			? item.title.trim()
-			: __( 'Library item', 'alerts-dlx' );
+		if ( 'global_style' === item.kind ) {
+			return [ createGlobalStyleInserterVariation( item, id ) ];
+		}
+
+		if ( 'snapshot' !== item.kind ) {
+			return [];
+		}
+
+		const title = libraryItemTitle( item );
 		const config = item.config && typeof item.config === 'object' ? item.config : {};
 		const attributes = buildSnapshotApplyAttributes( config, '' );
 

@@ -161,14 +161,10 @@ const LibraryList = ({ onAdd, onEdit }) => {
 				id: "showInInserter",
 				label: __("Inserter", "alerts-dlx"),
 				enableSorting: true,
-				getValue: ({ item }) => {
-					if (KIND_SNAPSHOT !== item.kind) {
-						return "—";
-					}
-					return item.showInInserter
+				getValue: ({ item }) =>
+					item.showInInserter
 						? __("Shown", "alerts-dlx")
-						: __("Hidden", "alerts-dlx");
-				},
+						: __("Hidden", "alerts-dlx"),
 			},
 			{
 				id: "alert_group",

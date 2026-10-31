@@ -44,16 +44,14 @@ const getDefaultsForKind = (nextKind) =>
 		: { ...(alertsDlxAdmin.libraryDefaults || {}) };
 
 /**
- * Whether the inserter flag applies to this library kind.
+ * Whether the editor should treat the inserter flag as on.
  *
- * Snapshots may appear in the inserter. Global styles may not.
+ * Snapshots and global styles may both be flagged.
  *
- * @param {string}  itemKind Library kind.
- * @param {boolean} flagged  Stored flag.
- * @return {boolean} Whether the editor should treat the flag as on.
+ * @param {boolean} flagged Stored flag.
+ * @return {boolean} Whether the flag is on.
  */
-const isSnapshotShownInInserter = (itemKind, flagged) =>
-	KIND_SNAPSHOT === itemKind && Boolean(flagged);
+const isShownInInserter = (flagged) => Boolean(flagged);
 
 /**
  * Studio editor for one library item.
@@ -145,7 +143,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 				const next = {
 					title: item.title || "",
 					slug: item.slug || "",
-					showInInserter: isSnapshotShownInInserter(nextKind, item.showInInserter),
+					showInInserter: isShownInInserter(item.showInInserter),
 					kind: nextKind,
 					config: item.config || getDefaultsForKind(nextKind),
 				};
@@ -181,9 +179,6 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 
 	const handleKindChange = (nextKind) => {
 		setKind(nextKind);
-		if (KIND_SNAPSHOT !== nextKind) {
-			setShowInInserter(false);
-		}
 		if (!itemId) {
 			const nextDefaults = getDefaultsForKind(nextKind);
 			setConfig((current) => {
@@ -217,7 +212,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 			kind,
 			title: title.trim(),
 			slug: slug.trim() || undefined,
-			showInInserter: isSnapshotShownInInserter(kind, showInInserter),
+			showInInserter: isShownInInserter(showInInserter),
 			config,
 		};
 
@@ -231,7 +226,7 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 				const next = {
 					title: saved.title || title,
 					slug: saved.slug || slug,
-					showInInserter: isSnapshotShownInInserter(nextKind, saved.showInInserter),
+					showInInserter: isShownInInserter(saved.showInInserter),
 					kind: nextKind,
 					config: saved.config || config,
 				};
@@ -344,18 +339,22 @@ const LibraryEditor = ({ libraryKind, itemId, onBack, onSaved, onKindChange }) =
 						)}
 						__nextHasNoMarginBottom
 					/>
-					{KIND_SNAPSHOT === kind && (
-						<ToggleControl
-							label={__("Show in block inserter (Advanced)", "alerts-dlx")}
-							checked={showInInserter}
-							onChange={setShowInInserter}
-							help={__(
-								"This preset appears as its own choice in the Alert inserter. Any number of presets can be shown.",
-								"alerts-dlx"
-							)}
-							__nextHasNoMarginBottom
-						/>
-					)}
+					<ToggleControl
+						label={__("Show in block inserter (Advanced)", "alerts-dlx")}
+						checked={showInInserter}
+						onChange={setShowInInserter}
+						help={
+							KIND_SNAPSHOT === kind
+								? __(
+									"This preset appears as its own choice in the Alert inserter. Any number of presets can be shown.",
+									"alerts-dlx"
+								)
+								: __(
+									"This style appears in the Singular Alerts (Global) inserter category. Its label is the style name followed by (Global). Inserting it keeps the alert linked to the style.",
+									"alerts-dlx"
+								)
+						}
+					/>
 				</div>
 			</div>
 

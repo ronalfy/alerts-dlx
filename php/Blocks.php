@@ -82,6 +82,10 @@ class Blocks {
 							'title' => __( 'Singular Alerts', 'alerts-dlx' ),
 						),
 						array(
+							'slug'  => 'singular-alerts-global',
+							'title' => __( 'Singular Alerts (Global)', 'alerts-dlx' ),
+						),
+						array(
 							'slug'  => 'alertsdlx-legacy',
 							'title' => __( 'AlertsDLX Legacy', 'alerts-dlx' ),
 						),
