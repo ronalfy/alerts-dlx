@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.9
 Tested up to: 7.1
-Stable tag: 3.2.0
+Stable tag: 3.2.2
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -175,6 +175,11 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Changelog ==
 
+= 3.2.2 =
+* Released 2026-10-31
+* New: Global Styles can now be used in the block inserter.
+* New: Global styles are assigned their own category in the block editor and are available in the block inserter.
+
 = 3.2.0 =
 * Released 2026-10-29
 * New: Added a secondary button, with its own label, link, and colors. Turn it on from the block toolbar or Settings sidebar. Custom colors cover the fill, hover, and text.
@@ -334,7 +339,4 @@ Please report security bugs found in the source code of the plugin through the [
 == Upgrade Notice ==
 
 = 3.2.0 =
-Added a secondary button, icon size options, and display conditions for date range, day of week, URL parameters, and logged-in users. Shortcodes can use a published global style, and the button link picker searches public post types. Fixes include dismissed alerts showing again after text changes, firewalls flagging icon SVG, preset previews, saving styles and presets with a custom icon, Shoelace left accent icons, and shortcode URL parameters.
-
-= 3.1.0 =
-New abilities API for generating shortcodes and listing global styles. Fixes to the link control component in the block editor where relative paths couldn't be saved and the popover wouldn't close when losing focus.
+New: Global Styles can now be used in the block inserter. New: Global styles are assigned their own category in the block editor and are available in the block inserter.
