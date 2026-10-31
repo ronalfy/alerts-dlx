@@ -1,4 +1,4 @@
-=== Singular Alerts - Alert Block, Alert Box, Callout Box, and Notifications ===
+=== Singular Alerts - Create Beautiful Alerts and Notifications in Seconds ===
 Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.9
@@ -9,7 +9,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Donate link: https://github.com/sponsors/DLXPlugins
 
-Create stunning alerts, tips, warnings, and callout boxes in seconds and enhance your site's content and user engagement.
+Create stunning alerts, tips, notifications, warnings, and callout boxes in seconds. Perfect for tutorials, documentation, and much more.
 
 == Description ==
 
