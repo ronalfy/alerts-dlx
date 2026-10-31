@@ -338,5 +338,5 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Upgrade Notice ==
 
-= 3.2.0 =
+= 3.2.2 =
 New: Global Styles can now be used in the block inserter. New: Global styles are assigned their own category in the block editor and are available in the block inserter.
