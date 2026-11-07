@@ -152,6 +152,10 @@
       "type": "string",
       "default": ""
     },
+    "modalEnabled": {
+      "type": "boolean",
+      "default": false
+    },
     "alertGroup": {
       "type": "string",
       "default": "chakra"

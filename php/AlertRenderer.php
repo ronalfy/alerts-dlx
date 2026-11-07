@@ -148,17 +148,25 @@ final class AlertRenderer {
 		$color_light                    = $normalized['color_light'];
 		$close_button_enabled           = $normalized['close_button_enabled'];
 		$close_button_expiration        = $normalized['close_button_expiration'];
-		$is_block_editorial_only        = $normalized['is_block_editorial_only'];
-		$icon_source                    = $normalized['icon_source'];
-		$image_url                      = $normalized['image_url'];
-		$image_id                       = $normalized['image_id'];
-		$conditions_enabled             = $normalized['conditions_enabled'];
-		$start_date                     = $normalized['start_date'];
-		$end_date                       = $normalized['end_date'];
-		$days_of_week                   = $normalized['days_of_week'];
-		$url_params                     = $normalized['url_params'];
-		$require_login                  = $normalized['require_login'];
-		$required_roles                 = $normalized['required_roles'];
+		$modal_enabled                  = (bool) $normalized['modal_enabled'];
+		// A dialog always has a close control, even when the saved dismiss setting is off.
+		if ( $modal_enabled ) {
+			$close_button_enabled = true;
+		}
+		// Admin AJAX previews stay inline. Public renders and the conditions REST
+		// re-render keep the dialog, because is_admin() is true during REST.
+		$render_as_dialog        = $modal_enabled && ! wp_doing_ajax();
+		$is_block_editorial_only = $normalized['is_block_editorial_only'];
+		$icon_source             = $normalized['icon_source'];
+		$image_url               = $normalized['image_url'];
+		$image_id                = $normalized['image_id'];
+		$conditions_enabled      = $normalized['conditions_enabled'];
+		$start_date              = $normalized['start_date'];
+		$end_date                = $normalized['end_date'];
+		$days_of_week            = $normalized['days_of_week'];
+		$url_params              = $normalized['url_params'];
+		$require_login           = $normalized['require_login'];
+		$required_roles          = $normalized['required_roles'];
 
 		// If block is editorial only, return early.
 		if ( $is_block_editorial_only ) {
@@ -181,7 +189,7 @@ final class AlertRenderer {
 		$cookie_name        = $unique_id;
 		$legacy_cookie_name = 'alerts-dlx-' . $unique_id;
 
-		if ( $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
+		if ( ! $modal_enabled && $close_button_enabled && $reset_dismissal_countdown && ! $is_in_block_editor ) {
 			$display_content = ! empty( $alert_description ) ? $alert_description : $content;
 			$hash            = md5( $alert_title . wp_strip_all_tags( $display_content ) . $button_text . $secondary_button_text );
 			$option_name     = 'adlx-' . $unique_id;
@@ -200,7 +208,8 @@ final class AlertRenderer {
 
 		// Check to see if expiration cookie is set.
 		// Prefer uniqueId as cookie name; also accept legacy double-prefixed name.
-		if ( $close_button_enabled && ( isset( $_COOKIE[ $cookie_name ] ) || isset( $_COOKIE[ $legacy_cookie_name ] ) ) ) {
+		// A modal stays in the page so an explicit trigger can open it again.
+		if ( ! $modal_enabled && $close_button_enabled && ( isset( $_COOKIE[ $cookie_name ] ) || isset( $_COOKIE[ $legacy_cookie_name ] ) ) ) {
 			return '';
 		}
 
@@ -312,6 +321,10 @@ final class AlertRenderer {
 			);
 		}
 
+		if ( $render_as_dialog ) {
+			$this->enqueue_modal_script();
+		}
+
 		// Add conditions script when any condition is enabled.
 		if ( $conditions_enabled ) {
 			wp_enqueue_script(
@@ -396,6 +409,11 @@ final class AlertRenderer {
 		?>
 		<!-- begin AlertsDLX output -->
 		<style>
+			<?php if ( $render_as_dialog ) : ?>
+			#<?php echo esc_attr( $unique_id ); ?>-dialog {
+				--alerts-dlx-dialog-width: <?php echo esc_attr( $maximum_width . $maximum_width_unit ); ?>;
+			}
+			<?php endif; ?>
 			#<?php echo esc_attr( $unique_id ); ?> {
 				max-width: <?php echo esc_attr( $maximum_width ); ?><?php echo esc_attr( $maximum_width_unit ); ?>;
 				--alerts-dlx-base-font-size: <?php echo esc_attr( $base_font_size ); ?>px;
@@ -418,6 +436,19 @@ final class AlertRenderer {
 				height: calc(1.8em * var(--alerts-dlx-icon-scale, 1));
 			}
 		</style>
+		<?php if ( $render_as_dialog ) : ?>
+			<dialog
+				class="alerts-dlx-dialog"
+				id="<?php echo esc_attr( $unique_id ); ?>-dialog"
+				data-alerts-dlx-dialog="<?php echo esc_attr( $unique_id ); ?>"
+				closedby="any"
+				<?php if ( $title_enabled ) : ?>
+					aria-labelledby="<?php echo esc_attr( $unique_id ); ?>-title"
+				<?php else : ?>
+					aria-label="<?php esc_attr_e( 'Alert', 'alerts-dlx' ); ?>"
+				<?php endif; ?>
+			>
+		<?php endif; ?>
 		<div
 			class="<?php echo esc_attr( implode( ' ', $container_classes ) ); ?>"
 			data-expiration="<?php echo esc_attr( absint( $close_button_expiration ) ); ?>"
@@ -445,7 +476,9 @@ final class AlertRenderer {
 			<?php endif; ?>
 		>
 			<figure
-				role="alert"
+				<?php if ( ! $render_as_dialog ) : ?>
+					role="alert"
+				<?php endif; ?>
 				class="<?php echo esc_attr( implode( ' ', $figure_classes ) ); ?>"
 				id="<?php echo esc_attr( $unique_id ); ?>"
 			>
@@ -517,9 +550,10 @@ final class AlertRenderer {
 					if ( $title_enabled ) {
 						$title_tag = Options::get_headline_tag();
 						printf(
-							'<%1$s class="%2$s">%3$s</%1$s>',
+							'<%1$s class="%2$s"%3$s>%4$s</%1$s>',
 							esc_html( $title_tag ),
 							esc_attr( Options::get_headline_title_classes() ),
+							$render_as_dialog ? ' id="' . esc_attr( $unique_id . '-title' ) . '"' : '',
 							esc_html( $alert_title )
 						);
 					}
@@ -576,6 +610,9 @@ final class AlertRenderer {
 				</section>
 			</figure>
 		</div>
+		<?php if ( $render_as_dialog ) : ?>
+			</dialog>
+		<?php endif; ?>
 		<!-- end AlertsDLX output -->
 		<?php
 		$html = ob_get_clean();
@@ -605,6 +642,27 @@ final class AlertRenderer {
 		}
 
 		return $html;
+	}
+
+	/**
+	 * Enqueue the dialog opener. Public pages only; callers skip AJAX previews.
+	 */
+	private function enqueue_modal_script() {
+		$asset_path = Functions::get_plugin_dir( 'dist/alerts-dlx-modal.asset.php' );
+		$asset      = file_exists( $asset_path )
+			? require $asset_path
+			: array(
+				'dependencies' => array(),
+				'version'      => Functions::get_plugin_version(),
+			);
+
+		wp_enqueue_script(
+			'alerts-dlx-modal',
+			Functions::get_plugin_url( 'dist/alerts-dlx-modal.js' ),
+			$asset['dependencies'],
+			$asset['version'],
+			true
+		);
 	}
 
 	/**

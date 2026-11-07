@@ -32,6 +32,8 @@ On the **frontend**, PHP (`Blocks::frontend()`) outputs the wrapper roughly as:
 
 When one or both action buttons are enabled, the description is followed by `.alerts-dlx-actions`, a left-to-right flex row. The secondary CTA is printed first (`.alerts-dlx-button.alerts-dlx-button-secondary`), then the primary button (`.alerts-dlx-button`).
 
+When **Open in a dialog** is on, the public markup wraps that same alert in `<dialog class="alerts-dlx-dialog">`. The figure keeps `id="{uniqueId}"`. The dialog id is `{uniqueId}-dialog`. The dialog is closed until a trigger calls `showModal()`, so the alert is not in normal flow. The opened dialog does not add `alerts-dlx-is-modal`. That class is editor-only and draws a blue dashed border, with an Alert Dialogue label, in the block canvas.
+
 In the **editor**, each theme’s `edit.js` builds the same class list via `useBlockProps()` so the canvas matches the frontend.
 
 ---

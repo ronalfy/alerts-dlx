@@ -319,6 +319,15 @@ export const mergePreviewValues = (
 };
 
 /**
+ * True for the boolean shapes the builder stores.
+ *
+ * @param {*} value Field value.
+ * @return {boolean} Whether the flag is on.
+ */
+const isBuilderFlagOn = (value) =>
+  true === value || "true" === value || 1 === value || "1" === value;
+
+/**
  * Apply alert_group and alert_type side effects when a field changes.
  *
  * @param {string} name    Field name.
@@ -342,6 +351,12 @@ export const applyBuilderFieldChange = (name, value, current, fields) => {
   }
   if ("alert_type" === name && "custom" === value) {
     next = applyInfoColors(next, next.alert_group);
+  }
+  if ("modal_enabled" === name && isBuilderFlagOn(value)) {
+    next.close_button_enabled = true;
+  }
+  if ("close_button_enabled" === name && isBuilderFlagOn(current.modal_enabled)) {
+    next.close_button_enabled = true;
   }
   return next;
 };

@@ -34,9 +34,9 @@ const withAlertCloseExpirationToolbar = createHigherOrderComponent(
         return <BlockEdit {...props} />;
       }
 
-      const { closeButtonEnabled, closeButtonExpiration } = attributes;
+      const { closeButtonEnabled, closeButtonExpiration, modalEnabled } = attributes;
 
-      if (!closeButtonEnabled) {
+      if (!closeButtonEnabled || modalEnabled) {
         return <BlockEdit {...props} />;
       }
 

@@ -48,15 +48,23 @@ const withAlertElementsToolbar = createHigherOrderComponent((BlockEdit) => {
                   {() => (
                     <MenuGroup label={__("Alert elements", "alerts-dlx")}>
                       {ALERT_ELEMENT_TOGGLES.map((toggle) => {
-                        const isEnabled = attributes[toggle.attribute];
+                        const closeLocked =
+                          "closeButtonEnabled" === toggle.attribute &&
+                          !!attributes.modalEnabled;
+                        const isEnabled =
+                          closeLocked || !!attributes[toggle.attribute];
 
                         return (
                           <MenuItem
                             key={toggle.attribute}
                             role="menuitemcheckbox"
                             isSelected={isEnabled}
+                            disabled={closeLocked}
                             icon={isEnabled ? "yes" : null}
                             onClick={() => {
+                              if (closeLocked) {
+                                return;
+                              }
                               toggleAlertElement(
                                 toggle.attribute,
                                 isEnabled,

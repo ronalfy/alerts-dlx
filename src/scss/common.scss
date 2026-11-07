@@ -451,3 +451,39 @@ body .alerts-dlx.is-appearance-centered figure.alerts-dlx-alert[role=alert] {
 	margin: 0;
 	padding: 0;
 }
+
+.alerts-dlx-dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	right: auto;
+	bottom: auto;
+	transform: translate(-50%, -50%);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	width: min(var(--alerts-dlx-dialog-width, 40rem), calc(100vw - 2rem));
+	max-width: calc(100vw - 2rem);
+	height: fit-content;
+	max-height: calc(100vh - 2rem);
+	overflow: auto;
+	color: inherit;
+
+	&::backdrop {
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	>.alerts-dlx {
+		/* inline-size containment sizes this box as if it had no content, which collapses the dialog. */
+		container-type: normal;
+		width: 100%;
+		max-width: 100%;
+		margin: 0 !important;
+	}
+
+	.alerts-dlx-alert {
+		width: 100%;
+		box-sizing: border-box;
+	}
+}

@@ -154,16 +154,25 @@ const MaterialAlerts = ( props ) => {
 	/**
 	 * Keep a saved Material alert's identity stable. New blocks, duplicates,
 	 * copies, and transforms from another alert family still receive a fresh
-	 * Material ID. The ID also scopes styles and identifies dismiss cookies.
+	 * Material ID. An author-set id is kept. The ID also scopes styles and
+	 * identifies dismiss cookies.
 	 */
 	useEffect( () => {
 		const isPersistedMaterialId =
 			typeof uniqueId === 'string' &&
 			uniqueId.startsWith( 'adlx-material-' );
+		// Author-set ids stay put. Auto ids from another design still get a Material id.
+		const isOtherFamilyAutoId =
+			typeof uniqueId === 'string' && uniqueId.startsWith( 'alerts-dlx-' );
+		const hasAuthorId =
+			typeof uniqueId === 'string' &&
+			'' !== uniqueId &&
+			! isPersistedMaterialId &&
+			! isOtherFamilyAutoId;
 		const currentOwner = materialAlertIdOwners.get( uniqueId );
 
 		if (
-			isPersistedMaterialId &&
+			( isPersistedMaterialId || hasAuthorId ) &&
 			( ! currentOwner || currentOwner === clientId )
 		) {
 			materialAlertIdOwners.set( uniqueId, clientId );

@@ -51,6 +51,7 @@ const BlockMain = (props) => {
     alertType,
     alertGroup,
     closeButtonEnabled,
+    modalEnabled,
     titleEnabled,
     alertTitle,
     maximumWidth,
@@ -138,7 +139,7 @@ const BlockMain = (props) => {
           </div>
         )}
         <section>
-          {closeButtonEnabled && (
+          {(closeButtonEnabled || modalEnabled) && (
             <div className="alerts-dlx-close">
               <CloseButtonIcon />
             </div>

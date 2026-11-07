@@ -223,12 +223,24 @@ const BuilderField = ({ field, values, onChange, onSelectImage }) => {
 		: field.options || [];
 
 	if ("toggle" === field.control) {
+		const dialogLocksClose =
+			"close_button_enabled" === field.name &&
+			(true === values.modal_enabled ||
+				"true" === values.modal_enabled ||
+				1 === values.modal_enabled ||
+				"1" === values.modal_enabled);
 		return (
 			<ToggleControl
 				label={field.label}
 				help={field.help || undefined}
-				checked={Boolean(value)}
-				onChange={(nextValue) => onChange(field.name, nextValue)}
+				checked={dialogLocksClose || Boolean(value)}
+				disabled={dialogLocksClose}
+				onChange={(nextValue) => {
+					if (dialogLocksClose) {
+						return;
+					}
+					onChange(field.name, nextValue);
+				}}
 			/>
 		);
 	}

@@ -221,6 +221,10 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
+			'modalEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'alertGroup' => array(
 				'type' => 'string',
 				'default' => 'bootstrap'
@@ -547,6 +551,10 @@ return array(
 				'type' => 'string',
 				'default' => ''
 			),
+			'modalEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
+			),
 			'alertGroup' => array(
 				'type' => 'string',
 				'default' => 'bootstrap'
@@ -838,6 +846,10 @@ return array(
 			'uniqueId' => array(
 				'type' => 'string',
 				'default' => ''
+			),
+			'modalEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
 			),
 			'alertGroup' => array(
 				'type' => 'string',
@@ -1166,6 +1178,10 @@ return array(
 			'uniqueId' => array(
 				'type' => 'string',
 				'default' => ''
+			),
+			'modalEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
 			),
 			'alertGroup' => array(
 				'type' => 'string',
@@ -1498,6 +1514,10 @@ return array(
 			'uniqueId' => array(
 				'type' => 'string',
 				'default' => ''
+			),
+			'modalEnabled' => array(
+				'type' => 'boolean',
+				'default' => false
 			),
 			'alertGroup' => array(
 				'type' => 'string',

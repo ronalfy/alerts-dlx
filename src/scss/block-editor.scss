@@ -20,6 +20,65 @@ button.button-reset.alerts-dlx-icon-preview-button.components-button:hover {
 	border: 4px dashed #ff9800;
 }
 
+.alerts-dlx-is-modal {
+	position: relative;
+	padding: 48px;
+	border: 4px dashed #2196f3;
+}
+
+.alerts-dlx-modal-triggers {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 12px;
+	width: 100%;
+	min-width: 0;
+}
+
+.alerts-dlx-modal-triggers p {
+	margin-bottom: 0px;
+}
+
+.alerts-dlx-modal-trigger {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+}
+
+.alerts-dlx-modal-trigger__label {
+	color: #757575;
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+.alerts-dlx-modal-trigger__row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	min-width: 0;
+	background: #f0f0f0;
+	border-radius: 2px;
+
+	code {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
+		padding: 4px 8px;
+		overflow-x: auto;
+		background: transparent;
+		color: inherit;
+		font-size: 12px;
+		line-height: 1.4;
+		white-space: nowrap;
+	}
+
+	.components-button {
+		flex: 0 0 auto;
+		margin: 0;
+	}
+}
+
 .alerts-dlx-icon-image {
 	max-width: 64px;
 	max-height: 64px;

@@ -64,6 +64,20 @@ const withAlertsPanel = createHigherOrderComponent( ( BlockEdit ) => {
 									z-index: 1;
 									background: #ff9800;
 								}
+								.alerts-dlx-is-modal:before {
+									content: '${ __( 'Alert Dialogue', 'alerts-dlx' ) }';
+									position: absolute;
+									top: 0px;
+									left: 0px;
+									display: inline-block;
+									padding: 4px 6px;
+									font-size: 14px;
+									font-weight: 600;
+									color: #333;
+									line-height: 1.5;
+									z-index: 1;
+									background: #2196f3;
+								}
 							` }
 					</style>
 					<InspectorControls>
@@ -118,6 +132,7 @@ addFilter(
 			...blockClasses,
 			'alerts-dlx-editorial-only': attributes.isBlockEditorialOnly,
 			'alerts-dlx-read-only': attributes.isBlockReadOnly,
+			'alerts-dlx-is-modal': Boolean( attributes.modalEnabled ),
 		};
 	}
 );

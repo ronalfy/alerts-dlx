@@ -20,6 +20,14 @@ Add a unique ID around the alerts container. This is useful if you need to style
 [alertsdlx unique_id="my-unique-id" alert_title="this is a title"]Alert Description[/alertsdlx]
 ```
 
+## modal_enabled
+
+Set `modal_enabled="true"` to hide the alert until something opens it. Pair it with a stable `unique_id`. A link to `#my-unique-id`, a button with `class="modal-my-unique-id"`, or `data-alerts-dlx-open="my-unique-id"` opens the dialog. The close button is always shown. Closing the dialog does not remember a dismissal. See [Dialog Alerts](../overview/modal-alerts.md).
+
+```html
+[alertsdlx modal_enabled="true" unique_id="my-unique-id" alert_title="this is a title"]Alert Description[/alertsdlx]
+```
+
 ## global_style
 
 Slug of a published global style. Appearance (design, colors, icon, width, margin, and font size) comes from that style when the shortcode renders. Title, description, buttons, dismiss, display conditions, and alignment stay on the shortcode.

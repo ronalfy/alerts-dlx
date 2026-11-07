@@ -401,7 +401,10 @@ class Abilities {
 				'color_bold'                     => self::color_property( esc_html__( 'Icon color.', 'alerts-dlx' ) ),
 				'color_light'                    => self::color_property( esc_html__( 'Background color.', 'alerts-dlx' ) ),
 				'close_button_enabled'           => self::boolean_property(
-					esc_html__( 'Show a dismiss control. Defaults to false.', 'alerts-dlx' )
+					esc_html__( 'Show a dismiss control. Defaults to false. Dialogs always show it.', 'alerts-dlx' )
+				),
+				'modal_enabled'                  => self::boolean_property(
+					esc_html__( 'Render the alert in a dialog opened by #unique_id, class modal-{unique_id}, or data-alerts-dlx-open. Defaults to false. The close button stays on. Closing the dialog does not remember a dismissal.', 'alerts-dlx' )
 				),
 				'close_button_expiration'        => self::integer_property(
 					esc_html__( 'How long a dismissal is remembered, in seconds. 0 means the current browser session only. Included only when close_button_enabled is true.', 'alerts-dlx' ),

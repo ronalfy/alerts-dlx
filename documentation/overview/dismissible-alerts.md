@@ -15,6 +15,8 @@ Singular Alerts supports dismissible alerts with an optional close button. When 
 
 When the close button is enabled, a **Close expiration** toolbar control appears with presets for how long dismissal should be remembered.
 
+An alert that opens in a dialog always shows the close button. That control stays on in the editor, and the expiration setting stays hidden, because closing the dialog does not remember a dismissal.
+
 ### In Shortcodes
 
 Use these parameters together:
@@ -49,6 +51,8 @@ When a visitor clicks the close button:
 | Custom | Any positive integer (seconds) |
 
 Use toolbar presets in the block editor or set `close_button_expiration` directly in shortcodes.
+
+Dialog alerts do not use this cookie. Closing a dialog only hides it, and the trigger can open it again. See [Dialog Alerts](modal-alerts.md).
 
 ## Unique IDs
 

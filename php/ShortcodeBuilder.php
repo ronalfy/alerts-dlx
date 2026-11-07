@@ -50,6 +50,7 @@ final class ShortcodeBuilder {
 		'secondary_button_rel_no_follow',
 		'secondary_button_rel_sponsored',
 		'close_button_enabled',
+		'modal_enabled',
 		'is_block_editorial_only',
 		'conditions_enabled',
 		'require_login',
@@ -725,7 +726,18 @@ final class ShortcodeBuilder {
 						'field'    => 'close_button_enabled',
 						'operator' => 'is_true',
 					),
+					array(
+						'field'    => 'modal_enabled',
+						'operator' => 'is_false',
+					),
 				),
+			),
+			array(
+				'name'    => 'modal_enabled',
+				'group'   => 'advanced',
+				'control' => 'toggle',
+				'label'   => __( 'Open in a dialog', 'alerts-dlx' ),
+				'help'    => __( 'Hide this alert on the public page until a link to #unique_id, a button with class modal-{unique_id}, or data-alerts-dlx-open="unique_id" opens it. The preview stays visible. Closing the dialog does not remember a dismissal.', 'alerts-dlx' ),
 			),
 			array(
 				'name'    => 'unique_id',
@@ -997,6 +1009,11 @@ final class ShortcodeBuilder {
 					$sanitized[ $name ] = $linked_style[ $name ];
 				}
 			}
+		}
+
+		// Dialogs always show a close button. Expiration stays unused.
+		if ( ! empty( $sanitized['modal_enabled'] ) ) {
+			$sanitized['close_button_enabled'] = true;
 		}
 
 		return $sanitized;

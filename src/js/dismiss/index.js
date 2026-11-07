@@ -97,10 +97,29 @@ const getAlertUniqueId = ( alert ) => {
 };
 
 /**
+ * Dialog that owns an alert, when the alert opens in a modal.
+ *
+ * @param {Element} alert Alert root element.
+ * @return {HTMLDialogElement|null} Owning dialog, or null.
+ */
+const getModalDialog = ( alert ) => {
+	if ( ! alert || 'function' !== typeof alert.closest ) {
+		return null;
+	}
+
+	return alert.closest( 'dialog.alerts-dlx-dialog' );
+};
+
+/**
  * Remove alerts that were previously dismissed (works with page cache).
  */
 const hideDismissedAlerts = () => {
 	document.querySelectorAll( '.alerts-dlx' ).forEach( ( alert ) => {
+		// Modal alerts stay in the page so a trigger can open them again.
+		if ( getModalDialog( alert ) ) {
+			return;
+		}
+
 		if ( ! alert.querySelector( '.alerts-dlx-close' ) ) {
 			return;
 		}
@@ -125,6 +144,12 @@ const bindCloseButtons = () => {
 		closeButton.addEventListener( 'click', () => {
 			const alert = closeButton.closest( '.alerts-dlx' );
 			if ( ! alert ) {
+				return;
+			}
+
+			const dialog = getModalDialog( alert );
+			if ( dialog ) {
+				dialog.close();
 				return;
 			}
 

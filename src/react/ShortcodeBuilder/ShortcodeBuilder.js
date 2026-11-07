@@ -76,7 +76,21 @@ const ShortcodeBuilder = () => {
       label: values.global_style,
     });
   }
+  const dialogEnabled =
+    true === values.modal_enabled ||
+    "true" === values.modal_enabled ||
+    1 === values.modal_enabled ||
+    "1" === values.modal_enabled;
   const fields = baseFields.map((field) => {
+    if ("close_button_enabled" === field.name && dialogEnabled) {
+      return {
+        ...field,
+        help: __(
+          "Dialogs always include a close button. Closing the dialog does not remember the dismissal.",
+          "alerts-dlx"
+        ),
+      };
+    }
     if ("global_style" !== field.name) {
       return field;
     }
@@ -227,7 +241,10 @@ const ShortcodeBuilder = () => {
           values={values}
           onChange={handleChange}
           onSelectImage={handleImageSelect}
-          lockedFieldNames={selectedStyle ? globalStyleFields : []}
+          lockedFieldNames={[
+            ...(selectedStyle ? globalStyleFields : []),
+            ...(dialogEnabled ? ["close_button_enabled"] : []),
+          ]}
         />
 
         <div className="adlx-admin-content-body">
