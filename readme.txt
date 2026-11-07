@@ -3,7 +3,7 @@ Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.9
 Tested up to: 7.1
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -175,6 +175,10 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Changelog ==
 
+= 3.2.3 =
+* Released 2026-11-07
+* Fix: Alert buttons in the block editor would lose focus and make it difficult to apply links.
+
 = 3.2.2 =
 * Released 2026-10-31
 * New: Global Styles can now be used in the block inserter.
@@ -338,5 +342,5 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Upgrade Notice ==
 
-= 3.2.2 =
-New: Global Styles can now be used in the block inserter. New: Global styles are assigned their own category in the block editor and are available in the block inserter.
+= 3.2.3 =
+Fix: Alert buttons in the block editor would lose focus and make it difficult to apply links.
