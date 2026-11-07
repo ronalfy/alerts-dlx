@@ -8,6 +8,7 @@ import { RichText } from "@wordpress/block-editor";
 import { link } from "@wordpress/icons";
 import { useState, useRef } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
+import classnames from "classnames";
 
 import AlertButtonLinkControl from "../AlertButtonLinkControl";
 import usePopoverOutsidePointerClose from "../usePopoverOutsidePointerClose";
@@ -105,7 +106,9 @@ const AlertButton = (props) => {
 
   return (
     <div
-      className="alerts-dlx-button-wrapper"
+      className={classnames("alerts-dlx-button-wrapper", {
+        "is-link-popover-open": isPopOverVisible,
+      })}
       style={{ display: "inline-flex" }}
     >
       <Button className={buttonClassName}>

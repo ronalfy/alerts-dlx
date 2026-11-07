@@ -1,19 +1,29 @@
 button {
+
 	&.button-reset,
 	&.button-reset:focus,
 	&.button-reset:hover {
 		background: none;
 		color: inherit;
 		border: none;
-		padding: 0;
 		cursor: pointer;
 		outline: inherit;
 		text-transform: unset;
 	}
+
+	// Keep alert button padding when focus moves. Padding 0 here was
+	// collapsing the editor button after the label or link icon blurred.
+	&.button-reset:not(.alerts-dlx-button),
+	&.button-reset:not(.alerts-dlx-button):focus,
+	&.button-reset:not(.alerts-dlx-button):hover {
+		padding: 0;
+	}
+
 	&.button-reset.show-cursor {
 		cursor: pointer;
 	}
 }
+
 .button-reset,
 .button-reset:focus,
 .button-reset:hover {
