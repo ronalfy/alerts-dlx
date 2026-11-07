@@ -20,28 +20,41 @@ $white: #ffffff;
 
 a.alerts-dlx-button.button-reset,
 a.alerts-dlx-button,
-button.button-reset,
-button.button-reset:hover,
-a.alerts-dlx-button,
-button.button-reset.components-button,
-button.button-reset.components-button:hover {
+a.alerts-dlx-button:hover,
+a.alerts-dlx-button:focus,
+a.alerts-dlx-button:focus-within,
+button.button-reset.alerts-dlx-button,
+button.button-reset.alerts-dlx-button:hover,
+button.button-reset.alerts-dlx-button:focus,
+button.button-reset.alerts-dlx-button:focus-within,
+button.button-reset.components-button.alerts-dlx-button,
+button.button-reset.components-button.alerts-dlx-button:hover,
+button.button-reset.components-button.alerts-dlx-button:focus,
+button.button-reset.components-button.alerts-dlx-button:focus-within {
 	padding: 10px 30px;
 	border-radius: 0.3125em;
 	line-height: 1.2em;
 	font-size: 1em;
 	height: auto;
+	min-height: 0;
+	flex-shrink: 0;
 	text-decoration: none;
-	transition: all 0.3s ease-in-out;
+	transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 
 	&~.button-reset,
-	&~.button-reset:hover {
+	&~.button-reset:hover,
+	&~.button-reset:focus,
+	&~.button-reset:focus-within {
 		margin-top: 0.5em;
 		padding: 0;
-		transition: all 0.3s ease-in-out;
+		height: auto;
+		transition: none;
 	}
 }
 
-.editor-styles-wrapper .alerts-dlx-button-wrapper:hover .alerts-dlx-button {
+.editor-styles-wrapper .alerts-dlx-button-wrapper:hover .alerts-dlx-button,
+.editor-styles-wrapper .alerts-dlx-button-wrapper:focus-within .alerts-dlx-button,
+.editor-styles-wrapper .alerts-dlx-button-wrapper.is-link-popover-open .alerts-dlx-button {
 	margin-right: 32px;
 }
 

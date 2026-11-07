@@ -1,4 +1,4 @@
-=== Singular Alerts - Create Beautiful Alerts and Notifications in Seconds ===
+=== Singular Alerts - Alert Block, Alert Notifications, and an Alert Shortcode ===
 Contributors: ronalfy
 Tags: alert box, notifications, alerts, dismissible, callouts
 Requires at least: 6.9
